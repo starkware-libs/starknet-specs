@@ -1,0 +1,826 @@
+{
+    "openrpc": "1.0.0-rc1",
+    "info": {
+        "version": "0.2.1",
+        "title": "StarkNet Constellations Sequencer API",
+        "license": {}
+    },
+    "servers": [],
+    "methods": [
+        {
+            "name": "starknet_getBlockByHash",
+            "summary": "Get block information given the block id",
+            "params": [
+                {
+                    "name": "block_hash",
+                    "description": "The hash (id) of the requested block, or a block tag",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The block information",
+                "schema": {
+                    "$ref": "#/components/schemas/BLOCK"
+                }
+            },
+            "errors": []
+        },
+        {
+            "name": "starknet_getBlockByNumber",
+            "summary": "Get block information given the block number (its height)",
+            "params": [
+                {
+                    "name": "block_number",
+                    "summary": "The requested block number",
+                    "description": "The number (height) of the requested block or a block tag",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
+                    }
+                }
+            ],
+            "result": {
+                "$ref": "#/components/schemas/BLOCK"
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
+                }
+            ]
+        },
+        {
+            "name": "starknet_getStateUpdateByHash",
+            "summary": "Get the information about the result of executing the requested block",
+            "params": [
+                {
+                    "name": "block_hash",
+                    "description": "The hash (id) of the requested block, or a block tag referencing the necessary block",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The information about the state update of the requested block",
+                "schema": {
+                    "$ref": "#/components/schemas/STATE_UPDATE"
+                }
+            }
+        },
+        {
+            "name": "starknet_getStorageAt",
+            "summary": "Get the value of the storage at the given address and key",
+            "params": [
+                {
+                    "name": "contract_address",
+                    "description": "The address of the contract to read from",
+                    "summary": "The address of the contract to read from",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/ADDRESS"
+                    }
+                },
+                {
+                    "name": "key",
+                    "description": "The key to the storage value for the given contract",
+                    "summary": "The key to the storage value for the given contract",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/FELT"
+                    }
+                },
+                {
+                    "name": "block_hash",
+                    "description": "The hash (id) of the requested block or a tag referencing the necessary block",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The value at the given key for the given contract. 0 if no value is found",
+                "summary": "The value at the given key for the given contract.",
+                "schema": {
+                    "$ref": "#/components/schemas/FELT"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_STORAGE_KEY"
+                }
+            ]
+        },
+        {
+            "name": "starknet_getTransactionByHash",
+            "summary": "Get the details and status of a submitted transaction",
+            "paramStructure": "by-name",
+            "params": [
+                {
+                    "name": "transaction_hash",
+                    "summary": "The hash of the requested transaction",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/TXN_HASH"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "schema": {
+                    "$ref": "#/components/schemas/TXN"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_TXN_HASH"
+                }
+            ]
+        },
+        {
+            "name": "starknet_getTransactionByBlockHashAndIndex",
+            "summary": "Get the details of a transaction by a given block hash and index",
+            "description": "Get the details of the transaction given by the identified block and index in that block. If no transaction is found, null is returned.",
+            "params": [
+                {
+                    "name": "block_hash",
+                    "summary": "The queried block hash or tag referencing a block",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                    }
+                },
+                {
+                    "name": "index",
+                    "summary": "The index in the block to search for the transaction",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "minimum": 0
+                    }
+                }
+            ],
+            "result": {
+                "name": "transactionResult",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/TXN"
+                        },
+                        {
+                            "title": "Missing transaction",
+                            "type": "null"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "starknet_getTransactionByBlockNumberAndIndex",
+            "summary": "Get the details of a transaction by a given block number and index",
+            "description": "Get the details of the transaction given by the identified block and index in that block. If no transaction is found, null is returned.",
+            "params": [
+                {
+                    "name": "block_number",
+                    "summary": "The queried block number or a block tag",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
+                    }
+                },
+                {
+                    "name": "index",
+                    "summary": "The index in the block to search for the transaction",
+                    "required": true,
+                    "schema": {
+                        "type": "integer",
+                        "minimum": 0
+                    }
+                }
+            ],
+            "result": {
+                "name": "transactionResult",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/TXN"
+                        },
+                        {
+                            "title": "Missing transaction",
+                            "type": "null"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "starknet_getTransactionReceipt",
+            "summary": "Get the transaction receipt by the transaction hash",
+            "paramStructure": "by-name",
+            "params": [
+                {
+                    "name": "transaction_hash",
+                    "summary": "The hash of the requested transaction",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/TXN_HASH"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "schema": {
+                    "$ref": "#/components/schemas/TXN_RECEIPT"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_TXN_HASH"
+                }
+            ]
+        },
+        {
+            "name": "starknet_getCode",
+            "summary": "Get the code of a specific contract",
+            "params": [
+                {
+                    "name": "contract_address",
+                    "description": "The address for the contract we'd like to find",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/ADDRESS"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The code and ABI for the requested contract",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "bytecode": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/FELT"
+                            }
+                        },
+                        "abi": {
+                            "type": "string",
+                            "description": "The ABI of the contract in JSON format. Uses the same structure as EVM ABI."
+                        }
+                    }
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                }
+            ]
+        },
+        {
+            "name": "starknet_getBlockTransactionCountByHash",
+            "summary": "Get the number of transactions in a block given a block hash",
+            "description": "Returns the number of transactions in the designated block.",
+            "params": [
+                {
+                    "name": "block_hash",
+                    "summary": "The hash of the requested block",
+                    "description": "The hash of the block to query or a tag referencing a block",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The number of transactions in the designated block",
+                "summary": "The number of transactions in the designated block",
+                "schema": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                }
+            ]
+        },
+        {
+            "name": "starknet_getBlockTransactionCountByNumber",
+            "summary": "Get the number of transactions in a block given a block number (height)",
+            "description": "Returns the number of transactions in the designated block.",
+            "params": [
+                {
+                    "name": "block_number",
+                    "summary": "The number (height) of the requested block",
+                    "description": "The number of the block to query or a tag referencing a block",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The number of transactions in the designated block",
+                "summary": "The number of transactions in the designated block",
+                "schema": {
+                    "type": "integer",
+                    "minimum": 0
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
+                }
+            ]
+        },
+        {
+            "name": "starknet_call",
+            "summary": "call a starknet function without creating a StarkNet transaction",
+            "description": "Calls a function in a contract and returns the return value.  Using this call will not create a transaction; hence, will not change the state",
+            "paramStructure": "by-name",
+            "params": [
+                {
+                    "name": "request",
+                    "summary": "The details of the function call",
+                    "schema": {
+                        "$ref": "#/components/schemas/FUNCTION_CALL"
+                    },
+                    "required": true
+                },
+                {
+                    "name": "block_hash",
+                    "description": "The hash (id) of the requested block or a block tag, for the block referencing the state or call the transaction on.",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "summary": "The function's return value",
+                "description": "The function's return value, as defined in the Cairo output",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/FELT"
+                    }
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_MESSAGE_SELECTOR"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_CALL_DATA"
+                },
+                {
+                    "$ref": "#/components/errors/CONTRACT_ERROR"
+                }
+            ]
+        },
+        {
+            "name": "starknet_blockNumber",
+            "summary": "Get the most recent accepted block number",
+            "params": [],
+            "result": {
+                "$ref": "#/components/schemas/BLOCK_NUMBER"
+            }
+        },
+        {
+            "name": "starknet_chainId",
+            "summary": "Return the currently configured StarkNet chain id",
+            "params": [],
+            "result": {
+                "$ref": "#/components/schemas/CHAIN_ID"
+            }
+        },
+        {
+            "name": "starknet_pendingTransactions",
+            "summary": "Returns the transactions in the transaction pool, recognized by this sequencer",
+            "params": [],
+            "result": {
+                "name": "result",
+                "schema": {
+                    "type": "array",
+                    "title": "Pending Transactions",
+                    "items": {
+                        "$ref": "#/components/schemas/TXN"
+                    }
+                }
+            }
+        },
+        {
+            "name": "starknet_protocolVersion",
+            "summary": "Returns the current starknet protocol version identifier, as supported by this sequencer",
+            "params": [],
+            "result": {
+                "name": "protocolVersion",
+                "summary": "The protocol version",
+                "description": "The protocol version currently supported by this sequencer",
+                "schema": {
+                    "$ref": "#/components/schemas/PROTOCOL_VERSION"
+                }
+            }
+        },
+        {
+            "name": "starknet_syncing",
+            "summary": "Returns an object about the sync status, or false if the node is not synching",
+            "params": [],
+            "result": {
+                "name": "syncing",
+                "summary": "The state of the synchronization, or false if the node is not synchronizing",
+                "description": "The status of the node, if it is currently synchronizing state. FALSE otherwise",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "type": "boolean",
+                            "description": "only legal value is FALSE here"
+                        },
+                        {
+                            "$ref": "#/components/schemas/SYNC_STATUS"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "components": {
+        "contentDescriptors": {},
+        "schemas": {
+            "BLOCK_HASH_OR_TAG": {
+                "title": "Block hash or tag",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    },
+                    {
+                        "$ref": "#/components/schemas/BLOCK_TAG"
+                    }
+                ]
+            },
+            "BLOCK_NUM_OR_TAG": {
+                "title": "Block number or tag",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/BLOCK_NUMBER"
+                    },
+                    {
+                        "$ref": "#/components/schemas/BLOCK_TAG"
+                    }
+                ]
+            },
+            "BLOCK_TAG": {
+                "type": "string",
+                "description": "A tag specifying a dynamic reference to a block",
+                "pattern": "latest",
+                "enum": [
+                    "latest"
+                ]
+            },
+            "SYNC_STATUS": {
+                "type": "object",
+                "description": "An object describing the node synchronization status",
+                "properties": {
+                    "starting_block": {
+                        "description": "The hash of the block from which the sync started",
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    },
+                    "current_block": {
+                        "description": "The hash of the current block being synchronized",
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    },
+                    "highest_block": {
+                        "description": "The hash of the estimated highest block to be synchronized",
+                        "$ref": "#/components/schemas/BLOCK_STATUS"
+                    }
+                }
+            },
+            "PROTOCOL_VERSION": {
+                "title": "protocolVersion",
+                "description": "StarkNet protocol version, given in hex representation.",
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]+$"
+            },
+            "CHAIN_ID": {
+                "title": "chainId",
+                "description": "StarkNet chain id, given in hex representation.",
+                "type": "string",
+                "pattern": "^0x[a-fA-F0-9]+$"
+            },
+            "STATE_UPDATE": {
+                "type": "object",
+                "properties": {
+                    "block_hash": {
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    },
+                    "new_root": {
+                        "description": "The new global state root",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "old_root": {
+                        "description": "The previous global state root",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "accepted_time": {
+                        "description": "When the block was accepted on L1. Formatted as... ",
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "state_diff": {
+                        "description": "The change in state applied in this block, given as a mapping of addresses to the new values and/or new contracts",
+                        "type": "object",
+                        "properties": {
+                            "storage_diffs": {
+                                "type": "array",
+                                "items": {
+                                    "description": "A change in a single storage item",
+                                    "$ref": "#/components/schemas/STATE_DIFF_ITEM"
+                                }
+                            },
+                            "contracts": {
+                                "type": "array",
+                                "items": {
+                                    "description": "A new contract added as part of the new state",
+                                    "$ref": "#/components/schemas/CONTRACT_ITEM"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ADDRESS": {
+                "$ref": "#/components/schemas/FELT"
+            },
+            "ETH_ADDRESS": {
+                "type": "string",
+                "$comment": "An ethereum address",
+                "description": "an ethereum address represented as 40 hex digits",
+                "pattern": "^0x[a-fA-F0-9]{40}$"
+            },
+            "TXN_HASH": {
+                "$ref": "#/components/schemas/FELT",
+                "description": "The transaction hash, as assigned in StarkNet",
+                "title": "A transaction's hash"
+            },
+            "FELT": {
+                "type": "string",
+                "title": "Field element",
+                "$comment": "A field element, represented as a string of hex digits",
+                "description": "A field element of 251 bits. Represented as up to 64 hex digits",
+                "pattern": "^0x[a-fA-F0-9]{1,64}$"
+            },
+            "BLOCK_NUMBER": {
+                "description": "The block's number (its height)",
+                "type": "integer",
+                "minimum": 0
+            },
+            "BLOCK_HASH": {
+                "$ref": "#/components/schemas/FELT"
+            },
+            "BLOCK": {
+                "type": "object",
+                "properties": {
+                    "block_hash": {
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    },
+                    "parent_hash": {
+                        "description": "The hash of this block's parent",
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    },
+                    "block_number": {
+                        "description": "The block number (its height)",
+                        "$ref": "#/components/schemas/BLOCK_NUMBER"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/BLOCK_STATUS"
+                    },
+                    "sequencer": {
+                        "description": "The identity of the sequencer submitting this block",
+                        "$ref": "#/components/schemas/ETH_ADDRESS"
+                    },
+                    "new_root": {
+                        "description": "The new global state root",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "old_root": {
+                        "description": "The previous global state root",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "accepted_time": {
+                        "description": "When the block was accepted on L1. Formatted as... ",
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "transactions": {
+                        "description": "The hashes of the transactions included in this block",
+                        "type": "array",
+                        "items": {
+                            "description": "The hash of a single transaction",
+                            "$ref": "#/components/schemas/TXN_HASH"
+                        }
+                    }
+                }
+            },
+            "CONTRACT_ITEM": {
+                "type": "object",
+                "properties": {
+                    "address": {
+                        "description": "The address of the contract",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "contract_hash": {
+                        "description": "The hash of the contract code",
+                        "$ref": "#/components/schemas/FELT"
+                    }
+                }
+            },
+            "STATE_DIFF_ITEM": {
+                "type": "object",
+                "properties": {
+                    "address": {
+                        "description": "The contract address for which the state changed",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "key": {
+                        "description": "The key of the changed value",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "value": {
+                        "description": "The new value applied to the given address",
+                        "$ref": "#/components/schemas/FELT"
+                    }
+                }
+            },
+            "TXN": {
+                "title": "Transaction",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/FUNCTION_CALL",
+                        "description": "The function the transaction invokes"
+                    },
+                    {
+                        "properties": {
+                            "txn_hash": {
+                                "$ref": "#/components/schemas/TXN_HASH",
+                                "description": "The hash identifying the transaction"
+                            }
+                        }
+                    }
+                ]
+            },
+            "TXN_RECEIPT": {
+                "properties": {
+                    "txn_hash": {
+                        "$ref": "#/components/schemas/TXN_HASH",
+                        "description": "The hash identifying the transaction"
+                    },
+                    "status": {
+                        "$ref": "#/components/schemas/TXN_STATUS"
+                    },
+                    "statusData": {
+                        "type": "string",
+                        "description": "Extra information pertaining to the status"
+                    },
+                    "messages_sent": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MSG_TO_L1"
+                        }
+                    },
+                    "l1_origin_message": {
+                        "description": "In case this transaction was an L1 handler, this is the original message that invoked it",
+                        "$ref": "#/components/schemas/MSG_TO_L2"
+                    }
+                }
+            },
+            "MSG_TO_L1": {
+                "type": "object",
+                "properties": {
+                    "to_address": {
+                        "description": "The target L1 address the message is sent to",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "payload": {
+                        "description": "The payload of the message",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                }
+            },
+            "MSG_TO_L2": {
+                "type": "object",
+                "properties": {
+                    "from_address": {
+                        "description": "The originating L1 contract that sent the message",
+                        "$ref": "#/components/schemas/ETH_ADDRESS"
+                    },
+                    "payload": {
+                        "description": "The payload of the meesage. The call data to the L1 handler",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                }
+            },
+            "TXN_STATUS": {
+                "type": "string",
+                "enum": [
+                    "UNKNOWN",
+                    "RECEIVED",
+                    "PENDING",
+                    "ACCEPTED_ONCHAIN",
+                    "REJECTED"
+                ],
+                "description": "The status of the transaction. May be unknown in case node is not aware of it"
+            },
+            "BLOCK_STATUS": {
+                "type": "string",
+                "enum": [
+                    "PENDING",
+                    "PROVEN",
+                    "ACCEPTED_ONCHAIN",
+                    "REJECTED"
+                ],
+                "description": "The status of the block"
+            },
+            "FUNCTION_CALL": {
+                "type": "object",
+                "title": "Function call information",
+                "properties": {
+                    "contractAddress": {
+                        "$ref": "#/components/schemas/ADDRESS"
+                    },
+                    "entry_point_selector": {
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "calldata": {
+                        "type": "array",
+                        "description": "The parameters passed to the function",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                }
+            }
+        },
+        "errors": {
+            "FAILED_TO_RECEIVE_TXN": {
+                "code": 1,
+                "message": "Failed to write transaction"
+            },
+            "CONTRACT_NOT_FOUND": {
+                "code": 20,
+                "message": "Contract not found"
+            },
+            "INVALID_MESSAGE_SELECTOR": {
+                "code": 21,
+                "message": "Invalid message selector"
+            },
+            "INVALID_CALL_DATA": {
+                "code": 22,
+                "message": "Invalid call data"
+            },
+            "INVALID_STORAGE_KEY": {
+                "code": 23,
+                "message": "Invalid storage key"
+            },
+            "INVALID_TXN_HASH": {
+                "code": 25,
+                "message": "Invalid transaction hash"
+            },
+            "INVALID_BLOCK_HASH": {
+                "code": 24,
+                "message": "Invalid block hash"
+            },
+            "INVALID_BLOCK_NUMBER": {
+                "code": 25,
+                "message": "Invalid block number"
+            },
+            "CONTRACT_ERROR": {
+                "code": 40,
+                "message": "Contract error"
+            }
+        }
+    }
+}
