@@ -2,7 +2,7 @@
     "openrpc": "1.0.0-rc1",
     "info": {
         "version": "0.2.1",
-        "title": "StarkNet Sequencer API",
+        "title": "StarkNet Node API",
         "license": {}
     },
     "servers": [],
