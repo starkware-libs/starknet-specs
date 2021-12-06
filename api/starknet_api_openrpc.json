@@ -1,8 +1,8 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.2.1",
-        "title": "StarkNet Constellations Sequencer API",
+        "version": "0.3.0",
+        "title": "StarkNet Node API",
         "license": {}
     },
     "servers": [],
@@ -22,7 +22,7 @@
             ],
             "result": {
                 "name": "result",
-                "description": "The block information",
+                "description": "The resulting block information",
                 "schema": {
                     "$ref": "#/components/schemas/BLOCK"
                 }
@@ -44,7 +44,11 @@
                 }
             ],
             "result": {
-                "$ref": "#/components/schemas/BLOCK"
+                "name": "result",
+                "description": "The resulting block information",
+                "schema": {
+                    "$ref": "#/components/schemas/BLOCK"
+                }
             },
             "errors": [
                 {
@@ -401,7 +405,11 @@
             "summary": "Get the most recent accepted block number",
             "params": [],
             "result": {
-                "$ref": "#/components/schemas/BLOCK_NUMBER"
+                "name": "result",
+                "description": "The latest block number",
+                "schema": {
+                    "$ref": "#/components/schemas/BLOCK_NUMBER"
+                }
             }
         },
         {
@@ -409,7 +417,11 @@
             "summary": "Return the currently configured StarkNet chain id",
             "params": [],
             "result": {
-                "$ref": "#/components/schemas/CHAIN_ID"
+                "name": "result",
+                "description": "The chain id this node is connected to",
+                "schema": {
+                    "$ref": "#/components/schemas/CHAIN_ID"
+                }
             }
         },
         {
@@ -460,11 +472,140 @@
                     ]
                 }
             }
+        },
+        {
+            "name": "starknet_getEvents",
+            "summary": "Returns all events matching the given filter",
+            "description": "Returns all event objects matching the conditions in the provided filter",
+            "params": [
+                {
+                    "name": "filter",
+                    "summary": "The conditions used to filter the returned events",
+                    "required": true,
+                    "schema": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/EVENT_FILTER"
+                            },
+                            {
+                                "$ref": "#/components/schemas/RESULT_PAGE_REQUEST"
+                            }
+                        ]
+                    }
+                }
+            ],
+            "result": {
+                "name": "events",
+                "description": "All the event objects matching the filter",
+                "schema": {
+                    "allOf": [
+                        {
+                            "type": "array",
+                            "title": "Matching Events",
+                            "items": {
+                                "$ref": "#/components/schemas/EMITTED_EVENT"
+                            }
+                        },
+                        {
+                            "title": "page_number",
+                            "description": "The returned page number. 0 if all events are returned",
+                            "type": "integer"
+                        }
+                    ]
+                }
+            }
         }
     ],
     "components": {
         "contentDescriptors": {},
         "schemas": {
+            "RESULT_PAGE_REQUEST": {
+                "title": "A request for a specific page of results",
+                "description": "A specification of a result page to retrieve",
+                "type": "object",
+                "properties": {
+                    "page_size": {
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "page_number": {
+                        "type": "integer",
+                        "minimum": 0
+                    }
+                }
+            },
+            "EMITTED_EVENT": {
+                "title": "An event emitted as a result of transaction execution",
+                "description": "Event information decorated with metadata on where it was emitted",
+                "allOf": [
+                    {
+                        "title": "The event information",
+                        "$ref": "#/components/schemas/EVENT"
+                    },
+                    {
+                        "title": "The event emission information",
+                        "type": "object",
+                        "properties": {
+                            "block_hash": {
+                                "title": "The block in which the event was emitted",
+                                "$ref": "#/components/schemas/BLOCK_HASH"
+                            },
+                            "transaction_hash": {
+                                "title": "The transaction that emitted the event",
+                                "$ref": "#/components/schemas/TXN_HASH"
+                            }
+                        }
+                    }
+                ]
+            },
+            "EVENT": {
+                "title": "A StarkNet event",
+                "type": "object",
+                "properties": {
+                    "from_address": {
+                        "$ref": "#/components/schemas/ADDRESS"
+                    },
+                    "keys": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                }
+            },
+            "EVENT_FILTER": {
+                "title": "An event filter/query",
+                "type": "object",
+                "properties": {
+                    "fromBlock": {
+                        "title": "from block",
+                        "$ref": "#/components/schemas/BLOCK_NUMBER"
+                    },
+                    "toBlock": {
+                        "title": "to block",
+                        "$ref": "#/components/schemas/BLOCK_NUMBER"
+                    },
+                    "address": {
+                        "title": "from contract",
+                        "$ref": "#/components/schemas/ADDRESS"
+                    },
+                    "keys": {
+                        "title": "filter key values",
+                        "description": "The values used to filter the events",
+                        "type": "array",
+                        "items": {
+                            "title": "event key value",
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                }
+            },
             "BLOCK_HASH_OR_TAG": {
                 "title": "Block hash or tag",
                 "oneOf": [
@@ -749,7 +890,8 @@
                     "UNKNOWN",
                     "RECEIVED",
                     "PENDING",
-                    "ACCEPTED_ONCHAIN",
+                    "ACCEPTED_ON_L2",
+                    "ACCEPTED_ON_L1",
                     "REJECTED"
                 ],
                 "description": "The status of the transaction. May be unknown in case node is not aware of it"
@@ -759,7 +901,8 @@
                 "enum": [
                     "PENDING",
                     "PROVEN",
-                    "ACCEPTED_ONCHAIN",
+                    "ACCEPTED_ON_L2",
+                    "ACCEPTED_ON_L1",
                     "REJECTED"
                 ],
                 "description": "The status of the block"
