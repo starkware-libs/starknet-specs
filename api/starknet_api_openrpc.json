@@ -560,11 +560,25 @@
             },
             "EVENT": {
                 "title": "A StarkNet event",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "from_address": {
+                                "$ref": "#/components/schemas/ADDRESS"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/EVENT_CONTENT"
+                    }
+                ]
+            },
+            "EVENT_CONTENT": {
+                "title": "Event Content",
+                "description": "The content of an event",
                 "type": "object",
                 "properties": {
-                    "from_address": {
-                        "$ref": "#/components/schemas/ADDRESS"
-                    },
                     "keys": {
                         "type": "array",
                         "items": {
