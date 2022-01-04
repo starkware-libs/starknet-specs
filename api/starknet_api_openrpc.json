@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.3.0",
+        "version": "0.4.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -18,6 +18,14 @@
                     "schema": {
                         "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
                     }
+                },
+                {
+                    "name": "requested_scope",
+                    "description": "The scope of the block information requested. Defaults to txn hashes only",
+                    "required": false,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_RESPONSE_SCOPE_OPTIONS"
+                    }
                 }
             ],
             "result": {
@@ -27,7 +35,11 @@
                     "$ref": "#/components/schemas/BLOCK"
                 }
             },
-            "errors": []
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                }
+            ]
         },
         {
             "name": "starknet_getBlockByNumber",
@@ -40,6 +52,14 @@
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
+                    }
+                },
+                {
+                    "name": "requested_scope",
+                    "description": "The scope of the block information requested. Defaults to txn hashes only",
+                    "required": false,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_RESPONSE_SCOPE_OPTIONS"
                     }
                 }
             ],
@@ -75,7 +95,12 @@
                 "schema": {
                     "$ref": "#/components/schemas/STATE_UPDATE"
                 }
-            }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                }
+            ]
         },
         {
             "name": "starknet_getStorageAt",
@@ -519,6 +544,15 @@
     "components": {
         "contentDescriptors": {},
         "schemas": {
+            "BLOCK_RESPONSE_SCOPE_OPTIONS": {
+                "title": "Options for block information requests",
+                "type": "string",
+                "enum": [
+                    "TXN_HASH",
+                    "FULL_TXNS",
+                    "FULL_TXN_AND_RECEIPTS"
+                ]
+            },
             "RESULT_PAGE_REQUEST": {
                 "title": "A request for a specific page of results",
                 "description": "A specification of a result page to retrieve",
@@ -785,12 +819,30 @@
                         "minimum": 0
                     },
                     "transactions": {
-                        "description": "The hashes of the transactions included in this block",
-                        "type": "array",
-                        "items": {
-                            "description": "The hash of a single transaction",
-                            "$ref": "#/components/schemas/TXN_HASH"
-                        }
+                        "oneOf": [
+                            {
+                                "description": "The hashes of the transactions included in this block",
+                                "type": "array",
+                                "items": {
+                                    "description": "The hash of a single transaction",
+                                    "$ref": "#/components/schemas/TXN_HASH"
+                                }
+                            },
+                            {
+                                "description": "The transactions in this block",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/TXN"
+                                }
+                            },
+                            {
+                                "description": "The transactions in this block + their receipts",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/TXN_OBJECT_AND_RECEIPT"
+                                }
+                            }
+                        ]
                     }
                 }
             },
@@ -823,6 +875,16 @@
                         "$ref": "#/components/schemas/FELT"
                     }
                 }
+            },
+            "TXN_OBJECT_AND_RECEIPT": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TXN"
+                    },
+                    {
+                        "$ref": "#/components/schemas/TXN_RECEIPT"
+                    }
+                ]
             },
             "TXN": {
                 "title": "Transaction",
@@ -863,6 +925,13 @@
                     "l1_origin_message": {
                         "description": "In case this transaction was an L1 handler, this is the original message that invoked it",
                         "$ref": "#/components/schemas/MSG_TO_L2"
+                    },
+                    "events": {
+                        "description": "The events emitted as part of this transaction",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EVENT"
+                        }
                     }
                 }
             },
