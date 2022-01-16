@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.4.0",
+        "version": "0.4.1",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -212,7 +212,12 @@
                         }
                     ]
                 }
-            }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                }
+            ]
         },
         {
             "name": "starknet_getTransactionByBlockNumberAndIndex",
@@ -250,7 +255,12 @@
                         }
                     ]
                 }
-            }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
+                }
+            ]
         },
         {
             "name": "starknet_getTransactionReceipt",
@@ -422,6 +432,9 @@
                 },
                 {
                     "$ref": "#/components/errors/CONTRACT_ERROR"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
                 }
             ]
         },
@@ -994,7 +1007,7 @@
                 "type": "object",
                 "title": "Function call information",
                 "properties": {
-                    "contractAddress": {
+                    "contract_address": {
                         "$ref": "#/components/schemas/ADDRESS"
                     },
                     "entry_point_selector": {
@@ -1031,16 +1044,16 @@
                 "code": 23,
                 "message": "Invalid storage key"
             },
-            "INVALID_TXN_HASH": {
-                "code": 25,
-                "message": "Invalid transaction hash"
-            },
             "INVALID_BLOCK_HASH": {
                 "code": 24,
                 "message": "Invalid block hash"
             },
-            "INVALID_BLOCK_NUMBER": {
+            "INVALID_TXN_HASH": {
                 "code": 25,
+                "message": "Invalid transaction hash"
+            },
+            "INVALID_BLOCK_NUMBER": {
+                "code": 26,
                 "message": "Invalid block number"
             },
             "CONTRACT_ERROR": {
