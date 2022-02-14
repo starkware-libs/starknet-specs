@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.4.1",
+        "version": "0.4.3",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -147,6 +147,9 @@
                 },
                 {
                     "$ref": "#/components/errors/INVALID_STORAGE_KEY"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
                 }
             ]
         },
@@ -202,20 +205,15 @@
             "result": {
                 "name": "transactionResult",
                 "schema": {
-                    "oneOf": [
-                        {
-                            "$ref": "#/components/schemas/TXN"
-                        },
-                        {
-                            "title": "Missing transaction",
-                            "type": "null"
-                        }
-                    ]
+                    "$ref": "#/components/schemas/TXN"
                 }
             },
             "errors": [
                 {
                     "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_TXN_INDEX"
                 }
             ]
         },
@@ -245,20 +243,15 @@
             "result": {
                 "name": "transactionResult",
                 "schema": {
-                    "oneOf": [
-                        {
-                            "$ref": "#/components/schemas/TXN"
-                        },
-                        {
-                            "title": "Missing transaction",
-                            "type": "null"
-                        }
-                    ]
+                    "$ref": "#/components/schemas/TXN"
                 }
             },
             "errors": [
                 {
                     "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_TXN_INDEX"
                 }
             ]
         },
@@ -711,7 +704,7 @@
                     },
                     "highest_block": {
                         "description": "The hash of the estimated highest block to be synchronized",
-                        "$ref": "#/components/schemas/BLOCK_STATUS"
+                        "$ref": "#/components/schemas/BLOCK_HASH"
                     }
                 }
             },
@@ -786,8 +779,8 @@
                 "type": "string",
                 "title": "Field element",
                 "$comment": "A field element, represented as a string of hex digits",
-                "description": "A field element of 251 bits. Represented as up to 64 hex digits",
-                "pattern": "^0x[a-fA-F0-9]{1,64}$"
+                "description": "A field element. Represented as up to 63 hex digits and leading 4 bits zeroed.",
+                "pattern": "^0x0[a-fA-F0-9]{1,63}$"
             },
             "BLOCK_NUMBER": {
                 "description": "The block's number (its height)",
@@ -1055,6 +1048,10 @@
             "INVALID_BLOCK_NUMBER": {
                 "code": 26,
                 "message": "Invalid block number"
+            },
+            "INVALID_TXN_INDEX": {
+                "code": 27,
+                "message": "Invalid transaction index in a block"
             },
             "CONTRACT_ERROR": {
                 "code": 40,
