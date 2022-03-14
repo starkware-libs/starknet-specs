@@ -587,8 +587,12 @@
                         "type": "object",
                         "properties": {
                             "block_hash": {
-                                "title": "The block in which the event was emitted",
+                                "title": "The hash of the block in which the event was emitted",
                                 "$ref": "#/components/schemas/BLOCK_HASH"
+                            },
+                            "block_number": {
+                                "title": "The number of the block in which the event was emitted",
+                                "$ref": "#/components/schemas/BLOCK_NUMBER"
                             },
                             "transaction_hash": {
                                 "title": "The transaction that emitted the event",
