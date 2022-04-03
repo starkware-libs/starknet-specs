@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.1.0",
+        "version": "0.3.0",
         "title": "StarkNet Trace API",
         "license": {}
     },
@@ -31,6 +31,48 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/INVALID_TXN_HASH"
+                },
+                {
+                    "$ref": "#/components/errors/NO_TRACE_AVAILABLE"
+                }
+            ]
+        },
+        {
+            "name": "starknet_traceBlockTransactions",
+            "summary": "Retrieve traces for all transactions in the given block",
+            "description": "Returns the execution traces of all transactions included in the given block",
+            "params": [
+                {
+                    "name": "block_hash",
+                    "summary": "The hash of the requested block",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    }
+                }
+            ],
+            "result": {
+                "name": "traces",
+                "description": "The traces of all transactions in the block",
+                "schema": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "description": "A single pair of transaction hash and corresponding trace",
+                        "properties": {
+                            "transaction_hash": {
+                                "$ref": "#/components/schemas/FELT"
+                            },
+                            "trace_root": {
+                                "$ref": "#/components/schemas/TRACE_ROOT"
+                            }
+                        }
+                    }
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
                 }
             ]
         }
@@ -147,9 +189,33 @@
             },
             "MSG_TO_L1": {
                 "$ref": "starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
+            },
+            "BLOCK_HASH": {
+                "$ref": "starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
             }
         },
         "errors": {
+            "NO_TRACE_AVAILABLE": {
+                "code": 10,
+                "message": "No trace available for transaction",
+                "data": {
+                    "type": "object",
+                    "description": "Extra information on why trace is not available. Either it wasn't executed yet (RECEIVED), or the transaction failed (REJECTED)",
+                    "properties": {
+                        "status": {
+                            "type": "string",
+                            "enum": [
+                                "RECEIVED",
+                                "REJECTED"
+                            ]
+                        }
+                    }
+                }
+            },
+            "INVALID_BLOCK_HASH": {
+                "code": 24,
+                "message": "Invalid block hash"
+            },
             "INVALID_TXN_HASH": {
                 "code": 25,
                 "message": "Invalid transaction hash"
