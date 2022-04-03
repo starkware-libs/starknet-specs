@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.5.3",
+        "version": "0.6.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -529,22 +529,37 @@
                 "name": "events",
                 "description": "All the event objects matching the filter",
                 "schema": {
-                    "allOf": [
-                        {
+                    "type": "object",
+                    "properties": {
+                        "events": {
                             "type": "array",
                             "title": "Matching Events",
                             "items": {
                                 "$ref": "#/components/schemas/EMITTED_EVENT"
                             }
                         },
-                        {
-                            "title": "page_number",
+                        "page_number": {
+                            "title": "Page Number",
                             "description": "The returned page number. 0 if all events are returned",
                             "type": "integer"
+                        },
+                        "is_last_page": {
+                            "title": "Is Last Page",
+                            "description": "A flag indicating whether this is the end of the stream of events",
+                            "type": "boolean"
                         }
+                    },
+                    "required": [
+                        "events",
+                        "page_number"
                     ]
                 }
-            }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/PAGE_SIZE_TOO_BIG"
+                }
+            ]
         }
     ],
     "components": {
@@ -1056,6 +1071,10 @@
             "INVALID_TXN_INDEX": {
                 "code": 27,
                 "message": "Invalid transaction index in a block"
+            },
+            "PAGE_SIZE_TOO_BIG": {
+                "code": 31,
+                "message": "Requested page size is too big."
             },
             "CONTRACT_ERROR": {
                 "code": 40,
