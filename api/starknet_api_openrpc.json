@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.6.0",
+        "version": "0.6.2",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -540,7 +540,7 @@
                         },
                         "page_number": {
                             "title": "Page Number",
-                            "description": "The returned page number. 0 if all events are returned",
+                            "description": "The returned page number.",
                             "type": "integer"
                         },
                         "is_last_page": {
@@ -551,7 +551,8 @@
                     },
                     "required": [
                         "events",
-                        "page_number"
+                        "page_number",
+                        "is_last_page"
                     ]
                 }
             },
@@ -581,13 +582,17 @@
                 "properties": {
                     "page_size": {
                         "type": "integer",
-                        "minimum": 0
+                        "minimum": 1
                     },
                     "page_number": {
                         "type": "integer",
-                        "minimum": 0
+                        "minimum": 1
                     }
-                }
+                },
+                "required": [
+                    "page_size",
+                    "page_number"
+                ]
             },
             "EMITTED_EVENT": {
                 "title": "An event emitted as a result of transaction execution",
