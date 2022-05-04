@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.7.0",
+        "version": "0.8.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -945,6 +945,10 @@
                             "txn_hash": {
                                 "$ref": "#/components/schemas/TXN_HASH",
                                 "description": "The hash identifying the transaction"
+                            },
+                            "max_fee": {
+                                "$ref": "#/components/schemas/FELT",
+                                "description": "The maximal fee that can be charged for including the transaction"
                             }
                         }
                     }
@@ -955,6 +959,10 @@
                     "txn_hash": {
                         "$ref": "#/components/schemas/TXN_HASH",
                         "description": "The hash identifying the transaction"
+                    },
+                    "actual_fee": {
+                        "$ref": "#/components/schemas/FELT",
+                        "description": "The fee that was charged by the sequencer"
                     },
                     "status": {
                         "$ref": "#/components/schemas/TXN_STATUS"
