@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.1.0",
+        "version": "0.2.0",
         "title": "StarkNet Node Write API",
         "license": {}
     },
@@ -48,7 +48,10 @@
                 "schema": {
                     "type": "object",
                     "properties": {
-                        "txn_hash": "#/components/schemas/TXN_HASH"
+                        "transaction_hash": {
+                            "title": "The hash of the invoke transaction",
+                            "$ref": "#/components/schemas/TXN_HASH"
+                        }
                     }
                 }
             },
@@ -89,7 +92,14 @@
                 "schema": {
                     "type": "object",
                     "properties": {
-                        "txn_hash": "#/components/schemas/TXN_HASH"
+                        "transaction_hash": {
+                            "title": "The hash of the deploy transaction",
+                            "$ref": "#/components/schemas/TXN_HASH"
+                        },
+                        "contract_address": {
+                            "title": "The address of the new contract",
+                            "$ref": "#/components/schemas/FELT"
+                        }
                     }
                 }
             },
