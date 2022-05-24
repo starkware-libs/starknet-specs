@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.2.0",
+        "version": "0.2.1",
         "title": "StarkNet Node Write API",
         "license": {}
     },
@@ -66,6 +66,13 @@
                     "description": "The salt used for calculting the contract address",
                     "schema": {
                         "$ref": "#/components/schemas/CONTRACT_CLASS"
+                    }
+                },
+                {
+                    "name": "version",
+                    "description": "Version of the transaction scheme",
+                    "schema": {
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
                     }
                 }
             ],
