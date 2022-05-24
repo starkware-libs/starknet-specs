@@ -58,6 +58,41 @@
             "errors": []
         },
         {
+            "name": "starknet_addDeclareTransaction",
+            "summary": "Submit a new class declaration transaction",
+            "params": [
+                {
+                    "name": "contract_class",
+                    "description": "The salt used for calculting the contract address",
+                    "schema": {
+                        "$ref": "#/components/schemas/CONTRACT_CLASS"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The result of the transaction submission",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "transaction_hash": {
+                            "title": "The hash of the deploy transaction",
+                            "$ref": "#/components/schemas/TXN_HASH"
+                        },
+                        "class_hash": {
+                            "title": "The hash of the declared class",
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_CONTRACT_CLASS"
+                }
+            ]
+        },
+        {
             "name": "starknet_addDeployTransaction",
             "summary": "Submit a new deploy contract transaction",
             "params": [
@@ -82,7 +117,7 @@
                     "name": "contract_definition",
                     "description": "The definition of the deployed contract",
                     "schema": {
-                        "$ref": "#/components/schemas/CONTRACT_DEFINITION"
+                        "$ref": "#/components/schemas/CONTRACT_CLASS"
                     }
                 }
             ],
@@ -105,7 +140,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_CONTRACT_DEFINITION"
+                    "$ref": "#/components/errors/INVALID_CONTRACT_CLASS"
                 }
             ]
         }
@@ -113,8 +148,8 @@
     "components": {
         "contentDescriptors": {},
         "schemas": {
-            "CONTRACT_DEFINITION": {
-                "title": "The definition of a StarkNet contract",
+            "CONTRACT_CLASS": {
+                "title": "The definition of a StarkNet contract class",
                 "type": "object",
                 "properties": {
                     "program": {
@@ -190,9 +225,9 @@
             }
         },
         "errors": {
-            "INVALID_CONTRACT_DEFINITION": {
+            "INVALID_CONTRACT_CLASS": {
                 "code": 50,
-                "message": "Invalid contract definition"
+                "message": "Invalid contract class"
             }
         }
     }
