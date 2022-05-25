@@ -65,7 +65,7 @@
                     "name": "contract_class",
                     "description": "The class to be declared",
                     "schema": {
-                        "$ref": "#/components/schemas/CONTRACT_CLASS"
+                        "$ref": "starknet_api_openrpc.json#/components/schemas/CONTRACT_CLASS"
                     }
                 },
                 {
@@ -124,7 +124,7 @@
                     "name": "contract_definition",
                     "description": "The definition of the deployed contract",
                     "schema": {
-                        "$ref": "#/components/schemas/CONTRACT_CLASS"
+                        "$ref": "starknet_api_openrpc.json#/components/schemas/CONTRACT_CLASS"
                     }
                 }
             ],
