@@ -1106,6 +1106,60 @@
                         }
                     }
                 }
+            },
+            "CONTRACT_CLASS": {
+                "title": "The definition of a StarkNet contract class",
+                "type": "object",
+                "properties": {
+                    "program": {
+                        "type": "string",
+                        "description": "A base64 representation of the compressed program code",
+                        "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$"
+                    },
+                    "entry_points_by_type": {
+                        "type": "object",
+                        "properties": {
+                            "CONSTRUCTOR": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT_LIST"
+                                }
+                            },
+                            "EXTERNAL": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT_LIST"
+                                }
+                            },
+                            "L1_HANDLER": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT_LIST"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "CONTRACT_ENTRY_POINT_LIST": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT"
+                }
+            },
+            "CONTRACT_ENTRY_POINT": {
+                "type": "object",
+                "properties": {
+                    "offset": {
+                        "description": "The offset of the entry point in the program",
+                        "schema": {
+                            "$ref": "#/components/schemas/NUM_AS_HEX"
+                        }
+                    },
+                    "selector": {
+                        "description": "A unique identifier of the entry point (function) in the program",
+                        "schema": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                }
             }
         },
         "errors": {

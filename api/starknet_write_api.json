@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.2.0",
+        "version": "0.3.0",
         "title": "StarkNet Node Write API",
         "license": {}
     },
@@ -58,6 +58,48 @@
             "errors": []
         },
         {
+            "name": "starknet_addDeclareTransaction",
+            "summary": "Submit a new class declaration transaction",
+            "params": [
+                {
+                    "name": "contract_class",
+                    "description": "The class to be declared",
+                    "schema": {
+                        "$ref": "starknet_api_openrpc.json#/components/schemas/CONTRACT_CLASS"
+                    }
+                },
+                {
+                    "name": "version",
+                    "description": "Version of the transaction scheme",
+                    "schema": {
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The result of the transaction submission",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "transaction_hash": {
+                            "title": "The hash of the declare transaction",
+                            "$ref": "#/components/schemas/TXN_HASH"
+                        },
+                        "class_hash": {
+                            "title": "The hash of the declared class",
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_CONTRACT_CLASS"
+                }
+            ]
+        },
+        {
             "name": "starknet_addDeployTransaction",
             "summary": "Submit a new deploy contract transaction",
             "params": [
@@ -82,7 +124,7 @@
                     "name": "contract_definition",
                     "description": "The definition of the deployed contract",
                     "schema": {
-                        "$ref": "#/components/schemas/CONTRACT_DEFINITION"
+                        "$ref": "starknet_api_openrpc.json#/components/schemas/CONTRACT_CLASS"
                     }
                 }
             ],
@@ -105,7 +147,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_CONTRACT_DEFINITION"
+                    "$ref": "#/components/errors/INVALID_CONTRACT_CLASS"
                 }
             ]
         }
@@ -113,60 +155,6 @@
     "components": {
         "contentDescriptors": {},
         "schemas": {
-            "CONTRACT_DEFINITION": {
-                "title": "The definition of a StarkNet contract",
-                "type": "object",
-                "properties": {
-                    "program": {
-                        "type": "string",
-                        "description": "A base64 representation of the compressed program code",
-                        "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$"
-                    },
-                    "entry_points_by_type": {
-                        "type": "object",
-                        "properties": {
-                            "CONSTRUCTOR": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT_LIST"
-                                }
-                            },
-                            "EXTERNAL": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT_LIST"
-                                }
-                            },
-                            "L1_HANDLER": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT_LIST"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
-            "CONTRACT_ENTRY_POINT_LIST": {
-                "type": "array",
-                "items": {
-                    "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT"
-                }
-            },
-            "CONTRACT_ENTRY_POINT": {
-                "type": "object",
-                "properties": {
-                    "offset": {
-                        "description": "The offset of the entry point in the program",
-                        "schema": {
-                            "$ref": "#/components/schemas/NUM_AS_HEX"
-                        }
-                    },
-                    "selector": {
-                        "description": "A unique identifier of the entry point (function) in the program",
-                        "schema": {
-                            "$ref": "#/components/schemas/FELT"
-                        }
-                    }
-                }
-            },
             "NUM_AS_HEX": {
                 "title": "An integer number in hex format (0x...)",
                 "type": "string",
@@ -190,9 +178,9 @@
             }
         },
         "errors": {
-            "INVALID_CONTRACT_DEFINITION": {
+            "INVALID_CONTRACT_CLASS": {
                 "code": 50,
-                "message": "Invalid contract definition"
+                "message": "Invalid contract class"
             }
         }
     }
