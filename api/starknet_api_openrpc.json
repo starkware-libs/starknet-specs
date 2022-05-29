@@ -313,7 +313,7 @@
             "params": [
                 {
                     "name": "contract_address",
-                    "description": "The address of the contract to retrieve the class hash from",
+                    "description": "The address of the contract whose class hash will be returned",
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/ADDRESS"
@@ -322,7 +322,7 @@
             ],
             "result": {
                 "name": "result",
-                "description": "The hash of the contract class at the contract",
+                "description": "The class hash of the given contract",
                 "schema": {
                     "$ref": "#/components/schemas/FELT"
                 }
@@ -339,7 +339,7 @@
             "params": [
                 {
                     "name": "contract_address",
-                    "description": "The address for the contract we'd like to find",
+                    "description": "The address of the contract whose class definition will be returned",
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/ADDRESS"
