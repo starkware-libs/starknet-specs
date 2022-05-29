@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.9.0",
+        "version": "0.10.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -282,12 +282,38 @@
             ]
         },
         {
-            "name": "starknet_getCode",
-            "summary": "Get the code of a specific contract",
+            "name": "starknet_getClass",
+            "summary": "Get the contract class definition associated with the given hash",
+            "params": [
+                {
+                    "name": "class_hash",
+                    "description": "The hash of the requested contract class",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/FELT"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The contract class, if found",
+                "schema": {
+                    "$ref": "#/components/schemas/CONTRACT_CLASS"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_CONTRACT_CLASS_HASH"
+                }
+            ]
+        },
+        {
+            "name": "starknet_getClassHashAt",
+            "summary": "Get the contract class hash for the contract deployed at the given address",
             "params": [
                 {
                     "name": "contract_address",
-                    "description": "The address for the contract we'd like to find",
+                    "description": "The address of the contract whose class hash will be returned",
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/ADDRESS"
@@ -296,21 +322,35 @@
             ],
             "result": {
                 "name": "result",
-                "description": "The code and ABI for the requested contract",
+                "description": "The class hash of the given contract",
                 "schema": {
-                    "type": "object",
-                    "properties": {
-                        "bytecode": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/components/schemas/FELT"
-                            }
-                        },
-                        "abi": {
-                            "type": "string",
-                            "description": "The ABI of the contract in JSON format. Uses the same structure as EVM ABI."
-                        }
+                    "$ref": "#/components/schemas/FELT"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                }
+            ]
+        },
+        {
+            "name": "starknet_getClassAt",
+            "summary": "Get the contract class definition at the given address",
+            "params": [
+                {
+                    "name": "contract_address",
+                    "description": "The address of the contract whose class definition will be returned",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/ADDRESS"
                     }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The contract class",
+                "schema": {
+                    "$ref": "#/components/schemas/CONTRACT_CLASS"
                 }
             },
             "errors": [
@@ -1198,6 +1238,10 @@
             "INVALID_TXN_INDEX": {
                 "code": 27,
                 "message": "Invalid transaction index in a block"
+            },
+            "INVALID_CONTRACT_CLASS_HASH": {
+                "code": 28,
+                "message": "The supplied contract class hash is invalid or unknown"
             },
             "PAGE_SIZE_TOO_BIG": {
                 "code": 31,
