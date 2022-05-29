@@ -472,6 +472,54 @@
             ]
         },
         {
+            "name": "starknet_estimateFee",
+            "summary": "estimate the fee for a given StarkNet transaction",
+            "description": "estimates the resources required by a transaction relative to a given state",
+            "paramStructure": "by-name",
+            "params": [
+                {
+                    "name": "request",
+                    "summary": "The details of the function call",
+                    "schema": {
+                        "$ref": "#/components/schemas/FUNCTION_CALL"
+                    },
+                    "required": true
+                },
+                {
+                    "name": "block_hash",
+                    "description": "The hash (id) of the requested block or a block tag, for the block referencing the state or call the transaction on.",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "the fee estimation",
+                "schema": {
+                    "$ref": "#/components/schemas/FEE_ESTIMATE"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_MESSAGE_SELECTOR"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_CALL_DATA"
+                },
+                {
+                    "$ref": "#/components/errors/CONTRACT_ERROR"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                }
+            ]
+        },
+        {
             "name": "starknet_blockNumber",
             "summary": "Get the most recent accepted block number",
             "params": [],
@@ -1197,6 +1245,29 @@
                         "description": "A unique identifier of the entry point (function) in the program",
                         "schema": {
                             "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                }
+            },
+            "FEE_ESTIMATE": {
+                "type": "object",
+                "properties": {
+                    "gas_consumed": {
+                        "description": "The Ethereum gas cost of the transaction (see https://docs.starknet.io/docs/Fees/fee-mechanism for more info)",
+                        "schema": {
+                            "$ref": "#/components/schemas/NUM_AS_HEX"
+                        }
+                    },
+                    "gas_price": {
+                        "description": "The gas price (in gwei) that was used in the cost estimation",
+                        "schema": {
+                            "$ref": "#/components/schemas/NUM_AS_HEX"
+                        }
+                    },
+                    "overall_fee": {
+                        "description": "The estimated fee for the transaction (in gwei), product of gas_consumed and gas_price",
+                        "schema": {
+                            "$ref": "#/components/schemas/NUM_AS_HEX"
                         }
                     }
                 }
