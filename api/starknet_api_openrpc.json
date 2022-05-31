@@ -423,7 +423,6 @@
             "name": "starknet_call",
             "summary": "call a starknet function without creating a StarkNet transaction",
             "description": "Calls a function in a contract and returns the return value.  Using this call will not create a transaction; hence, will not change the state",
-            "paramStructure": "by-name",
             "params": [
                 {
                     "name": "request",
@@ -475,7 +474,6 @@
             "name": "starknet_estimateFee",
             "summary": "estimate the fee for a given StarkNet transaction",
             "description": "estimates the resources required by a transaction relative to a given state",
-            "paramStructure": "by-name",
             "params": [
                 {
                     "name": "request",
