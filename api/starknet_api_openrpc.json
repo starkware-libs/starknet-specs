@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.11.0",
+        "version": "0.12.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -1117,7 +1117,14 @@
                             "$ref": "#/components/schemas/EVENT"
                         }
                     }
-                }
+                },
+                "required": [
+                    "txn_hash",
+                    "actual_fee",
+                    "status",
+                    "messages_sent",
+                    "events"
+                ]
             },
             "MSG_TO_L1": {
                 "type": "object",
