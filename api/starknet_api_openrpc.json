@@ -1064,6 +1064,39 @@
             },
             "TXN": {
                 "title": "Transaction",
+                "anyOf": [
+                    {
+                        "$ref": "#/components/schemas/INVOKE_TXN"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DECLARE_TXN"
+                    }
+                ]
+            },
+            "DECLARE_TXN": {
+                "title": "Declare Contract Transaction",
+                "type": "object",
+                "properties": {
+                    "contract_class": {
+                        "description": "The contract definition deployed",
+                        "$ref": "#/components/schemas/CONTRACT_CLASS"
+                    },
+                    "sender_address": {
+                        "description": "The address of the account contract sending the declaration transaction",
+                        "$ref": "#/components/schemas/ADDRESS"
+                    },
+                    "max_fee": {
+                        "$ref": "#/components/schemas/FELT",
+                        "description": "The maximal fee that can be charged for including the transaction"
+                    },
+                    "version": {
+                        "description": "Version of the transaction scheme",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    }
+                }
+            },
+            "INVOKE_TXN": {
+                "title": "Invoke Contract Transaction",
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/FUNCTION_CALL",
@@ -1078,6 +1111,10 @@
                             "max_fee": {
                                 "$ref": "#/components/schemas/FELT",
                                 "description": "The maximal fee that can be charged for including the transaction"
+                            },
+                            "version": {
+                                "description": "Version of the transaction scheme",
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
                             }
                         }
                     }
