@@ -1073,17 +1073,12 @@
                     }
                 ]
             },
-            "DECLARE_TXN": {
-                "title": "Declare Contract Transaction",
+            "COMMON_TXN_PROPERTIES": {
                 "type": "object",
                 "properties": {
-                    "contract_class": {
-                        "description": "The contract definition deployed",
-                        "$ref": "#/components/schemas/CONTRACT_CLASS"
-                    },
-                    "sender_address": {
-                        "description": "The address of the account contract sending the declaration transaction",
-                        "$ref": "#/components/schemas/ADDRESS"
+                    "txn_hash": {
+                        "$ref": "#/components/schemas/TXN_HASH",
+                        "description": "The hash identifying the transaction"
                     },
                     "max_fee": {
                         "$ref": "#/components/schemas/FELT",
@@ -1095,28 +1090,36 @@
                     }
                 }
             },
+            "DECLARE_TXN": {
+                "title": "Declare Contract Transaction",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/COMMON_TXN_PROPERTIES"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "contract_class": {
+                                "description": "The contract definition deployed",
+                                "$ref": "#/components/schemas/CONTRACT_CLASS"
+                            },
+                            "sender_address": {
+                                "description": "The address of the account contract sending the declaration transaction",
+                                "$ref": "#/components/schemas/ADDRESS"
+                            }
+                        }
+                    }
+                ]
+            },
             "INVOKE_TXN": {
                 "title": "Invoke Contract Transaction",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/FUNCTION_CALL",
-                        "description": "The function the transaction invokes"
+                        "$ref": "#/components/schemas/COMMON_TXN_PROPERTIES"
                     },
                     {
-                        "properties": {
-                            "txn_hash": {
-                                "$ref": "#/components/schemas/TXN_HASH",
-                                "description": "The hash identifying the transaction"
-                            },
-                            "max_fee": {
-                                "$ref": "#/components/schemas/FELT",
-                                "description": "The maximal fee that can be charged for including the transaction"
-                            },
-                            "version": {
-                                "description": "Version of the transaction scheme",
-                                "$ref": "#/components/schemas/NUM_AS_HEX"
-                            }
-                        }
+                        "$ref": "#/components/schemas/FUNCTION_CALL",
+                        "description": "The function the transaction invokes"
                     }
                 ]
             },
