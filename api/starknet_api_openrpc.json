@@ -1100,7 +1100,7 @@
                         "type": "object",
                         "properties": {
                             "contract_class": {
-                                "description": "The contract definition deployed",
+                                "description": "The class to be delcared",
                                 "$ref": "#/components/schemas/CONTRACT_CLASS"
                             },
                             "sender_address": {
