@@ -1073,6 +1073,13 @@
                     }
                 ]
             },
+            "SIGNATURE": {
+                "title": "A transaction signature",
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/FELT"
+                }
+            },
             "COMMON_TXN_PROPERTIES": {
                 "type": "object",
                 "properties": {
@@ -1087,6 +1094,9 @@
                     "version": {
                         "description": "Version of the transaction scheme",
                         "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "signature": {
+                        "$ref": "#/components/schemas/SIGNATURE"
                     }
                 }
             },
