@@ -161,11 +161,7 @@
                 "pattern": "^0x[a-fA-F0-9]+$"
             },
             "SIGNATURE": {
-                "title": "A transaction signature",
-                "type": "array",
-                "items": {
-                    "$ref": "#/components/schemas/FELT"
-                }
+                "$ref": "starknet_api_openrpc.json#/components/schemas/SIGNATURE"
             },
             "FELT": {
                 "$ref": "starknet_api_openrpc.json#/components/schemas/FELT"
