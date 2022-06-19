@@ -1070,6 +1070,12 @@
                                 "description": "The StarkNet identity of the sequencer submitting this block",
                                 "$ref": "#/components/schemas/FELT"
                             }
+                        },
+                        {
+                            "parent_hash": {
+                                "description": "The hash of this block's parent",
+                                "$ref": "#/components/schemas/BLOCK_HASH"
+                            }
                         }
                     ]
                 }
