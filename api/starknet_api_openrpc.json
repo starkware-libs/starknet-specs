@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.11.0",
+        "version": "0.12.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -32,7 +32,14 @@
                 "name": "result",
                 "description": "The resulting block information",
                 "schema": {
-                    "$ref": "#/components/schemas/BLOCK"
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/BLOCK"
+                        },
+                        {
+                            "$ref": "#/components/schemas/PENDING_BLOCK"
+                        }
+                    ]
                 }
             },
             "errors": [
@@ -67,7 +74,14 @@
                 "name": "result",
                 "description": "The resulting block information",
                 "schema": {
-                    "$ref": "#/components/schemas/BLOCK"
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/BLOCK"
+                        },
+                        {
+                            "$ref": "#/components/schemas/PENDING_BLOCK"
+                        }
+                    ]
                 }
             },
             "errors": [
@@ -775,11 +789,11 @@
                 "properties": {
                     "fromBlock": {
                         "title": "from block",
-                        "$ref": "#/components/schemas/BLOCK_NUMBER"
+                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
                     },
                     "toBlock": {
                         "title": "to block",
-                        "$ref": "#/components/schemas/BLOCK_NUMBER"
+                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
                     },
                     "address": {
                         "title": "from contract",
@@ -821,9 +835,9 @@
             "BLOCK_TAG": {
                 "type": "string",
                 "description": "A tag specifying a dynamic reference to a block",
-                "pattern": "latest",
                 "enum": [
-                    "latest"
+                    "latest",
+                    "pending"
                 ]
             },
             "SYNC_STATUS": {
@@ -960,66 +974,104 @@
             "BLOCK_HASH": {
                 "$ref": "#/components/schemas/FELT"
             },
+            "BLOCK_BODY": {
+                "transactions": {
+                    "oneOf": [
+                        {
+                            "description": "The hashes of the transactions included in this block",
+                            "type": "array",
+                            "items": {
+                                "description": "The hash of a single transaction",
+                                "$ref": "#/components/schemas/TXN_HASH"
+                            }
+                        },
+                        {
+                            "description": "The transactions in this block",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/TXN"
+                            }
+                        },
+                        {
+                            "description": "The transactions in this block + their receipts",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/TXN_OBJECT_AND_RECEIPT"
+                            }
+                        }
+                    ]
+                }
+            },
+            "BLOCK_HEADER": {
+                "block_hash": {
+                    "$ref": "#/components/schemas/BLOCK_HASH"
+                },
+                "parent_hash": {
+                    "description": "The hash of this block's parent",
+                    "$ref": "#/components/schemas/BLOCK_HASH"
+                },
+                "block_number": {
+                    "description": "The block number (its height)",
+                    "$ref": "#/components/schemas/BLOCK_NUMBER"
+                },
+                "new_root": {
+                    "description": "The new global state root",
+                    "$ref": "#/components/schemas/FELT"
+                },
+                "old_root": {
+                    "description": "The previous global state root",
+                    "$ref": "#/components/schemas/FELT"
+                },
+                "timestamp": {
+                    "description": "The time in which the block was created, encoded in Unix time",
+                    "type": "integer",
+                    "minimum": 0
+                },
+                "sequencer_address": {
+                    "description": "The StarkNet identity of the sequencer submitting this block",
+                    "$ref": "#/components/schemas/FELT"
+                }
+            },
             "BLOCK": {
                 "type": "object",
                 "properties": {
-                    "block_hash": {
-                        "$ref": "#/components/schemas/BLOCK_HASH"
-                    },
-                    "parent_hash": {
-                        "description": "The hash of this block's parent",
-                        "$ref": "#/components/schemas/BLOCK_HASH"
-                    },
-                    "block_number": {
-                        "description": "The block number (its height)",
-                        "$ref": "#/components/schemas/BLOCK_NUMBER"
-                    },
-                    "status": {
-                        "$ref": "#/components/schemas/BLOCK_STATUS"
-                    },
-                    "sequencer": {
-                        "description": "The identity of the sequencer submitting this block",
-                        "$ref": "#/components/schemas/ETH_ADDRESS"
-                    },
-                    "new_root": {
-                        "description": "The new global state root",
-                        "$ref": "#/components/schemas/FELT"
-                    },
-                    "old_root": {
-                        "description": "The previous global state root",
-                        "$ref": "#/components/schemas/FELT"
-                    },
-                    "accepted_time": {
-                        "description": "When the block was accepted on L1. Formatted as... ",
-                        "type": "integer",
-                        "minimum": 0
-                    },
-                    "transactions": {
-                        "oneOf": [
-                            {
-                                "description": "The hashes of the transactions included in this block",
-                                "type": "array",
-                                "items": {
-                                    "description": "The hash of a single transaction",
-                                    "$ref": "#/components/schemas/TXN_HASH"
-                                }
-                            },
-                            {
-                                "description": "The transactions in this block",
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/TXN"
-                                }
-                            },
-                            {
-                                "description": "The transactions in this block + their receipts",
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/TXN_OBJECT_AND_RECEIPT"
-                                }
+                    "allOf": [
+                        {
+                            "status": {
+                                "$ref": "#/components/schemas/BLOCK_STATUS"
                             }
-                        ]
-                    }
+                        },
+                        {
+                            "$ref": "#/components/schemas/BLOCK_HEADER"
+                        },
+                        {
+                            "$ref": "#/components/schemas/BLOCK_BODY"
+                        }
+                    ]
+                }
+            },
+            "PENDING_BLOCK": {
+                "type": "object",
+                "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
+                "properties": {
+                    "allOf": [
+                        {
+                            "$ref": "#/components/schemas/BLOCK_BODY"
+                        },
+                        {
+                            "timestamp": {
+                                "description": "The time in which the block was created, encoded in Unix time",
+                                "type": "integer",
+                                "minimum": 0
+                            }
+                        },
+                        {
+                            "sequencer_address": {
+                                "description": "The StarkNet identity of the sequencer submitting this block",
+                                "$ref": "#/components/schemas/FELT"
+                            }
+                        }
+                    ]
                 }
             },
             "CONTRACT_ITEM": {
