@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.13.0",
+        "version": "0.14.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -541,7 +541,12 @@
                 "schema": {
                     "$ref": "#/components/schemas/BLOCK_NUMBER"
                 }
-            }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/NO_BLOCKS"
+                }
+            ]
         },
         {
             "name": "starknet_chainId",
@@ -1464,7 +1469,11 @@
             },
             "PAGE_SIZE_TOO_BIG": {
                 "code": 31,
-                "message": "Requested page size is too big."
+                "message": "Requested page size is too big"
+            },
+            "NO_BLOCKS": {
+                "code": 32,
+                "message": "There are no blocks"
             },
             "CONTRACT_ERROR": {
                 "code": 40,
