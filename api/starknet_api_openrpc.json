@@ -1018,10 +1018,6 @@
                     "description": "The new global state root",
                     "$ref": "#/components/schemas/FELT"
                 },
-                "old_root": {
-                    "description": "The previous global state root",
-                    "$ref": "#/components/schemas/FELT"
-                },
                 "timestamp": {
                     "description": "The time in which the block was created, encoded in Unix time",
                     "type": "integer",
