@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.14.0",
+        "version": "0.15.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -1021,10 +1021,6 @@
                 },
                 "new_root": {
                     "description": "The new global state root",
-                    "$ref": "#/components/schemas/FELT"
-                },
-                "old_root": {
-                    "description": "The previous global state root",
                     "$ref": "#/components/schemas/FELT"
                 },
                 "timestamp": {
