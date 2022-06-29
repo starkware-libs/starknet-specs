@@ -933,11 +933,18 @@
                                     "$ref": "#/components/schemas/STATE_DIFF_ITEM"
                                 }
                             },
-                            "contracts": {
+                            "declared_contracts": {
                                 "type": "array",
                                 "items": {
-                                    "description": "A new contract added as part of the new state",
-                                    "$ref": "#/components/schemas/CONTRACT_ITEM"
+                                    "description": "A new contract declared as part of the new state",
+                                    "$ref": "#/components/schemas/DECLARED_CONTRACT_ITEM"
+                                }
+                            },
+                            "deployed_contracts": {
+                                "type": "array",
+                                "items": {
+                                    "description": "A new contract deployed as part of the new state",
+                                    "$ref": "#/components/schemas/DEPLOYED_CONTRACT_ITEM"
                                 }
                             },
                             "nonces": {
@@ -1087,7 +1094,16 @@
                     }
                 ]
             },
-            "CONTRACT_ITEM": {
+            "DECLARED_CONTRACT_ITEM": {
+                "type": "object",
+                "properties": {
+                    "contract_class_hash": {
+                        "description": "The hash of the contract class",
+                        "$ref": "#/components/schemas/FELT"
+                    }
+                }
+            },
+            "DEPLOYED_CONTRACT_ITEM": {
                 "type": "object",
                 "properties": {
                     "address": {
