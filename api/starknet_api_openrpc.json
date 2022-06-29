@@ -1305,7 +1305,7 @@
                         "description": "The address of the contract",
                         "$ref": "#/components/schemas/FELT"
                     },
-                    "contract_hash": {
+                    "contract_class_hash": {
                         "description": "The hash of the contract code",
                         "$ref": "#/components/schemas/FELT"
                     }
