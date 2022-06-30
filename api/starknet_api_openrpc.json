@@ -18,19 +18,77 @@
                     "schema": {
                         "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
                     }
-                },
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The resulting block information with transaction hashes",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/BLOCK"
+                        },
+                        {
+                            "$ref": "#/components/schemas/PENDING_BLOCK"
+                        }
+                    ]
+                }
+            },
+            "errors": [
                 {
-                    "name": "requested_scope",
-                    "description": "The scope of the block information requested. Defaults to txn hashes only",
-                    "required": false,
+                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                }
+            ]
+        },
+        {
+            "name": "starknet_getBlockByHash_withTransactions",
+            "summary": "Get block information given the block id",
+            "params": [
+                {
+                    "name": "block_hash",
+                    "description": "The hash (id) of the requested block, or a block tag",
+                    "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_RESPONSE_SCOPE_OPTIONS"
+                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
                     }
                 }
             ],
             "result": {
                 "name": "result",
-                "description": "The resulting block information",
+                "description": "The resulting block information with full transactions",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/BLOCK"
+                        },
+                        {
+                            "$ref": "#/components/schemas/PENDING_BLOCK"
+                        }
+                    ]
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                }
+            ]
+        },
+        {
+            "name": "starknet_getBlockByHash_withTransactionsAndReceipts",
+            "summary": "Get block information given the block id",
+            "params": [
+                {
+                    "name": "block_hash",
+                    "description": "The hash (id) of the requested block, or a block tag",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The resulting block information with full transactions and receipts",
                 "schema": {
                     "oneOf": [
                         {
@@ -60,19 +118,79 @@
                     "schema": {
                         "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
                     }
-                },
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The resulting block information with transaction hashes",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/BLOCK"
+                        },
+                        {
+                            "$ref": "#/components/schemas/PENDING_BLOCK"
+                        }
+                    ]
+                }
+            },
+            "errors": [
                 {
-                    "name": "requested_scope",
-                    "description": "The scope of the block information requested. Defaults to txn hashes only",
-                    "required": false,
+                    "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
+                }
+            ]
+        },
+        {
+            "name": "starknet_getBlockByNumber_withTransactions",
+            "summary": "Get block information given the block number (its height)",
+            "params": [
+                {
+                    "name": "block_number",
+                    "summary": "The requested block number",
+                    "description": "The number (height) of the requested block or a block tag",
+                    "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_RESPONSE_SCOPE_OPTIONS"
+                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
                     }
                 }
             ],
             "result": {
                 "name": "result",
-                "description": "The resulting block information",
+                "description": "The resulting block information with full transactions",
+                "schema": {
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/BLOCK"
+                        },
+                        {
+                            "$ref": "#/components/schemas/PENDING_BLOCK"
+                        }
+                    ]
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
+                }
+            ]
+        },
+        {
+            "name": "starknet_getBlockByNumber_withTransactionsAndReceipts",
+            "summary": "Get block information given the block number (its height)",
+            "params": [
+                {
+                    "name": "block_number",
+                    "summary": "The requested block number",
+                    "description": "The number (height) of the requested block or a block tag",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The resulting block information with full transactions and receipts",
                 "schema": {
                     "oneOf": [
                         {
@@ -697,15 +815,6 @@
     "components": {
         "contentDescriptors": {},
         "schemas": {
-            "BLOCK_RESPONSE_SCOPE_OPTIONS": {
-                "title": "Options for block information requests",
-                "type": "string",
-                "enum": [
-                    "TXN_HASH",
-                    "FULL_TXNS",
-                    "FULL_TXN_AND_RECEIPTS"
-                ]
-            },
             "RESULT_PAGE_REQUEST": {
                 "title": "A request for a specific page of results",
                 "description": "A specification of a result page to retrieve",
