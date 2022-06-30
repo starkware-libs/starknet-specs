@@ -1143,52 +1143,47 @@
                 }
             },
             "BLOCK": {
-                "type": "object",
-                "properties": {
-                    "allOf": [
-                        {
-                            "status": {
-                                "$ref": "#/components/schemas/BLOCK_STATUS"
-                            }
-                        },
-                        {
-                            "$ref": "#/components/schemas/BLOCK_HEADER"
-                        },
-                        {
-                            "$ref": "#/components/schemas/BLOCK_BODY"
+                "title": "The block object",
+                "allOf": [
+                    {
+                        "status": {
+                            "$ref": "#/components/schemas/BLOCK_STATUS"
                         }
-                    ]
-                }
+                    },
+                    {
+                        "$ref": "#/components/schemas/BLOCK_HEADER"
+                    },
+                    {
+                        "$ref": "#/components/schemas/BLOCK_BODY"
+                    }
+                ]
             },
             "PENDING_BLOCK": {
-                "type": "object",
                 "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
-                "properties": {
-                    "allOf": [
-                        {
-                            "$ref": "#/components/schemas/BLOCK_BODY"
-                        },
-                        {
-                            "timestamp": {
-                                "description": "The time in which the block was created, encoded in Unix time",
-                                "type": "integer",
-                                "minimum": 0
-                            }
-                        },
-                        {
-                            "sequencer_address": {
-                                "description": "The StarkNet identity of the sequencer submitting this block",
-                                "$ref": "#/components/schemas/FELT"
-                            }
-                        },
-                        {
-                            "parent_hash": {
-                                "description": "The hash of this block's parent",
-                                "$ref": "#/components/schemas/BLOCK_HASH"
-                            }
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BLOCK_BODY"
+                    },
+                    {
+                        "timestamp": {
+                            "description": "The time in which the block was created, encoded in Unix time",
+                            "type": "integer",
+                            "minimum": 0
                         }
-                    ]
-                }
+                    },
+                    {
+                        "sequencer_address": {
+                            "description": "The StarkNet identity of the sequencer submitting this block",
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    },
+                    {
+                        "parent_hash": {
+                            "description": "The hash of this block's parent",
+                            "$ref": "#/components/schemas/BLOCK_HASH"
+                        }
+                    }
+                ]
             },
             "CONTRACT_ITEM": {
                 "type": "object",
@@ -1265,6 +1260,9 @@
                     },
                     "signature": {
                         "$ref": "#/components/schemas/SIGNATURE"
+                    },
+                    "nonce": {
+                        "$ref": "#/components/schemas/FELT"
                     }
                 }
             },
