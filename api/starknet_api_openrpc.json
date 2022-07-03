@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.16.0",
+        "version": "0.17.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -323,8 +323,16 @@
         },
         {
             "name": "starknet_getClassHashAt",
-            "summary": "Get the contract class hash for the contract deployed at the given address",
+            "summary": "Get the contract class hash in the given block number for the contract deployed at the given address",
             "params": [
+                {
+                    "name": "block_number",
+                    "summary": "The queried block number or a block tag",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
+                    }
+                },
                 {
                     "name": "contract_address",
                     "description": "The address of the contract whose class hash will be returned",
@@ -342,6 +350,9 @@
                 }
             },
             "errors": [
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
+                },
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
                 }
