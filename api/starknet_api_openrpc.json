@@ -1,7 +1,11 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
+<<<<<<< HEAD
         "version": "0.18.0",
+=======
+        "version": "0.19.0",
+>>>>>>> Remove invalid storage key error
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -276,9 +280,6 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
-                },
-                {
-                    "$ref": "#/components/errors/INVALID_STORAGE_KEY"
                 },
                 {
                     "$ref": "#/components/errors/INVALID_BLOCK_HASH"
@@ -1642,10 +1643,6 @@
             "INVALID_CALL_DATA": {
                 "code": 22,
                 "message": "Invalid call data"
-            },
-            "INVALID_STORAGE_KEY": {
-                "code": 23,
-                "message": "Invalid storage key"
             },
             "INVALID_BLOCK_HASH": {
                 "code": 24,
