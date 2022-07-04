@@ -1,11 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-<<<<<<< HEAD
-        "version": "0.18.0",
-=======
         "version": "0.19.0",
->>>>>>> Remove invalid storage key error
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -257,7 +253,7 @@
                     "summary": "The key to the storage value for the given contract",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/STORAGE_KEY"
                     }
                 },
                 {
@@ -1073,6 +1069,13 @@
             },
             "ADDRESS": {
                 "$ref": "#/components/schemas/FELT"
+            },
+            "STORAGE_KEY": {
+                "type": "string",
+                "title": "A storage key",
+                "$comment": "A storage key, represented as a string of hex digits",
+                "description": "A storage key. Represented as up to 62 hex digits, 3 bits, and 5 leading zeroes.",
+                "pattern": "^0x0[0-7]{1}[a-fA-F0-9]{0,62}$"
             },
             "ETH_ADDRESS": {
                 "type": "string",
