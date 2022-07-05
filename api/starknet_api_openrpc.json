@@ -1,11 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-<<<<<<< HEAD
         "version": "0.18.0",
-=======
-        "version": "0.17.0",
->>>>>>> v0.17.0: declared vs. deployed contracts in diff
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -445,7 +441,7 @@
         },
         {
             "name": "starknet_getClassHashAt",
-            "summary": "Get the contract class hash in the given block number for the contract deployed at the given address",
+            "summary": "Get the contract class hash in the given block (defaults to latest) for the contract deployed at the given address",
             "params": [
                 {
                     "name": "contract_address",
@@ -482,7 +478,7 @@
         },
         {
             "name": "starknet_getClassAt",
-            "summary": "Get the contract class definition at the given address, for the given block",
+            "summary": "Get the contract class definition at the given address, in the given block (defaults to latest)",
             "params": [
                 {
                     "name": "contract_address",
@@ -1055,7 +1051,6 @@
                                 }
                             },
                             "declared_contracts": {
-<<<<<<< HEAD
                                 "type": "array",
                                 "items": {
                                     "description": "A new contract declared as part of the new state",
@@ -1065,17 +1060,6 @@
                             "deployed_contracts": {
                                 "type": "array",
                                 "items": {
-=======
-                                "type": "array",
-                                "items": {
-                                    "description": "A new contract declared as part of the new state",
-                                    "$ref": "#/components/schemas/DECLARED_CONTRACT_ITEM"
-                                }
-                            },
-                            "deployed_contracts": {
-                                "type": "array",
-                                "items": {
->>>>>>> v0.17.0: declared vs. deployed contracts in diff
                                     "description": "A new contract deployed as part of the new state",
                                     "$ref": "#/components/schemas/DEPLOYED_CONTRACT_ITEM"
                                 }
@@ -1259,7 +1243,6 @@
                     }
                 ]
             },
-<<<<<<< HEAD
             "FULL_PENDING_BLOCK": {
                 "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
                 "allOf": [
@@ -1314,8 +1297,6 @@
                     }
                 ]
             },
-=======
->>>>>>> v0.17.0: declared vs. deployed contracts in diff
             "DECLARED_CONTRACT_ITEM": {
                 "type": "object",
                 "properties": {
