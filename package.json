@@ -1,0 +1,13 @@
+{
+    "name": "openrpc_scripts",
+    "version": "0.1.0",
+    "description": "Tooling for OpenRPC files",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "Lior Schejter",
+    "license": "MIT",
+    "dependencies": {
+        "@open-rpc/schema-utils-js": "^1.16.1"
+    }
+}
