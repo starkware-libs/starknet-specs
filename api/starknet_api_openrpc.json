@@ -1,14 +1,14 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.20.0",
+        "version": "0.21.0",
         "title": "StarkNet Node API",
         "license": {}
     },
     "servers": [],
     "methods": [
         {
-            "name": "starknet_getBlockWithTxsHashesByHash",
+            "name": "starknet_getBlockWithTxHashesByHash",
             "summary": "Get block information with transaction hashes given the block id",
             "params": [
                 {
@@ -26,10 +26,10 @@
                 "schema": {
                     "oneOf": [
                         {
-                            "$ref": "#/components/schemas/BLOCK_W_TXS_HASHES"
+                            "$ref": "#/components/schemas/BLOCK_WITH_TX_HASHES"
                         },
                         {
-                            "$ref": "#/components/schemas/PENDING_BLOCK_W_TXS_HASHES"
+                            "$ref": "#/components/schemas/PENDING_BLOCK_WITH_TX_HASHES"
                         }
                     ]
                 }
@@ -59,10 +59,10 @@
                 "schema": {
                     "oneOf": [
                         {
-                            "$ref": "#/components/schemas/BLOCK_W_TXS"
+                            "$ref": "#/components/schemas/BLOCK_WITH_TXS"
                         },
                         {
-                            "$ref": "#/components/schemas/PENDING_BLOCK_W_TXS"
+                            "$ref": "#/components/schemas/PENDING_BLOCK_WITH_TXS"
                         }
                     ]
                 }
@@ -74,7 +74,7 @@
             ]
         },
         {
-            "name": "starknet_getBlockWithTxsHashesByNumber",
+            "name": "starknet_getBlockWithTxHashesByNumber",
             "summary": "Get block information with transaction hashes given the block number (its height)",
             "params": [
                 {
@@ -93,10 +93,10 @@
                 "schema": {
                     "oneOf": [
                         {
-                            "$ref": "#/components/schemas/BLOCK_W_TXS_HASHES"
+                            "$ref": "#/components/schemas/BLOCK_WITH_TX_HASHES"
                         },
                         {
-                            "$ref": "#/components/schemas/PENDING_BLOCK_W_TXS_HASHES"
+                            "$ref": "#/components/schemas/PENDING_BLOCK_WITH_TX_HASHES"
                         }
                     ]
                 }
@@ -127,10 +127,10 @@
                 "schema": {
                     "oneOf": [
                         {
-                            "$ref": "#/components/schemas/BLOCK_W_TXS"
+                            "$ref": "#/components/schemas/BLOCK_WITH_TXS"
                         },
                         {
-                            "$ref": "#/components/schemas/PENDING_BLOCK_W_TXS"
+                            "$ref": "#/components/schemas/PENDING_BLOCK_WITH_TXS"
                         }
                     ]
                 }
@@ -1036,7 +1036,7 @@
             "BLOCK_HASH": {
                 "$ref": "#/components/schemas/FELT"
             },
-            "BLOCK_BODY_W_TXS_HASHES": {
+            "BLOCK_BODY_WITH_TX_HASHES": {
                 "transactions": {
                     "description": "The hashes of the transactions included in this block",
                     "type": "array",
@@ -1046,7 +1046,7 @@
                     }
                 }
             },
-            "BLOCK_BODY_W_TXS": {
+            "BLOCK_BODY_WITH_TXS": {
                 "transactions": {
                     "description": "The transactions in this block",
                     "type": "array",
@@ -1081,7 +1081,7 @@
                     "$ref": "#/components/schemas/FELT"
                 }
             },
-            "BLOCK_W_TXS_HASHES": {
+            "BLOCK_WITH_TX_HASHES": {
                 "title": "The block object",
                 "allOf": [
                     {
@@ -1093,11 +1093,11 @@
                         "$ref": "#/components/schemas/BLOCK_HEADER"
                     },
                     {
-                        "$ref": "#/components/schemas/BLOCK_BODY_W_TXS_HASHES"
+                        "$ref": "#/components/schemas/BLOCK_BODY_WITH_TX_HASHES"
                     }
                 ]
             },
-            "BLOCK_W_TXS": {
+            "BLOCK_WITH_TXS": {
                 "title": "The block object",
                 "allOf": [
                     {
@@ -1109,15 +1109,15 @@
                         "$ref": "#/components/schemas/BLOCK_HEADER"
                     },
                     {
-                        "$ref": "#/components/schemas/BLOCK_BODY_W_TXS"
+                        "$ref": "#/components/schemas/BLOCK_BODY_WITH_TXS"
                     }
                 ]
             },
-            "PENDING_BLOCK_W_TXS_HASHES": {
+            "PENDING_BLOCK_WITH_TX_HASHES": {
                 "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/BLOCK_BODY_W_TXS_HASHES"
+                        "$ref": "#/components/schemas/BLOCK_BODY_WITH_TX_HASHES"
                     },
                     {
                         "timestamp": {
@@ -1140,11 +1140,11 @@
                     }
                 ]
             },
-            "PENDING_BLOCK_W_TXS": {
+            "PENDING_BLOCK_WITH_TXS": {
                 "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/BLOCK_BODY_W_TXS"
+                        "$ref": "#/components/schemas/BLOCK_BODY_WITH_TXS"
                     },
                     {
                         "timestamp": {
