@@ -1,14 +1,14 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.19.0",
+        "version": "0.21.0",
         "title": "StarkNet Node API",
         "license": {}
     },
     "servers": [],
     "methods": [
         {
-            "name": "starknet_getBlockByHash",
+            "name": "starknet_getBlockWithTxsHashesByHash",
             "summary": "Get block information with transaction hashes given the block id",
             "params": [
                 {
@@ -26,10 +26,10 @@
                 "schema": {
                     "oneOf": [
                         {
-                            "$ref": "#/components/schemas/BLOCK"
+                            "$ref": "#/components/schemas/BLOCK_W_TXS_HASHES"
                         },
                         {
-                            "$ref": "#/components/schemas/PENDING_BLOCK"
+                            "$ref": "#/components/schemas/PENDING_BLOCK_W_TXS_HASHES"
                         }
                     ]
                 }
@@ -41,7 +41,7 @@
             ]
         },
         {
-            "name": "starknet_getBlockByHashWithTransactions",
+            "name": "starknet_getBlockWithTxsByHash",
             "summary": "Get block information with full transactions given the block id",
             "params": [
                 {
@@ -59,10 +59,10 @@
                 "schema": {
                     "oneOf": [
                         {
-                            "$ref": "#/components/schemas/FULL_BLOCK"
+                            "$ref": "#/components/schemas/BLOCK_W_TXS"
                         },
                         {
-                            "$ref": "#/components/schemas/FULL_PENDING_BLOCK"
+                            "$ref": "#/components/schemas/PENDING_BLOCK_W_TXS"
                         }
                     ]
                 }
@@ -74,40 +74,7 @@
             ]
         },
         {
-            "name": "starknet_getBlockByHashWithTransactionsAndReceipts",
-            "summary": "Get block information with full transactions and receipts given the block id",
-            "params": [
-                {
-                    "name": "block_hash",
-                    "description": "The hash (id) of the requested block, or a block tag",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
-                    }
-                }
-            ],
-            "result": {
-                "name": "result",
-                "description": "The resulting block information with full transactions and receipts",
-                "schema": {
-                    "oneOf": [
-                        {
-                            "$ref": "#/components/schemas/FULL_BLOCK_W_RECEIPTS"
-                        },
-                        {
-                            "$ref": "#/components/schemas/FULL_PENDING_BLOCK_W_RECEIPTS"
-                        }
-                    ]
-                }
-            },
-            "errors": [
-                {
-                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
-                }
-            ]
-        },
-        {
-            "name": "starknet_getBlockByNumber",
+            "name": "starknet_getBlockWithTxsHashesByNumber",
             "summary": "Get block information with transaction hashes given the block number (its height)",
             "params": [
                 {
@@ -126,10 +93,10 @@
                 "schema": {
                     "oneOf": [
                         {
-                            "$ref": "#/components/schemas/BLOCK"
+                            "$ref": "#/components/schemas/BLOCK_W_TXS_HASHES"
                         },
                         {
-                            "$ref": "#/components/schemas/PENDING_BLOCK"
+                            "$ref": "#/components/schemas/PENDING_BLOCK_W_TXS_HASHES"
                         }
                     ]
                 }
@@ -141,7 +108,7 @@
             ]
         },
         {
-            "name": "starknet_getBlockByNumberWithTransactions",
+            "name": "starknet_getBlockWithTxsByNumber",
             "summary": "Get block information with full transactions given the block number (its height)",
             "params": [
                 {
@@ -160,44 +127,10 @@
                 "schema": {
                     "oneOf": [
                         {
-                            "$ref": "#/components/schemas/FULL_BLOCK"
+                            "$ref": "#/components/schemas/BLOCK_W_TXS"
                         },
                         {
-                            "$ref": "#/components/schemas/FULL_PENDING_BLOCK"
-                        }
-                    ]
-                }
-            },
-            "errors": [
-                {
-                    "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
-                }
-            ]
-        },
-        {
-            "name": "starknet_getBlockByNumberWithTransactionsAndReceipts",
-            "summary": "Get block information with full transactions and receipts given the block number (its height)",
-            "params": [
-                {
-                    "name": "block_number",
-                    "summary": "The requested block number",
-                    "description": "The number (height) of the requested block or a block tag",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
-                    }
-                }
-            ],
-            "result": {
-                "name": "result",
-                "description": "The resulting block information with full transactions and receipts",
-                "schema": {
-                    "oneOf": [
-                        {
-                            "$ref": "#/components/schemas/FULL_BLOCK_W_RECEIPTS"
-                        },
-                        {
-                            "$ref": "#/components/schemas/FULL_PENDING_BLOCK_W_RECEIPTS"
+                            "$ref": "#/components/schemas/PENDING_BLOCK_W_TXS"
                         }
                     ]
                 }
@@ -1103,7 +1036,7 @@
             "BLOCK_HASH": {
                 "$ref": "#/components/schemas/FELT"
             },
-            "BLOCK_BODY": {
+            "BLOCK_BODY_W_TXS_HASHES": {
                 "transactions": {
                     "description": "The hashes of the transactions included in this block",
                     "type": "array",
@@ -1113,21 +1046,12 @@
                     }
                 }
             },
-            "FULL_BLOCK_BODY": {
+            "BLOCK_BODY_W_TXS": {
                 "transactions": {
                     "description": "The transactions in this block",
                     "type": "array",
                     "items": {
                         "$ref": "#/components/schemas/TXN"
-                    }
-                }
-            },
-            "FULL_BLOCK_BODY_W_RECEIPTS": {
-                "transactions": {
-                    "description": "The transactions in this block + their receipts",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/components/schemas/TXN_OBJECT_AND_RECEIPT"
                     }
                 }
             },
@@ -1157,7 +1081,7 @@
                     "$ref": "#/components/schemas/FELT"
                 }
             },
-            "BLOCK": {
+            "BLOCK_W_TXS_HASHES": {
                 "title": "The block object",
                 "allOf": [
                     {
@@ -1169,11 +1093,11 @@
                         "$ref": "#/components/schemas/BLOCK_HEADER"
                     },
                     {
-                        "$ref": "#/components/schemas/BLOCK_BODY"
+                        "$ref": "#/components/schemas/BLOCK_BODY_W_TXS_HASHES"
                     }
                 ]
             },
-            "FULL_BLOCK": {
+            "BLOCK_W_TXS": {
                 "title": "The block object",
                 "allOf": [
                     {
@@ -1185,31 +1109,15 @@
                         "$ref": "#/components/schemas/BLOCK_HEADER"
                     },
                     {
-                        "$ref": "#/components/schemas/FULL_BLOCK_BODY"
+                        "$ref": "#/components/schemas/BLOCK_BODY_W_TXS"
                     }
                 ]
             },
-            "FULL_BLOCK_W_RECEIPTS": {
-                "title": "The block object",
-                "allOf": [
-                    {
-                        "status": {
-                            "$ref": "#/components/schemas/BLOCK_STATUS"
-                        }
-                    },
-                    {
-                        "$ref": "#/components/schemas/BLOCK_HEADER"
-                    },
-                    {
-                        "$ref": "#/components/schemas/FULL_BLOCK_BODY_W_RECEIPTS"
-                    }
-                ]
-            },
-            "PENDING_BLOCK": {
+            "PENDING_BLOCK_W_TXS_HASHES": {
                 "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/BLOCK_BODY"
+                        "$ref": "#/components/schemas/BLOCK_BODY_W_TXS_HASHES"
                     },
                     {
                         "timestamp": {
@@ -1232,38 +1140,11 @@
                     }
                 ]
             },
-            "FULL_PENDING_BLOCK": {
+            "PENDING_BLOCK_W_TXS": {
                 "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/FULL_BLOCK_BODY"
-                    },
-                    {
-                        "timestamp": {
-                            "description": "The time in which the block was created, encoded in Unix time",
-                            "type": "integer",
-                            "minimum": 0
-                        }
-                    },
-                    {
-                        "sequencer_address": {
-                            "description": "The StarkNet identity of the sequencer submitting this block",
-                            "$ref": "#/components/schemas/FELT"
-                        }
-                    },
-                    {
-                        "parent_hash": {
-                            "description": "The hash of this block's parent",
-                            "$ref": "#/components/schemas/BLOCK_HASH"
-                        }
-                    }
-                ]
-            },
-            "FULL_PENDING_BLOCK_W_RECEIPTS": {
-                "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/FULL_BLOCK_BODY_W_RECEIPTS"
+                        "$ref": "#/components/schemas/BLOCK_BODY_W_TXS"
                     },
                     {
                         "timestamp": {
