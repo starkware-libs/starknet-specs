@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.18.0",
+        "version": "0.19.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -253,7 +253,7 @@
                     "summary": "The key to the storage value for the given contract",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/STORAGE_KEY"
                     }
                 },
                 {
@@ -276,9 +276,6 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
-                },
-                {
-                    "$ref": "#/components/errors/INVALID_STORAGE_KEY"
                 },
                 {
                     "$ref": "#/components/errors/INVALID_BLOCK_HASH"
@@ -1073,6 +1070,13 @@
             "ADDRESS": {
                 "$ref": "#/components/schemas/FELT"
             },
+            "STORAGE_KEY": {
+                "type": "string",
+                "title": "A storage key",
+                "$comment": "A storage key, represented as a string of hex digits",
+                "description": "A storage key. Represented as up to 62 hex digits, 3 bits, and 5 leading zeroes.",
+                "pattern": "^0x0[0-7]{1}[a-fA-F0-9]{0,62}$"
+            },
             "ETH_ADDRESS": {
                 "type": "string",
                 "$comment": "An ethereum address",
@@ -1642,10 +1646,6 @@
             "INVALID_CALL_DATA": {
                 "code": 22,
                 "message": "Invalid call data"
-            },
-            "INVALID_STORAGE_KEY": {
-                "code": 23,
-                "message": "Invalid storage key"
             },
             "INVALID_BLOCK_HASH": {
                 "code": 24,
