@@ -1330,6 +1330,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/DECLARE_TXN"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DEPLOY_TXN"
                     }
                 ]
             },
@@ -1372,9 +1375,9 @@
                     {
                         "type": "object",
                         "properties": {
-                            "contract_class": {
-                                "description": "The class to be delcared",
-                                "$ref": "#/components/schemas/CONTRACT_CLASS"
+                            "class_hash": {
+                                "description": "The hash of the declared class",
+                                "$ref": "#/components/schemas/FELT"
                             },
                             "sender_address": {
                                 "description": "The address of the account contract sending the declaration transaction",
@@ -1383,6 +1386,38 @@
                         }
                     }
                 ]
+            },
+            "DEPLOY_TXN": {
+                "title": "Deploy Contract Transaction",
+                "description": "The structure of a deploy transaction. Note that this transaction type is deprecated and will no longer be supported in future versions",
+                "properties": {
+                    "type": "object",
+                    "properties": {
+                        "txn_hash": {
+                            "$ref": "#/components/schemas/TXN_HASH",
+                            "description": "The hash identifying the transaction"
+                        },
+                        "class_hash": {
+                            "description": "The hash of the deployed contract's class",
+                            "$ref": "#/components/schemas/FELT"
+                        },
+                        "contract_address": {
+                            "description": "The address of the deployed contract",
+                            "$ref": "#/components/schemas/FELT"
+                        },
+                        "constructor_calldata": {
+                            "type": "array",
+                            "description": "The parameters passed to the function",
+                            "items": {
+                                "$ref": "#/components/schemas/FELT"
+                            }
+                        },
+                        "sender_address": {
+                            "description": "The address of the account contract sending the declaration transaction",
+                            "$ref": "#/components/schemas/ADDRESS"
+                        }
+                    }
+                }
             },
             "INVOKE_TXN": {
                 "title": "Invoke Contract Transaction",
