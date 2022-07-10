@@ -1411,14 +1411,10 @@
                         },
                         "constructor_calldata": {
                             "type": "array",
-                            "description": "The parameters passed to the function",
+                            "description": "The parameters passed to the constructor",
                             "items": {
                                 "$ref": "#/components/schemas/FELT"
                             }
-                        },
-                        "sender_address": {
-                            "description": "The address of the account contract sending the declaration transaction",
-                            "$ref": "#/components/schemas/ADDRESS"
                         }
                     }
                 }
