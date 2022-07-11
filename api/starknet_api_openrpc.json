@@ -478,7 +478,14 @@
                 "name": "result",
                 "description": "The latest block id",
                 "schema": {
-                    "$ref": "#/components/schemas/BLOCK_ID"
+                    "allOf": [
+                        {
+                            "$ref": "#/components/schemas/BLOCK_NUMBER"
+                        },
+                        {
+                            "$ref": "#/components/schemas/BLOCK_HASH"
+                        }
+                    ]
                 }
             },
             "errors": [
