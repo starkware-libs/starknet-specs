@@ -13,7 +13,7 @@
             "params": [
                 {
                     "name": "block_id",
-                    "description": "The hash of the requested block, number (height) of the requested block, or a block tag",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BLOCK_ID"
@@ -46,7 +46,7 @@
             "params": [
                 {
                     "name": "block_id",
-                    "description": "The hash of the requested block, number (height) of the requested block, or a block tag",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BLOCK_ID"
@@ -79,7 +79,7 @@
             "params": [
                 {
                     "name": "block_id",
-                    "description": "The hash of the requested block, number (height) of the requested block, or a block tag",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BLOCK_ID"
@@ -123,7 +123,7 @@
                 },
                 {
                     "name": "block_id",
-                    "description": "The hash of the requested block, number (height) of the requested block, or a block tag",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BLOCK_ID"
@@ -180,7 +180,7 @@
             "params": [
                 {
                     "name": "block_id",
-                    "description": "The hash of the requested block, number (height) of the requested block, or a block tag",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BLOCK_ID"
@@ -269,7 +269,7 @@
             "params": [
                 {
                     "name": "block_id",
-                    "description": "The hash of the requested block, number (height) of the requested block, or a block tag",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BLOCK_ID"
@@ -333,7 +333,7 @@
             "params": [
                 {
                     "name": "block_id",
-                    "description": "The hash of the requested block, number (height) of the requested block, or a block tag",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BLOCK_ID"
@@ -370,10 +370,10 @@
                 },
                 {
                     "name": "block_id",
-                    "description": "The hash of the requested block, number (height) of the requested block, or a block tag, for the block referencing the state or call the transaction on.",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag, for the block referencing the state or call the transaction on.",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 }
             ],
@@ -421,10 +421,10 @@
                 },
                 {
                     "name": "block_id",
-                    "description": "The hash of the requested block, number (height) of the requested block, or a block tag, for the block referencing the state or call the transaction on.",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag, for the block referencing the state or call the transaction on.",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 }
             ],
@@ -471,14 +471,21 @@
             ]
         },
         {
-            "name": "starknet_getLatestBlockID",
-            "summary": "Get the most recent accepted block id",
+            "name": "starknet_blockHashAndNumber",
+            "summary": "Get the most recent accepted block hash and number",
             "params": [],
             "result": {
                 "name": "result",
-                "description": "The latest block id",
+                "description": "The latest block hash and number",
                 "schema": {
-                    "$ref": "#/components/schemas/BLOCK_ID"
+                    "allOf": [
+                        {
+                            "$ref": "#/components/schemas/BLOCK_HASH"
+                        },
+                        {
+                            "$ref": "#/components/schemas/BLOCK_NUMBER"
+                        }
+                    ]
                 }
             },
             "errors": [
@@ -724,11 +731,11 @@
                 "properties": {
                     "fromBlock": {
                         "title": "from block",
-                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     },
                     "toBlock": {
                         "title": "to block",
-                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     },
                     "address": {
                         "title": "from contract",
@@ -749,13 +756,28 @@
                 "title": "Block hash, number or tag",
                 "oneOf": [
                     {
-                        "$ref": "#/components/schemas/BLOCK_HASH"
+                        "type": "object",
+                        "properties": {
+                            "block_hash": {
+                                "$ref": "#/components/schemas/BLOCK_HASH"
+                            }
+                        }
                     },
                     {
-                        "$ref": "#/components/schemas/BLOCK_NUMBER"
+                        "type": "object",
+                        "properties": {
+                            "block_number": {
+                                "$ref": "#/components/schemas/BLOCK_NUMBER"
+                            }
+                        }
                     },
                     {
-                        "$ref": "#/components/schemas/BLOCK_TAG"
+                        "type": "object",
+                        "properties": {
+                            "tag": {
+                                "$ref": "#/components/schemas/BLOCK_TAG"
+                            }
+                        }
                     }
                 ]
             },
