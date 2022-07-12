@@ -1,10 +1,8 @@
 #!/usr/bin/env node
 
-// const { types } = require("@open-rpc/meta-schema");
 const { parseOpenRPCDocument, validateOpenRPCDocument } = require("@open-rpc/schema-utils-js");
 
 async function runValidation(filename) {
-
     try {
         let doc = await parseOpenRPCDocument(filename);
 

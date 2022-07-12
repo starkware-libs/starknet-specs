@@ -1275,27 +1275,25 @@
             "DEPLOY_TXN": {
                 "title": "Deploy Contract Transaction",
                 "description": "The structure of a deploy transaction. Note that this transaction type is deprecated and will no longer be supported in future versions",
+                "type": "object",
                 "properties": {
-                    "type": "object",
-                    "properties": {
-                        "txn_hash": {
-                            "$ref": "#/components/schemas/TXN_HASH",
-                            "description": "The hash identifying the transaction"
-                        },
-                        "class_hash": {
-                            "description": "The hash of the deployed contract's class",
+                    "txn_hash": {
+                        "$ref": "#/components/schemas/TXN_HASH",
+                        "description": "The hash identifying the transaction"
+                    },
+                    "class_hash": {
+                        "description": "The hash of the deployed contract's class",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "contract_address": {
+                        "description": "The address of the deployed contract",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "constructor_calldata": {
+                        "type": "array",
+                        "description": "The parameters passed to the constructor",
+                        "items": {
                             "$ref": "#/components/schemas/FELT"
-                        },
-                        "contract_address": {
-                            "description": "The address of the deployed contract",
-                            "$ref": "#/components/schemas/FELT"
-                        },
-                        "constructor_calldata": {
-                            "type": "array",
-                            "description": "The parameters passed to the constructor",
-                            "items": {
-                                "$ref": "#/components/schemas/FELT"
-                            }
                         }
                     }
                 }
