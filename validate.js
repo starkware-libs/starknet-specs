@@ -20,8 +20,6 @@ async function runValidation(filename) {
     }
 }
 
-////
-
 let args = process.argv.slice(2);
 
 if (args.length > 0) {
