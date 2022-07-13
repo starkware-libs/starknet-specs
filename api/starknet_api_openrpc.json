@@ -371,22 +371,22 @@
         },
         {
             "name": "starknet_getClassHashAt",
-            "summary": "Get the contract class hash in the given block number for the contract deployed at the given address",
+            "summary": "Get the contract class hash in the given block (defaults to latest) for the contract deployed at the given address",
             "params": [
-                {
-                    "name": "block_number",
-                    "summary": "The queried block number or a block tag",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
-                    }
-                },
                 {
                     "name": "contract_address",
                     "description": "The address of the contract whose class hash will be returned",
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/ADDRESS"
+                    }
+                },
+                {
+                    "name": "block_hash",
+                    "description": "The hash (id) of the requested block or a tag referencing the necessary block. Defaults to latest block",
+                    "required": false,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
                     }
                 }
             ],
@@ -408,7 +408,7 @@
         },
         {
             "name": "starknet_getClassAt",
-            "summary": "Get the contract class definition at the given address",
+            "summary": "Get the contract class definition at the given address, in the given block (defaults to latest)",
             "params": [
                 {
                     "name": "contract_address",
@@ -416,6 +416,14 @@
                     "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/ADDRESS"
+                    }
+                },
+                {
+                    "name": "block_hash",
+                    "description": "The hash (id) of the requested block or a tag referencing the necessary block. Defaults to latest block",
+                    "required": false,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
                     }
                 }
             ],
@@ -972,11 +980,18 @@
                                     "$ref": "#/components/schemas/STATE_DIFF_ITEM"
                                 }
                             },
-                            "contracts": {
+                            "declared_contracts": {
                                 "type": "array",
                                 "items": {
-                                    "description": "A new contract added as part of the new state",
-                                    "$ref": "#/components/schemas/CONTRACT_ITEM"
+                                    "description": "A new contract declared as part of the new state",
+                                    "$ref": "#/components/schemas/DECLARED_CONTRACT_ITEM"
+                                }
+                            },
+                            "deployed_contracts": {
+                                "type": "array",
+                                "items": {
+                                    "description": "A new contract deployed as part of the new state",
+                                    "$ref": "#/components/schemas/DEPLOYED_CONTRACT_ITEM"
                                 }
                             },
                             "nonces": {
@@ -1167,14 +1182,23 @@
                     }
                 ]
             },
-            "CONTRACT_ITEM": {
+            "DECLARED_CONTRACT_ITEM": {
+                "type": "object",
+                "properties": {
+                    "contract_class_hash": {
+                        "description": "The hash of the contract class",
+                        "$ref": "#/components/schemas/FELT"
+                    }
+                }
+            },
+            "DEPLOYED_CONTRACT_ITEM": {
                 "type": "object",
                 "properties": {
                     "address": {
                         "description": "The address of the contract",
                         "$ref": "#/components/schemas/FELT"
                     },
-                    "contract_hash": {
+                    "contract_class_hash": {
                         "description": "The hash of the contract code",
                         "$ref": "#/components/schemas/FELT"
                     }
