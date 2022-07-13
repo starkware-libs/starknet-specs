@@ -1,22 +1,22 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.21.0",
+        "version": "0.22.0",
         "title": "StarkNet Node API",
         "license": {}
     },
     "servers": [],
     "methods": [
         {
-            "name": "starknet_getBlockWithTxHashesByHash",
+            "name": "starknet_getBlockWithTxHashes",
             "summary": "Get block information with transaction hashes given the block id",
             "params": [
                 {
-                    "name": "block_hash",
-                    "description": "The hash (id) of the requested block, or a block tag",
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 }
             ],
@@ -36,20 +36,20 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
                 }
             ]
         },
         {
-            "name": "starknet_getBlockWithTxsByHash",
+            "name": "starknet_getBlockWithTxs",
             "summary": "Get block information with full transactions given the block id",
             "params": [
                 {
-                    "name": "block_hash",
-                    "description": "The hash (id) of the requested block, or a block tag",
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 }
             ],
@@ -69,88 +69,20 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
                 }
             ]
         },
         {
-            "name": "starknet_getBlockWithTxHashesByNumber",
-            "summary": "Get block information with transaction hashes given the block number (its height)",
-            "params": [
-                {
-                    "name": "block_number",
-                    "summary": "The requested block number",
-                    "description": "The number (height) of the requested block or a block tag",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
-                    }
-                }
-            ],
-            "result": {
-                "name": "result",
-                "description": "The resulting block information with transaction hashes",
-                "schema": {
-                    "oneOf": [
-                        {
-                            "$ref": "#/components/schemas/BLOCK_WITH_TX_HASHES"
-                        },
-                        {
-                            "$ref": "#/components/schemas/PENDING_BLOCK_WITH_TX_HASHES"
-                        }
-                    ]
-                }
-            },
-            "errors": [
-                {
-                    "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
-                }
-            ]
-        },
-        {
-            "name": "starknet_getBlockWithTxsByNumber",
-            "summary": "Get block information with full transactions given the block number (its height)",
-            "params": [
-                {
-                    "name": "block_number",
-                    "summary": "The requested block number",
-                    "description": "The number (height) of the requested block or a block tag",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
-                    }
-                }
-            ],
-            "result": {
-                "name": "result",
-                "description": "The resulting block information with full transactions",
-                "schema": {
-                    "oneOf": [
-                        {
-                            "$ref": "#/components/schemas/BLOCK_WITH_TXS"
-                        },
-                        {
-                            "$ref": "#/components/schemas/PENDING_BLOCK_WITH_TXS"
-                        }
-                    ]
-                }
-            },
-            "errors": [
-                {
-                    "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
-                }
-            ]
-        },
-        {
-            "name": "starknet_getStateUpdateByHash",
+            "name": "starknet_getStateUpdate",
             "summary": "Get the information about the result of executing the requested block",
             "params": [
                 {
-                    "name": "block_hash",
-                    "description": "The hash (id) of the requested block, or a block tag referencing the necessary block",
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 }
             ],
@@ -163,7 +95,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
                 }
             ]
         },
@@ -190,11 +122,11 @@
                     }
                 },
                 {
-                    "name": "block_hash",
-                    "description": "The hash (id) of the requested block or a tag referencing the necessary block",
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 }
             ],
@@ -211,7 +143,7 @@
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
                 }
             ]
         },
@@ -242,16 +174,16 @@
             ]
         },
         {
-            "name": "starknet_getTransactionByBlockHashAndIndex",
-            "summary": "Get the details of a transaction by a given block hash and index",
+            "name": "starknet_getTransactionByBlockIdAndIndex",
+            "summary": "Get the details of a transaction by a given block id and index",
             "description": "Get the details of the transaction given by the identified block and index in that block. If no transaction is found, null is returned.",
             "params": [
                 {
-                    "name": "block_hash",
-                    "summary": "The queried block hash or tag referencing a block",
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 },
                 {
@@ -272,45 +204,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
-                },
-                {
-                    "$ref": "#/components/errors/INVALID_TXN_INDEX"
-                }
-            ]
-        },
-        {
-            "name": "starknet_getTransactionByBlockNumberAndIndex",
-            "summary": "Get the details of a transaction by a given block number and index",
-            "description": "Get the details of the transaction given by the identified block and index in that block. If no transaction is found, null is returned.",
-            "params": [
-                {
-                    "name": "block_number",
-                    "summary": "The queried block number or a block tag",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
-                    }
-                },
-                {
-                    "name": "index",
-                    "summary": "The index in the block to search for the transaction",
-                    "required": true,
-                    "schema": {
-                        "type": "integer",
-                        "minimum": 0
-                    }
-                }
-            ],
-            "result": {
-                "name": "transactionResult",
-                "schema": {
-                    "$ref": "#/components/schemas/TXN"
-                }
-            },
-            "errors": [
-                {
-                    "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
+                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
                 },
                 {
                     "$ref": "#/components/errors/INVALID_TXN_INDEX"
@@ -374,11 +268,11 @@
             "summary": "Get the contract class hash in the given block number for the contract deployed at the given address",
             "params": [
                 {
-                    "name": "block_number",
-                    "summary": "The queried block number or a block tag",
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 },
                 {
@@ -399,7 +293,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
+                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
                 },
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
@@ -433,17 +327,16 @@
             ]
         },
         {
-            "name": "starknet_getBlockTransactionCountByHash",
+            "name": "starknet_getBlockTransactionCount",
             "summary": "Get the number of transactions in a block given a block hash",
             "description": "Returns the number of transactions in the designated block.",
             "params": [
                 {
-                    "name": "block_hash",
-                    "summary": "The hash of the requested block",
-                    "description": "The hash of the block to query or a tag referencing a block",
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 }
             ],
@@ -458,37 +351,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
-                }
-            ]
-        },
-        {
-            "name": "starknet_getBlockTransactionCountByNumber",
-            "summary": "Get the number of transactions in a block given a block number (height)",
-            "description": "Returns the number of transactions in the designated block.",
-            "params": [
-                {
-                    "name": "block_number",
-                    "summary": "The number (height) of the requested block",
-                    "description": "The number of the block to query or a tag referencing a block",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
-                    }
-                }
-            ],
-            "result": {
-                "name": "result",
-                "description": "The number of transactions in the designated block",
-                "summary": "The number of transactions in the designated block",
-                "schema": {
-                    "type": "integer",
-                    "minimum": 0
-                }
-            },
-            "errors": [
-                {
-                    "$ref": "#/components/errors/INVALID_BLOCK_NUMBER"
+                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
                 }
             ]
         },
@@ -506,11 +369,11 @@
                     "required": true
                 },
                 {
-                    "name": "block_hash",
-                    "description": "The hash (id) of the requested block or a block tag, for the block referencing the state or call the transaction on.",
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag, for the block referencing the state or call the transaction on.",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 }
             ],
@@ -539,7 +402,7 @@
                     "$ref": "#/components/errors/CONTRACT_ERROR"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
                 }
             ]
         },
@@ -557,11 +420,11 @@
                     "required": true
                 },
                 {
-                    "name": "block_hash",
-                    "description": "The hash (id) of the requested block or a block tag, for the block referencing the state or call the transaction on.",
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag, for the block referencing the state or call the transaction on.",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 }
             ],
@@ -586,7 +449,7 @@
                     "$ref": "#/components/errors/CONTRACT_ERROR"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
                 }
             ]
         },
@@ -599,6 +462,40 @@
                 "description": "The latest block number",
                 "schema": {
                     "$ref": "#/components/schemas/BLOCK_NUMBER"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/NO_BLOCKS"
+                }
+            ]
+        },
+        {
+            "name": "starknet_blockHashAndNumber",
+            "summary": "Get the most recent accepted block hash and number",
+            "params": [],
+            "result": {
+                "name": "result",
+                "description": "The latest block hash and number",
+                "schema": {
+                    "allOf": [
+                        {
+                            "type": "object",
+                            "properties": {
+                                "block_hash": {
+                                    "$ref": "#/components/schemas/BLOCK_HASH"
+                                }
+                            }
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "block_number": {
+                                    "$ref": "#/components/schemas/BLOCK_NUMBER"
+                                }
+                            }
+                        }
+                    ]
                 }
             },
             "errors": [
@@ -844,11 +741,11 @@
                 "properties": {
                     "fromBlock": {
                         "title": "from block",
-                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     },
                     "toBlock": {
                         "title": "to block",
-                        "$ref": "#/components/schemas/BLOCK_NUM_OR_TAG"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     },
                     "address": {
                         "title": "from contract",
@@ -865,22 +762,24 @@
                     }
                 }
             },
-            "BLOCK_HASH_OR_TAG": {
-                "title": "Block hash or tag",
+            "BLOCK_ID": {
+                "title": "Block hash, number or tag",
                 "oneOf": [
                     {
-                        "$ref": "#/components/schemas/BLOCK_HASH"
+                        "type": "object",
+                        "properties": {
+                            "block_hash": {
+                                "$ref": "#/components/schemas/BLOCK_HASH"
+                            }
+                        }
                     },
                     {
-                        "$ref": "#/components/schemas/BLOCK_TAG"
-                    }
-                ]
-            },
-            "BLOCK_NUM_OR_TAG": {
-                "title": "Block number or tag",
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/BLOCK_NUMBER"
+                        "type": "object",
+                        "properties": {
+                            "block_number": {
+                                "$ref": "#/components/schemas/BLOCK_NUMBER"
+                            }
+                        }
                     },
                     {
                         "$ref": "#/components/schemas/BLOCK_TAG"
@@ -1557,17 +1456,13 @@
                 "code": 22,
                 "message": "Invalid call data"
             },
-            "INVALID_BLOCK_HASH": {
+            "INVALID_BLOCK_ID": {
                 "code": 24,
-                "message": "Invalid block hash"
+                "message": "Invalid block id"
             },
             "INVALID_TXN_HASH": {
                 "code": 25,
                 "message": "Invalid transaction hash"
-            },
-            "INVALID_BLOCK_NUMBER": {
-                "code": 26,
-                "message": "Invalid block number"
             },
             "INVALID_TXN_INDEX": {
                 "code": 27,
