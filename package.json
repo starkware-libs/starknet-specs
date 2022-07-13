@@ -2,6 +2,10 @@
     "name": "openrpc_scripts",
     "version": "0.1.0",
     "description": "Tooling for OpenRPC files",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/starkware-libs/starknet-specs.git"
+    },
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
