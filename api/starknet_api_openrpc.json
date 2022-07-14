@@ -947,21 +947,27 @@
                 "$ref": "#/components/schemas/FELT"
             },
             "BLOCK_BODY_WITH_TX_HASHES": {
-                "transactions": {
-                    "description": "The hashes of the transactions included in this block",
-                    "type": "array",
-                    "items": {
-                        "description": "The hash of a single transaction",
-                        "$ref": "#/components/schemas/TXN_HASH"
+                "type": "object",
+                "properties": {
+                    "transactions": {
+                        "description": "The hashes of the transactions included in this block",
+                        "type": "array",
+                        "items": {
+                            "description": "The hash of a single transaction",
+                            "$ref": "#/components/schemas/TXN_HASH"
+                        }
                     }
                 }
             },
             "BLOCK_BODY_WITH_TXS": {
-                "transactions": {
-                    "description": "The transactions in this block",
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/components/schemas/TXN"
+                "type": "object",
+                "properties": {
+                    "transactions": {
+                        "description": "The transactions in this block",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TXN"
+                        }
                     }
                 }
             },
