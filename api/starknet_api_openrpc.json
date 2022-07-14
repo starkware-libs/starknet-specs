@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.22.0",
+        "version": "0.23.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -265,7 +265,7 @@
         },
         {
             "name": "starknet_getClassHashAt",
-            "summary": "Get the contract class hash in the given block number for the contract deployed at the given address",
+            "summary": "Get the contract class hash in the given block for the contract deployed at the given address",
             "params": [
                 {
                     "name": "block_id",
@@ -302,8 +302,16 @@
         },
         {
             "name": "starknet_getClassAt",
-            "summary": "Get the contract class definition at the given address",
+            "summary": "Get the contract class definition in the given block at the given address",
             "params": [
+                {
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_ID"
+                    }
+                },
                 {
                     "name": "contract_address",
                     "description": "The address of the contract whose class definition will be returned",
@@ -322,13 +330,16 @@
             },
             "errors": [
                 {
+                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                },
+                {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
                 }
             ]
         },
         {
             "name": "starknet_getBlockTransactionCount",
-            "summary": "Get the number of transactions in a block given a block hash",
+            "summary": "Get the number of transactions in a block given a block id",
             "description": "Returns the number of transactions in the designated block.",
             "params": [
                 {
