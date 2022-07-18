@@ -1311,7 +1311,7 @@
                 ]
             },
             "DEPLOY_TXN_RECEIPT": {
-                "title": "Declare Transaction Receipt",
+                "title": "Deploy Transaction Receipt",
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
