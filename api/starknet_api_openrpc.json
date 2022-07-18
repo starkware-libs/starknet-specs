@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.24.0",
+        "version": "0.26.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -1174,6 +1174,9 @@
                     },
                     "nonce": {
                         "$ref": "#/components/schemas/FELT"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/TXN_TYPE"
                     }
                 }
             },
@@ -1357,6 +1360,15 @@
                     "REJECTED"
                 ],
                 "description": "The status of the transaction. May be unknown in case node is not aware of it"
+            },
+            "TXN_TYPE": {
+                "type": "string",
+                "enum": [
+                    "DECLARE",
+                    "DEPLOY",
+                    "INVOKE"
+                ],
+                "description": "The type of the transaction"
             },
             "BLOCK_STATUS": {
                 "type": "string",
