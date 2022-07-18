@@ -424,7 +424,7 @@
             "params": [
                 {
                     "name": "request",
-                    "summary": "The details of the function call",
+                    "summary": "The transaction to estimate",
                     "schema": {
                         "$ref": "#/components/schemas/INVOKE_TXN"
                     },
