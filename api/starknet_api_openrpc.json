@@ -1304,19 +1304,11 @@
             },
             "DECLARE_TXN_RECEIPT": {
                 "title": "Declare Transaction Receipt",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
-                    }
-                ]
+                "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
             },
             "DEPLOY_TXN_RECEIPT": {
                 "title": "Deploy Transaction Receipt",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
-                    }
-                ]
+                "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
             },
             "TXN_RECEIPT": {
                 "oneOf": [
