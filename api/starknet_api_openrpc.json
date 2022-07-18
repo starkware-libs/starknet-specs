@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.24.0",
+        "version": "0.25.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -426,7 +426,7 @@
                     "name": "request",
                     "summary": "The details of the function call",
                     "schema": {
-                        "$ref": "#/components/schemas/FUNCTION_CALL"
+                        "$ref": "#/components/schemas/INVOKE_TXN"
                     },
                     "required": true
                 },
@@ -1254,6 +1254,12 @@
                     "statusData": {
                         "type": "string",
                         "description": "Extra information pertaining to the status"
+                    },
+                    "block_hash": {
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    },
+                    "block_number": {
+                        "$ref": "#/components/schemas/BLOCK_NUMBER"
                     }
                 },
                 "required": [
@@ -1304,6 +1310,14 @@
                     }
                 ]
             },
+            "DEPLOY_TXN_RECEIPT": {
+                "title": "Declare Transaction Receipt",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
+                    }
+                ]
+            },
             "TXN_RECEIPT": {
                 "oneOf": [
                     {
@@ -1311,6 +1325,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/DECLARE_TXN_RECEIPT"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DEPLOY_TXN_RECEIPT"
                     }
                 ]
             },
