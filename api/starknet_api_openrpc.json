@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.24.0",
+        "version": "0.27.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -866,11 +866,6 @@
                         "description": "The previous global state root",
                         "$ref": "#/components/schemas/FELT"
                     },
-                    "accepted_time": {
-                        "description": "When the block was accepted on L1. Formatted as... ",
-                        "type": "integer",
-                        "minimum": 0
-                    },
                     "state_diff": {
                         "description": "The change in state applied in this block, given as a mapping of addresses to the new values and/or new contracts",
                         "type": "object",
@@ -879,7 +874,7 @@
                                 "type": "array",
                                 "items": {
                                     "description": "A change in a single storage item",
-                                    "$ref": "#/components/schemas/STATE_DIFF_ITEM"
+                                    "$ref": "#/components/schemas/STORAGE_DIFF_ITEM"
                                 }
                             },
                             "declared_contracts": {
@@ -1106,7 +1101,7 @@
                     }
                 }
             },
-            "STATE_DIFF_ITEM": {
+            "STORAGE_DIFF_ITEM": {
                 "type": "object",
                 "properties": {
                     "address": {
