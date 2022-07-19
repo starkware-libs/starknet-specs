@@ -1,18 +1,17 @@
 #!/usr/bin/env node
 
-const { parseOpenRPCDocument, validateOpenRPCDocument } = require("@open-rpc/schema-utils-js");
+const { parseOpenRPCDocument, validateOpenRPCDocument, dereferenceDocument } = require("@open-rpc/schema-utils-js");
+const Dereferencer = require("@json-schema-tools/dereferencer");
 const fs = require('fs-extra');
 
 async function runValidation(filename) {
     try {
 
-        let json = await fileContentAsJSON(filename)
-        let externalRefs = await externalRefsFrom(json.components.schemas);
-        let allExternalSchemas = await fetchExternalSchemas(externalRefs);
-        Object.keys(allExternalSchemas).forEach(key => json.components.schemas[key] = allExternalSchemas[key]);
-        allExternalSchemas = null;
+        let docToParse = await fileContentAsJSON(filename)
+        let docToParseWithExternalRefs = await fetchExternalRefsFor(docToParse);
+        let dereffedDoc = await derefAll(docToParseWithExternalRefs);
 
-        let doc = await parseOpenRPCDocument(json);
+        let doc = await parseOpenRPCDocument(dereffedDoc, { dereference: false });
 
         const errors = validateOpenRPCDocument(doc);
         if (errors === true) {
@@ -26,6 +25,56 @@ async function runValidation(filename) {
         console.error(exn && exn.message)
     }
 }
+
+/**
+ * Given a JSON document with an OpenRPC schema, fetch all references pointing to schemas in external files,
+ * and add them to the schemas in this document.
+ * @param {JSON} docToParse The OpenRPC document
+ * @returns The amended objects.
+ */
+async function fetchExternalRefsFor(docToParse) {
+    let externalRefs = await externalRefsFrom(docToParse.components.schemas);
+    let allExternalSchemas = await fetchExternalSchemas(externalRefs);
+    Object.keys(allExternalSchemas).forEach(key => docToParse.components.schemas[key] = allExternalSchemas[key]);
+
+    return docToParse;
+}
+
+/**
+ * For a given dereferencer object, make sure its initial refs don't include refs that are already
+ * in the ref cache it has. So it won't try to resolve these.
+ *
+ * @param {Dereferencer} dereffer The dereferncer object
+ * @returns The amended dereferencer.
+ */
+function fixRefs(dereffer) {
+    dereffer.refs = dereffer.refs.filter(r => dereffer.refCache[r] === undefined);
+    return dereffer;
+}
+
+/**
+ * For a given OpenRPC document, resolve all references.
+ * This takes care of working around a bug with recursive definitions
+ * @param {JSON} doc The OpenRPC document
+ * @returns The document, with the references resolved.
+ */
+async function derefAll(doc) {
+    let dereffer = fixRefs(new Dereferencer.default(
+        doc,
+        {
+            //TOOD: look generically for all recursive definitions and put them in the cache.
+            refCache: {
+                "#/components/schemas/FUNCTION_INVOCATION": doc.components.schemas["FUNCTION_INVOCATION"]
+            },
+            rootSchema: doc
+        })
+    );
+
+    let dereffedDoc = await dereffer.resolve();
+
+    return dereffedDoc;
+}
+
 
 /**
  * Retrieve external schema definitions, from other files.
