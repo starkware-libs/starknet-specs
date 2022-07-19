@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.27.0",
+        "version": "0.28.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -1356,14 +1356,12 @@
             "TXN_STATUS": {
                 "type": "string",
                 "enum": [
-                    "UNKNOWN",
-                    "RECEIVED",
                     "PENDING",
                     "ACCEPTED_ON_L2",
                     "ACCEPTED_ON_L1",
                     "REJECTED"
                 ],
-                "description": "The status of the transaction. May be unknown in case node is not aware of it"
+                "description": "The status of the transaction"
             },
             "TXN_TYPE": {
                 "type": "string",
@@ -1378,7 +1376,6 @@
                 "type": "string",
                 "enum": [
                     "PENDING",
-                    "PROVEN",
                     "ACCEPTED_ON_L2",
                     "ACCEPTED_ON_L1",
                     "REJECTED"
