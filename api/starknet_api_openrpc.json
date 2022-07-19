@@ -1105,16 +1105,24 @@
                 "type": "object",
                 "properties": {
                     "address": {
-                        "description": "The contract address for which the state changed",
+                        "description": "The contract address for which the storage changed",
                         "$ref": "#/components/schemas/FELT"
                     },
-                    "key": {
-                        "description": "The key of the changed value",
-                        "$ref": "#/components/schemas/FELT"
-                    },
-                    "value": {
-                        "description": "The new value applied to the given address",
-                        "$ref": "#/components/schemas/FELT"
+                    "storage_entries": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "key": {
+                                    "description": "The key of the changed value",
+                                    "$ref": "#/components/schemas/FELT"
+                                },
+                                "value": {
+                                    "description": "The new value applied to the given address",
+                                    "$ref": "#/components/schemas/FELT"
+                                }
+                            }
+                        }
                     }
                 }
             },
