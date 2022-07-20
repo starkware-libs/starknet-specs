@@ -750,11 +750,11 @@
                 "title": "An event filter/query",
                 "type": "object",
                 "properties": {
-                    "fromBlock": {
+                    "from_block": {
                         "title": "from block",
                         "$ref": "#/components/schemas/BLOCK_ID"
                     },
-                    "toBlock": {
+                    "to_block": {
                         "title": "to block",
                         "$ref": "#/components/schemas/BLOCK_ID"
                     },
