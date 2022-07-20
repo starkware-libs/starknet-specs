@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.29.0",
+        "version": "0.30.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -1124,27 +1124,24 @@
                     }
                 }
             },
-            "TXN_OBJECT_AND_RECEIPT": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/TXN"
-                    },
-                    {
-                        "$ref": "#/components/schemas/TXN_RECEIPT"
-                    }
-                ]
-            },
             "TXN": {
                 "title": "Transaction",
-                "oneOf": [
+                "allOf": [
                     {
-                        "$ref": "#/components/schemas/INVOKE_TXN"
+                        "$ref": "#/components/schemas/TXN_TYPE"
                     },
                     {
-                        "$ref": "#/components/schemas/DECLARE_TXN"
-                    },
-                    {
-                        "$ref": "#/components/schemas/DEPLOY_TXN"
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/INVOKE_TXN"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DECLARE_TXN"
+                            },
+                            {
+                                "$ref": "#/components/schemas/DEPLOY_TXN"
+                            }
+                        ]
                     }
                 ]
             },
@@ -1175,9 +1172,6 @@
                     },
                     "nonce": {
                         "$ref": "#/components/schemas/FELT"
-                    },
-                    "type": {
-                        "$ref": "#/components/schemas/TXN_TYPE"
                     }
                 }
             },
