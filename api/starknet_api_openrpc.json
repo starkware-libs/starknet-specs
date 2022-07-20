@@ -873,7 +873,7 @@
                             "storage_diffs": {
                                 "type": "array",
                                 "items": {
-                                    "description": "A change in a single storage item",
+                                    "description": "The changes in the storage per contract address",
                                     "$ref": "#/components/schemas/STORAGE_DIFF_ITEM"
                                 }
                             },
@@ -1109,6 +1109,7 @@
                         "$ref": "#/components/schemas/FELT"
                     },
                     "storage_entries": {
+                        "description": "The changes in the storage of the contract",
                         "type": "array",
                         "items": {
                             "type": "object",
