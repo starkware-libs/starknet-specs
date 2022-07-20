@@ -6,7 +6,6 @@ const fs = require('fs-extra');
 
 async function runValidation(filename) {
     try {
-
         let docToParse = await fileContentAsJSON(filename)
         let docToParseWithExternalRefs = await fetchExternalRefsFor(docToParse);
         let dereffedDoc = await derefAll(docToParseWithExternalRefs);
@@ -54,7 +53,7 @@ function fixRefs(dereffer) {
 
 /**
  * For a given OpenRPC document, resolve all references.
- * This takes care of working around a bug with recursive definitions
+ * This takes care of working around a bug with recursive definitions.
  * @param {JSON} doc The OpenRPC document
  * @returns The document, with the references resolved.
  */
