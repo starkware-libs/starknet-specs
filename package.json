@@ -1,0 +1,19 @@
+{
+    "name": "openrpc_scripts",
+    "version": "0.1.0",
+    "description": "Tooling for OpenRPC files",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/starkware-libs/starknet-specs.git"
+    },
+    "scripts": {
+        "validate_all": "node validate.js api/starknet_api_openrpc.json && node validate.js api/starknet_write_api.json && node validate.js api/starknet_trace_api_openrpc.json"
+    },
+    "author": "Lior Schejter",
+    "license": "MIT",
+    "dependencies": {
+        "@open-rpc/schema-utils-js": "^1.16.1",
+        "fs-extra": "10.1.0",
+        "@json-schema-tools/dereferencer": "1.5.4"
+    }
+}
