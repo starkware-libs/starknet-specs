@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.28.0",
+        "version": "0.29.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -1263,7 +1263,9 @@
                 "required": [
                     "txn_hash",
                     "actual_fee",
-                    "status"
+                    "status",
+                    "block_hash",
+                    "block_number"
                 ]
             },
             "INVOKE_TXN_RECEIPT": {
