@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.29.0",
+        "version": "0.30.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -489,24 +489,15 @@
                 "name": "result",
                 "description": "The latest block hash and number",
                 "schema": {
-                    "allOf": [
-                        {
-                            "type": "object",
-                            "properties": {
-                                "block_hash": {
-                                    "$ref": "#/components/schemas/BLOCK_HASH"
-                                }
-                            }
+                    "type": "object",
+                    "properties": {
+                        "block_hash": {
+                            "$ref": "#/components/schemas/BLOCK_HASH"
                         },
-                        {
-                            "type": "object",
-                            "properties": {
-                                "block_number": {
-                                    "$ref": "#/components/schemas/BLOCK_NUMBER"
-                                }
-                            }
+                        "block_number": {
+                            "$ref": "#/components/schemas/BLOCK_NUMBER"
                         }
-                    ]
+                    }
                 }
             },
             "errors": [
@@ -1124,16 +1115,6 @@
                     }
                 }
             },
-            "TXN_OBJECT_AND_RECEIPT": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/TXN"
-                    },
-                    {
-                        "$ref": "#/components/schemas/TXN_RECEIPT"
-                    }
-                ]
-            },
             "TXN": {
                 "title": "Transaction",
                 "oneOf": [
@@ -1158,7 +1139,7 @@
             "COMMON_TXN_PROPERTIES": {
                 "type": "object",
                 "properties": {
-                    "txn_hash": {
+                    "transaction_hash": {
                         "$ref": "#/components/schemas/TXN_HASH",
                         "description": "The hash identifying the transaction"
                     },
@@ -1207,7 +1188,7 @@
                 "description": "The structure of a deploy transaction. Note that this transaction type is deprecated and will no longer be supported in future versions",
                 "type": "object",
                 "properties": {
-                    "txn_hash": {
+                    "transaction_hash": {
                         "$ref": "#/components/schemas/TXN_HASH",
                         "description": "The hash identifying the transaction"
                     },
@@ -1244,7 +1225,7 @@
                 "title": "Common properties for a transaction receipt",
                 "type": "object",
                 "properties": {
-                    "txn_hash": {
+                    "transaction_hash": {
                         "$ref": "#/components/schemas/TXN_HASH",
                         "description": "The hash identifying the transaction"
                     },
@@ -1267,7 +1248,7 @@
                     }
                 },
                 "required": [
-                    "txn_hash",
+                    "transaction_hash",
                     "actual_fee",
                     "status",
                     "block_hash",
