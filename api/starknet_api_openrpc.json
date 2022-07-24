@@ -1236,7 +1236,7 @@
                     "status": {
                         "$ref": "#/components/schemas/TXN_STATUS"
                     },
-                    "statusData": {
+                    "status_data": {
                         "type": "string",
                         "description": "Extra information pertaining to the status"
                     },
