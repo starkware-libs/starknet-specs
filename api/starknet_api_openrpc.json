@@ -1266,7 +1266,7 @@
                     "block_number"
                 ]
             },
-            "INVOKE_TXN_SPECIFIC_RECEIPT_PROPS": {
+            "INVOKE_TXN_RECEIPT_PROPERTIES": {
                 "description": "Properties specific to invoke transaction",
                 "type": "object",
                 "properties": {
@@ -1300,7 +1300,7 @@
                         "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
                     },
                     {
-                        "$ref": "#/components/schemas/INVOKE_TXN_SPECIFIC_RECEIPT_PROPS"
+                        "$ref": "#/components/schemas/INVOKE_TXN_RECEIPT_PROPERTIES"
                     }
                 ]
             },
@@ -1353,7 +1353,7 @@
                         "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
                     },
                     {
-                        "$ref": "#/components/schemas/INVOKE_TXN_SPECIFIC_RECEIPT_PROPS"
+                        "$ref": "#/components/schemas/INVOKE_TXN_RECEIPT_PROPERTIES"
                     }
                 ]
             },
