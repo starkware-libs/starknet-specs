@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.31.0",
+        "version": "0.32.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -636,8 +636,16 @@
                     "schema": {
                         "$ref": "#/components/schemas/ADDRESS"
                     }
+                },
+                {
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_ID"
+                    }
                 }
-            ],
+           ],
             "result": {
                 "name": "result",
                 "description": "The last nonce used for the given contract.",
