@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.32.0",
+        "version": "0.33.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -239,8 +239,16 @@
         },
         {
             "name": "starknet_getClass",
-            "summary": "Get the contract class definition associated with the given hash",
+            "summary": "Get the contract class definition in the given block associated with the given hash",
             "params": [
+                {
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_ID"
+                    }
+                },
                 {
                     "name": "class_hash",
                     "description": "The hash of the requested contract class",
@@ -259,7 +267,10 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_CONTRACT_CLASS_HASH"
+                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                },
+                {
+                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
                 }
             ]
         },
@@ -1565,10 +1576,6 @@
             "INVALID_TXN_INDEX": {
                 "code": 27,
                 "message": "Invalid transaction index in a block"
-            },
-            "INVALID_CONTRACT_CLASS_HASH": {
-                "code": 28,
-                "message": "The supplied contract class hash is invalid or unknown"
             },
             "PAGE_SIZE_TOO_BIG": {
                 "code": 31,
