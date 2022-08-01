@@ -270,7 +270,7 @@
                     "$ref": "#/components/errors/INVALID_BLOCK_ID"
                 },
                 {
-                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                    "$ref": "#/components/errors/INVALID_CONTRACT_CLASS_HASH"
                 }
             ]
         },
@@ -1576,6 +1576,10 @@
             "INVALID_TXN_INDEX": {
                 "code": 27,
                 "message": "Invalid transaction index in a block"
+            },
+            "INVALID_CONTRACT_CLASS_HASH": {
+                "code": 28,
+                "message": "The supplied contract class hash is invalid or unknown"
             },
             "PAGE_SIZE_TOO_BIG": {
                 "code": 31,
