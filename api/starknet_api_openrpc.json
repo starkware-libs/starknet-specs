@@ -656,7 +656,7 @@
                         "$ref": "#/components/schemas/ADDRESS"
                     }
                 }
-           ],
+            ],
             "result": {
                 "name": "result",
                 "description": "The last nonce used for the given contract.",
@@ -1498,8 +1498,17 @@
                                 }
                             }
                         }
+                    },
+                    "abi": {
+                        "schema": {
+                            "$ref": "#/components/schemas/CONTRACT_ABI"
+                        }
                     }
-                }
+                },
+                "required": [
+                    "program",
+                    "entry_points_by_type"
+                ]
             },
             "CONTRACT_ENTRY_POINT_LIST": {
                 "type": "array",
@@ -1521,6 +1530,135 @@
                         "schema": {
                             "$ref": "#/components/schemas/FELT"
                         }
+                    }
+                }
+            },
+            "CONTRACT_ABI": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/CONTRACT_ABI_ENTRY"
+                }
+            },
+            "CONTRACT_ABI_ENTRY": {
+                "type": "object",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/FUNCTION_ABI_ENTRY"
+                    },
+                    {
+                        "$ref": "#/components/schemas/EVENT_ABI_ENTRY"
+                    },
+                    {
+                        "$ref": "#/components/schemas/STRUCT_ABI_ENTRY"
+                    }
+                ]
+            },
+            "ABI_ITEM_TYPE": {
+                "type": "string",
+                "enum": [
+                    "function",
+                    "l1_handler",
+                    "constructor",
+                    "event",
+                    "struct"
+                ]
+            },
+            "STRUCT_ABI_ENTRY": {
+                "type": {
+                    "schema": {
+                        "$ref": "#/components/schemas/ABI_ITEM_TYPE"
+                    }
+                },
+                "name": {
+                    "description": "The event name",
+                    "type": "string"
+                },
+                "size": {
+                    "type": "integer"
+                },
+                "members": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/STRUCT_MEMBER"
+                    }
+                }
+            },
+            "STRUCT_MEMBER": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "the property's name",
+                        "type": "string"
+                    },
+                    "offset": {
+                        "description": "offset of this property within the struct",
+                        "type": "integer"
+                    },
+                    "type": {
+                        "description": "the property's type",
+                        "type": "string"
+                    }
+                }
+            },
+            "EVENT_ABI_ENTRY": {
+                "type": {
+                    "schema": {
+                        "$ref": "#/components/schemas/ABI_ITEM_TYPE"
+                    }
+                },
+                "name": {
+                    "description": "The event name",
+                    "type": "string"
+                },
+                "keys": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/FUNCTION_SIGNATURE_ITEM"
+                    }
+                },
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/components/schemas/FUNCTION_SIGNATURE_ITEM"
+                    }
+                }
+            },
+            "FUNCTION_ABI_ENTRY": {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ABI_ITEM_TYPE"
+                        }
+                    },
+                    "name": {
+                        "description": "The function name",
+                        "type": "string"
+                    },
+                    "inputs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FUNCTION_SIGNATURE_ITEM"
+                        }
+                    },
+                    "outputs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FUNCTION_SIGNATURE_ITEM"
+                        }
+                    }
+                }
+            },
+            "FUNCTION_SIGNATURE_ITEM": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "description": "The parameter's name",
+                        "type": "string"
+                    },
+                    "type": {
+                        "description": "The parameter's type",
+                        "type": "string"
                     }
                 }
             },
