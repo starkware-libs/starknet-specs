@@ -545,19 +545,6 @@
             }
         },
         {
-            "name": "starknet_protocolVersion",
-            "summary": "Returns the current starknet protocol version identifier, as supported by this sequencer",
-            "params": [],
-            "result": {
-                "name": "protocolVersion",
-                "summary": "The protocol version",
-                "description": "The protocol version currently supported by this sequencer",
-                "schema": {
-                    "$ref": "#/components/schemas/PROTOCOL_VERSION"
-                }
-            }
-        },
-        {
             "name": "starknet_syncing",
             "summary": "Returns an object about the sync status, or false if the node is not synching",
             "params": [],
@@ -656,7 +643,7 @@
                         "$ref": "#/components/schemas/ADDRESS"
                     }
                 }
-           ],
+            ],
             "result": {
                 "name": "result",
                 "description": "The last nonce used for the given contract.",
@@ -850,12 +837,6 @@
             },
             "NUM_AS_HEX": {
                 "title": "An integer number in hex format (0x...)",
-                "type": "string",
-                "pattern": "^0x[a-fA-F0-9]+$"
-            },
-            "PROTOCOL_VERSION": {
-                "title": "protocolVersion",
-                "description": "StarkNet protocol version, given in hex representation.",
                 "type": "string",
                 "pattern": "^0x[a-fA-F0-9]+$"
             },
