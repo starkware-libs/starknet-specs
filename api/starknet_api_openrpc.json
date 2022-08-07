@@ -656,7 +656,7 @@
                         "$ref": "#/components/schemas/ADDRESS"
                     }
                 }
-           ],
+            ],
             "result": {
                 "name": "result",
                 "description": "The last nonce used for the given contract.",
@@ -1242,15 +1242,40 @@
                     }
                 }
             },
+            "INVOKE_TXN_V0": {
+                "title": "version 0 invoke transaction",
+                "description": "invokes a specific function in the desired contract (not necessarily an account)",
+                "$ref": "#/components/schemas/FUNCTION_CALL"
+            },
+            "INVOKE_TXN_V1": {
+                "title": "version 1 invoke transaction",
+                "description": "initiates a transaction from a given account",
+                "properties": {
+                    "account_address": {
+                        "$ref": "#/components/schemas/ADDRESS"
+                    },
+                    "calldata": {
+                        "type": "array",
+                        "description": "The parameters passed to the function",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                }
+            },
             "INVOKE_TXN": {
-                "title": "Invoke Contract Transaction",
-                "allOf": [
-                    {
+                "title": "Initiate a transaction from an account",
+                "properties": {
+                    "account_address": {
                         "$ref": "#/components/schemas/COMMON_TXN_PROPERTIES"
+                    }
+                },
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/INVOKE_TXN_V0"
                     },
                     {
-                        "$ref": "#/components/schemas/FUNCTION_CALL",
-                        "description": "The function the transaction invokes"
+                        "$ref": "#/components/schemas/INVOKE_TXN_V1"
                     }
                 ]
             },
