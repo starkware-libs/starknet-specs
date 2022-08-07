@@ -1302,6 +1302,35 @@
                     }
                 ]
             },
+            "L1_HANDLER_TXN": {
+                "allOf": [
+                    {
+                        "type": "object",
+                        "title": "l1-->l2 message transaction",
+                        "description": "a call to an l1_handler on an L2 contract induced by a message from L1",
+                        "properties": {
+                            "transaction_hash": {
+                                "$ref": "#/components/schemas/TXN_HASH",
+                                "description": "The hash identifying the transaction"
+                            },
+                            "version": {
+                                "description": "Version of the transaction scheme",
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                            },
+                            "type": {
+                                "$ref": "#/components/schemas/TXN_TYPE"
+                            },
+                            "nonce": {
+                                "description": "The L1->L2 message nonce field of the SN Core L1 contract at the time the transaction was sent",
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/FUNCTION_CALL"
+                    }
+                ]
+            },
             "COMMON_RECEIPT_PROPERTIES": {
                 "title": "Common properties for a transaction receipt",
                 "type": "object",
@@ -1317,15 +1346,14 @@
                     "status": {
                         "$ref": "#/components/schemas/TXN_STATUS"
                     },
-                    "status_data": {
-                        "type": "string",
-                        "description": "Extra information pertaining to the status"
-                    },
                     "block_hash": {
                         "$ref": "#/components/schemas/BLOCK_HASH"
                     },
                     "block_number": {
                         "$ref": "#/components/schemas/BLOCK_NUMBER"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/TXN_TYPE"
                     }
                 },
                 "required": [
@@ -1345,10 +1373,6 @@
                         "items": {
                             "$ref": "#/components/schemas/MSG_TO_L1"
                         }
-                    },
-                    "l1_origin_message": {
-                        "description": "In case this transaction was an L1 handler, this is the original message that invoked it",
-                        "$ref": "#/components/schemas/MSG_TO_L2"
                     },
                     "events": {
                         "description": "The events emitted as part of this transaction",
@@ -1382,10 +1406,17 @@
                 "title": "Deploy Transaction Receipt",
                 "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
             },
+            "L1_HANDLER_TXN_RECEIPT": {
+                "title": "receipt for l1 handler transaction",
+                "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
+            },
             "TXN_RECEIPT": {
                 "oneOf": [
                     {
                         "$ref": "#/components/schemas/INVOKE_TXN_RECEIPT"
+                    },
+                    {
+                        "$ref": "#/components/schemas/L1_HANDLER_TXN_RECEIPT"
                     },
                     {
                         "$ref": "#/components/schemas/DECLARE_TXN_RECEIPT"
@@ -1409,6 +1440,9 @@
                     "actual_fee": {
                         "$ref": "#/components/schemas/FELT",
                         "description": "The fee that was charged by the sequencer"
+                    },
+                    "type": {
+                        "$ref": "#/components/schemas/TXN_TYPE"
                     }
                 },
                 "required": [
@@ -1485,7 +1519,8 @@
                 "enum": [
                     "DECLARE",
                     "DEPLOY",
-                    "INVOKE"
+                    "INVOKE",
+                    "L1_HANDLER"
                 ],
                 "description": "The type of the transaction"
             },
