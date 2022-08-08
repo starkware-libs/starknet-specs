@@ -12,33 +12,11 @@
             "summary": "Submit a new transaction to be added to the chain",
             "params": [
                 {
-                    "name": "function_invocation",
-                    "description": "The information needed to invoke the function (contract, selector, call data)",
+                    "name": "invoke functi",
+                    "description": "The information needed to invoke the contract or account",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/FUNCTION_CALL"
-                    }
-                },
-                {
-                    "name": "signature",
-                    "description": "The signature over the transaction",
-                    "required": false,
-                    "schema": {
-                        "$ref": "#/components/schemas/SIGNATURE"
-                    }
-                },
-                {
-                    "name": "max_fee",
-                    "description": "The maximum fee paid for the transaction, in ETH",
-                    "schema": {
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
-                    }
-                },
-                {
-                    "name": "version",
-                    "description": "Version of the transaction scheme",
-                    "schema": {
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                        "$ref": "#/components/schemas/BROADCASTED_INVOKE_TXN"
                     }
                 }
             ],

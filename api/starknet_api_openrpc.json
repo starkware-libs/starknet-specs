@@ -437,7 +437,7 @@
                     "name": "request",
                     "summary": "The transaction to estimate",
                     "schema": {
-                        "$ref": "#/components/schemas/INVOKE_TXN"
+                        "$ref": "#/components/schemas/BROADCASTED_INVOKE_TXN"
                     },
                     "required": true
                 },
@@ -1158,13 +1158,10 @@
                     "$ref": "#/components/schemas/FELT"
                 }
             },
-            "COMMON_TXN_PROPERTIES": {
+            "BROADCASTED_TXN_COMMON_PROPERTIES": {
                 "type": "object",
+                "description": "common properties of a transaction that is sent to the sequencer (but is not yet in a block)",
                 "properties": {
-                    "transaction_hash": {
-                        "$ref": "#/components/schemas/TXN_HASH",
-                        "description": "The hash identifying the transaction"
-                    },
                     "max_fee": {
                         "$ref": "#/components/schemas/FELT",
                         "description": "The maximal fee that can be charged for including the transaction"
@@ -1178,11 +1175,27 @@
                     },
                     "nonce": {
                         "$ref": "#/components/schemas/FELT"
-                    },
-                    "type": {
-                        "$ref": "#/components/schemas/TXN_TYPE"
                     }
                 }
+            },
+            "COMMON_TXN_PROPERTIES": {
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "transaction_hash": {
+                                "$ref": "#/components/schemas/TXN_HASH",
+                                "description": "The hash identifying the transaction"
+                            },
+                            "type": {
+                                "$ref": "#/components/schemas/TXN_TYPE"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
+                    }
+                ]
             },
             "DECLARE_TXN": {
                 "title": "Declare Contract Transaction",
@@ -1268,6 +1281,24 @@
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/COMMON_TXN_PROPERTIES"
+                    },
+                    {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/INVOKE_TXN_V0"
+                            },
+                            {
+                                "$ref": "#/components/schemas/INVOKE_TXN_V1"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "BROADCASTED_INVOKE_TXN": {
+                "description": "the transaction's representation when it's sent to the sequencer (but not yet in a block)",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
                     },
                     {
                         "oneOf": [
