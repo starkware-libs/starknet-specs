@@ -1265,17 +1265,19 @@
             },
             "INVOKE_TXN": {
                 "title": "Initiate a transaction from an account",
-                "properties": {
-                    "account_address": {
-                        "$ref": "#/components/schemas/COMMON_TXN_PROPERTIES"
-                    }
-                },
-                "oneOf": [
+                "allOf": [
                     {
-                        "$ref": "#/components/schemas/INVOKE_TXN_V0"
+                        "$ref": "#/components/schemas/COMMON_TXN_PROPERTIES"
                     },
                     {
-                        "$ref": "#/components/schemas/INVOKE_TXN_V1"
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/INVOKE_TXN_V0"
+                            },
+                            {
+                                "$ref": "#/components/schemas/INVOKE_TXN_V1"
+                            }
+                        ]
                     }
                 ]
             },
