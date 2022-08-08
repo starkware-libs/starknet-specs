@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.33.0",
+        "version": "0.34.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -867,8 +867,8 @@
                             "storage_diffs": {
                                 "type": "array",
                                 "items": {
-                                    "description": "A change in a single storage item",
-                                    "$ref": "#/components/schemas/STORAGE_DIFF_ITEM"
+                                    "description": "The changes in the storage per contract address",
+                                    "$ref": "#/components/schemas/CONTRACT_STORAGE_DIFF_ITEM"
                                 }
                             },
                             "declared_contracts": {
@@ -1101,20 +1101,29 @@
                     }
                 }
             },
-            "STORAGE_DIFF_ITEM": {
+            "CONTRACT_STORAGE_DIFF_ITEM": {
                 "type": "object",
                 "properties": {
                     "address": {
-                        "description": "The contract address for which the state changed",
+                        "description": "The contract address for which the storage changed",
                         "$ref": "#/components/schemas/FELT"
                     },
-                    "key": {
-                        "description": "The key of the changed value",
-                        "$ref": "#/components/schemas/FELT"
-                    },
-                    "value": {
-                        "description": "The new value applied to the given address",
-                        "$ref": "#/components/schemas/FELT"
+                    "storage_entries": {
+                        "description": "The changes in the storage of the contract",
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "key": {
+                                    "description": "The key of the changed value",
+                                    "$ref": "#/components/schemas/FELT"
+                                },
+                                "value": {
+                                    "description": "The new value applied to the given address",
+                                    "$ref": "#/components/schemas/FELT"
+                                }
+                            }
+                        }
                     }
                 }
             },
