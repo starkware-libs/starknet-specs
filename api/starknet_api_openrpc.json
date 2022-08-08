@@ -1564,41 +1564,43 @@
                 ]
             },
             "STRUCT_ABI_ENTRY": {
-                "type": {
-                    "schema": {
-                        "$ref": "#/components/schemas/ABI_ITEM_TYPE"
-                    }
-                },
-                "name": {
-                    "description": "The event name",
-                    "type": "string"
-                },
-                "size": {
-                    "type": "integer"
-                },
-                "members": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/components/schemas/STRUCT_MEMBER"
+                "properties": {
+                    "type": {
+                        "schema": {
+                            "$ref": "#/components/schemas/ABI_ITEM_TYPE"
+                        }
+                    },
+                    "name": {
+                        "description": "The struct name",
+                        "type": "string"
+                    },
+                    "size": {
+                        "type": "integer"
+                    },
+                    "members": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/STRUCT_MEMBER"
+                        }
                     }
                 }
             },
             "STRUCT_MEMBER": {
                 "type": "object",
-                "properties": {
-                    "name": {
-                        "description": "the property's name",
-                        "type": "string"
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/TYPED_PARAMETER"
                     },
-                    "offset": {
-                        "description": "offset of this property within the struct",
-                        "type": "integer"
-                    },
-                    "type": {
-                        "description": "the property's type",
-                        "type": "string"
+                    {
+                        "type": "object",
+                        "properties": {
+                            "offset": {
+                                "description": "offset of this property within the struct",
+                                "type": "integer"
+                            }
+                        }
                     }
-                }
+                ]
             },
             "EVENT_ABI_ENTRY": {
                 "type": {
@@ -1613,13 +1615,13 @@
                 "keys": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/components/schemas/FUNCTION_SIGNATURE_ITEM"
+                        "$ref": "#/components/schemas/TYPED_PARAMETER"
                     }
                 },
                 "data": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/components/schemas/FUNCTION_SIGNATURE_ITEM"
+                        "$ref": "#/components/schemas/TYPED_PARAMETER"
                     }
                 }
             },
@@ -1638,18 +1640,18 @@
                     "inputs": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/FUNCTION_SIGNATURE_ITEM"
+                            "$ref": "#/components/schemas/TYPED_PARAMETER"
                         }
                     },
                     "outputs": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/FUNCTION_SIGNATURE_ITEM"
+                            "$ref": "#/components/schemas/TYPED_PARAMETER"
                         }
                     }
                 }
             },
-            "FUNCTION_SIGNATURE_ITEM": {
+            "TYPED_PARAMETER": {
                 "type": "object",
                 "properties": {
                     "name": {
