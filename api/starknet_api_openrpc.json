@@ -1553,21 +1553,30 @@
                     }
                 ]
             },
-            "ABI_ITEM_TYPE": {
+            "STRUCT_ABI_TYPE": {
+                "type": "string",
+                "enum": [
+                    "struct"
+                ]
+            },
+            "EVENT_ABI_TYPE": {
+                "type": "string",
+                "enum": [
+                    "event"
+                ]
+            },
+            "FUNCTION_ABI_TYPE": {
                 "type": "string",
                 "enum": [
                     "function",
-                    "l1_handler",
-                    "constructor",
-                    "event",
-                    "struct"
+                    "l1_handler"
                 ]
             },
             "STRUCT_ABI_ENTRY": {
                 "properties": {
                     "type": {
                         "schema": {
-                            "$ref": "#/components/schemas/ABI_ITEM_TYPE"
+                            "$ref": "#/components/schemas/STRUCT_ABI_TYPE"
                         }
                     },
                     "name": {
@@ -1605,7 +1614,7 @@
             "EVENT_ABI_ENTRY": {
                 "type": {
                     "schema": {
-                        "$ref": "#/components/schemas/ABI_ITEM_TYPE"
+                        "$ref": "#/components/schemas/EVENT_ABI_TYPE"
                     }
                 },
                 "name": {
@@ -1630,7 +1639,7 @@
                 "properties": {
                     "type": {
                         "schema": {
-                            "$ref": "#/components/schemas/ABI_ITEM_TYPE"
+                            "$ref": "#/components/schemas/FUNCTION_ABI_TYPE"
                         }
                     },
                     "name": {
