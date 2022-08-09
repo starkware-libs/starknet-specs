@@ -1269,7 +1269,7 @@
                     },
                     "calldata": {
                         "type": "array",
-                        "description": "The parameters passed to the function",
+                        "description": "The data expected by the account's `execute` function (in most usecases, this includes the called contract address and a function selector)",
                         "items": {
                             "$ref": "#/components/schemas/FELT"
                         }

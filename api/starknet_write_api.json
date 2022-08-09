@@ -150,6 +150,9 @@
             "TXN_HASH": {
                 "$ref": "starknet_api_openrpc.json#/components/schemas/TXN_HASH"
             },
+            "BROADCASTED_INVOKE_TXN": {
+                "$ref": "starknet_api_openrpc.json#/components/schemas/BROADCASTED_INVOKE_TXN"
+            },
             "FUNCTION_CALL": {
                 "$ref": "starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
             }
