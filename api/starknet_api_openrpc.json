@@ -1584,7 +1584,8 @@
                         "type": "string"
                     },
                     "size": {
-                        "type": "integer"
+                        "type": "integer",
+                        "minimum": 1
                     },
                     "members": {
                         "type": "array",
@@ -1612,25 +1613,28 @@
                 ]
             },
             "EVENT_ABI_ENTRY": {
-                "type": {
-                    "schema": {
-                        "$ref": "#/components/schemas/EVENT_ABI_TYPE"
-                    }
-                },
-                "name": {
-                    "description": "The event name",
-                    "type": "string"
-                },
-                "keys": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/components/schemas/TYPED_PARAMETER"
-                    }
-                },
-                "data": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/components/schemas/TYPED_PARAMETER"
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "schema": {
+                            "$ref": "#/components/schemas/EVENT_ABI_TYPE"
+                        }
+                    },
+                    "name": {
+                        "description": "The event name",
+                        "type": "string"
+                    },
+                    "keys": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TYPED_PARAMETER"
+                        }
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TYPED_PARAMETER"
+                        }
                     }
                 }
             },
