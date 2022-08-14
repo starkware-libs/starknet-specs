@@ -612,6 +612,9 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/PAGE_SIZE_TOO_BIG"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_CONTINUATION_TOKEN"
                 }
             ]
         },
@@ -1566,6 +1569,10 @@
             "NO_BLOCKS": {
                 "code": 32,
                 "message": "There are no blocks"
+            },
+            "INVALID_CONTINUATION_TOKEN": {
+                "code": 33,
+                "message": "The supplied continuation token is invalid or unknown"
             },
             "CONTRACT_ERROR": {
                 "code": 40,
