@@ -40,17 +40,11 @@
             "summary": "Submit a new class declaration transaction",
             "params": [
                 {
-                    "name": "contract_class",
-                    "description": "The class to be declared",
+                    "name": "class_declaration",
+                    "description": "The information needed to declare a new class",
+                    "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/CONTRACT_CLASS"
-                    }
-                },
-                {
-                    "name": "version",
-                    "description": "Version of the transaction scheme",
-                    "schema": {
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN"
                     }
                 }
             ],

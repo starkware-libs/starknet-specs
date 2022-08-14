@@ -1197,11 +1197,11 @@
                     }
                 ]
             },
-            "DECLARE_TXN": {
-                "title": "Declare Contract Transaction",
+            "BROADCASTED_DECLARE_TXN": {
+                "description": "the transaction's representation when it's sent to the sequencer (but not yet in a block)",
                 "allOf": [
                     {
-                        "$ref": "#/components/schemas/COMMON_TXN_PROPERTIES"
+                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
                     },
                     {
                         "type": "object",
@@ -1213,6 +1213,26 @@
                             "sender_address": {
                                 "description": "The address of the account contract sending the declaration transaction",
                                 "$ref": "#/components/schemas/ADDRESS"
+                            }
+                        }
+                    }
+                ]
+            },
+            "DECLARE_TXN": {
+                "title": "Declare Contract Transaction",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BRODCASTED_DECLARE_TXN"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "transaction_hash": {
+                                "$ref": "#/components/schemas/TXN_HASH",
+                                "description": "The hash identifying the transaction"
+                            },
+                            "type": {
+                                "$ref": "#/components/schemas/TXN_TYPE"
                             }
                         }
                     }
