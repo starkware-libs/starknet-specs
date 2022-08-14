@@ -667,7 +667,8 @@
                         "type": "string"
                     },
                     "chunk_size": {
-                        "type": "integer"
+                        "type": "integer",
+                        "minimum": 1
                     }
                 },
                 "required": [
