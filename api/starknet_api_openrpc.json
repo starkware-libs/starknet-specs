@@ -1162,6 +1162,9 @@
                 "type": "object",
                 "description": "common properties of a transaction that is sent to the sequencer (but is not yet in a block)",
                 "properties": {
+                    "type": {
+                        "$ref": "#/components/schemas/TXN_TYPE"
+                    },
                     "max_fee": {
                         "$ref": "#/components/schemas/FELT",
                         "description": "The maximal fee that can be charged for including the transaction"
@@ -1186,9 +1189,6 @@
                             "transaction_hash": {
                                 "$ref": "#/components/schemas/TXN_HASH",
                                 "description": "The hash identifying the transaction"
-                            },
-                            "type": {
-                                "$ref": "#/components/schemas/TXN_TYPE"
                             }
                         }
                     },
