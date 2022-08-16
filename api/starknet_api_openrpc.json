@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.35.0",
+        "version": "0.37.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -1318,7 +1318,10 @@
                                 "$ref": "#/components/schemas/NUM_AS_HEX"
                             },
                             "type": {
-                                "$ref": "#/components/schemas/TXN_TYPE"
+                                "type": "string",
+                                "enum": [
+                                    "L1_HANDLER"
+                                ]
                             },
                             "nonce": {
                                 "description": "The L1->L2 message nonce field of the SN Core L1 contract at the time the transaction was sent",
