@@ -437,7 +437,7 @@
                     "name": "request",
                     "summary": "The transaction to estimate",
                     "schema": {
-                        "$ref": "#/components/schemas/BROADCASTED_INVOKE_TXN"
+                        "$ref": "#/components/schemas/BROADCASTED_TXN"
                     },
                     "required": true
                 },
@@ -1141,6 +1141,21 @@
                     }
                 ]
             },
+            "BROADCASTED_TXN": {
+                "description": "the transaction's representation when it's sent to the sequencer (but not yet in a block)",
+                "title": "Transaction",
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_INVOKE_TXN"
+                    },
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN"
+                    },
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_DEPLOY_TXN"
+                    }
+                ]
+            },
             "SIGNATURE": {
                 "title": "A transaction signature",
                 "type": "array",
@@ -1208,19 +1223,74 @@
                     }
                 ]
             },
+            "BROADCASTED_DECLARE_TXN": {
+                "title": "mempool representation of a declare transaction",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "contract_class": {
+                                "description": "The class to be declared",
+                                "schema": {
+                                    "$ref": "#/components/schemas/CONTRACT_CLASS"
+                                }
+                            },
+                            "sender_address": {
+                                "description": "The address of the account contract sending the declaration transaction",
+                                "$ref": "#/components/schemas/ADDRESS"
+                            }
+                        }
+                    }
+                ]
+            },
             "DEPLOY_TXN": {
                 "title": "Deploy Contract Transaction",
                 "description": "The structure of a deploy transaction. Note that this transaction type is deprecated and will no longer be supported in future versions",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "transaction_hash": {
+                                "$ref": "#/components/schemas/TXN_HASH",
+                                "description": "The hash identifying the transaction"
+                            },
+                            "class_hash": {
+                                "description": "The hash of the deployed contract's class",
+                                "$ref": "#/components/schemas/FELT"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/DEPLOY_TXN_PROPERTIES"
+                    }
+                ]
+            },
+            "BROADCASTED_DEPLOY_TXN": {
+                "title": "mempool representation of a deploy transaction",
+                "description": "The structure of a deploy transaction. Note that this transaction type is deprecated and will no longer be supported in future versions",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "contract_class": {
+                                "description": "The class of the contract that will be deployed",
+                                "schema": {
+                                    "$ref": "#/components/schemas/CONTRACT_CLASS"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/DEPLOY_TXN_PROPERTIES"
+                    }
+                ]
+            },
+            "DEPLOY_TXN_PROPERTIES": {
                 "type": "object",
                 "properties": {
-                    "transaction_hash": {
-                        "$ref": "#/components/schemas/TXN_HASH",
-                        "description": "The hash identifying the transaction"
-                    },
-                    "class_hash": {
-                        "description": "The hash of the deployed contract's class",
-                        "$ref": "#/components/schemas/FELT"
-                    },
                     "version": {
                         "description": "Version of the transaction scheme",
                         "$ref": "#/components/schemas/NUM_AS_HEX"
@@ -1285,7 +1355,7 @@
                 ]
             },
             "BROADCASTED_INVOKE_TXN": {
-                "description": "the transaction's representation when it's sent to the sequencer (but not yet in a block)",
+                "description": "mempool representation of an invoke transaction",
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
