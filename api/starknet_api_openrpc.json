@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.34.0",
+        "version": "0.35.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -437,7 +437,7 @@
                     "name": "request",
                     "summary": "The transaction to estimate",
                     "schema": {
-                        "$ref": "#/components/schemas/INVOKE_TXN"
+                        "$ref": "#/components/schemas/BROADCASTED_INVOKE_TXN"
                     },
                     "required": true
                 },
@@ -1148,12 +1148,12 @@
                     "$ref": "#/components/schemas/FELT"
                 }
             },
-            "COMMON_TXN_PROPERTIES": {
+            "BROADCASTED_TXN_COMMON_PROPERTIES": {
                 "type": "object",
+                "description": "common properties of a transaction that is sent to the sequencer (but is not yet in a block)",
                 "properties": {
-                    "transaction_hash": {
-                        "$ref": "#/components/schemas/TXN_HASH",
-                        "description": "The hash identifying the transaction"
+                    "type": {
+                        "$ref": "#/components/schemas/TXN_TYPE"
                     },
                     "max_fee": {
                         "$ref": "#/components/schemas/FELT",
@@ -1168,11 +1168,24 @@
                     },
                     "nonce": {
                         "$ref": "#/components/schemas/FELT"
-                    },
-                    "type": {
-                        "$ref": "#/components/schemas/TXN_TYPE"
                     }
                 }
+            },
+            "COMMON_TXN_PROPERTIES": {
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "transaction_hash": {
+                                "$ref": "#/components/schemas/TXN_HASH",
+                                "description": "The hash identifying the transaction"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
+                    }
+                ]
             },
             "DECLARE_TXN": {
                 "title": "Declare Contract Transaction",
@@ -1232,15 +1245,60 @@
                     }
                 }
             },
+            "INVOKE_TXN_V0": {
+                "title": "version 0 invoke transaction",
+                "description": "invokes a specific function in the desired contract (not necessarily an account)",
+                "$ref": "#/components/schemas/FUNCTION_CALL"
+            },
+            "INVOKE_TXN_V1": {
+                "title": "version 1 invoke transaction",
+                "description": "initiates a transaction from a given account",
+                "properties": {
+                    "account_address": {
+                        "$ref": "#/components/schemas/ADDRESS"
+                    },
+                    "calldata": {
+                        "type": "array",
+                        "description": "The data expected by the account's `execute` function (in most usecases, this includes the called contract address and a function selector)",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                }
+            },
             "INVOKE_TXN": {
-                "title": "Invoke Contract Transaction",
+                "title": "Initiate a transaction from an account",
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/COMMON_TXN_PROPERTIES"
                     },
                     {
-                        "$ref": "#/components/schemas/FUNCTION_CALL",
-                        "description": "The function the transaction invokes"
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/INVOKE_TXN_V0"
+                            },
+                            {
+                                "$ref": "#/components/schemas/INVOKE_TXN_V1"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "BROADCASTED_INVOKE_TXN": {
+                "description": "the transaction's representation when it's sent to the sequencer (but not yet in a block)",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
+                    },
+                    {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/INVOKE_TXN_V0"
+                            },
+                            {
+                                "$ref": "#/components/schemas/INVOKE_TXN_V1"
+                            }
+                        ]
                     }
                 ]
             },

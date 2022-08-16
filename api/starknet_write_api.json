@@ -13,32 +13,10 @@
             "params": [
                 {
                     "name": "function_invocation",
-                    "description": "The information needed to invoke the function (contract, selector, call data)",
+                    "description": "The information needed to invoke the function (or account, for version 1 transactions)",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/FUNCTION_CALL"
-                    }
-                },
-                {
-                    "name": "signature",
-                    "description": "The signature over the transaction",
-                    "required": false,
-                    "schema": {
-                        "$ref": "#/components/schemas/SIGNATURE"
-                    }
-                },
-                {
-                    "name": "max_fee",
-                    "description": "The maximum fee paid for the transaction, in ETH",
-                    "schema": {
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
-                    }
-                },
-                {
-                    "name": "version",
-                    "description": "Version of the transaction scheme",
-                    "schema": {
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                        "$ref": "#/components/schemas/BROADCASTED_INVOKE_TXN"
                     }
                 }
             ],
@@ -171,6 +149,9 @@
             },
             "TXN_HASH": {
                 "$ref": "starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+            },
+            "BROADCASTED_INVOKE_TXN": {
+                "$ref": "starknet_api_openrpc.json#/components/schemas/BROADCASTED_INVOKE_TXN"
             },
             "FUNCTION_CALL": {
                 "$ref": "starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
