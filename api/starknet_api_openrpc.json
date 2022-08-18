@@ -1129,9 +1129,13 @@
             },
             "TXN": {
                 "title": "Transaction",
+                "description": "The transaction schema, as it appears inside a block",
                 "oneOf": [
                     {
                         "$ref": "#/components/schemas/INVOKE_TXN"
+                    },
+                    {
+                        "$ref": "#/components/schemas/L1_HANDLER_TXN"
                     },
                     {
                         "$ref": "#/components/schemas/DECLARE_TXN"
@@ -1484,22 +1488,6 @@
                     },
                     "payload": {
                         "description": "The payload of the message",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/FELT"
-                        }
-                    }
-                }
-            },
-            "MSG_TO_L2": {
-                "type": "object",
-                "properties": {
-                    "from_address": {
-                        "description": "The originating L1 contract that sent the message",
-                        "$ref": "#/components/schemas/ETH_ADDRESS"
-                    },
-                    "payload": {
-                        "description": "The payload of the meesage. The call data to the L1 handler",
                         "type": "array",
                         "items": {
                             "$ref": "#/components/schemas/FELT"
