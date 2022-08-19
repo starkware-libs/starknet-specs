@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.36.0",
+        "version": "0.37.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -599,27 +599,22 @@
                                 "$ref": "#/components/schemas/EMITTED_EVENT"
                             }
                         },
-                        "page_number": {
-                            "title": "Page Number",
-                            "description": "The returned page number.",
-                            "type": "integer"
-                        },
-                        "is_last_page": {
-                            "title": "Is Last Page",
-                            "description": "A flag indicating whether this is the end of the stream of events",
-                            "type": "boolean"
+                        "continuation_token": {
+                            "description": "a pointer to the last element of the delivered page, use this token in a subsequent query to obtain the next page",
+                            "type": "string"
                         }
                     },
                     "required": [
-                        "events",
-                        "page_number",
-                        "is_last_page"
+                        "events"
                     ]
                 }
             },
             "errors": [
                 {
                     "$ref": "#/components/errors/PAGE_SIZE_TOO_BIG"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_CONTINUATION_TOKEN"
                 }
             ]
         },
@@ -665,22 +660,19 @@
         "contentDescriptors": {},
         "schemas": {
             "RESULT_PAGE_REQUEST": {
-                "title": "A request for a specific page of results",
-                "description": "A specification of a result page to retrieve",
                 "type": "object",
                 "properties": {
-                    "page_size": {
-                        "type": "integer",
-                        "minimum": 1
+                    "continuation_token": {
+                        "description": "a pointer to the last element of the delivered page, use this token in a subsequent query to obtain the next page",
+                        "type": "string"
                     },
-                    "page_number": {
+                    "chunk_size": {
                         "type": "integer",
                         "minimum": 1
                     }
                 },
                 "required": [
-                    "page_size",
-                    "page_number"
+                    "chunk_size"
                 ]
             },
             "EMITTED_EVENT": {
@@ -1789,6 +1781,10 @@
             "NO_BLOCKS": {
                 "code": 32,
                 "message": "There are no blocks"
+            },
+            "INVALID_CONTINUATION_TOKEN": {
+                "code": 33,
+                "message": "The supplied continuation token is invalid or unknown"
             },
             "CONTRACT_ERROR": {
                 "code": 40,
