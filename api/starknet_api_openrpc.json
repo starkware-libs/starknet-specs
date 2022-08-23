@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.38.0",
+        "version": "0.40.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -1250,7 +1250,7 @@
                 "title": "version 1 invoke transaction",
                 "description": "initiates a transaction from a given account",
                 "properties": {
-                    "account_address": {
+                    "sender_address": {
                         "$ref": "#/components/schemas/ADDRESS"
                     },
                     "calldata": {
