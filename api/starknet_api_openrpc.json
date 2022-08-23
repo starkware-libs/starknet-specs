@@ -1256,10 +1256,6 @@
                             "class_hash": {
                                 "description": "The hash of the deployed contract's class",
                                 "$ref": "#/components/schemas/FELT"
-                            },
-                            "contract_address": {
-                                "description": "The address of the deployed contract",
-                                "$ref": "#/components/schemas/FELT"
                             }
                         }
                     },
@@ -1473,7 +1469,20 @@
             },
             "DEPLOY_TXN_RECEIPT": {
                 "title": "Deploy Transaction Receipt",
-                "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "contract_address": {
+                                "description": "The address of the deployed contract",
+                                "$ref": "#/components/schemas/FELT"
+                            }
+                        }
+                    }
+                ]
             },
             "L1_HANDLER_TXN_RECEIPT": {
                 "title": "receipt for l1 handler transaction",
