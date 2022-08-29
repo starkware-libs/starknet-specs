@@ -1426,7 +1426,8 @@
                     "actual_fee",
                     "status",
                     "block_hash",
-                    "block_number"
+                    "block_number",
+                    "type"
                 ]
             },
             "INVOKE_TXN_RECEIPT_PROPERTIES": {
