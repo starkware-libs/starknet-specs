@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.40.0",
+        "version": "0.41.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -36,7 +36,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -69,7 +69,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -95,7 +95,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -143,7 +143,7 @@
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -169,7 +169,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_TXN_HASH"
+                    "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
                 }
             ]
         },
@@ -204,7 +204,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 },
                 {
                     "$ref": "#/components/errors/INVALID_TXN_INDEX"
@@ -233,7 +233,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_TXN_HASH"
+                    "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
                 }
             ]
         },
@@ -267,10 +267,10 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_CONTRACT_CLASS_HASH"
+                    "$ref": "#/components/errors/CLASS_HASH_NOT_FOUND"
                 }
             ]
         },
@@ -304,7 +304,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 },
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
@@ -341,7 +341,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 },
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
@@ -373,7 +373,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -424,7 +424,7 @@
                     "$ref": "#/components/errors/CONTRACT_ERROR"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -471,7 +471,7 @@
                     "$ref": "#/components/errors/CONTRACT_ERROR"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -648,7 +648,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 },
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
@@ -1866,21 +1866,21 @@
                 "code": 22,
                 "message": "Invalid call data"
             },
-            "INVALID_BLOCK_ID": {
+            "BLOCK_NOT_FOUND": {
                 "code": 24,
-                "message": "Invalid block id"
+                "message": "Block not found"
             },
-            "INVALID_TXN_HASH": {
+            "TXN_HASH_NOT_FOUND": {
                 "code": 25,
-                "message": "Invalid transaction hash"
+                "message": "Transaction hash not found"
             },
             "INVALID_TXN_INDEX": {
                 "code": 27,
                 "message": "Invalid transaction index in a block"
             },
-            "INVALID_CONTRACT_CLASS_HASH": {
+            "CLASS_HASH_NOT_FOUND": {
                 "code": 28,
-                "message": "The supplied contract class hash is invalid or unknown"
+                "message": "Class hash not found"
             },
             "PAGE_SIZE_TOO_BIG": {
                 "code": 31,
