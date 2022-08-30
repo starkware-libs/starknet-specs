@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.42.0",
+        "version": "0.43.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -617,7 +617,7 @@
                     "$ref": "#/components/errors/INVALID_CONTINUATION_TOKEN"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
            ]
         },
@@ -1487,6 +1487,9 @@
                                 "$ref": "#/components/schemas/FELT"
                             }
                         }
+                    },
+                    {
+                        "$ref": "#/components/schemas/INVOKE_TXN_RECEIPT_PROPERTIES"
                     }
                 ]
             },
