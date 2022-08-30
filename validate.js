@@ -10,7 +10,7 @@ async function runValidation(filename) {
         let docToParseWithExternalRefs = await fetchExternalRefsFor(docToParse);
         let dereffedDoc = await derefAll(docToParseWithExternalRefs);
 
-        let doc = await parseOpenRPCDocument(dereffedDoc, { dereference: false });
+        let doc = await parseOpenRPCDocument(dereffedDoc, { dereference: shouldDeref(filename) });
 
         const errors = validateOpenRPCDocument(doc);
         if (errors === true) {
@@ -23,6 +23,11 @@ async function runValidation(filename) {
     catch (exn) {
         console.error(exn && exn.message)
     }
+}
+
+function shouldDeref(filename) {
+    //For now, hardcode not dereferencing the trace api file, which has recursive definition
+    return filename && filename.indexOf("starknet_trace") < 0;
 }
 
 /**
