@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.40.0",
+        "version": "0.41.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -615,8 +615,11 @@
                 },
                 {
                     "$ref": "#/components/errors/INVALID_CONTINUATION_TOKEN"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
                 }
-            ]
+           ]
         },
         {
             "name": "starknet_getNonce",
