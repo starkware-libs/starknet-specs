@@ -1424,21 +1424,7 @@
                     },
                     "type": {
                         "$ref": "#/components/schemas/TXN_TYPE"
-                    }
-                },
-                "required": [
-                    "transaction_hash",
-                    "actual_fee",
-                    "status",
-                    "block_hash",
-                    "block_number",
-                    "type"
-                ]
-            },
-            "INVOKE_TXN_RECEIPT_PROPERTIES": {
-                "description": "Properties specific to invoke transaction",
-                "type": "object",
-                "properties": {
+                    },
                     "messages_sent": {
                         "type": "array",
                         "items": {
@@ -1452,22 +1438,19 @@
                             "$ref": "#/components/schemas/EVENT"
                         }
                     }
-                },
+               },
                 "required": [
-                    "messages_sent",
-                    "events"
+                    "transaction_hash",
+                    "actual_fee",
+                    "status",
+                    "block_hash",
+                    "block_number",
+                    "type"
                 ]
             },
             "INVOKE_TXN_RECEIPT": {
                 "title": "Invoke Transaction Receipt",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
-                    },
-                    {
-                        "$ref": "#/components/schemas/INVOKE_TXN_RECEIPT_PROPERTIES"
-                    }
-                ]
+                "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
             },
             "DECLARE_TXN_RECEIPT": {
                 "title": "Declare Transaction Receipt",
@@ -1487,9 +1470,6 @@
                                 "$ref": "#/components/schemas/FELT"
                             }
                         }
-                    },
-                    {
-                        "$ref": "#/components/schemas/INVOKE_TXN_RECEIPT_PROPERTIES"
                     }
                 ]
             },
@@ -1516,8 +1496,7 @@
                     }
                 ]
             },
-            "PENDING_COMMON_RECEIPT_PROPERTIES": {
-                "title": "Common properties for a pending transaction receipt",
+            "PENDING_TXN_RECEIPT": {
                 "type": "object",
                 "properties": {
                     "transaction_hash": {
@@ -1530,33 +1509,24 @@
                     },
                     "type": {
                         "$ref": "#/components/schemas/TXN_TYPE"
+                    },
+                    "messages_sent": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MSG_TO_L1"
+                        }
+                    },
+                    "events": {
+                        "description": "The events emitted as part of this transaction",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EVENT"
+                        }
                     }
                 },
                 "required": [
                     "transaction_hash",
                     "actual_fee"
-                ]
-            },
-            "PENDING_INVOKE_TXN_RECEIPT": {
-                "title": "Pending Invoke Transaction Receipt",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
-                    },
-                    {
-                        "$ref": "#/components/schemas/INVOKE_TXN_RECEIPT_PROPERTIES"
-                    }
-                ]
-            },
-            "PENDING_TXN_RECEIPT": {
-                "oneOf": [
-                    {
-                        "$ref": "#/components/schemas/PENDING_INVOKE_TXN_RECEIPT"
-                    },
-                    {
-                        "$comment": "Used for deploy and declare transaction receipts",
-                        "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
-                    }
                 ]
             },
             "MSG_TO_L1": {
