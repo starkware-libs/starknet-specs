@@ -1435,7 +1435,7 @@
                     "type"
                 ]
             },
-            "INVOKE_TXN_RECEIPT_PROPERTIES": {
+            "EXECUTION_RECEIPT_PROPERTIES": {
                 "description": "Properties specific to invoke transaction",
                 "type": "object",
                 "properties": {
@@ -1465,13 +1465,20 @@
                         "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
                     },
                     {
-                        "$ref": "#/components/schemas/INVOKE_TXN_RECEIPT_PROPERTIES"
+                        "$ref": "#/components/schemas/EXECUTION_RECEIPT_PROPERTIES"
                     }
                 ]
             },
             "DECLARE_TXN_RECEIPT": {
                 "title": "Declare Transaction Receipt",
-                "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
+                    },
+                    {
+                        "$ref": "#/components/schemas/EXECUTION_RECEIPT_PROPERTIES"
+                    }
+                ]
             },
             "DEPLOY_TXN_RECEIPT": {
                 "title": "Deploy Transaction Receipt",
@@ -1489,7 +1496,7 @@
                         }
                     },
                     {
-                        "$ref": "#/components/schemas/INVOKE_TXN_RECEIPT_PROPERTIES"
+                        "$ref": "#/components/schemas/EXECUTION_RECEIPT_PROPERTIES"
                     }
                 ]
             },
@@ -1544,7 +1551,7 @@
                         "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
                     },
                     {
-                        "$ref": "#/components/schemas/INVOKE_TXN_RECEIPT_PROPERTIES"
+                        "$ref": "#/components/schemas/EXECUTION_RECEIPT_PROPERTIES"
                     }
                 ]
             },
