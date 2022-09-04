@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.43.0",
+        "version": "0.44.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -869,8 +869,8 @@
                             "declared_contracts": {
                                 "type": "array",
                                 "items": {
-                                    "description": "A new contract declared as part of the new state",
-                                    "$ref": "#/components/schemas/DECLARED_CONTRACT_ITEM"
+                                    "description": "The hash of a new contract declared as part of the new state",
+                                    "$ref": "#/components/schemas/FELT"
                                 }
                             },
                             "deployed_contracts": {
@@ -1074,15 +1074,6 @@
                         }
                     }
                 ]
-            },
-            "DECLARED_CONTRACT_ITEM": {
-                "type": "object",
-                "properties": {
-                    "class_hash": {
-                        "description": "The hash of the contract code",
-                        "$ref": "#/components/schemas/FELT"
-                    }
-                }
             },
             "DEPLOYED_CONTRACT_ITEM": {
                 "type": "object",
