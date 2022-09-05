@@ -1498,7 +1498,8 @@
                     }
                 ]
             },
-            "PENDING_TXN_RECEIPT": {
+            "PENDING_COMMON_RECEIPT_PROPERTIES": {
+                "title": "Common properties for a pending transaction receipt",
                 "type": "object",
                 "properties": {
                     "transaction_hash": {
@@ -1528,7 +1529,37 @@
                 },
                 "required": [
                     "transaction_hash",
-                    "actual_fee"
+                    "actual_fee",
+                    "messages_sent",
+                    "events"
+                ]
+            },
+            "PENDING_DEPLOY_TXN_RECEIPT": {
+                "title": "Pending deploy Transaction Receipt",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "contract_address": {
+                                "description": "The address of the deployed contract",
+                                "$ref": "#/components/schemas/FELT"
+                            }
+                        }
+                    }
+                ]
+            },
+            "PENDING_TXN_RECEIPT": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/PENDING_DEPLOY_TXN_RECEIPT"
+                    },
+                    {
+                        "$comment": "Used for pending invoke and declare transaction receipts",
+                        "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
+                    }
                 ]
             },
             "MSG_TO_L1": {
