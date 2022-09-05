@@ -17,7 +17,7 @@
                     "summary": "The hash of the transaction to trace",
                     "required": true,
                     "schema": {
-                        "$ref": "starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+                        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
                     }
                 }
             ],
@@ -103,6 +103,9 @@
                     }
                 }
             },
+            "NESTED_CALL": {
+                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+            },
             "FUNCTION_INVOCATION": {
                 "allOf": [
                     {
@@ -140,7 +143,7 @@
                                 "description": "The calls made by this invocation",
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                                    "$ref": "#/components/schemas/NESTED_CALL"
                                 }
                             },
                             "events": {
@@ -179,19 +182,19 @@
                 ]
             },
             "FELT": {
-                "$ref": "starknet_api_openrpc.json#/components/schemas/FELT"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
             },
             "FUNCTION_CALL": {
-                "$ref": "starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
             },
             "EVENT": {
-                "$ref": "starknet_api_openrpc.json#/components/schemas/EVENT_CONTENT"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EVENT_CONTENT"
             },
             "MSG_TO_L1": {
-                "$ref": "starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
             },
             "BLOCK_HASH": {
-                "$ref": "starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
             }
         },
         "errors": {
