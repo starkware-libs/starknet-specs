@@ -866,7 +866,7 @@
                                     "$ref": "#/components/schemas/CONTRACT_STORAGE_DIFF_ITEM"
                                 }
                             },
-                            "declared_contracts": {
+                            "declared_contract_hashes": {
                                 "type": "array",
                                 "items": {
                                     "description": "The hash of a new contract declared as part of the new state",
