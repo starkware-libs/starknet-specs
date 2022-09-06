@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.40.0",
+        "version": "0.44.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -36,7 +36,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -69,7 +69,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -95,7 +95,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -143,7 +143,7 @@
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -169,7 +169,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_TXN_HASH"
+                    "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
                 }
             ]
         },
@@ -204,7 +204,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 },
                 {
                     "$ref": "#/components/errors/INVALID_TXN_INDEX"
@@ -233,7 +233,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_TXN_HASH"
+                    "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
                 }
             ]
         },
@@ -267,10 +267,10 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_CONTRACT_CLASS_HASH"
+                    "$ref": "#/components/errors/CLASS_HASH_NOT_FOUND"
                 }
             ]
         },
@@ -304,7 +304,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 },
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
@@ -341,7 +341,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 },
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
@@ -373,7 +373,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -424,7 +424,7 @@
                     "$ref": "#/components/errors/CONTRACT_ERROR"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -471,7 +471,7 @@
                     "$ref": "#/components/errors/CONTRACT_ERROR"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -615,8 +615,11 @@
                 },
                 {
                     "$ref": "#/components/errors/INVALID_CONTINUATION_TOKEN"
+                },
+                {
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
-            ]
+           ]
         },
         {
             "name": "starknet_getNonce",
@@ -648,7 +651,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_BLOCK_ID"
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 },
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
@@ -863,11 +866,11 @@
                                     "$ref": "#/components/schemas/CONTRACT_STORAGE_DIFF_ITEM"
                                 }
                             },
-                            "declared_contracts": {
+                            "declared_contract_hashes": {
                                 "type": "array",
                                 "items": {
-                                    "description": "A new contract declared as part of the new state",
-                                    "$ref": "#/components/schemas/DECLARED_CONTRACT_ITEM"
+                                    "description": "The hash of a new contract declared as part of the new state",
+                                    "$ref": "#/components/schemas/FELT"
                                 }
                             },
                             "deployed_contracts": {
@@ -1071,15 +1074,6 @@
                         }
                     }
                 ]
-            },
-            "DECLARED_CONTRACT_ITEM": {
-                "type": "object",
-                "properties": {
-                    "class_hash": {
-                        "description": "The hash of the contract code",
-                        "$ref": "#/components/schemas/FELT"
-                    }
-                }
             },
             "DEPLOYED_CONTRACT_ITEM": {
                 "type": "object",
@@ -1421,21 +1415,7 @@
                     },
                     "type": {
                         "$ref": "#/components/schemas/TXN_TYPE"
-                    }
-                },
-                "required": [
-                    "transaction_hash",
-                    "actual_fee",
-                    "status",
-                    "block_hash",
-                    "block_number",
-                    "type"
-                ]
-            },
-            "INVOKE_TXN_RECEIPT_PROPERTIES": {
-                "description": "Properties specific to invoke transaction",
-                "type": "object",
-                "properties": {
+                    },
                     "messages_sent": {
                         "type": "array",
                         "items": {
@@ -1449,22 +1429,21 @@
                             "$ref": "#/components/schemas/EVENT"
                         }
                     }
-                },
+               },
                 "required": [
+                    "transaction_hash",
+                    "actual_fee",
+                    "status",
+                    "block_hash",
+                    "block_number",
+                    "type",
                     "messages_sent",
                     "events"
                 ]
             },
             "INVOKE_TXN_RECEIPT": {
                 "title": "Invoke Transaction Receipt",
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
-                    },
-                    {
-                        "$ref": "#/components/schemas/INVOKE_TXN_RECEIPT_PROPERTIES"
-                    }
-                ]
+                "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
             },
             "DECLARE_TXN_RECEIPT": {
                 "title": "Declare Transaction Receipt",
@@ -1524,31 +1503,52 @@
                     },
                     "type": {
                         "$ref": "#/components/schemas/TXN_TYPE"
+                    },
+                    "messages_sent": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/MSG_TO_L1"
+                        }
+                    },
+                    "events": {
+                        "description": "The events emitted as part of this transaction",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/EVENT"
+                        }
                     }
                 },
                 "required": [
                     "transaction_hash",
-                    "actual_fee"
+                    "actual_fee",
+                    "messages_sent",
+                    "events"
                 ]
             },
-            "PENDING_INVOKE_TXN_RECEIPT": {
-                "title": "Pending Invoke Transaction Receipt",
+            "PENDING_DEPLOY_TXN_RECEIPT": {
+                "title": "Pending deploy Transaction Receipt",
                 "allOf": [
                     {
                         "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
                     },
                     {
-                        "$ref": "#/components/schemas/INVOKE_TXN_RECEIPT_PROPERTIES"
+                        "type": "object",
+                        "properties": {
+                            "contract_address": {
+                                "description": "The address of the deployed contract",
+                                "$ref": "#/components/schemas/FELT"
+                            }
+                        }
                     }
                 ]
             },
             "PENDING_TXN_RECEIPT": {
                 "oneOf": [
                     {
-                        "$ref": "#/components/schemas/PENDING_INVOKE_TXN_RECEIPT"
+                        "$ref": "#/components/schemas/PENDING_DEPLOY_TXN_RECEIPT"
                     },
                     {
-                        "$comment": "Used for deploy and declare transaction receipts",
+                        "$comment": "Used for pending invoke and declare transaction receipts",
                         "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
                     }
                 ]
@@ -1866,21 +1866,21 @@
                 "code": 22,
                 "message": "Invalid call data"
             },
-            "INVALID_BLOCK_ID": {
+            "BLOCK_NOT_FOUND": {
                 "code": 24,
-                "message": "Invalid block id"
+                "message": "Block not found"
             },
-            "INVALID_TXN_HASH": {
+            "TXN_HASH_NOT_FOUND": {
                 "code": 25,
-                "message": "Invalid transaction hash"
+                "message": "Transaction hash not found"
             },
             "INVALID_TXN_INDEX": {
                 "code": 27,
                 "message": "Invalid transaction index in a block"
             },
-            "INVALID_CONTRACT_CLASS_HASH": {
+            "CLASS_HASH_NOT_FOUND": {
                 "code": 28,
-                "message": "The supplied contract class hash is invalid or unknown"
+                "message": "Class hash not found"
             },
             "PAGE_SIZE_TOO_BIG": {
                 "code": 31,
