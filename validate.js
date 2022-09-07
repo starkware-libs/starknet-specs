@@ -10,7 +10,7 @@ async function runValidation(filename) {
         let docToParseWithExternalRefs = await fetchExternalRefsFor(docToParse);
         let dereffedDoc = await derefAll(docToParseWithExternalRefs);
 
-        let doc = await parseOpenRPCDocument(dereffedDoc, { dereference: false });
+        let doc = await parseOpenRPCDocument(dereffedDoc, { dereference: true });
 
         const errors = validateOpenRPCDocument(doc);
         if (errors === true) {
@@ -58,20 +58,23 @@ function fixRefs(dereffer) {
  * @returns The document, with the references resolved.
  */
 async function derefAll(doc) {
-    let dereffer = fixRefs(new Dereferencer.default(
-        doc,
-        {
-            //TOOD: look generically for all recursive definitions and put them in the cache.
-            refCache: {
-                "#/components/schemas/FUNCTION_INVOCATION": doc.components.schemas["FUNCTION_INVOCATION"]
-            },
-            rootSchema: doc
-        })
-    );
 
-    let dereffedDoc = await dereffer.resolve();
-
-    return dereffedDoc;
+    let allSchemas = doc.components.schemas;
+    let refCacheWithRecursiveRef = {
+        "#/components/schemas/NESTED_CALL": allSchemas["NESTED_CALL"]
+    }
+    let dereferencerOptions = {
+        refCache: refCacheWithRecursiveRef,
+        rootSchema: doc
+    }
+    //resolve all schemas, and remember them
+    await Promise.all(Object.keys(allSchemas).map(async k => {
+        let s = allSchemas[k]
+        let dereffer = fixRefs(new Dereferencer.default(s, dereferencerOptions));
+        allSchemas[k] = await dereffer.resolve();
+        return allSchemas[k];
+    }))
+    return doc;
 }
 
 
@@ -139,11 +142,11 @@ const filenameFromExternalRef = ref => ref.split("#")[0];
 //TODO: this assumes the script is run in a specific directory relative to the files.
 /**
  * Given a relative path, retrieve the full path to the relative API.
- * Note this assumes some structure on the project.
+ * Note this assumes the references in the file are relative to the current working directory.
  * @param {String} relative The relative path
  * @returns The full filesystem path
  */
-const fullPathForRefFile = relative => `${process.cwd()}/api/${relative}` //should canonize this
+const fullPathForRefFile = relative => `${process.cwd()}/${relative}` //should canonize this
 
 let args = process.argv.slice(2);
 
