@@ -42,6 +42,8 @@ address, StarkNet uses a field element, not a 256-bit number.
 The field element type in StarkNet is based on the field in the underlying Cairo VM.
 In other words, a value x of a field element type is an integer in the range of `0≤x<P`. `P` is currently defined as `2^251+17*2^192+1`
 
+In the specification it is used with a hex representation: <!-- attr:/components/schemas/FELT/pattern -->
+
 # Mapping of Methods
 
 We list below the methods in Ethereum's API and their corresponding StarkNet methods.
