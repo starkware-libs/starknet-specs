@@ -6,8 +6,6 @@ const { parseOpenRPCDocument } = require("@open-rpc/schema-utils-js");
 const pointer = require('json-pointer');
 const { fileContentAsJSON, derefAll, fetchExternalRefsFor } = require('./rpc_doc_utils')
 
-
-
 function parseEmbedding(emb) {
 
     let a = emb.emb_ptr.split(':')
@@ -38,7 +36,7 @@ async function findObjects(openrpcFile, embeddings) {
             let resolved = pointer.get(doc, emb.ref) //todo handle invalid pointers
             return { resolved, ...emb }
         })
-        console.log(JSON.stringify(resolvedRPCObjects))
+        // console.log(JSON.stringify(resolvedRPCObjects))
         return resolvedRPCObjects;
 
     }
@@ -48,13 +46,6 @@ async function findObjects(openrpcFile, embeddings) {
 
 }
 
-
-
-
-
-
-
-
 async function embedRPCObject(mdFile, openrpcFile) {
 
     try {
@@ -62,7 +53,6 @@ async function embedRPCObject(mdFile, openrpcFile) {
         let embeddings = findRPCEmbeddings(mdSource)
             .map(e => parseEmbedding(e))
             .filter(e => e !== undefined);
-        // console.log(JSON.stringify(embeddings))
 
         let rpcObjects = await findObjects(openrpcFile, embeddings)
 
@@ -70,7 +60,7 @@ async function embedRPCObject(mdFile, openrpcFile) {
         rpcObjects.forEach(emb => {
             out = out.replace(emb.embedding, JSON.stringify(emb.resolved))
         })
-        console.log(out)
+        return out;
     }
     catch (e) {
         console.error(e.message || e.toString())
@@ -78,14 +68,14 @@ async function embedRPCObject(mdFile, openrpcFile) {
 
 }
 
-
-
+//==========================================
 let args = process.argv.slice(2);
 
 if (args.length >= 2) {
     let mdFile = args[0];
     let openrpcFile = args[1];
-    let resultMD = embedRPCObject(mdFile, openrpcFile)
+    embedRPCObject(mdFile, openrpcFile)
+        .then(result => console.info(result))
 }
 else {
     console.error("Invalid arguments")
