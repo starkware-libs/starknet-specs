@@ -40,9 +40,17 @@ async function findObjects(embeddings) {
         let resolvedRPCObjects =
             Promise.all(
                 embeddings.map(async emb => {
-                    let doc = await loadAndParseRPCDoc(emb.filename);//todo: cache and reuse documents
-                    let resolved = pointer.get(doc, emb.ref) //todo handle invalid pointers
-                    return { resolved, ...emb }
+                    try {
+
+                        let doc = await loadAndParseRPCDoc(emb.filename);//todo: cache and reuse documents
+                        let resolved = pointer.get(doc, emb.ref)
+                        return { resolved, ...emb }
+                    }
+                    catch (err) {
+                        // in case of some error for a given embedding, warn but skip it - don't stop everything.
+                        console.warn(`Error: ${err.message || err.toString()}`)
+                        return undefined;
+                    }
                 }))
         // console.log(JSON.stringify(resolvedRPCObjects))
         return resolvedRPCObjects;
@@ -65,9 +73,11 @@ async function embedRPCObjects(mdFile, defaultOpenrpcFile) {
         let rpcObjects = await findObjects(embeddings)
 
         var out = mdSource.toString();
-        rpcObjects.forEach(emb => {
-            out = out.replace(emb.embedding, JSON.stringify(emb.resolved))
-        })
+        rpcObjects
+            .filter(o => o !== undefined)
+            .forEach(emb => {
+                out = out.replace(emb.embedding, JSON.stringify(emb.resolved))
+            })
         return out;
     }
     catch (e) {
