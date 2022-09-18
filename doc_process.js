@@ -35,6 +35,15 @@ async function loadAndParseRPCDoc(filename) {
     return doc;
 }
 
+const RPC_DOC_CACHE = {};
+
+async function getDocFromFile(filename) {
+    if (!filename) return null;
+    if (!RPC_DOC_CACHE[filename])
+        RPC_DOC_CACHE[filename] = await loadAndParseRPCDoc(filename);
+    return RPC_DOC_CACHE[filename]
+}
+
 async function findObjects(embeddings) {
     try {
         let resolvedRPCObjects =
@@ -42,7 +51,7 @@ async function findObjects(embeddings) {
                 embeddings.map(async emb => {
                     try {
 
-                        let doc = await loadAndParseRPCDoc(emb.filename);//todo: cache and reuse documents
+                        let doc = await getDocFromFile(emb.filename);//todo: cache and reuse documents
                         let resolved = pointer.get(doc, emb.ref)
                         return { resolved, ...emb }
                     }
