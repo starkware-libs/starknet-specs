@@ -51,7 +51,7 @@ async function findObjects(embeddings) {
                 embeddings.map(async emb => {
                     try {
 
-                        let doc = await getDocFromFile(emb.filename);//todo: cache and reuse documents
+                        let doc = await getDocFromFile(emb.filename);
                         let resolved = pointer.get(doc, emb.ref)
                         return { resolved, ...emb }
                     }
@@ -81,13 +81,13 @@ async function embedRPCObjects(mdFile, defaultOpenrpcFile) {
 
         let rpcObjects = await findObjects(embeddings)
 
-        var out = mdSource.toString();
-        rpcObjects
+        //start with the markdown source, and replace each embedding with the resolved object.
+        return rpcObjects
             .filter(o => o !== undefined)
-            .forEach(emb => {
-                out = out.replace(emb.embedding, JSON.stringify(emb.resolved))
-            })
-        return out;
+            .reduce(
+                (outputSoFar, emb) => outputSoFar.replace(emb.embedding, JSON.stringify(emb.resolved)),
+                mdSource.toString()
+            )
     }
     catch (e) {
         console.error(e.message || e.toString())
