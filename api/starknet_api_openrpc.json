@@ -618,6 +618,9 @@
                 },
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/TOO_MANY_KEYS_IN_FILTER"
                 }
             ]
         },
@@ -1897,6 +1900,10 @@
             "INVALID_CONTINUATION_TOKEN": {
                 "code": 33,
                 "message": "The supplied continuation token is invalid or unknown"
+            },
+            "TOO_MANY_KEYS_IN_FILTER": {
+                "code": 34,
+                "message": "Too many keys provided in a filter"
             },
             "CONTRACT_ERROR": {
                 "code": 40,
