@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.44.0",
+        "version": "0.45.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -618,8 +618,11 @@
                 },
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/TOO_MANY_KEYS_IN_FILTER"
                 }
-           ]
+            ]
         },
         {
             "name": "starknet_getNonce",
@@ -762,8 +765,12 @@
                         "description": "The values used to filter the events",
                         "type": "array",
                         "items": {
-                            "title": "event key value",
-                            "$ref": "#/components/schemas/FELT"
+                            "title": "Possible values, per key",
+                            "description": "Per key (by position), designate the possible values to be matched for events to be returned. Empty array designates 'any' value",
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/FELT"
+                            }
                         }
                     }
                 }
@@ -1429,7 +1436,7 @@
                             "$ref": "#/components/schemas/EVENT"
                         }
                     }
-               },
+                },
                 "required": [
                     "transaction_hash",
                     "actual_fee",
@@ -1893,6 +1900,10 @@
             "INVALID_CONTINUATION_TOKEN": {
                 "code": 33,
                 "message": "The supplied continuation token is invalid or unknown"
+            },
+            "TOO_MANY_KEYS_IN_FILTER": {
+                "code": 34,
+                "message": "Too many keys provided in a filter"
             },
             "CONTRACT_ERROR": {
                 "code": 40,
