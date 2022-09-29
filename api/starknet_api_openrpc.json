@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.44.0",
+        "version": "0.45.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -619,7 +619,7 @@
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
-           ]
+            ]
         },
         {
             "name": "starknet_getNonce",
@@ -1129,6 +1129,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/DEPLOY_TXN"
+                    },
+                    {
+                        "ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN"
                     }
                 ]
             },
@@ -1144,6 +1147,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/BROADCASTED_DEPLOY_TXN"
+                    },
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
                     }
                 ]
             },
@@ -1236,6 +1242,49 @@
                         }
                     }
                 ]
+            },
+            "DEPLOY_ACCOUNT_TXN": {
+                "title": "Deploy Account Transaction",
+                "description": "Deploys an account contract, charges fee from the pre-funded account addresses",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/COMMON_TXN_PROPERTIES"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN_PROPERTIES"
+                    }
+                ]
+            },
+            "BROADCASTED_DEPLOY_ACCOUNT_TXN": {
+                "description": "Mempool representation of a deploy account transaction",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN_PROPERTIES"
+                    }
+                ]
+            },
+            "DEPLOY_ACCOUNT_TXN_PROPERTIES": {
+                "type": "object",
+                "properties": {
+                    "contract_address_salt": {
+                        "description": "The salt for the address of the deployed contract",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "constructor_calldata": {
+                        "type": "array",
+                        "description": "The parameters passed to the constructor",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    },
+                    "class_hash": {
+                        "description": "The hash of the deployed contract's class",
+                        "$ref": "#/components/schemas/FELT"
+                    }
+                }
             },
             "DEPLOY_TXN": {
                 "title": "Deploy Contract Transaction",
@@ -1429,7 +1478,7 @@
                             "$ref": "#/components/schemas/EVENT"
                         }
                     }
-               },
+                },
                 "required": [
                     "transaction_hash",
                     "actual_fee",
@@ -1448,6 +1497,10 @@
             "DECLARE_TXN_RECEIPT": {
                 "title": "Declare Transaction Receipt",
                 "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
+            },
+            "DEPLOY_ACCOUNT_TXN_RECEIPT": {
+                "title": "Deploy Account Transaction Receipt",
+                "$ref": "#/components/schemas/DEPLOY_TXN_RECEIPT"
             },
             "DEPLOY_TXN_RECEIPT": {
                 "title": "Deploy Transaction Receipt",
@@ -1483,6 +1536,9 @@
                     },
                     {
                         "$ref": "#/components/schemas/DEPLOY_TXN_RECEIPT"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN_RECEIPT"
                     },
                     {
                         "$ref": "#/components/schemas/PENDING_TXN_RECEIPT"

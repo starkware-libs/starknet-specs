@@ -75,7 +75,7 @@
             "params": [
                 {
                     "name": "deploy_transaction",
-                    "description": "The salt used for calculting the contract address",
+                    "description": "The deploy transaction",
                     "schema": {
                         "$ref": "#/components/schemas/BROADCASTED_DEPLOY_TXN"
                     }
@@ -101,6 +101,41 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/INVALID_CONTRACT_CLASS"
+                }
+            ]
+        },
+        {
+            "name": "starknet_addDeployAccountTransaction",
+            "summary": "Submit a new deploy account transaction",
+            "params": [
+                {
+                    "name": "deploy_account_transaction",
+                    "description": "The deploy account transaction",
+                    "schema": {
+                        "$ref": "#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "The result of the transaction submission",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "transaction_hash": {
+                            "title": "The hash of the deploy transaction",
+                            "$ref": "#/components/schemas/TXN_HASH"
+                        },
+                        "contract_address": {
+                            "title": "The address of the new contract",
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/CLASS_HASH_NOT_FOUND"
                 }
             ]
         }
@@ -134,6 +169,9 @@
             "BROADCASTED_DEPLOY_TXN": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DEPLOY_TXN"
             },
+            "BROADCASTED_DEPLOY_ACCOUNT_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
+            },
             "FUNCTION_CALL": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
             }
@@ -142,6 +180,9 @@
             "INVALID_CONTRACT_CLASS": {
                 "code": 50,
                 "message": "Invalid contract class"
+            },
+            "CLASS_HASH_NOT_FOUND": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/errors/CLASS_HASH_NOT_FOUND"
             }
         }
     }
