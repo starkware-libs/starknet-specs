@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.46.0",
+        "version": "0.47.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -933,8 +933,8 @@
                 "type": "string",
                 "title": "Field element",
                 "$comment": "A field element, represented as a string of hex digits",
-                "description": "A field element. Represented as up to 63 hex digits and leading 4 bits zeroed.",
-                "pattern": "^0x0[a-fA-F0-9]{1,63}$"
+                "description": "A field element. Represented as 4 leading zero bits followed by 63 hex digits",
+                "pattern": "^0x0[a-fA-F0-9]{63}$"
             },
             "BLOCK_NUMBER": {
                 "description": "The block's number (its height)",
