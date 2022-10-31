@@ -1640,6 +1640,7 @@
                 "enum": [
                     "DECLARE",
                     "DEPLOY",
+                    "DEPLOY_ACCOUNT",
                     "INVOKE",
                     "L1_HANDLER"
                 ],
@@ -1773,7 +1774,8 @@
                 "type": "string",
                 "enum": [
                     "function",
-                    "l1_handler"
+                    "l1_handler",
+                    "constructor"
                 ]
             },
             "STRUCT_ABI_ENTRY": {
