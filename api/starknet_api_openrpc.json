@@ -600,7 +600,7 @@
                             }
                         },
                         "continuation_token": {
-                            "description": "a pointer to the last element of the delivered page, use this token in a subsequent query to obtain the next page",
+                            "description": "Use this token in a subsequent query to obtain the next page. Should not appear if there are no more pages.",
                             "type": "string"
                         }
                     },
@@ -669,7 +669,7 @@
                 "type": "object",
                 "properties": {
                     "continuation_token": {
-                        "description": "a pointer to the last element of the delivered page, use this token in a subsequent query to obtain the next page",
+                        "description": "The token returned from the previous query.",
                         "type": "string"
                     },
                     "chunk_size": {
