@@ -1138,7 +1138,7 @@
                         "$ref": "#/components/schemas/DEPLOY_TXN"
                     },
                     {
-                        "ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN"
+                        "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN"
                     }
                 ]
             },
