@@ -41,6 +41,7 @@
             "params": [
                 {
                     "name": "declare_transaction",
+                    "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN"
                     }
@@ -76,6 +77,7 @@
                 {
                     "name": "deploy_transaction",
                     "description": "The deploy transaction",
+                    "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BROADCASTED_DEPLOY_TXN"
                     }
@@ -111,6 +113,7 @@
                 {
                     "name": "deploy_account_transaction",
                     "description": "The deploy account transaction",
+                    "required": true,
                     "schema": {
                         "$ref": "#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
                     }
