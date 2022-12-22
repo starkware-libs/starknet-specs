@@ -669,7 +669,7 @@
                 "type": "object",
                 "properties": {
                     "continuation_token": {
-                        "description": "The token returned from the previous query.",
+                        "description": "The token returned from the previous query. If no token is provided the first page is returned.",
                         "type": "string"
                     },
                     "chunk_size": {
