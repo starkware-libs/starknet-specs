@@ -71,42 +71,6 @@
             ]
         },
         {
-            "name": "starknet_addDeployTransaction",
-            "summary": "Submit a new deploy contract transaction",
-            "params": [
-                {
-                    "name": "deploy_transaction",
-                    "description": "The deploy transaction",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/components/schemas/BROADCASTED_DEPLOY_TXN"
-                    }
-                }
-            ],
-            "result": {
-                "name": "result",
-                "description": "The result of the transaction submission",
-                "schema": {
-                    "type": "object",
-                    "properties": {
-                        "transaction_hash": {
-                            "title": "The hash of the deploy transaction",
-                            "$ref": "#/components/schemas/TXN_HASH"
-                        },
-                        "contract_address": {
-                            "title": "The address of the new contract",
-                            "$ref": "#/components/schemas/FELT"
-                        }
-                    }
-                }
-            },
-            "errors": [
-                {
-                    "$ref": "#/components/errors/INVALID_CONTRACT_CLASS"
-                }
-            ]
-        },
-        {
             "name": "starknet_addDeployAccountTransaction",
             "summary": "Submit a new deploy account transaction",
             "params": [
@@ -168,9 +132,6 @@
             },
             "BROADCASTED_DECLARE_TXN": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DECLARE_TXN"
-            },
-            "BROADCASTED_DEPLOY_TXN": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DEPLOY_TXN"
             },
             "BROADCASTED_DEPLOY_ACCOUNT_TXN": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
