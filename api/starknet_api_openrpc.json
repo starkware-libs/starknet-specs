@@ -262,7 +262,14 @@
                 "name": "result",
                 "description": "The contract class, if found",
                 "schema": {
-                    "$ref": "#/components/schemas/CONTRACT_CLASS"
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
+                        },
+                        {
+                            "$ref": "#/components/schemas/CONTRACT_CLASS"
+                        }
+                    ]
                 }
             },
             "errors": [
@@ -336,7 +343,14 @@
                 "name": "result",
                 "description": "The contract class",
                 "schema": {
-                    "$ref": "#/components/schemas/CONTRACT_CLASS"
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
+                        },
+                        {
+                            "$ref": "#/components/schemas/CONTRACT_CLASS"
+                        }
+                    ]
                 }
             },
             "errors": [
@@ -970,7 +984,7 @@
                 }
             },
             "BLOCK_HEADER": {
-                "type":"object",
+                "type": "object",
                 "properties": {
                     "block_hash": {
                         "$ref": "#/components/schemas/BLOCK_HASH"
@@ -1685,6 +1699,62 @@
                 }
             },
             "CONTRACT_CLASS": {
+                "type": "object",
+                "properties": {
+                    "sierra_program": {
+                        "type": "array",
+                        "description": "The list of Sierra instructions of which the program consists",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    },
+                    "entry_points_by_type": {
+                        "$ref": "#/components/schemas/SIERRA_ENTRY_POINTS"
+                    }
+                }
+            },
+            "COMPILED_CONTRACT_CLASS": {
+                "type": "object",
+                "properties": {
+                    "prime": {
+                        "type": "NUM_AS_HEX",
+                        "description": "The field over which the program is expected to run"
+                    },
+                    "compiler_version": {
+                        "type": "string",
+                        "description": "The Cairo compiler version that was used to generate this class"
+                    },
+                    "bytecode": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    },
+                    "hints": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/CAIRO_HINT"
+                        }
+                    },
+                    "entry_points_by_type": {
+                        "$ref": "#/components/schemas/CAIRO_ENTRY_POINTS"
+                    }
+                }
+            },
+            "CAIRO_HINT": {
+                "type": "object",
+                "properties": {
+                    "hint_location": {
+                        "type": "integer",
+                        "description": "the instruction index before which the hint has to be executed"
+                    },
+                    "hint_instructions": {
+                        "type": "array",
+                        "items": "string"
+                    }
+                }
+            },
+            "DEPREACTED_CONTRACT_CLASS": {
                 "title": "The definition of a StarkNet contract class",
                 "type": "object",
                 "properties": {
@@ -1694,18 +1764,7 @@
                         "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$"
                     },
                     "entry_points_by_type": {
-                        "type": "object",
-                        "properties": {
-                            "CONSTRUCTOR": {
-                                "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT_LIST"
-                            },
-                            "EXTERNAL": {
-                                "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT_LIST"
-                            },
-                            "L1_HANDLER": {
-                                "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT_LIST"
-                            }
-                        }
+                        "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINTS"
                     },
                     "abi": {
                         "$ref": "#/components/schemas/CONTRACT_ABI"
@@ -1716,13 +1775,67 @@
                     "entry_points_by_type"
                 ]
             },
-            "CONTRACT_ENTRY_POINT_LIST": {
-                "type": "array",
-                "items": {
-                    "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT"
+            "CONTRACT_ENTRY_POINTS": {
+                "type": "object",
+                "properties": {
+                    "CONSTRUCTOR": {
+                        "$ref": "#/components/schemas/CAIRO_ENTRY_POINT_LIST"
+                    },
+                    "EXTERNAL": {
+                        "$ref": "#/components/schemas/CAIRO_ENTRY_POINT_LIST"
+                    },
+                    "L1_HANDLER": {
+                        "$ref": "#/components/schemas/CAIRO_ENTRY_POINT_LIST"
+                    }
                 }
             },
-            "CONTRACT_ENTRY_POINT": {
+            "DEPRECATED_CAIRO_ENTRY_POINTS": {
+                "type": "object",
+                "properties": {
+                    "CONSTRUCTOR": {
+                        "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT_LIST"
+                    },
+                    "EXTERNAL": {
+                        "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT_LIST"
+                    },
+                    "L1_HANDLER": {
+                        "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT_LIST"
+                    }
+                }
+            },
+            "SIERRA_ENTRY_POINTS": {
+                "type": "object",
+                "properties": {
+                    "CONSTRUCTOR": {
+                        "$ref": "#/components/schemas/SIERRA_ENTRY_POINT_LIST"
+                    },
+                    "EXTERNAL": {
+                        "$ref": "#/components/schemas/SIERRA_ENTRY_POINT_LIST"
+                    },
+                    "L1_HANDLER": {
+                        "$ref": "#/components/schemas/SIERRA_ENTRY_POINT_LIST"
+                    }
+                }
+            },
+            "CAIRO_ENTRY_POINT_LIST": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/CAIRO_ENTRY_POINT"
+                }
+            },
+            "DEPRECATED_CAIRO_ENTRY_POINT_LIST": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
+                }
+            },
+            "SIERRA_ENTRY_POINT_LIST": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
+                }
+            },
+            "DEPRECATED_CAIRO_ENTRY_POINT": {
                 "type": "object",
                 "properties": {
                     "offset": {
@@ -1734,6 +1847,49 @@
                         "$ref": "#/components/schemas/FELT"
                     }
                 }
+            },
+            "CAIRO_ENTRY_POINT": {
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/DEPRECATED_CONTRACT_ENTRY_POINT"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "builtins": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/BUILTIN_TYPE"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            "SIERRA_ENTRY_POINT": {
+                "type": "object",
+                "properties": {
+                    "selector": {
+                        "description": "A unique identifier of the entry point (function) in the program",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "function_idx": {
+                        "description": "The index of the function in the program",
+                        "type": "integer"
+                    }
+                }
+            },
+            "BUILTIN_TYPE": {
+                "type": "string",
+                "enum": [
+                    "range_check",
+                    "pedersen",
+                    "keccak",
+                    "poseidon",
+                    "ecdsa",
+                    "ec_op",
+                    "bitwise"
+                ]
             },
             "CONTRACT_ABI": {
                 "type": "array",
