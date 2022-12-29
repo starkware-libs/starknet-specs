@@ -254,7 +254,7 @@
                     "description": "The hash of the requested contract class",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                     }
                 }
             ],
@@ -299,7 +299,7 @@
                 "name": "result",
                 "description": "The class hash of the given contract",
                 "schema": {
-                    "$ref": "#/components/schemas/FELT"
+                    "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                 }
             },
             "errors": [
@@ -856,11 +856,11 @@
                     },
                     "new_root": {
                         "description": "The new global state root",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                     },
                     "old_root": {
                         "description": "The previous global state root",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                     },
                     "state_diff": {
                         "description": "The change in state applied in this block, given as a mapping of addresses to the new values and/or new contracts",
@@ -877,7 +877,7 @@
                                 "type": "array",
                                 "items": {
                                     "description": "The hash of a new contract declared as part of the new state",
-                                    "$ref": "#/components/schemas/FELT"
+                                    "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                                 }
                             },
                             "deployed_contracts": {
@@ -908,9 +908,6 @@
                     }
                 }
             },
-            "ADDRESS": {
-                "$ref": "#/components/schemas/FELT"
-            },
             "STORAGE_KEY": {
                 "type": "string",
                 "title": "A storage key",
@@ -925,16 +922,22 @@
                 "pattern": "^0x[a-fA-F0-9]{40}$"
             },
             "TXN_HASH": {
-                "$ref": "#/components/schemas/FELT",
+                "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT",
                 "description": "The transaction hash, as assigned in StarkNet",
                 "title": "A transaction's hash"
+            },
+            "ADDRESS_OR_HASH_FELT": {
+                "type": "string",
+                "title": "Field element",
+                "$comment": "A field element representing a address (ususally the result of a hash application) or a hash, so likely all bits are used",
+                "description": "A field element. Represented as 4 leading zero bits followed by 63 hex digits",
+                "pattern": "^0x0[a-fA-F0-9]{63}$"
             },
             "FELT": {
                 "type": "string",
                 "title": "Field element",
                 "$comment": "A field element, represented as a string of hex digits",
-                "description": "A field element. Represented as 4 leading zero bits followed by 63 hex digits",
-                "pattern": "^0x0[a-fA-F0-9]{63}$"
+                "pattern": "^0x[a-fA-F0-9]{1,63}$"
             },
             "BLOCK_NUMBER": {
                 "description": "The block's number (its height)",
@@ -942,7 +945,7 @@
                 "minimum": 0
             },
             "BLOCK_HASH": {
-                "$ref": "#/components/schemas/FELT"
+                "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
             },
             "BLOCK_BODY_WITH_TX_HASHES": {
                 "type": "object",
@@ -970,7 +973,7 @@
                 }
             },
             "BLOCK_HEADER": {
-                "type":"object",
+                "type": "object",
                 "properties": {
                     "block_hash": {
                         "$ref": "#/components/schemas/BLOCK_HASH"
@@ -985,7 +988,7 @@
                     },
                     "new_root": {
                         "description": "The new global state root",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                     },
                     "timestamp": {
                         "description": "The time in which the block was created, encoded in Unix time",
@@ -994,7 +997,7 @@
                     },
                     "sequencer_address": {
                         "description": "The StarkNet identity of the sequencer submitting this block",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                     }
                 }
             },
@@ -1052,7 +1055,7 @@
                             },
                             "sequencer_address": {
                                 "description": "The StarkNet identity of the sequencer submitting this block",
-                                "$ref": "#/components/schemas/FELT"
+                                "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                             },
                             "parent_hash": {
                                 "description": "The hash of this block's parent",
@@ -1078,7 +1081,7 @@
                             },
                             "sequencer_address": {
                                 "description": "The StarkNet identity of the sequencer submitting this block",
-                                "$ref": "#/components/schemas/FELT"
+                                "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                             },
                             "parent_hash": {
                                 "description": "The hash of this block's parent",
@@ -1093,11 +1096,11 @@
                 "properties": {
                     "address": {
                         "description": "The address of the contract",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                     },
                     "class_hash": {
                         "description": "The hash of the contract code",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                     }
                 }
             },
@@ -1106,7 +1109,7 @@
                 "properties": {
                     "address": {
                         "description": "The contract address for which the storage changed",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                     },
                     "storage_entries": {
                         "description": "The changes in the storage of the contract",
@@ -1223,11 +1226,11 @@
                         "properties": {
                             "class_hash": {
                                 "description": "The hash of the declared class",
-                                "$ref": "#/components/schemas/FELT"
+                                "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                             },
                             "sender_address": {
                                 "description": "The address of the account contract sending the declaration transaction",
-                                "$ref": "#/components/schemas/ADDRESS"
+                                "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                             }
                         }
                     }
@@ -1293,7 +1296,7 @@
                     },
                     "class_hash": {
                         "description": "The hash of the deployed contract's class",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                     }
                 }
             },
@@ -1310,7 +1313,7 @@
                             },
                             "class_hash": {
                                 "description": "The hash of the deployed contract's class",
-                                "$ref": "#/components/schemas/FELT"
+                                "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                             }
                         }
                     },
@@ -1522,7 +1525,7 @@
                         "properties": {
                             "contract_address": {
                                 "description": "The address of the deployed contract",
-                                "$ref": "#/components/schemas/FELT"
+                                "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                             }
                         }
                     }
@@ -1601,7 +1604,7 @@
                         "properties": {
                             "contract_address": {
                                 "description": "The address of the deployed contract",
-                                "$ref": "#/components/schemas/FELT"
+                                "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                             }
                         }
                     }
@@ -1623,7 +1626,7 @@
                 "properties": {
                     "to_address": {
                         "description": "The target L1 address the message is sent to",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ETH_ADDRESS"
                     },
                     "payload": {
                         "description": "The payload of the message",
@@ -1670,10 +1673,10 @@
                 "title": "Function call information",
                 "properties": {
                     "contract_address": {
-                        "$ref": "#/components/schemas/ADDRESS"
+                        "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                     },
                     "entry_point_selector": {
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                     },
                     "calldata": {
                         "type": "array",
@@ -1731,7 +1734,7 @@
                     },
                     "selector": {
                         "description": "A unique identifier of the entry point (function) in the program",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                     }
                 }
             },
