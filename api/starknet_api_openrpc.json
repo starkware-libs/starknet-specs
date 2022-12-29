@@ -1173,9 +1173,6 @@
                         "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN"
                     },
                     {
-                        "$ref": "#/components/schemas/BROADCASTED_DEPLOY_TXN"
-                    },
-                    {
                         "$ref": "#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
                     }
                 ]
@@ -1227,6 +1224,16 @@
                 ]
             },
             "DECLARE_TXN": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/DECLARE_TXN_V1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DECLARE_TXN_V2"
+                    }
+                ]
+            },
+            "DECLARE_TXN_V1": {
                 "title": "Declare Contract Transaction",
                 "allOf": [
                     {
@@ -1247,7 +1254,55 @@
                     }
                 ]
             },
+            "DECLARE_TXN_V2": {
+                "title": "Declare Contract Transaction",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/DECLARE_TXN_V1"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "compiled_class_hash": {
+                                "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
+                                "$ref": "#/components/schemas/FELT"
+                            }
+                        }
+                    }
+                ]
+            },
             "BROADCASTED_DECLARE_TXN": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN_V1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN_V2"
+                    }
+                ]
+            },
+            "BROADCASTED_DECLARE_V1_TXN": {
+                "title": "mempool representation of a declare transaction",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "contract_class": {
+                                "description": "The class to be declared",
+                                "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
+                            },
+                            "sender_address": {
+                                "description": "The address of the account contract sending the declaration transaction",
+                                "$ref": "#/components/schemas/ADDRESS"
+                            }
+                        }
+                    }
+                ]
+            },
+            "BROADCASTED_DECLARE_V2_TXN": {
                 "title": "mempool representation of a declare transaction",
                 "allOf": [
                     {
@@ -1263,6 +1318,10 @@
                             "sender_address": {
                                 "description": "The address of the account contract sending the declaration transaction",
                                 "$ref": "#/components/schemas/ADDRESS"
+                            },
+                            "compiled_class_hash": {
+                                "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
+                                "$ref": "#/components/schemas/FELT"
                             }
                         }
                     }
