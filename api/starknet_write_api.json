@@ -59,7 +59,7 @@
                         },
                         "class_hash": {
                             "title": "The hash of the declared class",
-                            "$ref": "#/components/schemas/FELT"
+                            "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                         }
                     }
                 }
@@ -95,7 +95,7 @@
                         },
                         "contract_address": {
                             "title": "The address of the new contract",
-                            "$ref": "#/components/schemas/FELT"
+                            "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                         }
                     }
                 }
@@ -131,7 +131,7 @@
                         },
                         "contract_address": {
                             "title": "The address of the new contract",
-                            "$ref": "#/components/schemas/FELT"
+                            "$ref": "#/components/schemas/ADDRESS_OR_HASH_FELT"
                         }
                     }
                 }
@@ -157,8 +157,8 @@
             "SIGNATURE": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/SIGNATURE"
             },
-            "FELT": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
+            "ADDRESS_OR_HASH_FELT": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/ADDRESS_OR_HASH_FELT"
             },
             "TXN_HASH": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
