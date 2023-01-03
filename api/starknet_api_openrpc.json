@@ -1281,7 +1281,7 @@
                     }
                 ]
             },
-            "BROADCASTED_DECLARE_V1_TXN": {
+            "BROADCASTED_DECLARE_TXN_V1": {
                 "title": "mempool representation of a declare transaction",
                 "allOf": [
                     {
@@ -1302,7 +1302,7 @@
                     }
                 ]
             },
-            "BROADCASTED_DECLARE_V2_TXN": {
+            "BROADCASTED_DECLARE_TXN_V2": {
                 "title": "mempool representation of a declare transaction",
                 "allOf": [
                     {
@@ -1384,24 +1384,6 @@
                             "class_hash": {
                                 "description": "The hash of the deployed contract's class",
                                 "$ref": "#/components/schemas/FELT"
-                            }
-                        }
-                    },
-                    {
-                        "$ref": "#/components/schemas/DEPLOY_TXN_PROPERTIES"
-                    }
-                ]
-            },
-            "BROADCASTED_DEPLOY_TXN": {
-                "title": "mempool representation of a deploy transaction",
-                "description": "The structure of a deploy transaction. Note that this transaction type is deprecated and will no longer be supported in future versions",
-                "allOf": [
-                    {
-                        "type": "object",
-                        "properties": {
-                            "contract_class": {
-                                "description": "The class of the contract that will be deployed",
-                                "$ref": "#/components/schemas/CONTRACT_CLASS"
                             }
                         }
                     },
@@ -1768,7 +1750,27 @@
                         }
                     },
                     "entry_points_by_type": {
-                        "$ref": "#/components/schemas/SIERRA_ENTRY_POINTS"
+                        "type": "object",
+                        "properties": {
+                            "CONSTRUCTOR": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
+                                }
+                            },
+                            "EXTERNAL": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
+                                }
+                            },
+                            "L1_HANDLER": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -1813,7 +1815,7 @@
                     }
                 }
             },
-            "DEPREACTED_CONTRACT_CLASS": {
+            "DEPRECATED_CONTRACT_CLASS": {
                 "title": "The definition of a StarkNet contract class",
                 "type": "object",
                 "properties": {
@@ -1823,7 +1825,27 @@
                         "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$"
                     },
                     "entry_points_by_type": {
-                        "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINTS"
+                        "type": "object",
+                        "properties": {
+                            "CONSTRUCTOR": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
+                                }
+                            },
+                            "EXTERNAL": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
+                                }
+                            },
+                            "L1_HANDLER": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
+                                }
+                            }
+                        }
                     },
                     "abi": {
                         "$ref": "#/components/schemas/CONTRACT_ABI"
@@ -1833,66 +1855,6 @@
                     "program",
                     "entry_points_by_type"
                 ]
-            },
-            "CONTRACT_ENTRY_POINTS": {
-                "type": "object",
-                "properties": {
-                    "CONSTRUCTOR": {
-                        "$ref": "#/components/schemas/CAIRO_ENTRY_POINT_LIST"
-                    },
-                    "EXTERNAL": {
-                        "$ref": "#/components/schemas/CAIRO_ENTRY_POINT_LIST"
-                    },
-                    "L1_HANDLER": {
-                        "$ref": "#/components/schemas/CAIRO_ENTRY_POINT_LIST"
-                    }
-                }
-            },
-            "DEPRECATED_CAIRO_ENTRY_POINTS": {
-                "type": "object",
-                "properties": {
-                    "CONSTRUCTOR": {
-                        "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT_LIST"
-                    },
-                    "EXTERNAL": {
-                        "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT_LIST"
-                    },
-                    "L1_HANDLER": {
-                        "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT_LIST"
-                    }
-                }
-            },
-            "SIERRA_ENTRY_POINTS": {
-                "type": "object",
-                "properties": {
-                    "CONSTRUCTOR": {
-                        "$ref": "#/components/schemas/SIERRA_ENTRY_POINT_LIST"
-                    },
-                    "EXTERNAL": {
-                        "$ref": "#/components/schemas/SIERRA_ENTRY_POINT_LIST"
-                    },
-                    "L1_HANDLER": {
-                        "$ref": "#/components/schemas/SIERRA_ENTRY_POINT_LIST"
-                    }
-                }
-            },
-            "CAIRO_ENTRY_POINT_LIST": {
-                "type": "array",
-                "items": {
-                    "$ref": "#/components/schemas/CAIRO_ENTRY_POINT"
-                }
-            },
-            "DEPRECATED_CAIRO_ENTRY_POINT_LIST": {
-                "type": "array",
-                "items": {
-                    "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
-                }
-            },
-            "SIERRA_ENTRY_POINT_LIST": {
-                "type": "array",
-                "items": {
-                    "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
-                }
             },
             "DEPRECATED_CAIRO_ENTRY_POINT": {
                 "type": "object",
@@ -1906,24 +1868,6 @@
                         "$ref": "#/components/schemas/FELT"
                     }
                 }
-            },
-            "CAIRO_ENTRY_POINT": {
-                "allOf": [
-                    {
-                        "$ref": "#/components/schemas/DEPRECATED_CONTRACT_ENTRY_POINT"
-                    },
-                    {
-                        "type": "object",
-                        "properties": {
-                            "builtins": {
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/BUILTIN_TYPE"
-                                }
-                            }
-                        }
-                    }
-                ]
             },
             "SIERRA_ENTRY_POINT": {
                 "type": "object",
