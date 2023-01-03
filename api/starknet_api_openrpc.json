@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.47.0",
+        "version": "0.48.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -705,7 +705,12 @@
                                 "title": "The transaction that emitted the event",
                                 "$ref": "#/components/schemas/TXN_HASH"
                             }
-                        }
+                        },
+                        "required": [
+                            "block_hash",
+                            "block_number",
+                            "transaction_hash"
+                        ]
                     }
                 ]
             },
@@ -718,7 +723,10 @@
                             "from_address": {
                                 "$ref": "#/components/schemas/ADDRESS"
                             }
-                        }
+                        },
+                        "required": [
+                            "from_address"
+                        ]
                     },
                     {
                         "$ref": "#/components/schemas/EVENT_CONTENT"
@@ -742,7 +750,11 @@
                             "$ref": "#/components/schemas/FELT"
                         }
                     }
-                }
+                },
+                "required": [
+                    "keys",
+                    "data"
+                ]
             },
             "EVENT_FILTER": {
                 "title": "An event filter/query",
@@ -835,7 +847,15 @@
                         "description": "The number (height) of the estimated highest block to be synchronized",
                         "$ref": "#/components/schemas/NUM_AS_HEX"
                     }
-                }
+                },
+                "required": [
+                    "starting_block_hash",
+                    "starting_block_num",
+                    "current_block_hash",
+                    "current_block_num",
+                    "highest_block_hash",
+                    "highest_block_num"
+                ]
             },
             "NUM_AS_HEX": {
                 "title": "An integer number in hex format (0x...)",
@@ -904,9 +924,21 @@
                                     }
                                 }
                             }
-                        }
+                        },
+                        "required": [
+                            "storage_diffs",
+                            "declared_contract_hashes",
+                            "deployed_contracts",
+                            "nonces"
+                        ]
                     }
-                }
+                },
+                "required": [
+                    "block_hash",
+                    "new_root",
+                    "old_root",
+                    "state_diff"
+                ]
             },
             "ADDRESS": {
                 "$ref": "#/components/schemas/FELT"
@@ -955,7 +987,10 @@
                             "$ref": "#/components/schemas/TXN_HASH"
                         }
                     }
-                }
+                },
+                "required": [
+                    "transactions"
+                ]
             },
             "BLOCK_BODY_WITH_TXS": {
                 "type": "object",
@@ -967,7 +1002,10 @@
                             "$ref": "#/components/schemas/TXN"
                         }
                     }
-                }
+                },
+                "required": [
+                    "transactions"
+                ]
             },
             "BLOCK_HEADER": {
                 "type":"object",
@@ -996,7 +1034,15 @@
                         "description": "The StarkNet identity of the sequencer submitting this block",
                         "$ref": "#/components/schemas/FELT"
                     }
-                }
+                },
+                "required": [
+                    "block_hash",
+                    "parent_hash",
+                    "block_number",
+                    "new_root",
+                    "timestamp",
+                    "sequencer_address"
+                ]
             },
             "BLOCK_WITH_TX_HASHES": {
                 "title": "The block object",
@@ -1007,7 +1053,10 @@
                             "status": {
                                 "$ref": "#/components/schemas/BLOCK_STATUS"
                             }
-                        }
+                        },
+                        "required": [
+                            "status"
+                        ]
                     },
                     {
                         "$ref": "#/components/schemas/BLOCK_HEADER"
@@ -1026,7 +1075,10 @@
                             "status": {
                                 "$ref": "#/components/schemas/BLOCK_STATUS"
                             }
-                        }
+                        },
+                        "required": [
+                            "status"
+                        ]
                     },
                     {
                         "$ref": "#/components/schemas/BLOCK_HEADER"
@@ -1099,7 +1151,11 @@
                         "description": "The hash of the contract code",
                         "$ref": "#/components/schemas/FELT"
                     }
-                }
+                },
+                "required": [
+                    "address",
+                    "class_hash"
+                ]
             },
             "CONTRACT_STORAGE_DIFF_ITEM": {
                 "type": "object",
@@ -1125,7 +1181,11 @@
                             }
                         }
                     }
-                }
+                },
+                "required": [
+                    "address",
+                    "storage_entries"
+                ]
             },
             "TXN": {
                 "title": "Transaction",
@@ -1194,7 +1254,14 @@
                     "nonce": {
                         "$ref": "#/components/schemas/FELT"
                     }
-                }
+                },
+                "required": [
+                    "type",
+                    "max_fee",
+                    "version",
+                    "signature",
+                    "nonce"
+                ]
             },
             "COMMON_TXN_PROPERTIES": {
                 "allOf": [
@@ -1205,7 +1272,10 @@
                                 "$ref": "#/components/schemas/TXN_HASH",
                                 "description": "The hash identifying the transaction"
                             }
-                        }
+                        },
+                        "required": [
+                            "transaction_hash"
+                        ]
                     },
                     {
                         "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
@@ -1229,7 +1299,11 @@
                                 "description": "The address of the account contract sending the declaration transaction",
                                 "$ref": "#/components/schemas/ADDRESS"
                             }
-                        }
+                        },
+                        "required": [
+                            "class_hash",
+                            "sender_address"
+                        ]
                     }
                 ]
             },
@@ -1250,7 +1324,11 @@
                                 "description": "The address of the account contract sending the declaration transaction",
                                 "$ref": "#/components/schemas/ADDRESS"
                             }
-                        }
+                        },
+                        "required": [
+                            "contract_class",
+                            "sender_address"
+                        ]
                     }
                 ]
             },
@@ -1295,7 +1373,12 @@
                         "description": "The hash of the deployed contract's class",
                         "$ref": "#/components/schemas/FELT"
                     }
-                }
+                },
+                "required": [
+                    "contract_address_salt",
+                    "constructor_calldata",
+                    "class_hash"
+                ]
             },
             "DEPLOY_TXN": {
                 "title": "Deploy Contract Transaction",
@@ -1312,7 +1395,11 @@
                                 "description": "The hash of the deployed contract's class",
                                 "$ref": "#/components/schemas/FELT"
                             }
-                        }
+                        },
+                        "required": [
+                            "transaction_hash",
+                            "class_hash"
+                        ]
                     },
                     {
                         "$ref": "#/components/schemas/DEPLOY_TXN_PROPERTIES"
@@ -1330,7 +1417,10 @@
                                 "description": "The class of the contract that will be deployed",
                                 "$ref": "#/components/schemas/CONTRACT_CLASS"
                             }
-                        }
+                        },
+                        "required": [
+                            "contract_class"
+                        ]
                     },
                     {
                         "$ref": "#/components/schemas/DEPLOY_TXN_PROPERTIES"
@@ -1358,7 +1448,13 @@
                             "$ref": "#/components/schemas/FELT"
                         }
                     }
-                }
+                },
+                "required": [
+                    "version",
+                    "type",
+                    "contract_address_salt",
+                    "constructor_calldata"
+                ]
             },
             "INVOKE_TXN_V0": {
                 "title": "version 0 invoke transaction",
@@ -1380,7 +1476,11 @@
                             "$ref": "#/components/schemas/FELT"
                         }
                     }
-                }
+                },
+                "required": [
+                    "sender_address",
+                    "calldata"
+                ]
             },
             "INVOKE_TXN": {
                 "title": "Initiate a transaction from an account",
@@ -1443,7 +1543,13 @@
                                 "description": "The L1->L2 message nonce field of the SN Core L1 contract at the time the transaction was sent",
                                 "$ref": "#/components/schemas/NUM_AS_HEX"
                             }
-                        }
+                        },
+                        "required": [
+                            "transaction_hash",
+                            "version",
+                            "type",
+                            "nonce"
+                        ]
                     },
                     {
                         "$ref": "#/components/schemas/FUNCTION_CALL"
@@ -1524,7 +1630,10 @@
                                 "description": "The address of the deployed contract",
                                 "$ref": "#/components/schemas/FELT"
                             }
-                        }
+                        },
+                        "required": [
+                            "contract_address"
+                        ]
                     }
                 ]
             },
@@ -1632,7 +1741,11 @@
                             "$ref": "#/components/schemas/FELT"
                         }
                     }
-                }
+                },
+                "required": [
+                    "to_address",
+                    "payload"
+                ]
             },
             "TXN_STATUS": {
                 "type": "string",
@@ -1682,7 +1795,12 @@
                             "$ref": "#/components/schemas/FELT"
                         }
                     }
-                }
+                },
+                "required": [
+                    "contract_address",
+                    "entry_point_selector",
+                    "calldata"
+                ]
             },
             "CONTRACT_CLASS": {
                 "title": "The definition of a StarkNet contract class",
