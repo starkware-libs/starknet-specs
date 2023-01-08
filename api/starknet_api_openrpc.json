@@ -887,11 +887,28 @@
                                     "$ref": "#/components/schemas/CONTRACT_STORAGE_DIFF_ITEM"
                                 }
                             },
+                            "deprecated_declared_contract_hashes": {
+                                "type": "array",
+                                "items": {
+                                    "description": "The hash of the declared class",
+                                    "$ref": "#/components/schemas/FELT"
+                                }
+                            },
                             "declared_contract_hashes": {
                                 "type": "array",
                                 "items": {
-                                    "description": "The hash of a new contract declared as part of the new state",
-                                    "$ref": "#/components/schemas/FELT"
+                                    "description": "The declared class hash and compiled class hash",
+                                    "type": "object",
+                                    "properties": {
+                                        "class_hash": {
+                                            "description": "The hash of the declared class",
+                                            "$ref": "#/components/schemas/FELT"
+                                        },
+                                        "compiled_class_hash": {
+                                            "description": "The Cairo assembly hash corresponding to the declared class",
+                                            "$ref": "#/components/schemas/FELT"
+                                        }
+                                    }
                                 }
                             },
                             "deployed_contracts": {
