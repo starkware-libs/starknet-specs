@@ -1766,6 +1766,10 @@
                             "$ref": "#/components/schemas/FELT"
                         }
                     },
+                    "sierra_version": {
+                        "type": "string",
+                        "description": "the Sierra program version"
+                    },
                     "entry_points_by_type": {
                         "type": "object",
                         "properties": {
@@ -1788,47 +1792,10 @@
                                 }
                             }
                         }
-                    }
-                }
-            },
-            "COMPILED_CONTRACT_CLASS": {
-                "type": "object",
-                "properties": {
-                    "prime": {
-                        "type": "NUM_AS_HEX",
-                        "description": "The field over which the program is expected to run"
                     },
-                    "compiler_version": {
+                    "abi": {
                         "type": "string",
-                        "description": "The Cairo compiler version that was used to generate this class"
-                    },
-                    "bytecode": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/FELT"
-                        }
-                    },
-                    "hints": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/CAIRO_HINT"
-                        }
-                    },
-                    "entry_points_by_type": {
-                        "$ref": "#/components/schemas/CAIRO_ENTRY_POINTS"
-                    }
-                }
-            },
-            "CAIRO_HINT": {
-                "type": "object",
-                "properties": {
-                    "hint_location": {
-                        "type": "integer",
-                        "description": "the instruction index before which the hint has to be executed"
-                    },
-                    "hint_instructions": {
-                        "type": "array",
-                        "items": "string"
+                        "descripition": "The class ABI, as supplied by the user declaring the class"
                     }
                 }
             },
@@ -1898,18 +1865,6 @@
                         "type": "integer"
                     }
                 }
-            },
-            "BUILTIN_TYPE": {
-                "type": "string",
-                "enum": [
-                    "range_check",
-                    "pedersen",
-                    "keccak",
-                    "poseidon",
-                    "ecdsa",
-                    "ec_op",
-                    "bitwise"
-                ]
             },
             "CONTRACT_ABI": {
                 "type": "array",
