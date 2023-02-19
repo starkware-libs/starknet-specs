@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.49.0",
+        "version": "0.50.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -262,7 +262,14 @@
                 "name": "result",
                 "description": "The contract class, if found",
                 "schema": {
-                    "$ref": "#/components/schemas/CONTRACT_CLASS"
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
+                        },
+                        {
+                            "$ref": "#/components/schemas/CONTRACT_CLASS"
+                        }
+                    ]
                 }
             },
             "errors": [
@@ -336,7 +343,14 @@
                 "name": "result",
                 "description": "The contract class",
                 "schema": {
-                    "$ref": "#/components/schemas/CONTRACT_CLASS"
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
+                        },
+                        {
+                            "$ref": "#/components/schemas/CONTRACT_CLASS"
+                        }
+                    ]
                 }
             },
             "errors": [
@@ -896,11 +910,28 @@
                                     "$ref": "#/components/schemas/CONTRACT_STORAGE_DIFF_ITEM"
                                 }
                             },
+                            "deprecated_declared_contract_hashes": {
+                                "type": "array",
+                                "items": {
+                                    "description": "The hash of the declared class",
+                                    "$ref": "#/components/schemas/FELT"
+                                }
+                            },
                             "declared_contract_hashes": {
                                 "type": "array",
                                 "items": {
-                                    "description": "The hash of a new contract declared as part of the new state",
-                                    "$ref": "#/components/schemas/FELT"
+                                    "description": "The declared class hash and compiled class hash",
+                                    "type": "object",
+                                    "properties": {
+                                        "class_hash": {
+                                            "description": "The hash of the declared class",
+                                            "$ref": "#/components/schemas/FELT"
+                                        },
+                                        "compiled_class_hash": {
+                                            "description": "The Cairo assembly hash corresponding to the declared class",
+                                            "$ref": "#/components/schemas/FELT"
+                                        }
+                                    }
                                 }
                             },
                             "deployed_contracts": {
@@ -1011,7 +1042,7 @@
                 ]
             },
             "BLOCK_HEADER": {
-                "type":"object",
+                "type": "object",
                 "properties": {
                     "block_hash": {
                         "$ref": "#/components/schemas/BLOCK_HASH"
@@ -1222,9 +1253,6 @@
                         "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN"
                     },
                     {
-                        "$ref": "#/components/schemas/BROADCASTED_DEPLOY_TXN"
-                    },
-                    {
                         "$ref": "#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
                     }
                 ]
@@ -1282,6 +1310,16 @@
                 ]
             },
             "DECLARE_TXN": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/DECLARE_TXN_V1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/DECLARE_TXN_V2"
+                    }
+                ]
+            },
+            "DECLARE_TXN_V1": {
                 "title": "Declare Contract Transaction",
                 "allOf": [
                     {
@@ -1313,7 +1351,55 @@
                     }
                 ]
             },
+            "DECLARE_TXN_V2": {
+                "title": "Declare Contract Transaction",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/DECLARE_TXN_V1"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "compiled_class_hash": {
+                                "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
+                                "$ref": "#/components/schemas/FELT"
+                            }
+                        }
+                    }
+                ]
+            },
             "BROADCASTED_DECLARE_TXN": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN_V1"
+                    },
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN_V2"
+                    }
+                ]
+            },
+            "BROADCASTED_DECLARE_TXN_V1": {
+                "title": "mempool representation of a declare transaction",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
+                    },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "contract_class": {
+                                "description": "The class to be declared",
+                                "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
+                            },
+                            "sender_address": {
+                                "description": "The address of the account contract sending the declaration transaction",
+                                "$ref": "#/components/schemas/ADDRESS"
+                            }
+                        }
+                    }
+                ]
+            },
+            "BROADCASTED_DECLARE_TXN_V2": {
                 "title": "mempool representation of a declare transaction",
                 "allOf": [
                     {
@@ -1335,6 +1421,10 @@
                             "sender_address": {
                                 "description": "The address of the account contract sending the declaration transaction",
                                 "$ref": "#/components/schemas/ADDRESS"
+                            },
+                            "compiled_class_hash": {
+                                "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
+                                "$ref": "#/components/schemas/FELT"
                             }
                         },
                         "required": [
@@ -1419,27 +1509,6 @@
                         "required": [
                             "transaction_hash",
                             "class_hash"
-                        ]
-                    },
-                    {
-                        "$ref": "#/components/schemas/DEPLOY_TXN_PROPERTIES"
-                    }
-                ]
-            },
-            "BROADCASTED_DEPLOY_TXN": {
-                "title": "mempool representation of a deploy transaction",
-                "description": "The structure of a deploy transaction. Note that this transaction type is deprecated and will no longer be supported in future versions",
-                "allOf": [
-                    {
-                        "type": "object",
-                        "properties": {
-                            "contract_class": {
-                                "description": "The class of the contract that will be deployed",
-                                "$ref": "#/components/schemas/CONTRACT_CLASS"
-                            }
-                        },
-                        "required": [
-                            "contract_class"
                         ]
                     },
                     {
@@ -1934,6 +2003,49 @@
                 ]
             },
             "CONTRACT_CLASS": {
+                "type": "object",
+                "properties": {
+                    "sierra_program": {
+                        "type": "array",
+                        "description": "The list of Sierra instructions of which the program consists",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    },
+                    "sierra_version": {
+                        "type": "string",
+                        "description": "the Sierra program version"
+                    },
+                    "entry_points_by_type": {
+                        "type": "object",
+                        "properties": {
+                            "CONSTRUCTOR": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
+                                }
+                            },
+                            "EXTERNAL": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
+                                }
+                            },
+                            "L1_HANDLER": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
+                                }
+                            }
+                        }
+                    },
+                    "abi": {
+                        "type": "string",
+                        "descripition": "The class ABI, as supplied by the user declaring the class"
+                    }
+                }
+            },
+            "DEPRECATED_CONTRACT_CLASS": {
                 "title": "The definition of a StarkNet contract class",
                 "type": "object",
                 "properties": {
@@ -1946,13 +2058,22 @@
                         "type": "object",
                         "properties": {
                             "CONSTRUCTOR": {
-                                "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT_LIST"
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
+                                }
                             },
                             "EXTERNAL": {
-                                "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT_LIST"
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
+                                }
                             },
                             "L1_HANDLER": {
-                                "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT_LIST"
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
+                                }
                             }
                         }
                     },
@@ -1965,13 +2086,7 @@
                     "entry_points_by_type"
                 ]
             },
-            "CONTRACT_ENTRY_POINT_LIST": {
-                "type": "array",
-                "items": {
-                    "$ref": "#/components/schemas/CONTRACT_ENTRY_POINT"
-                }
-            },
-            "CONTRACT_ENTRY_POINT": {
+            "DEPRECATED_CAIRO_ENTRY_POINT": {
                 "type": "object",
                 "properties": {
                     "offset": {
@@ -1981,6 +2096,19 @@
                     "selector": {
                         "description": "A unique identifier of the entry point (function) in the program",
                         "$ref": "#/components/schemas/FELT"
+                    }
+                }
+            },
+            "SIERRA_ENTRY_POINT": {
+                "type": "object",
+                "properties": {
+                    "selector": {
+                        "description": "A unique identifier of the entry point (function) in the program",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "function_idx": {
+                        "description": "The index of the function in the program",
+                        "type": "integer"
                     }
                 }
             },
