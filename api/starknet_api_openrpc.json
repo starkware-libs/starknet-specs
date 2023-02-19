@@ -90,7 +90,14 @@
                 "name": "result",
                 "description": "The information about the state update of the requested block",
                 "schema": {
-                    "$ref": "#/components/schemas/STATE_UPDATE"
+                    "oneOf": [
+                        {
+                            "$ref": "#/components/schemas/STATE_UPDATE"
+                        },
+                        {
+                            "$ref": "#/components/schemas/PENDING_STATE_UPDATE"
+                        }
+                    ]
                 }
             },
             "errors": [
@@ -893,14 +900,31 @@
             },
             "STATE_UPDATE": {
                 "type": "object",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "block_hash": {
+                                "$ref": "#/components/schemas/BLOCK_HASH"
+                            },
+                            "new_root": {
+                                "description": "The new global state root",
+                                "$ref": "#/components/schemas/FELT"
+                            }
+                        },
+                        "required": [
+                            "block_hash",
+                            "new_root"
+                        ]
+                    },
+                    {
+                        "$ref": "#/components/schemas/PENDING_STATE_UPDATE"
+                    }
+                ]
+            },
+            "PENDING_STATE_UPDATE": {
+                "type": "object",
                 "properties": {
-                    "block_hash": {
-                        "$ref": "#/components/schemas/BLOCK_HASH"
-                    },
-                    "new_root": {
-                        "description": "The new global state root",
-                        "$ref": "#/components/schemas/FELT"
-                    },
                     "old_root": {
                         "description": "The previous global state root",
                         "$ref": "#/components/schemas/FELT"
@@ -974,8 +998,6 @@
                     }
                 },
                 "required": [
-                    "block_hash",
-                    "new_root",
                     "old_root",
                     "state_diff"
                 ]
