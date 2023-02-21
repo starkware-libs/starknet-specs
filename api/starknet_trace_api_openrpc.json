@@ -87,23 +87,21 @@
                 }
             },
             "errors": [
-                [
-                    {
-                        "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
-                    },
-                    {
-                        "$ref": "#/components/errors/INVALID_MESSAGE_SELECTOR"
-                    },
-                    {
-                        "$ref": "#/components/errors/INVALID_CALL_DATA"
-                    },
-                    {
-                        "$ref": "#/components/errors/CONTRACT_ERROR"
-                    },
-                    {
-                        "$ref": "#/components/errors/BLOCK_NOT_FOUND"
-                    }
-                ]
+                {
+                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_MESSAGE_SELECTOR"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_CALL_DATA"
+                },
+                {
+                    "$ref": "#/components/errors/CONTRACT_ERROR"
+                },
+                {
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                }
             ]
         },
         {
@@ -318,7 +316,7 @@
             "BROADCASTED_TXN": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_TXN"
             },
-            "FEE_ESTIMATE"{
+            "FEE_ESTIMATE": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FEE_ESTIMATE"
             }
         },
@@ -347,6 +345,26 @@
             "INVALID_TXN_HASH": {
                 "code": 25,
                 "message": "Invalid transaction hash"
+            },
+            "CONTRACT_NOT_FOUND": {
+                "code": 20,
+                "message": "Contract not found"
+            },
+            "INVALID_MESSAGE_SELECTOR": {
+                "code": 21,
+                "message": "Invalid message selector"
+            },
+            "INVALID_CALL_DATA": {
+                "code": 22,
+                "message": "Invalid call data"
+            },
+            "BLOCK_NOT_FOUND": {
+                "code": 24,
+                "message": "Block not found"
+            },
+            "CONTRACT_ERROR": {
+                "code": 40,
+                "message": "Contract error"
             }
         }
     }
