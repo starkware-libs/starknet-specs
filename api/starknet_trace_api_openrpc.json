@@ -69,25 +69,23 @@
                     }
                 }
             ],
-            "result": [
-                {
-                    "name": "simulated_transaction",
-                    "description": "The execution trace and consuemd resources of the required transaction",
-                    "schema": {
-                        "type": "object",
-                        "properties": {
-                            "transaction_trace": {
-                                "title": "the transaction's trace",
-                                "$ref": "#/components/schemas/TRANSACTION_TRACE"
-                            },
-                            "fee_estimation": {
-                                "title": "the transaction's resources and fee",
-                                "$ref": "#/components/schemas/FEE_ESTIMATE"
-                            }
+            "result": {
+                "name": "simulated_transaction",
+                "description": "The execution trace and consuemd resources of the required transaction",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "transaction_trace": {
+                            "title": "the transaction's trace",
+                            "$ref": "#/components/schemas/TRANSACTION_TRACE"
+                        },
+                        "fee_estimation": {
+                            "title": "the transaction's resources and fee",
+                            "$ref": "#/components/schemas/FEE_ESTIMATE"
                         }
                     }
                 }
-            ],
+            },
             "errors": [
                 [
                     {
