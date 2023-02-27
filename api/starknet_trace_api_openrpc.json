@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.3.0",
+        "version": "0.4.0",
         "title": "StarkNet Trace API",
         "license": {}
     },
@@ -25,7 +25,7 @@
                 "name": "trace",
                 "description": "The function call trace of the transaction designated by the given hash",
                 "schema": {
-                    "$ref": "#/components/schemas/TRACE_ROOT"
+                    "$ref": "#/components/schemas/TRANSACTION_TRACE"
                 }
             },
             "errors": [
@@ -34,6 +34,73 @@
                 },
                 {
                     "$ref": "#/components/errors/NO_TRACE_AVAILABLE"
+                }
+            ]
+        },
+        {
+            "name": "starknet_simulateTransaction",
+            "summary": "simulate a given transaction on the requested state, and generate the execution trace",
+            "params": [
+                {
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag, for the block referencing the state or call the transaction on.",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BLOCK_ID"
+                    }
+                },
+                {
+                    "name": "transaction",
+                    "description": "The transaction to simulate",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/components/schemas/BROADCASTED_TXN"
+                    }
+                },
+                {
+                    "name": "simulation_flags",
+                    "description": "describes what parts of the transaction should be executed",
+                    "required": true,
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SIMULATION_FLAG"
+                        }
+                    }
+                }
+            ],
+            "result": {
+                "name": "simulated_transaction",
+                "description": "The execution trace and consuemd resources of the required transaction",
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "transaction_trace": {
+                            "title": "the transaction's trace",
+                            "$ref": "#/components/schemas/TRANSACTION_TRACE"
+                        },
+                        "fee_estimation": {
+                            "title": "the transaction's resources and fee",
+                            "$ref": "#/components/schemas/FEE_ESTIMATE"
+                        }
+                    }
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_MESSAGE_SELECTOR"
+                },
+                {
+                    "$ref": "#/components/errors/INVALID_CALL_DATA"
+                },
+                {
+                    "$ref": "#/components/errors/CONTRACT_ERROR"
+                },
+                {
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
                 }
             ]
         },
@@ -64,7 +131,7 @@
                                 "$ref": "#/components/schemas/FELT"
                             },
                             "trace_root": {
-                                "$ref": "#/components/schemas/TRACE_ROOT"
+                                "$ref": "#/components/schemas/TRANSACTION_TRACE"
                             }
                         }
                     }
@@ -80,28 +147,75 @@
     "components": {
         "contentDescriptors": {},
         "schemas": {
-            "TRACE_ROOT": {
-                "type": "object",
-                "description": "The root of a transaction trace",
-                "summary": "Transaction call trace root",
-                "properties": {
-                    "nonce": {
-                        "title": "Nonce",
-                        "description": "The nonce provided for the transaction invoked",
-                        "$ref": "#/components/schemas/FELT"
-                    },
-                    "signature": {
-                        "title": "Signature",
-                        "description": "The signature/witness provided for the transaction",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/FELT"
+            "TRANSACTION_TRACE": {
+                "oneOf": [
+                    {
+                        "name": "INVOKE_TXN_TRACE",
+                        "type": "object",
+                        "description": "the execution trace of an invoke transaction",
+                        "properties": {
+                            "validate_invocation": {
+                                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "execute_invocation": {
+                                "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
+                                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "fee_transfer_invocation": {
+                                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            }
                         }
                     },
-                    "function_invocation": {
-                        "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                    {
+                        "name": "DECLARE_TXN_TRACE",
+                        "type": "object",
+                        "description": "the execution trace of a declare transaction",
+                        "properties": {
+                            "validate_invocation": {
+                                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "fee_transfer_invocation": {
+                                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            }
+                        }
+                    },
+                    {
+                        "name": "DEPLOY_ACCOUNT_TXN_TRACE",
+                        "type": "object",
+                        "description": "the execution trace of a deploy account transaction",
+                        "properties": {
+                            "validate_invocation": {
+                                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "constructor_invocation": {
+                                "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
+                                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "fee_transfer_invocation": {
+                                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            }
+                        }
+                    },
+                    {
+                        "name": "L1_HANDLER_TXN_TRACE",
+                        "type": "object",
+                        "description": "the execution trace of an L1 handler transaction",
+                        "properties": {
+                            "function_invocation": {
+                                "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
+                                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            }
+                        }
                     }
-                }
+                ]
+            },
+            "SIMULATION_FLAG": {
+                "type": "string",
+                "enum": [
+                    "SKIP_VALIDATE",
+                    "SKIP_EXECUTE"
+                ],
+                "description": "Flags that indicate how to simulate a given transaction"
             },
             "NESTED_CALL": {
                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
@@ -177,7 +291,7 @@
             "CALL_TYPE": {
                 "type": "string",
                 "enum": [
-                    "DELEGATE",
+                    "LIBRARY_CALL",
                     "CALL"
                 ]
             },
@@ -195,6 +309,15 @@
             },
             "BLOCK_HASH": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
+            },
+            "BLOCK_ID": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
+            },
+            "BROADCASTED_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_TXN"
+            },
+            "FEE_ESTIMATE": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FEE_ESTIMATE"
             }
         },
         "errors": {
@@ -222,6 +345,26 @@
             "INVALID_TXN_HASH": {
                 "code": 25,
                 "message": "Invalid transaction hash"
+            },
+            "CONTRACT_NOT_FOUND": {
+                "code": 20,
+                "message": "Contract not found"
+            },
+            "INVALID_MESSAGE_SELECTOR": {
+                "code": 21,
+                "message": "Invalid message selector"
+            },
+            "INVALID_CALL_DATA": {
+                "code": 22,
+                "message": "Invalid call data"
+            },
+            "BLOCK_NOT_FOUND": {
+                "code": 24,
+                "message": "Block not found"
+            },
+            "CONTRACT_ERROR": {
+                "code": 40,
+                "message": "Contract error"
             }
         }
     }
