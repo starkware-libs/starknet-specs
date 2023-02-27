@@ -2170,6 +2170,12 @@
                     "event"
                 ]
             },
+            "STATE_MUTABILITY_TYPE": {
+                "type": "string",
+                "enum": [
+                    "view"
+                ]
+            },
             "FUNCTION_ABI_TYPE": {
                 "type": "string",
                 "enum": [
@@ -2250,6 +2256,12 @@
                         "description": "The function name",
                         "type": "string"
                     },
+                    "stateMutability": {
+                        "description": "specifies when a function is view-only",
+                        "schema": {
+                          "$ref": "#/components/schemas/STATE_MUTABILITY_TYPE"
+                        }
+                    },
                     "inputs": {
                         "type": "array",
                         "items": {
@@ -2262,7 +2274,13 @@
                             "$ref": "#/components/schemas/TYPED_PARAMETER"
                         }
                     }
-                }
+                },
+                "required": [
+                  "type",
+                  "name",
+                  "inputs",
+                  "outputs"
+                ]
             },
             "TYPED_PARAMETER": {
                 "type": "object",
