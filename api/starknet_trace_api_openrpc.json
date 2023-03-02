@@ -54,7 +54,11 @@
                     "description": "The transaction to simulate",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BROADCASTED_TXN"
+                        "type": "array",
+                        "description": "a sequence of transactions to simulate, running each transaction on the state resulting from applying all the previous ones",
+                        "items": {
+                            "$ref": "#/components/schemas/BROADCASTED_TXN"
+                        }
                     }
                 },
                 {
@@ -70,18 +74,23 @@
                 }
             ],
             "result": {
-                "name": "simulated_transaction",
-                "description": "The execution trace and consuemd resources of the required transaction",
+                "name": "simulated_transactions",
+                "description": "The execution trace and consuemd resources of the required transactions",
                 "schema": {
-                    "type": "object",
-                    "properties": {
-                        "transaction_trace": {
-                            "title": "the transaction's trace",
-                            "$ref": "#/components/schemas/TRANSACTION_TRACE"
-                        },
-                        "fee_estimation": {
-                            "title": "the transaction's resources and fee",
-                            "$ref": "#/components/schemas/FEE_ESTIMATE"
+                    "type": "array",
+                    "items": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "transaction_trace": {
+                                    "title": "the transaction's trace",
+                                    "$ref": "#/components/schemas/TRANSACTION_TRACE"
+                                },
+                                "fee_estimation": {
+                                    "title": "the transaction's resources and fee",
+                                    "$ref": "#/components/schemas/FEE_ESTIMATE"
+                                }
+                            }
                         }
                     }
                 }
