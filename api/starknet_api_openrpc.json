@@ -2039,9 +2039,9 @@
                             "$ref": "#/components/schemas/FELT"
                         }
                     },
-                    "sierra_version": {
+                    "contract_class_version": {
                         "type": "string",
-                        "description": "the Sierra program version"
+                        "description": "The version of the contract class object. Currently, the Starknet OS supports version 0.1.0"
                     },
                     "entry_points_by_type": {
                         "type": "object",
@@ -2070,7 +2070,12 @@
                         "type": "string",
                         "descripition": "The class ABI, as supplied by the user declaring the class"
                     }
-                }
+                },
+                "required": [
+                    "sierra_program",
+                    "contract_class_version",
+                    "entry_points_by_type"
+                ]
             },
             "DEPRECATED_CONTRACT_CLASS": {
                 "title": "The definition of a StarkNet contract class",
