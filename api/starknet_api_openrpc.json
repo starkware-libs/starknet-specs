@@ -1008,7 +1008,9 @@
                         },
                         "required": [
                             "storage_diffs",
-                            "declared_contract_hashes",
+                            "deprecated_declared_classes",
+                            "declared_classes",
+                            "replaced_classes",
                             "deployed_contracts",
                             "nonces"
                         ]
