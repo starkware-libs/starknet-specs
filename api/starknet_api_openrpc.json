@@ -436,12 +436,6 @@
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_MESSAGE_SELECTOR"
-                },
-                {
-                    "$ref": "#/components/errors/INVALID_CALL_DATA"
-                },
-                {
                     "$ref": "#/components/errors/CONTRACT_ERROR"
                 },
                 {
@@ -489,12 +483,6 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
-                },
-                {
-                    "$ref": "#/components/errors/INVALID_MESSAGE_SELECTOR"
-                },
-                {
-                    "$ref": "#/components/errors/INVALID_CALL_DATA"
                 },
                 {
                     "$ref": "#/components/errors/CONTRACT_ERROR"
@@ -948,14 +936,14 @@
                                     "$ref": "#/components/schemas/CONTRACT_STORAGE_DIFF_ITEM"
                                 }
                             },
-                            "deprecated_declared_contract_hashes": {
+                            "deprecated_declared_classes": {
                                 "type": "array",
                                 "items": {
                                     "description": "The hash of the declared class",
                                     "$ref": "#/components/schemas/FELT"
                                 }
                             },
-                            "declared_contract_hashes": {
+                            "declared_classes": {
                                 "type": "array",
                                 "items": {
                                     "description": "The declared class hash and compiled class hash",
@@ -975,8 +963,25 @@
                             "deployed_contracts": {
                                 "type": "array",
                                 "items": {
-                                    "description": "A new contract deployed as part of the new state",
+                                    "description": "A new contract deployed as part of the state update",
                                     "$ref": "#/components/schemas/DEPLOYED_CONTRACT_ITEM"
+                                }
+                            },
+                            "replaced_classes": {
+                                "type": "array",
+                                "items": {
+                                    "description": "The list of contracts whose class was replaced",
+                                    "type": "object",
+                                    "properties": {
+                                        "contract_address": {
+                                            "description": "The address of the contract whose class was replaced",
+                                            "$ref": "#/components/schemas/ADDRESS"
+                                        },
+                                        "class_hash": {
+                                            "description": "The new class hash",
+                                            "$ref": "#/components/schemas/FELT"
+                                        }
+                                    }
                                 }
                             },
                             "nonces": {
@@ -999,7 +1004,9 @@
                         },
                         "required": [
                             "storage_diffs",
-                            "declared_contract_hashes",
+                            "deprecated_declared_classes",
+                            "declared_classes",
+                            "replaced_classes",
                             "deployed_contracts",
                             "nonces"
                         ]
@@ -2311,14 +2318,6 @@
             "CONTRACT_NOT_FOUND": {
                 "code": 20,
                 "message": "Contract not found"
-            },
-            "INVALID_MESSAGE_SELECTOR": {
-                "code": 21,
-                "message": "Invalid message selector"
-            },
-            "INVALID_CALL_DATA": {
-                "code": 22,
-                "message": "Invalid call data"
             },
             "BLOCK_NOT_FOUND": {
                 "code": 24,

@@ -100,12 +100,6 @@
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
                 },
                 {
-                    "$ref": "#/components/errors/INVALID_MESSAGE_SELECTOR"
-                },
-                {
-                    "$ref": "#/components/errors/INVALID_CALL_DATA"
-                },
-                {
                     "$ref": "#/components/errors/CONTRACT_ERROR"
                 },
                 {
