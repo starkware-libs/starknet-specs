@@ -669,7 +669,7 @@
             "EVENTS_CHUNK": {
                 "type": "object",
                 "properties": {
-                    "events": {
+                    "events_chunk": {
                         "type": "array",
                         "title": "Matching Events",
                         "items": {
@@ -682,7 +682,7 @@
                     }
                 },
                 "required": [
-                    "events"
+                    "events_chunk"
                 ]
             },
             "RESULT_PAGE_REQUEST": {
@@ -1055,7 +1055,7 @@
             "BLOCK_BODY_WITH_TX_HASHES": {
                 "type": "object",
                 "properties": {
-                    "transactions": {
+                    "transaction_hashes": {
                         "description": "The hashes of the transactions included in this block",
                         "type": "array",
                         "items": {
@@ -1065,7 +1065,7 @@
                     }
                 },
                 "required": [
-                    "transactions"
+                    "transaction_hashes"
                 ]
             },
             "BLOCK_BODY_WITH_TXS": {
