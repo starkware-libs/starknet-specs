@@ -445,12 +445,12 @@
         },
         {
             "name": "starknet_estimateFee",
-            "summary": "estimate the fee for of StarkNet transactions",
+            "summary": "estimate the fee of StarkNet transactions",
             "description": "estimates the resources required by transactions when applyed on a given state",
             "params": [
                 {
                     "name": "request",
-                    "summary": "The transaction to estimate",
+                    "summary": "The transactions to estimate",
                     "schema": {
                         "type": "array",
                         "description": "a sequence of transactions to estimate, running each transaction on the state resulting from applying all the previous ones",
@@ -474,7 +474,7 @@
                 "description": "the fee estimations",
                 "schema": {
                     "type": "array",
-                    "description": "a sequence of fee estimatione where the i'th estimate corresponds to the i'th transaction",
+                    "description": "a sequence of fee estimations where the i'th estimate corresponds to the i'th transaction",
                     "items": {
                         "$ref": "#/components/schemas/FEE_ESTIMATE"
                     }
