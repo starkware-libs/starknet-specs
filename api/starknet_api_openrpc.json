@@ -25,7 +25,7 @@
                 "name": "result",
                 "description": "The resulting block information with transaction hashes",
                 "schema": {
-                    "title": "starknet_getBlockWithTxHashesResult",
+                    "title": "Starknet get block hash with txs result",
                     "oneOf": [
                         {
                             "title": "Block with transaction hashes",
@@ -62,7 +62,7 @@
                 "name": "result",
                 "description": "The resulting block information with full transactions",
                 "schema": {
-                    "title": "starknet_getBlockWithTxsResult",
+                    "title": "Starknet get block with txs result",
                     "oneOf": [
                         {
                             "title": "Block with transactions",
@@ -99,7 +99,7 @@
                 "name": "result",
                 "description": "The information about the state update of the requested block",
                 "schema": {
-                    "title": "starknet_getStateUpdateResult",
+                    "title": "Starknet get state update result",
                     "oneOf": [
                         {
                             "title": "State update",
@@ -294,7 +294,7 @@
                 "name": "result",
                 "description": "The contract class, if found",
                 "schema": {
-                    "title": "starknet_getClassResult",
+                    "title": "Starknet get class result",
                     "oneOf": [
                         {
                             "title": "Deprecated contract class",
@@ -383,7 +383,7 @@
                 "name": "result",
                 "description": "The contract class",
                 "schema": {
-                    "title": "starknet_getClassAtResult",
+                    "title": "Starknet get class at result",
                     "oneOf": [
                         {
                             "title": "Deprecated contract class",
@@ -468,7 +468,6 @@
                     "type": "array",
                     "title": "Field element",
                     "items": {
-                        "title": "Field element",
                         "$ref": "#/components/schemas/FELT"
                     }
                 }
@@ -498,7 +497,6 @@
                         "description": "a sequence of transactions to estimate, running each transaction on the state resulting from applying all the previous ones",
                         "title": "Broadcasted transaction",
                         "items": {
-                            "title": "Broadcasted transaction",
                             "$ref": "#/components/schemas/BROADCASTED_TXN"
                         }
                     },
@@ -518,11 +516,10 @@
                 "name": "result",
                 "description": "the fee estimations",
                 "schema": {
-                    "title": "Fee estimate",
+                    "title": "Estimation",
                     "type": "array",
                     "description": "a sequence of fee estimatione where the i'th estimate corresponds to the i'th transaction",
                     "items": {
-                        "title": "Fee estimate",
                         "$ref": "#/components/schemas/FEE_ESTIMATE"
                     }
                 }
@@ -565,7 +562,7 @@
                 "name": "result",
                 "description": "The latest block hash and number",
                 "schema": {
-                    "title": "starknet_blockHashAndNumberResult",
+                    "title": "Starknet block hash and number result",
                     "type": "object",
                     "properties": {
                         "block_hash": {
@@ -612,7 +609,6 @@
                     "type": "array",
                     "title": "Pending Transactions",
                     "items": {
-                        "title": "Transaction",
                         "$ref": "#/components/schemas/TXN"
                     }
                 }
@@ -652,7 +648,7 @@
                     "summary": "The conditions used to filter the returned events",
                     "required": true,
                     "schema": {
-                        "title": "Params",
+                        "title": "Event emitter",
                         "allOf": [
                             {
                                 "title": "Event filter",
@@ -741,7 +737,6 @@
                         "type": "array",
                         "title": "Matching Events",
                         "items": {
-                            "title": "Emitted event",
                             "$ref": "#/components/schemas/EMITTED_EVENT"
                         }
                     },
@@ -784,7 +779,7 @@
                         "$ref": "#/components/schemas/EVENT"
                     },
                     {
-                        "title": "Event emission",
+                        "title": "Event context",
                         "description": "The event emission information",
                         "type": "object",
                         "properties": {
@@ -817,7 +812,7 @@
                 "descripition": "A StarkNet event",
                 "allOf": [
                     {
-                        "title": "Params",
+                        "title": "Event emitter",
                         "type": "object",
                         "properties": {
                             "from_address": {
@@ -844,7 +839,6 @@
                         "type": "array",
                         "title": "Keys",
                         "items": {
-                            "title": "Field element",
                             "$ref": "#/components/schemas/FELT"
                         }
                     },
@@ -852,7 +846,6 @@
                         "type": "array",
                         "title": "Data",
                         "items": {
-                            "title": "Field element",
                             "$ref": "#/components/schemas/FELT"
                         }
                     }
@@ -888,7 +881,6 @@
                             "description": "Per key (by position), designate the possible values to be matched for events to be returned. Empty array designates 'any' value",
                             "type": "array",
                             "items": {
-                                "title": "Field element",
                                 "$ref": "#/components/schemas/FELT"
                             }
                         }
@@ -1008,7 +1000,7 @@
                 "type": "object",
                 "allOf": [
                     {
-                        "title": "Params",
+                        "title": "Event emitter",
                         "type": "object",
                         "properties": {
                             "block_hash": {
@@ -1048,11 +1040,10 @@
                         "type": "object",
                         "properties": {
                             "storage_diffs": {
-                                "type": "array",
                                 "title": "Storage diffs",
+                                "type": "array",
                                 "items": {
                                     "description": "The changes in the storage per contract address",
-                                    "title": "Contract storage diff items",
                                     "$ref": "#/components/schemas/CONTRACT_STORAGE_DIFF_ITEM"
                                 }
                             },
@@ -1060,7 +1051,6 @@
                                 "title": "Deprecated declared classes",
                                 "type": "array",
                                 "items": {
-                                    "title": "Field element",
                                     "description": "The hash of the declared class",
                                     "$ref": "#/components/schemas/FELT"
                                 }
@@ -1069,7 +1059,7 @@
                                 "title": "Declared classes",
                                 "type": "array",
                                 "items": {
-                                    "title": "Params",
+                                    "title": "Event emitter",
                                     "type": "object",
                                     "description": "The declared class hash and compiled class hash",
                                     "properties": {
@@ -1090,7 +1080,6 @@
                                 "title": "Deployed contracts",
                                 "type": "array",
                                 "items": {
-                                    "title": "Deployed contract item",
                                     "description": "A new contract deployed as part of the state update",
                                     "$ref": "#/components/schemas/DEPLOYED_CONTRACT_ITEM"
                                 }
@@ -1099,8 +1088,8 @@
                                 "title": "Replaced classes",
                                 "type": "array",
                                 "items": {
-                                    "title": "Params",
                                     "description": "The list of contracts whose class was replaced",
+                                    "title": "Event emitter",
                                     "type": "object",
                                     "properties": {
                                         "contract_address": {
@@ -1120,9 +1109,9 @@
                                 "title": "Nonces",
                                 "type": "array",
                                 "items": {
+                                    "title": "Event emitter",
                                     "description": "The updated nonce per contract address",
                                     "type": "object",
-                                    "title": "Params",
                                     "properties": {
                                         "contract_address": {
                                             "title": "Contract address",
@@ -1219,7 +1208,6 @@
                         "description": "The transactions in this block",
                         "type": "array",
                         "items": {
-                            "title": "Transactions",
                             "$ref": "#/components/schemas/TXN"
                         }
                     }
@@ -1277,7 +1265,7 @@
                 "descripition": "The block object",
                 "allOf": [
                     {
-                        "title": "Params",
+                        "title": "Event emitter",
                         "type": "object",
                         "properties": {
                             "status": {
@@ -1304,7 +1292,7 @@
                 "description": "The block object",
                 "allOf": [
                     {
-                        "title": "Params",
+                        "title": "Event emitter",
                         "type": "object",
                         "properties": {
                             "status": {
@@ -1335,8 +1323,8 @@
                         "$ref": "#/components/schemas/BLOCK_BODY_WITH_TX_HASHES"
                     },
                     {
+                        "title": "Event emitter",
                         "type": "object",
-                        "title": "Params",
                         "properties": {
                             "timestamp": {
                                 "title": "Timestamp",
@@ -1368,7 +1356,7 @@
                     },
                     {
                         "type": "object",
-                        "title": "Params",
+                        "title": "Event emitter",
                         "properties": {
                             "timestamp": {
                                 "title": "Timestamp",
@@ -1424,8 +1412,8 @@
                         "description": "The changes in the storage of the contract",
                         "type": "array",
                         "items": {
+                            "title": "Event emitter",
                             "type": "object",
-                            "title": "Params",
                             "properties": {
                                 "key": {
                                     "title": "Key",
@@ -1495,7 +1483,6 @@
                 "descripition": "A transaction signature",
                 "type": "array",
                 "items": {
-                    "title": "Field element",
                     "$ref": "#/components/schemas/FELT"
                 }
             },
@@ -1576,7 +1563,7 @@
                     },
                     {
                         "type": "object",
-                        "title": "Params",
+                        "title": "Event emitter",
                         "properties": {
                             "type": {
                                 "title": "Declare",
@@ -1614,7 +1601,7 @@
                     },
                     {
                         "type": "object",
-                        "title": "Params",
+                        "title": "Event emitter",
                         "properties": {
                             "compiled_class_hash": {
                                 "title": "Compiled class hash",
@@ -1648,7 +1635,7 @@
                     },
                     {
                         "type": "object",
-                        "title": "Params",
+                        "title": "Event emitter",
                         "properties": {
                             "contract_class": {
                                 "title": "Contract class",
@@ -1674,7 +1661,7 @@
                     },
                     {
                         "type": "object",
-                        "title": "Params",
+                        "title": "Event emitter",
                         "properties": {
                             "type": {
                                 "title": "Declare",
@@ -1757,7 +1744,6 @@
                         "description": "The parameters passed to the constructor",
                         "title": "Constructor calldata",
                         "items": {
-                            "title": "Field element",
                             "$ref": "#/components/schemas/FELT"
                         }
                     },
@@ -1780,7 +1766,7 @@
                 "allOf": [
                     {
                         "type": "object",
-                        "title": "Params",
+                        "title": "Event emitter",
                         "properties": {
                             "transaction_hash": {
                                 "title": "Transaction hash",
@@ -1830,7 +1816,6 @@
                         "title": "Constructor calldata",
                         "description": "The parameters passed to the constructor",
                         "items": {
-                            "title": "Field element",
                             "$ref": "#/components/schemas/FELT"
                         }
                     }
@@ -1861,7 +1846,6 @@
                         "title": "calldata",
                         "description": "The data expected by the account's `execute` function (in most usecases, this includes the called contract address and a function selector)",
                         "items": {
-                            "title": "Field element",
                             "$ref": "#/components/schemas/FELT"
                         }
                     }
@@ -1919,7 +1903,7 @@
                         "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
                     },
                     {
-                        "title": "Params",
+                        "title": "Event emitter",
                         "type": "object",
                         "properties": {
                             "type": {
@@ -2024,7 +2008,6 @@
                         "type": "array",
                         "title": "Messages sent",
                         "items": {
-                            "title": "Message to L1",
                             "$ref": "#/components/schemas/MSG_TO_L1"
                         }
                     },
@@ -2033,7 +2016,6 @@
                         "title": "Events",
                         "type": "array",
                         "items": {
-                            "title": "Event",
                             "$ref": "#/components/schemas/EVENT"
                         }
                     }
@@ -2052,6 +2034,7 @@
                 "title": "Invoke Transaction Receipt",
                 "allOf": [
                     {
+                        "title": "Type",
                         "type": "object",
                         "properties": {
                             "type": {
@@ -2076,7 +2059,7 @@
                 "title": "Declare Transaction Receipt",
                 "allOf": [
                     {
-                        "title": "Params",
+                        "title": "Event emitter",
                         "type": "object",
                         "properties": {
                             "type": {
@@ -2105,7 +2088,7 @@
                         "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
                     },
                     {
-                        "title": "Params",
+                        "title": "Event emitter",
                         "type": "object",
                         "properties": {
                             "type": {
@@ -2136,7 +2119,7 @@
                         "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
                     },
                     {
-                        "title": "Params",
+                        "title": "Event emitter",
                         "type": "object",
                         "properties": {
                             "type": {
@@ -2164,7 +2147,7 @@
                 "description": "receipt for l1 handler transaction",
                 "allOf": [
                     {
-                        "title": "Params",
+                        "title": "Event emitter",
                         "type": "object",
                         "properties": {
                             "type": {
@@ -2237,7 +2220,6 @@
                         "type": "array",
                         "title": "Messages sent",
                         "items": {
-                            "title": "Message to L1",
                             "$ref": "#/components/schemas/MSG_TO_L1"
                         }
                     },
@@ -2246,7 +2228,6 @@
                         "title": "Events",
                         "type": "array",
                         "items": {
-                            "title": "Event",
                             "$ref": "#/components/schemas/EVENT"
                         }
                     }
@@ -2267,7 +2248,7 @@
                     },
                     {
                         "type": "object",
-                        "title": "Params",
+                        "title": "Event emitter",
                         "properties": {
                             "contract_address": {
                                 "title": "Contract address",
@@ -2306,7 +2287,6 @@
                         "title": "Payload",
                         "type": "array",
                         "items": {
-                            "title": "Field element",
                             "$ref": "#/components/schemas/FELT"
                         }
                     }
@@ -2368,7 +2348,6 @@
                         "type": "array",
                         "description": "The parameters passed to the function",
                         "items": {
-                            "title": "Field element",
                             "$ref": "#/components/schemas/FELT"
                         }
                     }
@@ -2388,7 +2367,6 @@
                         "type": "array",
                         "description": "The list of Sierra instructions of which the program consists",
                         "items": {
-                            "title": "Field element",
                             "$ref": "#/components/schemas/FELT"
                         }
                     },
@@ -2405,7 +2383,6 @@
                                 "type": "array",
                                 "title": "Constructor",
                                 "items": {
-                                    "title": "Sierra entry point",
                                     "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
                                 }
                             },
@@ -2413,7 +2390,6 @@
                                 "title": "External",
                                 "type": "array",
                                 "items": {
-                                    "title": "Sierra entry point",
                                     "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
                                 }
                             },
@@ -2421,7 +2397,6 @@
                                 "title": "L1 handler",
                                 "type": "array",
                                 "items": {
-                                    "title": "Sierra entry point",
                                     "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
                                 }
                             }
@@ -2621,7 +2596,7 @@
                     },
                     {
                         "type": "object",
-                        "title": "Params",
+                        "title": "Event emitter",
                         "properties": {
                             "offset": {
                                 "title": "Offset",
@@ -2652,7 +2627,6 @@
                         "type": "array",
                         "title": "Typed parameter",
                         "items": {
-                            "title": "Typed parameter",
                             "$ref": "#/components/schemas/TYPED_PARAMETER"
                         }
                     },
@@ -2688,7 +2662,6 @@
                         "type": "array",
                         "title": "Typed parameter",
                         "items": {
-                            "title": "Typed parameter",
                             "$ref": "#/components/schemas/TYPED_PARAMETER"
                         }
                     },
@@ -2696,7 +2669,6 @@
                         "type": "array",
                         "title": "Typed parameter",
                         "items": {
-                            "title": "Typed parameter",
                             "$ref": "#/components/schemas/TYPED_PARAMETER"
                         }
                     }
@@ -2729,7 +2701,7 @@
                 ]
             },
             "FEE_ESTIMATE": {
-                "title": "Fee estimate",
+                "title": "Fee estimation",
                 "type": "object",
                 "properties": {
                     "gas_consumed": {
@@ -2747,7 +2719,12 @@
                         "description": "The estimated fee for the transaction (in gwei), product of gas_consumed and gas_price",
                         "$ref": "#/components/schemas/NUM_AS_HEX"
                     }
-                }
+                },
+                "required": [
+                    "gas_consumed",
+                    "gas_price",
+                    "overall_fee"
+                ]
             }
         },
         "errors": {
