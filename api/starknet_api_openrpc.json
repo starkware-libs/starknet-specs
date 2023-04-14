@@ -2458,7 +2458,7 @@
                         }
                     },
                     "abi": {
-                        "title": "Contaract ABI",
+                        "title": "Contract ABI",
                         "$ref": "#/components/schemas/CONTRACT_ABI"
                     }
                 },
@@ -2574,7 +2574,7 @@
                     },
                     "members": {
                         "type": "array",
-                        "title": "Struct member",
+                        "title": "Members",
                         "items": {
                             "$ref": "#/components/schemas/STRUCT_MEMBER"
                         }
