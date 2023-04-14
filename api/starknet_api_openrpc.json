@@ -25,7 +25,7 @@
                 "name": "result",
                 "description": "The resulting block information with transaction hashes",
                 "schema": {
-                    "title": "Starknet get block hash with txs result",
+                    "title": "Starknet get block hash with tx hashes result",
                     "oneOf": [
                         {
                             "title": "Block with transaction hashes",
