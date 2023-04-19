@@ -2432,25 +2432,25 @@
                     },
                     "entry_points_by_type": {
                         "type": "object",
-                        "title": "Entry points by type",
+                        "title": "Deprecated entry points by type",
                         "properties": {
                             "CONSTRUCTOR": {
                                 "type": "array",
-                                "title": "Constructor",
+                                "title": "Deprecated constructor",
                                 "items": {
                                     "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
                                 }
                             },
                             "EXTERNAL": {
                                 "type": "array",
-                                "title": "External",
+                                "title": "Deprecated external",
                                 "items": {
                                     "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
                                 }
                             },
                             "L1_HANDLER": {
                                 "type": "array",
-                                "title": "L1 handler",
+                                "title": "Deprecated L1 handler",
                                 "items": {
                                     "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
                                 }
