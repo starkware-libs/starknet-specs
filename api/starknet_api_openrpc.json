@@ -1406,7 +1406,10 @@
                                 "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
                                 "$ref": "#/components/schemas/FELT"
                             }
-                        }
+                        },
+                        "required": [
+                            "compiled_class_hash"
+                        ]
                     }
                 ]
             },
@@ -1972,6 +1975,10 @@
             "MSG_TO_L1": {
                 "type": "object",
                 "properties": {
+                    "from_address": {
+                        "description": "The address of the L2 contract sending the message",
+                        "$ref": "#/components/schemas/FELT"
+                    },
                     "to_address": {
                         "description": "The target L1 address the message is sent to",
                         "$ref": "#/components/schemas/FELT"
@@ -1985,6 +1992,7 @@
                     }
                 },
                 "required": [
+                    "from_address",
                     "to_address",
                     "payload"
                 ]
