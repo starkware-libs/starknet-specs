@@ -15,8 +15,9 @@
     "author": "Lior Schejter",
     "license": "MIT",
     "dependencies": {
+        "@json-schema-tools/dereferencer": "1.5.4",
         "@open-rpc/schema-utils-js": "^1.16.1",
-        "fs-extra": "10.1.0",
-        "@json-schema-tools/dereferencer": "1.5.4"
+        "@open-rpc/typings": "^1.12.3",
+        "fs-extra": "10.1.0"
     }
 }
