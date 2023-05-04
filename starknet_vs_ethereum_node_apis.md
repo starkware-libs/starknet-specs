@@ -1,6 +1,6 @@
 # General
 
-This document provides information to developers who wish to work with StarkNet's node RPC API and
+This document provides information to developers who wish to work with Starknet's node RPC API and
 are familiar with Ethereum's RPC API. The document focuses on existing APIs, specifically targeting
 distributed application developers.
 
@@ -12,9 +12,9 @@ Below you can find a summary of the changes, whether cross-cutting or method-spe
 provide a mapping of methods.
 
 We currently compare Ethereum 1.0 API, as defined [here](https://github.com/ethereum/execution-apis),
- and [StarkNet's API](https://github.com/starkware-libs/starknet-specs/blob/master/api/starknet_api_openrpc.json).
+ and [Starknet's API](https://github.com/starkware-libs/starknet-specs/blob/master/api/starknet_api_openrpc.json).
 
-Familiarity with Ethereum and [StarkNet](https://starkware.co/product/starknet/) is assumed herein.
+Familiarity with Ethereum and [Starknet](https://starkware.co/product/starknet/) is assumed herein.
 
 ## Cross-Cutting Changes
 
@@ -22,11 +22,11 @@ Some differences are more fundamental and manifest in different API methods.
 
 **Block and Transaction objects:** Block and transaction objects have a somewhat different structure
  compared to Ethereum. These changes are mainly due to different network mechanics, e.g., no proof
- of work in StarkNet.
+ of work in Starknet.
 
 **Block Tags:** In some cases, the API refers to a block using relative tags that point to a block
 in a specific position in the chain or state (latest, earliest, pending). Where applicable,
-StarkNet allows referring only to the latest block, using the `latest` tag.
+Starknet allows referring only to the latest block, using the `latest` tag.
 
 ## Naming Conventions
 
@@ -35,18 +35,18 @@ The `eth` prefix is replaced with `starknet`.
 
 ## Types
 
-The fundamental data type in StarkNet is a field element. As a corollary, all resulting blocks and
+The fundamental data type in Starknet is a field element. As a corollary, all resulting blocks and
 transactions' hashes are also field elements. When referring to a block/transaction type or an
-address, StarkNet uses a field element, not a 256-bit number.
+address, Starknet uses a field element, not a 256-bit number.
 
-The field element type in StarkNet is based on the field in the underlying Cairo VM.
+The field element type in Starknet is based on the field in the underlying Cairo VM.
 In other words, a value x of a field element type is an integer in the range of `0≤x<P`. `P` is currently defined as `2^251+17*2^192+1`
 
 # Mapping of Methods
 
-We list below the methods in Ethereum's API and their corresponding StarkNet methods.
+We list below the methods in Ethereum's API and their corresponding Starknet methods.
 
-|Ethereum Method|StarkNet Method|Differences From Ethereum|
+|Ethereum Method|Starknet Method|Differences From Ethereum|
 |---------------|---------------|-------------------------|
 |eth_blockNumber|starknet_blockNumber|Will return only the block number |
 |eth_chainId|starknet_chainId| |
