@@ -141,6 +141,66 @@
             },
             "FUNCTION_CALL": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
+            },
+            "SIERRA_ENTRY_POINT": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/SIERRA_ENTRY_POINT"
+            },
+            "BROADCASTED_TXN_COMMON_PROPERTIES": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
+            },
+            "INVOKE_TXN_V0": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/INVOKE_TXN_V0"
+            },
+            "INVOKE_TXN_V1": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/INVOKE_TXN_V1"
+            },
+            "ADDRESS": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/ADDRESS"
+            },
+            "BROADCASTED_DECLARE_TXN_V1": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DECLARE_TXN_V1"
+            },
+            "DEPRECATED_CONTRACT_CLASS": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DEPRECATED_CONTRACT_CLASS"
+            },
+            "DEPRECATED_CAIRO_ENTRY_POINT": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
+            },
+            "CONTRACT_ABI": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/CONTRACT_ABI"
+            },
+            "CONTRACT_ABI_ENTRY": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/CONTRACT_ABI_ENTRY"
+            },
+            "FUNCTION_ABI_ENTRY": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FUNCTION_ABI_ENTRY"
+            },
+            "FUNCTION_ABI_TYPE": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FUNCTION_ABI_TYPE"
+            },
+            "TYPED_PARAMETER": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TYPED_PARAMETER"
+            },
+            "EVENT_ABI_ENTRY": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EVENT_ABI_ENTRY"
+            },
+            "EVENT_ABI_TYPE": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EVENT_ABI_TYPE"
+            },
+            "STRUCT_ABI_ENTRY": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/STRUCT_ABI_ENTRY"
+            },
+            "STRUCT_ABI_TYPE": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/STRUCT_ABI_TYPE"
+            },
+            "STRUCT_MEMBER": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/STRUCT_MEMBER"
+            },
+            "BROADCASTED_DECLARE_TXN_V2": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DECLARE_TXN_V2"
+            },
+            "DEPLOY_ACCOUNT_TXN_PROPERTIES": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DEPLOY_ACCOUNT_TXN_PROPERTIES"
             }
         },
         "errors": {
