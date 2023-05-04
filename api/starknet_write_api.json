@@ -105,7 +105,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/CLASS_HASH_NOT_FOUND"
+                    "$ref": "./api/starknet_api_openrpc.json#/components/errors/CLASS_HASH_NOT_FOUND"
                 }
             ]
         }
@@ -147,9 +147,6 @@
             "INVALID_CONTRACT_CLASS": {
                 "code": 50,
                 "message": "Invalid contract class"
-            },
-            "CLASS_HASH_NOT_FOUND": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/errors/CLASS_HASH_NOT_FOUND"
             },
             "CLASS_ALREADY_DECLARED": {
                 "code": 51,

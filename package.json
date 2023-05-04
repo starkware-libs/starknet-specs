@@ -7,7 +7,10 @@
         "url": "https://github.com/starkware-libs/starknet-specs.git"
     },
     "scripts": {
-        "validate_all": "node validate.js api/starknet_api_openrpc.json && node validate.js api/starknet_write_api.json && node validate.js api/starknet_trace_api_openrpc.json"
+        "validate_all": "node validate.js api/starknet_api_openrpc.json && node validate.js api/starknet_write_api.json && node validate.js api/starknet_trace_api_openrpc.json",
+        "gen_api": " node ./node_modules/@open-rpc/typings/build/cli.js -d ./api/starknet_api_openrpc.json --output-ts . --name-ts starknet_api",
+        "gen_write_api": " node ./node_modules/@open-rpc/typings/build/cli.js -d ./api/starknet_write_api.json --output-ts . --name-ts starknet_write_api",
+        "gen_trace_api": " node ./node_modules/@open-rpc/typings/build/cli.js -d ./api/starknet_trace_api_openrpc.json --output-ts . --name-ts starknet_trace_api"
     },
     "author": "Lior Schejter",
     "license": "MIT",
