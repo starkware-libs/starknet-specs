@@ -809,7 +809,7 @@
             },
             "EVENT": {
                 "title": "Event",
-                "descripition": "A StarkNet event",
+                "description": "A StarkNet event",
                 "allOf": [
                     {
                         "title": "Event emitter",
@@ -1026,7 +1026,7 @@
             },
             "PENDING_STATE_UPDATE": {
                 "title": "Pending state update",
-                "descripition": "Pending state update",
+                "description": "Pending state update",
                 "type": "object",
                 "properties": {
                     "old_root": {
@@ -1262,7 +1262,7 @@
             },
             "BLOCK_WITH_TX_HASHES": {
                 "title": "Block with transaction hashes",
-                "descripition": "The block object",
+                "description": "The block object",
                 "allOf": [
                     {
                         "title": "Event emitter",
@@ -1480,7 +1480,7 @@
             },
             "SIGNATURE": {
                 "title": "Signature",
-                "descripition": "A transaction signature",
+                "description": "A transaction signature",
                 "type": "array",
                 "items": {
                     "$ref": "#/components/schemas/FELT"
@@ -1555,7 +1555,7 @@
             },
             "DECLARE_TXN_V1": {
                 "title": "Declare Contract Transaction V1",
-                "descripition": "Declare Contract Transaction V1",
+                "description": "Declare Contract Transaction V1",
                 "allOf": [
                     {
                         "title": "Common transaction properties",
@@ -1593,7 +1593,7 @@
             },
             "DECLARE_TXN_V2": {
                 "title": "Declare Transaction V2",
-                "descripition": "Declare Contract Transaction V2",
+                "description": "Declare Contract Transaction V2",
                 "allOf": [
                     {
                         "title": "Declare transaction V1",
@@ -1630,7 +1630,7 @@
             },
             "BROADCASTED_DECLARE_TXN_V1": {
                 "title": "Broadcasted declare transaction V1",
-                "descripition": "mempool representation of a declare transaction",
+                "description": "mempool representation of a declare transaction",
                 "allOf": [
                     {
                         "title": "Broadcasted transaction common properties",
@@ -1656,7 +1656,7 @@
             },
             "BROADCASTED_DECLARE_TXN_V2": {
                 "title": "Broadcasted declare transaction V2",
-                "descripition": "mempool representation of a declare transaction V2",
+                "description": "mempool representation of a declare transaction V2",
                 "allOf": [
                     {
                         "title": "Broadcasted transaction common properties",
@@ -1699,7 +1699,6 @@
             },
             "DEPLOY_ACCOUNT_TXN": {
                 "title": "Deploy account transaction",
-                "descripition": "Deploy Account Transaction",
                 "description": "Deploys an account contract, charges fee from the pre-funded account addresses",
                 "allOf": [
                     {
@@ -1982,7 +1981,7 @@
             },
             "COMMON_RECEIPT_PROPERTIES": {
                 "title": "Common receipt properties",
-                "descripition": "Common properties for a transaction receipt",
+                "description": "Common properties for a transaction receipt",
                 "type": "object",
                 "properties": {
                     "transaction_hash": {
@@ -2418,7 +2417,7 @@
                     "abi": {
                         "title": "ABI",
                         "type": "string",
-                        "descripition": "The class ABI, as supplied by the user declaring the class"
+                        "description": "The class ABI, as supplied by the user declaring the class"
                     }
                 },
                 "required": [
@@ -2429,7 +2428,7 @@
             },
             "DEPRECATED_CONTRACT_CLASS": {
                 "title": "Deprecated contract class",
-                "descripition": "The definition of a StarkNet contract class",
+                "description": "The definition of a StarkNet contract class",
                 "type": "object",
                 "properties": {
                     "program": {
