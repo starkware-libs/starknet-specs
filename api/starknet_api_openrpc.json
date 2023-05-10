@@ -1692,7 +1692,8 @@
                         "required": [
                             "type",
                             "contract_class",
-                            "sender_address"
+                            "sender_address",
+                            "compiled_class_hash"
                         ]
                     }
                 ]
