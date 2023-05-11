@@ -1638,7 +1638,7 @@
                     },
                     {
                         "type": "object",
-                        "title": "Event emitter",
+                        "title": "Declare v1",
                         "properties": {
                             "type": {
                                 "title": "Declare",
