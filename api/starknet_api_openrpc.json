@@ -1638,8 +1638,15 @@
                     },
                     {
                         "type": "object",
-                        "title": "Event emitter",
+                        "title": "Declare v1",
                         "properties": {
+                            "type": {
+                                "title": "Declare",
+                                "type": "string",
+                                "enum": [
+                                    "DECLARE"
+                                ]
+                            },
                             "contract_class": {
                                 "title": "Contract class",
                                 "description": "The class to be declared",
