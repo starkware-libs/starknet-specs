@@ -2238,6 +2238,7 @@
                 "required": [
                     "transaction_hash",
                     "actual_fee",
+                    "type",
                     "messages_sent",
                     "events"
                 ]
