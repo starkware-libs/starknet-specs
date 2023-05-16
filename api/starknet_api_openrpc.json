@@ -886,12 +886,7 @@
                         }
                     }
                 },
-                "required": [
-                    "from_block",
-                    "to_block",
-                    "address",
-                    "keys"
-                ]
+                "required": []
             },
             "BLOCK_ID": {
                 "title": "Block id",
