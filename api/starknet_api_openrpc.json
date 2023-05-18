@@ -2656,6 +2656,13 @@
                     "data"
                 ]
             },
+            "FUNCTION_STATE_MUTABILITY": {
+                "title": "Function state mutability type",
+                "type": "string",
+                "enum": [
+                    "view"
+                ]
+            },
             "FUNCTION_ABI_ENTRY": {
                 "title": "Function ABI entry",
                 "type": "object",
@@ -2682,6 +2689,10 @@
                         "items": {
                             "$ref": "#/components/schemas/TYPED_PARAMETER"
                         }
+                    },
+                    "stateMutability": {
+                        "title": "Function state mutability",
+                        "$ref": "#/components/schemas/FUNCTION_STATE_MUTABILITY"
                     }
                 },
                 "required": [
