@@ -2311,10 +2311,9 @@
                 "title": "Transaction status",
                 "type": "string",
                 "enum": [
-                    "PENDING",
                     "ACCEPTED_ON_L2",
                     "ACCEPTED_ON_L1",
-                    "REJECTED"
+                    "REVERTED"
                 ],
                 "description": "The status of the transaction"
             },
