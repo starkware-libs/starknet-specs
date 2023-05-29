@@ -537,6 +537,56 @@
             ]
         },
         {
+            "name": "starknet_estimateMessageFee",
+            "summary": "estimate the L2 fee of a message sent on L1",
+            "description": "estimates the resources required by the l1_handler transaction induced by the message",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "the message's parameters",
+                    "schema": {
+                        "$ref": "#/components/schemas/FUNCTION_CALL"
+                    },
+                    "required": true
+                },
+                {
+                    "name": "sender_address",
+                    "description": "the L1 address of the sender",
+                    "schema": {
+                        "$ref": "#/components/schemas/ETH_ADDRESS"
+                    },
+                    "required": true
+                },
+                {
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag, for the block referencing the state or call the transaction on.",
+                    "required": true,
+                    "schema": {
+                        "title": "Block id",
+                        "$ref": "#/components/schemas/BLOCK_ID"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "the fee estimation",
+                "schema": {
+                    "$ref": "#/components/schemas/FEE_ESTIMATE"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/CONTRACT_ERROR"
+                },
+                {
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                }
+            ]
+        },
+        {
             "name": "starknet_blockNumber",
             "summary": "Get the most recent accepted block number",
             "params": [],
