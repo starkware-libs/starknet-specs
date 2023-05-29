@@ -162,7 +162,21 @@
                             },
                             "execute_invocation": {
                                 "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
-                                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                                "oneOf": [
+                                    {
+                                        "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                                    },
+                                    {
+                                        "type": "object",
+                                        "properties":{
+                                            "revert_reason":{
+                                                "name": "revert reason",
+                                                "description": "the revert reason for the failed execution",
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                ]
                             },
                             "fee_transfer_invocation": {
                                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"

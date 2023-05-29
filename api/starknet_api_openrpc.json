@@ -1523,6 +1523,11 @@
                                 "title": "Transaction hash",
                                 "$ref": "#/components/schemas/TXN_HASH",
                                 "description": "The hash identifying the transaction"
+                            },
+                            "revert_reason":{
+                                "name": "revert reason",
+                                "description": "the revert reason for the failed execution",
+                                "type": "string"
                             }
                         },
                         "required": [
@@ -2240,7 +2245,8 @@
                         "title": "Transaction status",
                         "type": "string",
                         "enum": [
-                            "ACCEPTED_ON_L2"
+                            "ACCEPTED_ON_L2",
+                            "REVERTED"
                         ],
                         "description": "The status of the transaction"
                     }
@@ -2321,7 +2327,7 @@
                 "enum": [
                     "ACCEPTED_ON_L2",
                     "ACCEPTED_ON_L1",
-                    "REJECTED"
+                    "REVERTED"
                 ],
                 "description": "The status of the transaction"
             },
