@@ -39,7 +39,7 @@
         },
         {
             "name": "starknet_simulateTransaction",
-            "summary": "simulate a given transaction on the requested state, and generate the execution trace",
+            "summary": "simulates given transactions on the requested state, and generate the execution trace",
             "params": [
                 {
                     "name": "block_id",
@@ -50,8 +50,8 @@
                     }
                 },
                 {
-                    "name": "transaction",
-                    "description": "The transaction to simulate",
+                    "name": "transactions",
+                    "description": "The transactions to simulate",
                     "required": true,
                     "schema": {
                         "type": "array",
@@ -75,7 +75,7 @@
             ],
             "result": {
                 "name": "simulated_transactions",
-                "description": "The execution trace and consuemd resources of the required transactions",
+                "description": "The execution trace and consumed resources of the required transactions",
                 "schema": {
                     "type": "array",
                     "items": {
