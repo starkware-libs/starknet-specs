@@ -545,7 +545,7 @@
                     "name": "message",
                     "description": "the message's parameters",
                     "schema": {
-                        "$ref": "#/components/schemas/FUNCTION_CALL"
+                        "$ref": "#/components/schemas/MSG_FROM_L1"
                     },
                     "required": true
                 },
@@ -2341,6 +2341,34 @@
                         "title": "To address",
                         "description": "The target L1 address the message is sent to",
                         "$ref": "#/components/schemas/FELT"
+                    },
+                    "payload": {
+                        "description": "The payload of the message",
+                        "title": "Payload",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                },
+                "required": [
+                    "from_address",
+                    "to_address",
+                    "payload"
+                ]
+            },
+            "MSG_FROM_L1": {
+                "title": "Message from L1",
+                "type": "object",
+                "properties": {
+                    "from_address": {
+                        "description": "The address of the L1 contract sending the message",
+                        "$ref": "#/components/schemas/ETH_ADDRESS"
+                    },
+                    "to_address": {
+                        "title": "To address",
+                        "description": "The target L2 address the message is sent to",
+                        "$ref": "#/components/schemas/ADDRESS"
                     },
                     "payload": {
                         "description": "The payload of the message",
