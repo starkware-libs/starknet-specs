@@ -2235,6 +2235,14 @@
                         "items": {
                             "$ref": "#/components/schemas/EVENT"
                         }
+                    },
+                    "status":{
+                        "title": "Transaction status",
+                        "type": "string",
+                        "enum": [
+                            "ACCEPTED_ON_L2"
+                        ],
+                        "description": "The status of the transaction"
                     }
                 },
                 "required": [
@@ -2311,7 +2319,6 @@
                 "title": "Transaction status",
                 "type": "string",
                 "enum": [
-                    "PENDING",
                     "ACCEPTED_ON_L2",
                     "ACCEPTED_ON_L1",
                     "REJECTED"
