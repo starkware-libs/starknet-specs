@@ -38,7 +38,7 @@
             ]
         },
         {
-            "name": "starknet_simulateTransaction",
+            "name": "starknet_simulateTransactions",
             "summary": "simulate a given sequence of transactions on the requested state, and generate the execution traces",
             "params": [
                 {
