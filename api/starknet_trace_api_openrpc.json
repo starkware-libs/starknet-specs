@@ -38,8 +38,8 @@
             ]
         },
         {
-            "name": "starknet_simulateTransaction",
-            "summary": "simulate a given transaction on the requested state, and generate the execution trace",
+            "name": "starknet_simulateTransactions",
+            "summary": "simulate a given sequence of transactions on the requested state, and generate the execution traces",
             "params": [
                 {
                     "name": "block_id",
@@ -50,8 +50,8 @@
                     }
                 },
                 {
-                    "name": "transaction",
-                    "description": "The transaction to simulate",
+                    "name": "transactions",
+                    "description": "The transactions to simulate",
                     "required": true,
                     "schema": {
                         "type": "array",
@@ -236,9 +236,9 @@
                                 "description": "The address of the invoking contract. 0 for the root invocation",
                                 "$ref": "#/components/schemas/FELT"
                             },
-                            "code_address": {
-                                "title": "Code Address",
-                                "description": "The address where the code for this contract is stored in the state",
+                            "class_hash": {
+                                "title": "Class hash",
+                                "description": "The hash of the class being called",
                                 "$ref": "#/components/schemas/FELT"
                             },
                             "entry_point_type": {
