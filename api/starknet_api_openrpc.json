@@ -1997,9 +1997,13 @@
                         "$ref": "#/components/schemas/FELT",
                         "description": "The fee that was charged by the sequencer"
                     },
-                    "status": {
-                        "title": "Status",
-                        "$ref": "#/components/schemas/TXN_STATUS"
+                    "execution_status": {
+                        "title": "Execution status",
+                        "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
+                    },
+                    "finality_status": {
+                        "title": "Finality status",
+                        "$ref": "#/components/schemas/TXN_FINALITY_STATUS"
                     },
                     "block_hash": {
                         "title": "Block hash",
@@ -2016,7 +2020,7 @@
                             "$ref": "#/components/schemas/MSG_TO_L1"
                         }
                     },
-                    "revert_reason":{
+                    "revert_reason": {
                         "title": "Revert reason",
                         "name": "revert reason",
                         "description": "the revert reason for the failed execution",
@@ -2242,20 +2246,23 @@
                             "$ref": "#/components/schemas/EVENT"
                         }
                     },
-                    "revert_reason":{
+                    "revert_reason": {
                         "title": "Revert reason",
                         "name": "revert reason",
                         "description": "the revert reason for the failed execution",
                         "type": "string"
                     },
-                    "status":{
-                        "title": "Transaction status",
+                    "finality_status": {
+                        "title": "Finality status",
                         "type": "string",
                         "enum": [
-                            "ACCEPTED_ON_L2",
-                            "REVERTED"
+                            "ACCEPTED_ON_L2"
                         ],
-                        "description": "The status of the transaction"
+                        "description": "The finality status of the transaction"
+                    },
+                    "execution_status": {
+                        "title": "Execution status",
+                        "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
                     }
                 },
                 "required": [
@@ -2328,15 +2335,23 @@
                     "payload"
                 ]
             },
-            "TXN_STATUS": {
-                "title": "Transaction status",
+            "TXN_FINALITY_STATUS": {
+                "title": "Finality status",
                 "type": "string",
                 "enum": [
                     "ACCEPTED_ON_L2",
-                    "ACCEPTED_ON_L1",
+                    "ACCEPTED_ON_L1"
+                ],
+                "description": "The finality status of the transaction"
+            },
+            "TXN_EXECUTION_STATUS": {
+                "title": "Execution status",
+                "type": "string",
+                "enum": [
+                    "SUCCEDED",
                     "REVERTED"
                 ],
-                "description": "The status of the transaction"
+                "description": "The execution status of the transaction"
             },
             "TXN_TYPE": {
                 "title": "Transaction type",
