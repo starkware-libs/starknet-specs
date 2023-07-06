@@ -2038,7 +2038,8 @@
                 "required": [
                     "transaction_hash",
                     "actual_fee",
-                    "status",
+                    "finality_status",
+                    "execution_status",
                     "block_hash",
                     "block_number",
                     "messages_sent",
@@ -2270,7 +2271,9 @@
                     "actual_fee",
                     "type",
                     "messages_sent",
-                    "events"
+                    "events",
+                    "finality_status",
+                    "execution_status"
                 ]
             },
             "PENDING_DEPLOY_TXN_RECEIPT": {
