@@ -550,14 +550,6 @@
                     "required": true
                 },
                 {
-                    "name": "sender_address",
-                    "description": "the L1 address of the sender",
-                    "schema": {
-                        "$ref": "#/components/schemas/ETH_ADDRESS"
-                    },
-                    "required": true
-                },
-                {
                     "name": "block_id",
                     "description": "The hash of the requested block, or number (height) of the requested block, or a block tag, for the block referencing the state or call the transaction on.",
                     "required": true,
