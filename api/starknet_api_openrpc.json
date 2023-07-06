@@ -537,6 +537,48 @@
             ]
         },
         {
+            "name": "starknet_estimateMessageFee",
+            "summary": "estimate the L2 fee of a message sent on L1",
+            "description": "estimates the resources required by the l1_handler transaction induced by the message",
+            "params": [
+                {
+                    "name": "message",
+                    "description": "the message's parameters",
+                    "schema": {
+                        "$ref": "#/components/schemas/MSG_FROM_L1"
+                    },
+                    "required": true
+                },
+                {
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag, for the block referencing the state or call the transaction on.",
+                    "required": true,
+                    "schema": {
+                        "title": "Block id",
+                        "$ref": "#/components/schemas/BLOCK_ID"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "description": "the fee estimation",
+                "schema": {
+                    "$ref": "#/components/schemas/FEE_ESTIMATE"
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/CONTRACT_ERROR"
+                },
+                {
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                }
+            ]
+        },
+        {
             "name": "starknet_blockNumber",
             "summary": "Get the most recent accepted block number",
             "params": [],
@@ -2312,6 +2354,34 @@
                         "title": "To address",
                         "description": "The target L1 address the message is sent to",
                         "$ref": "#/components/schemas/FELT"
+                    },
+                    "payload": {
+                        "description": "The payload of the message",
+                        "title": "Payload",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    }
+                },
+                "required": [
+                    "from_address",
+                    "to_address",
+                    "payload"
+                ]
+            },
+            "MSG_FROM_L1": {
+                "title": "Message from L1",
+                "type": "object",
+                "properties": {
+                    "from_address": {
+                        "description": "The address of the L1 contract sending the message",
+                        "$ref": "#/components/schemas/ETH_ADDRESS"
+                    },
+                    "to_address": {
+                        "title": "To address",
+                        "description": "The target L2 address the message is sent to",
+                        "$ref": "#/components/schemas/ADDRESS"
                     },
                     "payload": {
                         "description": "The payload of the message",
