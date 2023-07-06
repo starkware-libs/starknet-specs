@@ -230,9 +230,10 @@
                 "type": "string",
                 "enum": [
                     "SKIP_VALIDATE",
+                    "SKIP_FEE_CHARGE",
                     "SKIP_EXECUTE"
                 ],
-                "description": "Flags that indicate how to simulate a given transaction"
+                "description": "Flags that indicate how to simulate a given transaction. The SKIP_FEE_CHARGE, false by default, will simulate also the fee charging phase"
             },
             "NESTED_CALL": {
                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
