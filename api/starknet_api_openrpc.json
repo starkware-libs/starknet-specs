@@ -1694,7 +1694,11 @@
                                 "description": "The address of the account contract sending the declaration transaction",
                                 "$ref": "#/components/schemas/ADDRESS"
                             }
-                        }
+                        },
+                        "required": [
+                            "contract_class",
+                            "sender_address"
+                        ]
                     }
                 ]
             },
