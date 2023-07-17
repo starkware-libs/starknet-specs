@@ -149,11 +149,44 @@
                 "message": "Invalid contract class"
             },
             "CLASS_HASH_NOT_FOUND": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/errors/CLASS_HASH_NOT_FOUND"
+                "code": 28,
+                "message": "Class hash not found"
             },
             "CLASS_ALREADY_DECLARED": {
                 "code": 51,
                 "message": "Class already declared"
+            },
+            "INVALID_TRANSACTION_NONCE": {
+                "code": 52,
+                "message": "Invalid transaction nonce"
+            },
+            "INSUFFICIENT_MAX_FEE": {
+                "code": 53,
+                "message": "Max fee is smaller than the validation's actual fee"
+            },
+            "INSUFFICIENT_ACCOUNT_BALANCE": {
+                "code": 54,
+                "message": "Account balance is smaller than the transaction's max_fee"
+            },
+            "VALIDATION_FAILURE": {
+                "code": 55,
+                "message": "Account validation failed"
+            },
+            "COMPILATION_FAILED": {
+                "code": 56,
+                "message": "Compilation failed"
+            },
+            "CONTRACT_BYTECODE_SIZE_TOO_LARGE": {
+                "code": 57,
+                "message": "Contract bytecode size it too large"
+            },
+            "NON_ACCOUNT": {
+                "code": 58,
+                "message": "Sender address in not an account contract"
+            },
+            "DUPLICATE_TX": {
+                "code": 59,
+                "message": "A transaction with the same hash already exists in the mempool"
             }
         }
     }

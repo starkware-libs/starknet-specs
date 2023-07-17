@@ -2923,10 +2923,6 @@
                 "code": 24,
                 "message": "Block not found"
             },
-            "TXN_HASH_NOT_FOUND": {
-                "code": 25,
-                "message": "Transaction hash not found"
-            },
             "INVALID_TXN_INDEX": {
                 "code": 27,
                 "message": "Invalid transaction index in a block"
@@ -2934,6 +2930,10 @@
             "CLASS_HASH_NOT_FOUND": {
                 "code": 28,
                 "message": "Class hash not found"
+            },
+            "TXN_HASH_NOT_FOUND": {
+                "code": 29,
+                "message": "Transaction hash not found"
             },
             "PAGE_SIZE_TOO_BIG": {
                 "code": 31,
