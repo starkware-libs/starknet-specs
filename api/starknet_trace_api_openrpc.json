@@ -57,7 +57,20 @@
                         "type": "array",
                         "description": "a sequence of transactions to simulate, running each transaction on the state resulting from applying all the previous ones",
                         "items": {
-                            "$ref": "#/components/schemas/BROADCASTED_TXN"
+                            "oneOf": [
+                                {
+                                    "title": "Declare transaction",
+                                    "$ref": "#/components/schemas/DECLARE_TXN"
+                                },
+                                {
+                                    "title": "Invoke transaction",
+                                    "$ref": "#/components/schemas/INVOKE_TXN"
+                                },
+                                {
+                                    "title": "Deploy account transaction",
+                                    "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN"
+                                }
+                            ]
                         }
                     }
                 },
@@ -168,8 +181,8 @@
                                     },
                                     {
                                         "type": "object",
-                                        "properties":{
-                                            "revert_reason":{
+                                        "properties": {
+                                            "revert_reason": {
                                                 "name": "revert reason",
                                                 "description": "the revert reason for the failed execution",
                                                 "type": "string"
@@ -330,11 +343,17 @@
             "BLOCK_ID": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
             },
-            "BROADCASTED_TXN": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_TXN"
-            },
             "FEE_ESTIMATE": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FEE_ESTIMATE"
+            },
+            "INVOKE_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/INVOKE_TXN"
+            },
+            "DECLARE_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DECLARE_TXN"
+            },
+            "DEPLOY_ACCOUNT_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DEPLOY_ACCOUNT_TXN"
             }
         },
         "errors": {
