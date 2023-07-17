@@ -497,7 +497,46 @@
                         "description": "a sequence of transactions to estimate, running each transaction on the state resulting from applying all the previous ones",
                         "title": "Broadcasted transaction",
                         "items": {
-                            "$ref": "#/components/schemas/BROADCASTED_TXN"
+                            "oneOf": [
+                                {
+                                    "type": "object",
+                                    "title": "declare v1 txn",
+                                    "properties": {
+                                        "transaction_hash": {
+                                            "title": "declare v1 txn properties",
+                                            "$ref": "#/components/schemas/DECLARE_TXN_V1"
+                                        },
+                                        "contract_class": {
+                                            "title": "Contract class",
+                                            "description": "The class to be declared",
+                                            "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
+                                        }
+                                    }
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "declare v2 txn",
+                                    "properties": {
+                                        "transaction_hash": {
+                                            "title": "declare v2 txn properties",
+                                            "$ref": "#/components/schemas/DECLARE_TXN_V2"
+                                        },
+                                        "contract_class": {
+                                            "title": "Contract class",
+                                            "description": "The class to be declared",
+                                            "$ref": "#/components/schemas/CONTRACT_CLASS"
+                                        }
+                                    }
+                                },
+                                {
+                                    "title": "Invoke transaction",
+                                    "$ref": "#/components/schemas/INVOKE_TXN"
+                                },
+                                {
+                                    "title": "Deploy account transaction",
+                                    "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN"
+                                }
+                            ]
                         }
                     },
                     "required": true
@@ -690,7 +729,7 @@
                     "summary": "The conditions used to filter the returned events",
                     "required": true,
                     "schema": {
-                        "title": "Event emitter",
+                        "title": "Events request",
                         "allOf": [
                             {
                                 "title": "Event filter",
@@ -1037,7 +1076,7 @@
                 "type": "object",
                 "allOf": [
                     {
-                        "title": "Event emitter",
+                        "title": "Block info",
                         "type": "object",
                         "properties": {
                             "block_hash": {
@@ -1096,7 +1135,7 @@
                                 "title": "Declared classes",
                                 "type": "array",
                                 "items": {
-                                    "title": "Event emitter",
+                                    "title": "New classes",
                                     "type": "object",
                                     "description": "The declared class hash and compiled class hash",
                                     "properties": {
@@ -1126,7 +1165,7 @@
                                 "type": "array",
                                 "items": {
                                     "description": "The list of contracts whose class was replaced",
-                                    "title": "Event emitter",
+                                    "title": "Replaced class",
                                     "type": "object",
                                     "properties": {
                                         "contract_address": {
@@ -1146,7 +1185,7 @@
                                 "title": "Nonces",
                                 "type": "array",
                                 "items": {
-                                    "title": "Event emitter",
+                                    "title": "Nonce update",
                                     "description": "The updated nonce per contract address",
                                     "type": "object",
                                     "properties": {
@@ -1245,7 +1284,22 @@
                         "description": "The transactions in this block",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/TXN"
+                            "title": "transactions in block",
+                            "type": "object",
+                            "properties": {
+                                "transaction": {
+                                    "title": "transaction",
+                                    "$ref": "#/components/schemas/TXN"
+                                }
+                            },
+                            "transaction_hash": {
+                                "title": "transaction hash",
+                                "$ref": "#/components/schemas/TXN_HASH"
+                            },
+                            "required": [
+                                "transaction",
+                                "transaction_hash"
+                            ]
                         }
                     }
                 },
@@ -1302,7 +1356,7 @@
                 "description": "The block object",
                 "allOf": [
                     {
-                        "title": "Event emitter",
+                        "title": "Block status",
                         "type": "object",
                         "properties": {
                             "status": {
@@ -1329,7 +1383,7 @@
                 "description": "The block object",
                 "allOf": [
                     {
-                        "title": "Event emitter",
+                        "title": "block with txs",
                         "type": "object",
                         "properties": {
                             "status": {
@@ -1360,7 +1414,7 @@
                         "$ref": "#/components/schemas/BLOCK_BODY_WITH_TX_HASHES"
                     },
                     {
-                        "title": "Event emitter",
+                        "title": "Pending block header",
                         "type": "object",
                         "properties": {
                             "timestamp": {
@@ -1393,7 +1447,7 @@
                     },
                     {
                         "type": "object",
-                        "title": "Event emitter",
+                        "title": "Block Info",
                         "properties": {
                             "timestamp": {
                                 "title": "Timestamp",
@@ -1449,7 +1503,7 @@
                         "description": "The changes in the storage of the contract",
                         "type": "array",
                         "items": {
-                            "title": "Event emitter",
+                            "title": "Storage diff item",
                             "type": "object",
                             "properties": {
                                 "key": {
@@ -1497,24 +1551,6 @@
                     }
                 ]
             },
-            "BROADCASTED_TXN": {
-                "title": "Broadcasted transaction",
-                "description": "the transaction's representation when it's sent to the sequencer (but not yet in a block)",
-                "oneOf": [
-                    {
-                        "title": "Broadcasted invoke transaction",
-                        "$ref": "#/components/schemas/BROADCASTED_INVOKE_TXN"
-                    },
-                    {
-                        "title": "Broadcasted declare transaction",
-                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN"
-                    },
-                    {
-                        "title": "Broadcasted deploy account transaction",
-                        "$ref": "#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
-                    }
-                ]
-            },
             "SIGNATURE": {
                 "title": "Signature",
                 "description": "A transaction signature",
@@ -1522,60 +1558,6 @@
                 "items": {
                     "$ref": "#/components/schemas/FELT"
                 }
-            },
-            "BROADCASTED_TXN_COMMON_PROPERTIES": {
-                "title": "Broadcasted transaction common properties",
-                "type": "object",
-                "description": "common properties of a transaction that is sent to the sequencer (but is not yet in a block)",
-                "properties": {
-                    "max_fee": {
-                        "title": "Max fee",
-                        "$ref": "#/components/schemas/FELT",
-                        "description": "The maximal fee that can be charged for including the transaction"
-                    },
-                    "version": {
-                        "title": "Version",
-                        "description": "Version of the transaction scheme",
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
-                    },
-                    "signature": {
-                        "title": "Signature",
-                        "$ref": "#/components/schemas/SIGNATURE"
-                    },
-                    "nonce": {
-                        "title": "Nonce",
-                        "$ref": "#/components/schemas/FELT"
-                    }
-                },
-                "required": [
-                    "max_fee",
-                    "version",
-                    "signature",
-                    "nonce"
-                ]
-            },
-            "COMMON_TXN_PROPERTIES": {
-                "title": "Common transaction properties",
-                "allOf": [
-                    {
-                        "type": "object",
-                        "title": "Transaction hash",
-                        "properties": {
-                            "transaction_hash": {
-                                "title": "Transaction hash",
-                                "$ref": "#/components/schemas/TXN_HASH",
-                                "description": "The hash identifying the transaction"
-                            }
-                        },
-                        "required": [
-                            "transaction_hash"
-                        ]
-                    },
-                    {
-                        "title": "Broadcasted transaction common properties",
-                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
-                    }
-                ]
             },
             "DECLARE_TXN": {
                 "title": "Declare transaction",
@@ -1595,12 +1577,8 @@
                 "description": "Declare Contract Transaction V1",
                 "allOf": [
                     {
-                        "title": "Common transaction properties",
-                        "$ref": "#/components/schemas/COMMON_TXN_PROPERTIES"
-                    },
-                    {
                         "type": "object",
-                        "title": "Event emitter",
+                        "title": "Declare txn v1",
                         "properties": {
                             "type": {
                                 "title": "Declare",
@@ -1618,12 +1596,34 @@
                                 "title": "Sender address",
                                 "description": "The address of the account contract sending the declaration transaction",
                                 "$ref": "#/components/schemas/ADDRESS"
+                            },
+                            "max_fee": {
+                                "title": "Max fee",
+                                "$ref": "#/components/schemas/FELT",
+                                "description": "The maximal fee that can be charged for including the transaction"
+                            },
+                            "version": {
+                                "title": "Version",
+                                "description": "Version of the transaction scheme",
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                            },
+                            "signature": {
+                                "title": "Signature",
+                                "$ref": "#/components/schemas/SIGNATURE"
+                            },
+                            "nonce": {
+                                "title": "Nonce",
+                                "$ref": "#/components/schemas/FELT"
                             }
                         },
                         "required": [
                             "type",
                             "class_hash",
-                            "sender_address"
+                            "sender_address",
+                            "max_fee",
+                            "version",
+                            "signature",
+                            "nonce"
                         ]
                     }
                 ]
@@ -1638,7 +1638,7 @@
                     },
                     {
                         "type": "object",
-                        "title": "Event emitter",
+                        "title": "declare v2 additional fields",
                         "properties": {
                             "compiled_class_hash": {
                                 "title": "Compiled class hash",
@@ -1647,100 +1647,6 @@
                             }
                         },
                         "required": [
-                            "compiled_class_hash"
-                        ]
-                    }
-                ]
-            },
-            "BROADCASTED_DECLARE_TXN": {
-                "title": "Broadcasted declare transaction",
-                "oneOf": [
-                    {
-                        "title": "Broadcasted declare transaction V1",
-                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN_V1"
-                    },
-                    {
-                        "title": "Broadcasted declare transaction V2",
-                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN_V2"
-                    }
-                ]
-            },
-            "BROADCASTED_DECLARE_TXN_V1": {
-                "title": "Broadcasted declare transaction V1",
-                "description": "mempool representation of a declare transaction",
-                "allOf": [
-                    {
-                        "title": "Broadcasted transaction common properties",
-                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
-                    },
-                    {
-                        "type": "object",
-                        "title": "Declare v1",
-                        "properties": {
-                            "type": {
-                                "title": "Declare",
-                                "type": "string",
-                                "enum": [
-                                    "DECLARE"
-                                ]
-                            },
-                            "contract_class": {
-                                "title": "Contract class",
-                                "description": "The class to be declared",
-                                "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
-                            },
-                            "sender_address": {
-                                "title": "Sender address",
-                                "description": "The address of the account contract sending the declaration transaction",
-                                "$ref": "#/components/schemas/ADDRESS"
-                            }
-                        },
-                        "required": [
-                            "contract_class",
-                            "sender_address"
-                        ]
-                    }
-                ]
-            },
-            "BROADCASTED_DECLARE_TXN_V2": {
-                "title": "Broadcasted declare transaction V2",
-                "description": "mempool representation of a declare transaction V2",
-                "allOf": [
-                    {
-                        "title": "Broadcasted transaction common properties",
-                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
-                    },
-                    {
-                        "type": "object",
-                        "title": "Event emitter",
-                        "properties": {
-                            "type": {
-                                "title": "Declare",
-                                "type": "string",
-                                "enum": [
-                                    "DECLARE"
-                                ]
-                            },
-                            "contract_class": {
-                                "title": "Contract class",
-                                "description": "The class to be declared",
-                                "$ref": "#/components/schemas/CONTRACT_CLASS"
-                            },
-                            "sender_address": {
-                                "title": "Sender address",
-                                "description": "The address of the account contract sending the declaration transaction",
-                                "$ref": "#/components/schemas/ADDRESS"
-                            },
-                            "compiled_class_hash": {
-                                "title": "Compiled class hash",
-                                "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
-                                "$ref": "#/components/schemas/FELT"
-                            }
-                        },
-                        "required": [
-                            "type",
-                            "contract_class",
-                            "sender_address",
                             "compiled_class_hash"
                         ]
                     }
@@ -1749,34 +1655,6 @@
             "DEPLOY_ACCOUNT_TXN": {
                 "title": "Deploy account transaction",
                 "description": "Deploys an account contract, charges fee from the pre-funded account addresses",
-                "allOf": [
-                    {
-                        "title": "Common transaction properties",
-                        "$ref": "#/components/schemas/COMMON_TXN_PROPERTIES"
-                    },
-                    {
-                        "title": "Deploy account transaction properties",
-                        "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN_PROPERTIES"
-                    }
-                ]
-            },
-            "BROADCASTED_DEPLOY_ACCOUNT_TXN": {
-                "title": "Broadcasted deploy account transaction",
-                "description": "Mempool representation of a deploy account transaction",
-                "allOf": [
-                    {
-                        "title": "Broadcasted transaction common properties",
-                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
-                    },
-                    {
-                        "title": "Deploy account transaction properties",
-                        "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN_PROPERTIES"
-                    }
-                ]
-            },
-            "DEPLOY_ACCOUNT_TXN_PROPERTIES": {
-                "title": "Deploy account transaction properties",
-                "type": "object",
                 "properties": {
                     "type": {
                         "title": "Deploy account",
@@ -1784,6 +1662,24 @@
                         "enum": [
                             "DEPLOY_ACCOUNT"
                         ]
+                    },
+                    "max_fee": {
+                        "title": "Max fee",
+                        "$ref": "#/components/schemas/FELT",
+                        "description": "The maximal fee that can be charged for including the transaction"
+                    },
+                    "version": {
+                        "title": "Version",
+                        "description": "Version of the transaction scheme",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "signature": {
+                        "title": "Signature",
+                        "$ref": "#/components/schemas/SIGNATURE"
+                    },
+                    "nonce": {
+                        "title": "Nonce",
+                        "$ref": "#/components/schemas/FELT"
                     },
                     "contract_address_salt": {
                         "title": "Contract address salt",
@@ -1805,6 +1701,10 @@
                     }
                 },
                 "required": [
+                    "max_fee",
+                    "version",
+                    "signature",
+                    "nonce",
                     "type",
                     "contract_address_salt",
                     "constructor_calldata",
@@ -1817,12 +1717,32 @@
                 "allOf": [
                     {
                         "type": "object",
-                        "title": "Event emitter",
+                        "title": "Deploy txn",
                         "properties": {
-                            "transaction_hash": {
-                                "title": "Transaction hash",
-                                "$ref": "#/components/schemas/TXN_HASH",
-                                "description": "The hash identifying the transaction"
+                            "version": {
+                                "title": "Version",
+                                "description": "Version of the transaction scheme",
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                            },
+                            "type": {
+                                "title": "Deploy",
+                                "type": "string",
+                                "enum": [
+                                    "DEPLOY"
+                                ]
+                            },
+                            "contract_address_salt": {
+                                "description": "The salt for the address of the deployed contract",
+                                "title": "Contract address salt",
+                                "$ref": "#/components/schemas/FELT"
+                            },
+                            "constructor_calldata": {
+                                "type": "array",
+                                "title": "Constructor calldata",
+                                "description": "The parameters passed to the constructor",
+                                "items": {
+                                    "$ref": "#/components/schemas/FELT"
+                                }
                             },
                             "class_hash": {
                                 "title": "Class hash",
@@ -1831,51 +1751,13 @@
                             }
                         },
                         "required": [
-                            "transaction_hash",
+                            "version",
+                            "type",
+                            "constructor_calldata",
+                            "contract_address_salt",
                             "class_hash"
                         ]
-                    },
-                    {
-                        "title": "Deploy transaction properties",
-                        "$ref": "#/components/schemas/DEPLOY_TXN_PROPERTIES"
                     }
-                ]
-            },
-            "DEPLOY_TXN_PROPERTIES": {
-                "title": "Deploy transaction properties",
-                "type": "object",
-                "properties": {
-                    "version": {
-                        "title": "Version",
-                        "description": "Version of the transaction scheme",
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
-                    },
-                    "type": {
-                        "title": "Deploy",
-                        "type": "string",
-                        "enum": [
-                            "DEPLOY"
-                        ]
-                    },
-                    "contract_address_salt": {
-                        "description": "The salt for the address of the deployed contract",
-                        "title": "Contract address salt",
-                        "$ref": "#/components/schemas/FELT"
-                    },
-                    "constructor_calldata": {
-                        "type": "array",
-                        "title": "Constructor calldata",
-                        "description": "The parameters passed to the constructor",
-                        "items": {
-                            "$ref": "#/components/schemas/FELT"
-                        }
-                    }
-                },
-                "required": [
-                    "version",
-                    "type",
-                    "contract_address_salt",
-                    "constructor_calldata"
                 ]
             },
             "INVOKE_TXN_V0": {
@@ -1895,11 +1777,6 @@
                     "signature": {
                         "title": "Signature",
                         "$ref": "#/components/schemas/SIGNATURE"
-                    },
-                    "transaction_hash": {
-                        "title": "Transaction hash",
-                        "$ref": "#/components/schemas/TXN_HASH",
-                        "description": "The hash identifying the transaction"
                     },
                     "contract_address": {
                         "title": "Contract address",
@@ -1924,18 +1801,13 @@
                     "calldata",
                     "max_fee",
                     "version",
-                    "signature",
-                    "transaction_hash"
+                    "signature"
                 ]
             },
             "INVOKE_TXN_V1": {
                 "title": "Invoke transaction V1",
                 "description": "initiates a transaction from a given account",
                 "allOf": [
-                    {
-                        "title": "Common transaction properties",
-                        "$ref": "#/components/schemas/COMMON_TXN_PROPERTIES"
-                    },
                     {
                         "type": "object",
                         "properties": {
@@ -1950,11 +1822,33 @@
                                 "items": {
                                     "$ref": "#/components/schemas/FELT"
                                 }
+                            },
+                            "max_fee": {
+                                "title": "Max fee",
+                                "$ref": "#/components/schemas/FELT",
+                                "description": "The maximal fee that can be charged for including the transaction"
+                            },
+                            "version": {
+                                "title": "Version",
+                                "description": "Version of the transaction scheme",
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                            },
+                            "signature": {
+                                "title": "Signature",
+                                "$ref": "#/components/schemas/SIGNATURE"
+                            },
+                            "nonce": {
+                                "title": "Nonce",
+                                "$ref": "#/components/schemas/FELT"
                             }
                         },
                         "required": [
                             "sender_address",
-                            "calldata"
+                            "calldata",
+                            "max_fee",
+                            "version",
+                            "signature",
+                            "nonce"
                         ]
                     }
                 ]
@@ -1966,45 +1860,6 @@
                     {
                         "type": "object",
                         "title": "Type",
-                        "properties": {
-                            "type": {
-                                "title": "Type",
-                                "type": "string",
-                                "enum": [
-                                    "INVOKE"
-                                ]
-                            }
-                        },
-                        "required": [
-                            "type"
-                        ]
-                    },
-                    {
-                        "title": "Invoke transaction properties",
-                        "oneOf": [
-                            {
-                                "title": "Invoke transaction V0",
-                                "$ref": "#/components/schemas/INVOKE_TXN_V0"
-                            },
-                            {
-                                "title": "Invoke transaction V1",
-                                "$ref": "#/components/schemas/INVOKE_TXN_V1"
-                            }
-                        ]
-                    }
-                ]
-            },
-            "BROADCASTED_INVOKE_TXN": {
-                "title": "Broadcasted invoke transaction",
-                "description": "mempool representation of an invoke transaction",
-                "allOf": [
-                    {
-                        "title": "Broadcasted transaction common properties",
-                        "$ref": "#/components/schemas/BROADCASTED_TXN_COMMON_PROPERTIES"
-                    },
-                    {
-                        "title": "Event emitter",
-                        "type": "object",
                         "properties": {
                             "type": {
                                 "title": "Type",
@@ -2170,7 +2025,7 @@
                 "title": "Declare Transaction Receipt",
                 "allOf": [
                     {
-                        "title": "Event emitter",
+                        "title": "Declare txn receipt",
                         "type": "object",
                         "properties": {
                             "type": {
@@ -2199,7 +2054,7 @@
                         "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
                     },
                     {
-                        "title": "Event emitter",
+                        "title": "DeployAccount txn receipt",
                         "type": "object",
                         "properties": {
                             "type": {
@@ -2230,7 +2085,7 @@
                         "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
                     },
                     {
-                        "title": "Event emitter",
+                        "title": "Deploy txn receipt",
                         "type": "object",
                         "properties": {
                             "type": {
@@ -2380,7 +2235,7 @@
                     },
                     {
                         "type": "object",
-                        "title": "Event emitter",
+                        "title": "Contract address",
                         "properties": {
                             "contract_address": {
                                 "title": "Contract address",
@@ -2768,7 +2623,7 @@
                     },
                     {
                         "type": "object",
-                        "title": "Event emitter",
+                        "title": "Offset",
                         "properties": {
                             "offset": {
                                 "title": "Offset",

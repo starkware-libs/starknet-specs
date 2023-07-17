@@ -57,7 +57,46 @@
                         "type": "array",
                         "description": "a sequence of transactions to simulate, running each transaction on the state resulting from applying all the previous ones",
                         "items": {
-                            "$ref": "#/components/schemas/BROADCASTED_TXN"
+                            "oneOf": [
+                                {
+                                    "type": "object",
+                                    "title": "Declare v1 txn",
+                                    "properties": {
+                                        "transaction_hash": {
+                                            "title": "declare v1 txn properties",
+                                            "$ref": "#/components/schemas/DECLARE_TXN_V1"
+                                        },
+                                        "contract_class": {
+                                            "title": "Contract class",
+                                            "description": "The class to be declared",
+                                            "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
+                                        }
+                                    }
+                                },
+                                {
+                                    "type": "object",
+                                    "title": "Declare v2 txn",
+                                    "properties": {
+                                        "transaction_hash": {
+                                            "title": "declare v2 txn properties",
+                                            "$ref": "#/components/schemas/DECLARE_TXN_V2"
+                                        },
+                                        "contract_class": {
+                                            "title": "Contract class",
+                                            "description": "The class to be declared",
+                                            "$ref": "#/components/schemas/CONTRACT_CLASS"
+                                        }
+                                    }
+                                },
+                                {
+                                    "title": "Invoke transaction",
+                                    "$ref": "#/components/schemas/INVOKE_TXN"
+                                },
+                                {
+                                    "title": "Deploy account transaction",
+                                    "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN"
+                                }
+                            ]
                         }
                     }
                 },
@@ -168,8 +207,8 @@
                                     },
                                     {
                                         "type": "object",
-                                        "properties":{
-                                            "revert_reason":{
+                                        "properties": {
+                                            "revert_reason": {
                                                 "name": "revert reason",
                                                 "description": "the revert reason for the failed execution",
                                                 "type": "string"
@@ -330,11 +369,26 @@
             "BLOCK_ID": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
             },
-            "BROADCASTED_TXN": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_TXN"
-            },
             "FEE_ESTIMATE": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FEE_ESTIMATE"
+            },
+            "INVOKE_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/INVOKE_TXN"
+            },
+            "DECLARE_TXN_V1": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DECLARE_TXN_V1"
+            },
+            "DECLARE_TXN_V2": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DECLARE_TXN_V2"
+            },
+            "DEPLOY_ACCOUNT_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DEPLOY_ACCOUNT_TXN"
+            },
+            "CONTRACT_CLASS": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/CONTRACT_CLASS"
+            },
+            "DEPRECATED_CONTRACT_CLASS": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DEPRECATED_CONTRACT_CLASS"
             }
         },
         "errors": {
