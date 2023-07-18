@@ -499,34 +499,8 @@
                         "items": {
                             "oneOf": [
                                 {
-                                    "type": "object",
-                                    "title": "declare v1 txn",
-                                    "properties": {
-                                        "transaction_hash": {
-                                            "title": "declare v1 txn properties",
-                                            "$ref": "#/components/schemas/DECLARE_TXN_V1"
-                                        },
-                                        "contract_class": {
-                                            "title": "Contract class",
-                                            "description": "The class to be declared",
-                                            "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
-                                        }
-                                    }
-                                },
-                                {
-                                    "type": "object",
-                                    "title": "declare v2 txn",
-                                    "properties": {
-                                        "transaction_hash": {
-                                            "title": "declare v2 txn properties",
-                                            "$ref": "#/components/schemas/DECLARE_TXN_V2"
-                                        },
-                                        "contract_class": {
-                                            "title": "Contract class",
-                                            "description": "The class to be declared",
-                                            "$ref": "#/components/schemas/CONTRACT_CLASS"
-                                        }
-                                    }
+                                    "title": "Invoke transaction",
+                                    "$ref": "#/components/schemas/DECLARE_TXN"
                                 },
                                 {
                                     "title": "Invoke transaction",
@@ -1587,10 +1561,83 @@
                                     "DECLARE"
                                 ]
                             },
-                            "class_hash": {
-                                "title": "Class hash",
-                                "description": "The hash of the declared class",
+                            "sender_address": {
+                                "title": "Sender address",
+                                "description": "The address of the account contract sending the declaration transaction",
+                                "$ref": "#/components/schemas/ADDRESS"
+                            },
+                            "max_fee": {
+                                "title": "Max fee",
+                                "$ref": "#/components/schemas/FELT",
+                                "description": "The maximal fee that can be charged for including the transaction"
+                            },
+                            "version": {
+                                "title": "Version",
+                                "description": "Version of the transaction scheme",
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                            },
+                            "signature": {
+                                "title": "Signature",
+                                "$ref": "#/components/schemas/SIGNATURE"
+                            },
+                            "nonce": {
+                                "title": "Nonce",
                                 "$ref": "#/components/schemas/FELT"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "sender_address",
+                            "max_fee",
+                            "version",
+                            "signature",
+                            "nonce"
+                        ]
+                    },
+                    {
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "title": "ContractClass",
+                                "description": "The class to be declared. Expected to be included for all methods involving execution (estimateFee, simulateTransactions)",
+                                "properties": {
+                                    "contract_class": {
+                                        "title": "Contract class",
+                                        "description": "The class to be declared",
+                                        "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "title": "ClassHash",
+                                "description": "The hash of the declared class. Responses to getBlock and getTransaction are expected to include the hash rather than the full definition",
+                                "properties": {
+                                    "class_hash": {
+                                        "title": "Class hash",
+                                        "description": "The hash of the declared class",
+                                        "$ref": "#/components/schemas/FELT"
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "DECLARE_TXN_V2": {
+                "title": "Declare Transaction V2",
+                "description": "Declare Contract Transaction V2",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "title": "Declare txn v2",
+                        "properties": {
+                            "type": {
+                                "title": "Declare",
+                                "type": "string",
+                                "enum": [
+                                    "DECLARE"
+                                ]
                             },
                             "sender_address": {
                                 "title": "Sender address",
@@ -1618,36 +1665,39 @@
                         },
                         "required": [
                             "type",
-                            "class_hash",
                             "sender_address",
                             "max_fee",
                             "version",
                             "signature",
                             "nonce"
                         ]
-                    }
-                ]
-            },
-            "DECLARE_TXN_V2": {
-                "title": "Declare Transaction V2",
-                "description": "Declare Contract Transaction V2",
-                "allOf": [
-                    {
-                        "title": "Declare transaction V1",
-                        "$ref": "#/components/schemas/DECLARE_TXN_V1"
                     },
                     {
-                        "type": "object",
-                        "title": "declare v2 additional fields",
-                        "properties": {
-                            "compiled_class_hash": {
-                                "title": "Compiled class hash",
-                                "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
-                                "$ref": "#/components/schemas/FELT"
+                        "oneOf": [
+                            {
+                                "type": "object",
+                                "title": "ContractClass",
+                                "description": "The class to be declared. Expected to be included for all methods involving execution (estimateFee, simulateTransactions)",
+                                "properties": {
+                                    "contract_class": {
+                                        "title": "Contract class",
+                                        "description": "The class to be declared",
+                                        "$ref": "#/components/schemas/CONTRACT_CLASS"
+                                    }
+                                }
+                            },
+                            {
+                                "type": "object",
+                                "title": "ClassHash",
+                                "description": "The hash of the declared class. Responses to getBlock and getTransaction are expected to include the hash rather than the full definition",
+                                "properties": {
+                                    "class_hash": {
+                                        "title": "Class hash",
+                                        "description": "The hash of the declared class",
+                                        "$ref": "#/components/schemas/FELT"
+                                    }
+                                }
                             }
-                        },
-                        "required": [
-                            "compiled_class_hash"
                         ]
                     }
                 ]

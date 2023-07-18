@@ -44,38 +44,8 @@
                     "description": "Declare transaction required to declare a new class on Starknet",
                     "required": true,
                     "schema": {
-                        "oneOf": [
-                            {
-                                "type": "object",
-                                "title": "declare v1 txn",
-                                "properties": {
-                                    "transaction_hash": {
-                                        "title": "declare v1 txn properties",
-                                        "$ref": "#/components/schemas/DECLARE_TXN_V1"
-                                    },
-                                    "contract_class": {
-                                        "title": "Contract class",
-                                        "description": "The class to be declared",
-                                        "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
-                                    }
-                                }
-                            },
-                            {
-                                "type": "object",
-                                "title": "declare v2 txn",
-                                "properties": {
-                                    "transaction_hash": {
-                                        "title": "declare v2 txn properties",
-                                        "$ref": "#/components/schemas/DECLARE_TXN_V2"
-                                    },
-                                    "contract_class": {
-                                        "title": "Contract class",
-                                        "description": "The class to be declared",
-                                        "$ref": "#/components/schemas/CONTRACT_CLASS"
-                                    }
-                                }
-                            }
-                        ]
+                        "title": "Declare transaction",
+                        "$ref": "#/components/schemas/DECLARE_TXN"
                     }
                 }
             ],
@@ -165,11 +135,8 @@
             "INVOKE_TXN": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/INVOKE_TXN"
             },
-            "DECLARE_TXN_V1": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DECLARE_TXN_V1"
-            },
-            "DECLARE_TXN_V2": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DECLARE_TXN_V2"
+            "DECLARE_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DECLARE_TXN"
             },
             "DEPLOY_ACCOUNT_TXN": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DEPLOY_ACCOUNT_TXN"
