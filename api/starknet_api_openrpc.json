@@ -2446,6 +2446,11 @@
                         "description": "The target L2 address the message is sent to",
                         "$ref": "#/components/schemas/ADDRESS"
                     },
+                    "entry_point_selector": {
+                        "title": "Selector",
+                        "description": "The selector of the l1_handler in invoke in the target contract",
+                        "$ref": "#/components/schemas/FELT"
+                    },
                     "payload": {
                         "description": "The payload of the message",
                         "title": "Payload",
@@ -2458,7 +2463,8 @@
                 "required": [
                     "from_address",
                     "to_address",
-                    "payload"
+                    "payload",
+                    "entry_point_selector"
                 ]
             },
             "TXN_FINALITY_STATUS": {
