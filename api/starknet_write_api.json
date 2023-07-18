@@ -16,7 +16,7 @@
                     "description": "The information needed to invoke the function (or account, for version 1 transactions)",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BROADCASTED_INVOKE_TXN"
+                        "$ref": "#/components/schemas/INVOKE_TXN"
                     }
                 }
             ],
@@ -41,9 +41,11 @@
             "params": [
                 {
                     "name": "declare_transaction",
+                    "description": "Declare transaction required to declare a new class on Starknet",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN"
+                        "title": "Declare transaction",
+                        "$ref": "#/components/schemas/DECLARE_TXN"
                     }
                 }
             ],
@@ -82,7 +84,7 @@
                     "description": "The deploy account transaction",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
+                        "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN"
                     }
                 }
             ],
@@ -113,9 +115,6 @@
     "components": {
         "contentDescriptors": {},
         "schemas": {
-            "CONTRACT_CLASS": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/CONTRACT_CLASS"
-            },
             "NUM_AS_HEX": {
                 "title": "An integer number in hex format (0x...)",
                 "type": "string",
@@ -130,14 +129,14 @@
             "TXN_HASH": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
             },
-            "BROADCASTED_INVOKE_TXN": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_INVOKE_TXN"
+            "INVOKE_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/INVOKE_TXN"
             },
-            "BROADCASTED_DECLARE_TXN": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DECLARE_TXN"
+            "DECLARE_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DECLARE_TXN"
             },
-            "BROADCASTED_DEPLOY_ACCOUNT_TXN": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
+            "DEPLOY_ACCOUNT_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DEPLOY_ACCOUNT_TXN"
             },
             "FUNCTION_CALL": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
