@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.50.0",
+        "version": "0.4.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -1264,11 +1264,11 @@
                                 "transaction": {
                                     "title": "transaction",
                                     "$ref": "#/components/schemas/TXN"
+                                },
+                                "transaction_hash": {
+                                    "title": "transaction hash",
+                                    "$ref": "#/components/schemas/TXN_HASH"
                                 }
-                            },
-                            "transaction_hash": {
-                                "title": "transaction hash",
-                                "$ref": "#/components/schemas/TXN_HASH"
                             },
                             "required": [
                                 "transaction",
@@ -2385,7 +2385,7 @@
                 "title": "Execution status",
                 "type": "string",
                 "enum": [
-                    "SUCCEDED",
+                    "SUCCEEDED",
                     "REVERTED"
                 ],
                 "description": "The execution status of the transaction"
@@ -2688,9 +2688,6 @@
                             }
                         }
                     }
-                ],
-                "required": [
-                    "Typed parameter"
                 ]
             },
             "EVENT_ABI_ENTRY": {
