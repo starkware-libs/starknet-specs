@@ -1271,7 +1271,7 @@
                                 }
                             },
                             "required": [
-                                "trnasaction",
+                                "transaction",
                                 "transaction_hash"
                             ]
                         }
