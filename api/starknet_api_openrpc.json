@@ -243,7 +243,23 @@
                 "name": "transactionResult",
                 "schema": {
                     "title": "Transaction",
-                    "$ref": "#/components/schemas/TXN"
+                    "allOf": [
+                        {
+                            "$ref": "#/components/schemas/TXN"
+                        },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "transaction_hash": {
+                                    "title": "transaction hash",
+                                    "$ref": "#/components/schemas/TXN_HASH"
+                                }
+                            },
+                            "required": [
+                                "transaction_hash"
+                            ]
+                        }
+                    ]
                 }
             },
             "errors": [
