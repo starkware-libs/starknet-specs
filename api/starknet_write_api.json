@@ -54,6 +54,12 @@
                 },
                 {
                     "$ref": "#/components/errors/DUPLICATE_TX"
+                },
+                {
+                    "$ref": "#/components/errors/UNSUPPORTED_TX_VERSION"
+                },
+                {
+                    "$ref": "#/components/errors/UNEXPECTED_ERROR"
                 }
             ]
         },
@@ -120,7 +126,16 @@
                     "$ref": "#/components/errors/DUPLICATE_TX"
                 },
                 {
-                    "$ref": "#/components/errors/CONTRACT_BYTECODE_SIZE_IS_TOO_LARGE"
+                    "$ref": "#/components/errors/CONTRACT_CLASS_SIZE_IS_TOO_LARGE"
+                },
+                {
+                    "$ref": "#/components/errors/UNSUPPORTED_TX_VERSION"
+                },
+                {
+                    "$ref": "#/components/errors/UNSUPPORTED_CONTRACT_CLASS_VERSION"
+                },
+                {
+                    "$ref": "#/components/errors/UNEXPECTED_ERROR"
                 }
             ]
         },
@@ -175,6 +190,12 @@
                 },
                 {
                     "$ref": "#/components/errors/DUPLICATE_TX"
+                },
+                {
+                    "$ref": "#/components/errors/UNSUPPORTED_TX_VERSION"
+                },
+                {
+                    "$ref": "#/components/errors/UNEXPECTED_ERROR"
                 }
             ]
         }
@@ -224,7 +245,7 @@
             },
             "INSUFFICIENT_MAX_FEE": {
                 "code": 53,
-                "message": "Max fee is smaller than the validation's actual fee"
+                "message": "Max fee is smaller than the minimal transaction cost (validation plus fee transfer)"
             },
             "INSUFFICIENT_ACCOUNT_BALANCE": {
                 "code": 54,
@@ -238,9 +259,9 @@
                 "code": 56,
                 "message": "Compilation failed"
             },
-            "CONTRACT_BYTECODE_SIZE_IS_TOO_LARGE": {
+            "CONTRACT_CLASS_SIZE_IS_TOO_LARGE": {
                 "code": 57,
-                "message": "Contract bytecode size it too large"
+                "message": "Contract class size it too large"
             },
             "NON_ACCOUNT": {
                 "code": 58,
@@ -253,6 +274,19 @@
             "COMPILED_CLASS_HASH_MISMATCH": {
                 "code": 60,
                 "message": "the compiled class hash did not match the one supplied in the transaction"
+            },
+            "UNSUPPORTED_TX_VERSION": {
+                "code": 61,
+                "message": "the transaction version is not supported"
+            },
+            "UNSUPPORTED_CONTRACT_CLASS_VERSION": {
+                "code": 62,
+                "message": "the contract class version is not supported"
+            },
+            "UNEXPECTED_ERROR": {
+                "code": 63,
+                "message": "An unexpected error occured",
+                "data": "string"
             }
         }
     }
