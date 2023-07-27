@@ -50,9 +50,6 @@
                     "$ref": "#/components/errors/NON_ACCOUNT"
                 },
                 {
-                    "$ref": "#/components/errors/CLASS_HASH_NOT_FOUND"
-                },
-                {
                     "$ref": "#/components/errors/DUPLICATE_TX"
                 },
                 {
@@ -118,9 +115,6 @@
                 },
                 {
                     "$ref": "#/components/errors/NON_ACCOUNT"
-                },
-                {
-                    "$ref": "#/components/errors/CLASS_HASH_NOT_FOUND"
                 },
                 {
                     "$ref": "#/components/errors/DUPLICATE_TX"
