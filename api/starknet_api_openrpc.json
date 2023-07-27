@@ -1622,7 +1622,10 @@
                             "version": {
                                 "title": "Version",
                                 "description": "Version of the transaction scheme",
-                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                                "type": "string",
+                                "enum": [
+                                    "0x1"
+                                ]
                             },
                             "signature": {
                                 "title": "Signature",
@@ -1705,7 +1708,10 @@
                             "version": {
                                 "title": "Version",
                                 "description": "Version of the transaction scheme",
-                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                                "type": "string",
+                                "enum": [
+                                    "0x2"
+                                ]
                             },
                             "signature": {
                                 "title": "Signature",
@@ -1883,7 +1889,10 @@
                     "version": {
                         "title": "Version",
                         "description": "Version of the transaction scheme",
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                        "type": "string",
+                        "enum": [
+                            "0x0"
+                        ]
                     },
                     "signature": {
                         "title": "Signature",
@@ -1950,7 +1959,10 @@
                             "version": {
                                 "title": "Version",
                                 "description": "Version of the transaction scheme",
-                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                                "type": "string",
+                                "enum": [
+                                    "0x1"
+                                ]
                             },
                             "signature": {
                                 "title": "Signature",
