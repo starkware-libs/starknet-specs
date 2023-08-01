@@ -1585,6 +1585,10 @@
                 "title": "Declare transaction",
                 "oneOf": [
                     {
+                        "title": "Declare transaction V0",
+                        "$ref": "#/components/schemas/DECLARE_TXN_V0"
+                    },
+                    {
                         "title": "Declare transaction V1",
                         "$ref": "#/components/schemas/DECLARE_TXN_V1"
                     },
