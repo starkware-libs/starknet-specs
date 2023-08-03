@@ -1638,6 +1638,15 @@
                             "signature": {
                                 "title": "Signature",
                                 "$ref": "#/components/schemas/SIGNATURE"
+                            },
+                            "nonce": {
+                                "title": "Nonce",
+                                "$ref": "#/components/schemas/FELT"
+                            },
+                            "class_hash": {
+                                "title": "Class hash",
+                                "description": "The hash of the declared class",
+                                "$ref": "#/components/schemas/FELT"
                             }
                         },
                         "required": [
@@ -1645,41 +1654,9 @@
                             "sender_address",
                             "max_fee",
                             "version",
-                            "signature"
-                        ]
-                    },
-                    {
-                        "oneOf": [
-                            {
-                                "type": "object",
-                                "title": "ContractClass",
-                                "description": "The class to be declared. Expected to be included for all methods involving execution (estimateFee, simulateTransactions)",
-                                "properties": {
-                                    "contract_class": {
-                                        "title": "Contract class",
-                                        "description": "The class to be declared",
-                                        "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
-                                    }
-                                },
-                                "required": [
-                                    "contract_class"
-                                ]
-                            },
-                            {
-                                "type": "object",
-                                "title": "ClassHash",
-                                "description": "The hash of the declared class. Responses to getBlock and getTransaction are expected to include the hash rather than the full definition",
-                                "properties": {
-                                    "class_hash": {
-                                        "title": "Class hash",
-                                        "description": "The hash of the declared class",
-                                        "$ref": "#/components/schemas/FELT"
-                                    }
-                                },
-                                "required": [
-                                    "class_hash"
-                                ]
-                            }
+                            "signature",
+                            "nonce",
+                            "class_hash"
                         ]
                     }
                 ]
