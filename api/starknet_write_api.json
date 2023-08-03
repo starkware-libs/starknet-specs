@@ -70,7 +70,7 @@
                     "required": true,
                     "schema": {
                         "title": "Declare transaction",
-                        "$ref": "#/components/schemas/DECLARE_TXN"
+                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN"
                     }
                 }
             ],
@@ -214,8 +214,8 @@
             "INVOKE_TXN_V1": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/INVOKE_TXN_V1"
             },
-            "DECLARE_TXN": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DECLARE_TXN"
+            "BROADCASTED_DECLARE_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DECLARE_TXN"
             },
             "DEPLOY_ACCOUNT_TXN": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DEPLOY_ACCOUNT_TXN"
