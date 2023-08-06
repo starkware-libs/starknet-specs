@@ -1613,7 +1613,7 @@
                                     "DECLARE"
                                 ]
                             },
-                            "contract_address": {
+                            "sender_address": {
                                 "title": "Sender address",
                                 "description": "The address of the account contract sending the declaration transaction",
                                 "$ref": "#/components/schemas/ADDRESS"
@@ -1638,7 +1638,7 @@
                         },
                         "required": [
                             "type",
-                            "contract_address",
+                            "sender_address",
                             "max_fee",
                             "version",
                             "signature"
