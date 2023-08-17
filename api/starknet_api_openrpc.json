@@ -529,20 +529,7 @@
                         "description": "a sequence of transactions to estimate, running each transaction on the state resulting from applying all the previous ones",
                         "title": "Transaction",
                         "items": {
-                            "oneOf": [
-                                {
-                                    "title": "Declare transaction",
-                                    "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN"
-                                },
-                                {
-                                    "title": "Invoke transaction",
-                                    "$ref": "#/components/schemas/INVOKE_TXN"
-                                },
-                                {
-                                    "title": "Deploy account transaction",
-                                    "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN"
-                                }
-                            ]
+                            "$ref": "#/components/schemas/BROADCASTED_TXN"
                         }
                     },
                     "required": true
@@ -1782,6 +1769,27 @@
                     }
                 ]
             },
+            "BROADCASTED_TXN": {
+                "oneOf": [
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_INVOKE_TXN"
+                    },
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN"
+                    },
+                    {
+                        "$ref": "#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
+                    }
+                ]
+            },
+            "BROADCASTED_INVOKE_TXN": {
+                "title": "Broadcasted invoke transaction",
+                "$ref": "#/components/schemas/INVOKE_TXN_V1"
+            },
+            "BROADCASTED_DEPLOY_ACCOUNT_TXN": {
+                "title": "Broadcasted deploy account transaction",
+                "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN"
+            },
             "BROADCASTED_DECLARE_TXN": {
                 "title": "Broadcasted declare transaction",
                 "oneOf": [
@@ -1817,10 +1825,7 @@
                             "version": {
                                 "title": "Version",
                                 "description": "Version of the transaction scheme",
-                                "type": "string",
-                                "enum": [
-                                    "0x1"
-                                ]
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
                             },
                             "signature": {
                                 "title": "Signature",
@@ -1875,10 +1880,7 @@
                             "version": {
                                 "title": "Version",
                                 "description": "Version of the transaction scheme",
-                                "type": "string",
-                                "enum": [
-                                    "0x2"
-                                ]
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
                             },
                             "signature": {
                                 "title": "Signature",
@@ -2104,10 +2106,7 @@
                             "version": {
                                 "title": "Version",
                                 "description": "Version of the transaction scheme",
-                                "type": "string",
-                                "enum": [
-                                    "0x1"
-                                ]
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
                             },
                             "signature": {
                                 "title": "Signature",
