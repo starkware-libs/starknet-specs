@@ -30,7 +30,8 @@
                             "title": "The hash of the invoke transaction",
                             "$ref": "#/components/schemas/TXN_HASH"
                         }
-                    }
+                    },
+                    "required": ["transaction_hash"]
                 }
             },
             "errors": [
@@ -88,7 +89,8 @@
                             "title": "The hash of the declared class",
                             "$ref": "#/components/schemas/FELT"
                         }
-                    }
+                    },
+                    "required": ["transaction_hash", "class_hash"]
                 }
             },
             "errors": [
@@ -160,7 +162,8 @@
                             "title": "The address of the new contract",
                             "$ref": "#/components/schemas/FELT"
                         }
-                    }
+                    },
+                    "required": ["transaction_hash", "contract_address"]
                 }
             },
             "errors": [
