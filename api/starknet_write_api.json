@@ -203,25 +203,25 @@
                 "pattern": "^0x[a-fA-F0-9]+$"
             },
             "SIGNATURE": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/SIGNATURE"
+                "$ref": "./starknet_api_openrpc.json#/components/schemas/SIGNATURE"
             },
             "FELT": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
+                "$ref": "./starknet_api_openrpc.json#/components/schemas/FELT"
             },
             "TXN_HASH": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+                "$ref": "./starknet_api_openrpc.json#/components/schemas/TXN_HASH"
             },
             "INVOKE_TXN_V1": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/INVOKE_TXN_V1"
+                "$ref": "./starknet_api_openrpc.json#/components/schemas/INVOKE_TXN_V1"
             },
-            "BROADCASTED_DECLARE_TXN": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DECLARE_TXN"
+            "DECLARE_TXN": {
+                "$ref": "./starknet_api_openrpc.json#/components/schemas/DECLARE_TXN"
             },
             "DEPLOY_ACCOUNT_TXN": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DEPLOY_ACCOUNT_TXN"
+                "$ref": "./starknet_api_openrpc.json#/components/schemas/DEPLOY_ACCOUNT_TXN"
             },
             "FUNCTION_CALL": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
+                "$ref": "./starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
             }
         },
         "errors": {
