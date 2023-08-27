@@ -1080,33 +1080,105 @@
                 "type": "string",
                 "pattern": "^0x[a-fA-F0-9]+$"
             },
-            "STATE_UPDATE": {
-                "title": "State update",
+            "STATE_DIFF": {
+                "description": "The change in state applied in this block, given as a mapping of addresses to the new values and/or new contracts",
                 "type": "object",
-                "allOf": [
-                    {
-                        "title": "Block info",
-                        "type": "object",
-                        "properties": {
-                            "block_hash": {
-                                "title": "Block hash",
-                                "$ref": "#/components/schemas/BLOCK_HASH"
-                            },
-                            "new_root": {
-                                "title": "New root",
-                                "description": "The new global state root",
-                                "$ref": "#/components/schemas/FELT"
-                            }
-                        },
-                        "required": [
-                            "block_hash",
-                            "new_root"
-                        ]
+                "properties": {
+                    "storage_diffs": {
+                        "title": "Storage diffs",
+                        "type": "array",
+                        "items": {
+                            "description": "The changes in the storage per contract address",
+                            "$ref": "#/components/schemas/CONTRACT_STORAGE_DIFF_ITEM"
+                        }
                     },
-                    {
-                        "title": "Pending state update",
-                        "$ref": "#/components/schemas/PENDING_STATE_UPDATE"
+                    "deprecated_declared_classes": {
+                        "title": "Deprecated declared classes",
+                        "type": "array",
+                        "items": {
+                            "description": "The hash of the declared class",
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    },
+                    "declared_classes": {
+                        "title": "Declared classes",
+                        "type": "array",
+                        "items": {
+                            "title": "New classes",
+                            "type": "object",
+                            "description": "The declared class hash and compiled class hash",
+                            "properties": {
+                                "class_hash": {
+                                    "title": "Class hash",
+                                    "description": "The hash of the declared class",
+                                    "$ref": "#/components/schemas/FELT"
+                                },
+                                "compiled_class_hash": {
+                                    "title": "Compiled class hash",
+                                    "description": "The Cairo assembly hash corresponding to the declared class",
+                                    "$ref": "#/components/schemas/FELT"
+                                }
+                            }
+                        }
+                    },
+                    "deployed_contracts": {
+                        "title": "Deployed contracts",
+                        "type": "array",
+                        "items": {
+                            "description": "A new contract deployed as part of the state update",
+                            "$ref": "#/components/schemas/DEPLOYED_CONTRACT_ITEM"
+                        }
+                    },
+                    "replaced_classes": {
+                        "title": "Replaced classes",
+                        "type": "array",
+                        "items": {
+                            "description": "The list of contracts whose class was replaced",
+                            "title": "Replaced class",
+                            "type": "object",
+                            "properties": {
+                                "contract_address": {
+                                    "title": "Contract address",
+                                    "description": "The address of the contract whose class was replaced",
+                                    "$ref": "#/components/schemas/ADDRESS"
+                                },
+                                "class_hash": {
+                                    "title": "Class hash",
+                                    "description": "The new class hash",
+                                    "$ref": "#/components/schemas/FELT"
+                                }
+                            }
+                        }
+                    },
+                    "nonces": {
+                        "title": "Nonces",
+                        "type": "array",
+                        "items": {
+                            "title": "Nonce update",
+                            "description": "The updated nonce per contract address",
+                            "type": "object",
+                            "properties": {
+                                "contract_address": {
+                                    "title": "Contract address",
+                                    "description": "The address of the contract",
+                                    "$ref": "#/components/schemas/ADDRESS"
+                                },
+                                "nonce": {
+                                    "title": "Nonce",
+                                    "description": "The nonce for the given address at the end of the block",
+                                    "$ref": "#/components/schemas/FELT"
+                                }
+                            }
+                        }
                     }
+                },
+                "required": [
+                    "storage_diffs",
+                    "deprecated_declared_classes",
+                    "declared_classes",
+                    "replaced_classes",
+                    "deployed_contracts",
+                    "nonces"
                 ]
             },
             "PENDING_STATE_UPDATE": {
@@ -1121,110 +1193,42 @@
                     },
                     "state_diff": {
                         "title": "State diff",
-                        "description": "The change in state applied in this block, given as a mapping of addresses to the new values and/or new contracts",
-                        "type": "object",
-                        "properties": {
-                            "storage_diffs": {
-                                "title": "Storage diffs",
-                                "type": "array",
-                                "items": {
-                                    "description": "The changes in the storage per contract address",
-                                    "$ref": "#/components/schemas/CONTRACT_STORAGE_DIFF_ITEM"
-                                }
-                            },
-                            "deprecated_declared_classes": {
-                                "title": "Deprecated declared classes",
-                                "type": "array",
-                                "items": {
-                                    "description": "The hash of the declared class",
-                                    "$ref": "#/components/schemas/FELT"
-                                }
-                            },
-                            "declared_classes": {
-                                "title": "Declared classes",
-                                "type": "array",
-                                "items": {
-                                    "title": "New classes",
-                                    "type": "object",
-                                    "description": "The declared class hash and compiled class hash",
-                                    "properties": {
-                                        "class_hash": {
-                                            "title": "Class hash",
-                                            "description": "The hash of the declared class",
-                                            "$ref": "#/components/schemas/FELT"
-                                        },
-                                        "compiled_class_hash": {
-                                            "title": "Compiled class hash",
-                                            "description": "The Cairo assembly hash corresponding to the declared class",
-                                            "$ref": "#/components/schemas/FELT"
-                                        }
-                                    }
-                                }
-                            },
-                            "deployed_contracts": {
-                                "title": "Deployed contracts",
-                                "type": "array",
-                                "items": {
-                                    "description": "A new contract deployed as part of the state update",
-                                    "$ref": "#/components/schemas/DEPLOYED_CONTRACT_ITEM"
-                                }
-                            },
-                            "replaced_classes": {
-                                "title": "Replaced classes",
-                                "type": "array",
-                                "items": {
-                                    "description": "The list of contracts whose class was replaced",
-                                    "title": "Replaced class",
-                                    "type": "object",
-                                    "properties": {
-                                        "contract_address": {
-                                            "title": "Contract address",
-                                            "description": "The address of the contract whose class was replaced",
-                                            "$ref": "#/components/schemas/ADDRESS"
-                                        },
-                                        "class_hash": {
-                                            "title": "Class hash",
-                                            "description": "The new class hash",
-                                            "$ref": "#/components/schemas/FELT"
-                                        }
-                                    }
-                                }
-                            },
-                            "nonces": {
-                                "title": "Nonces",
-                                "type": "array",
-                                "items": {
-                                    "title": "Nonce update",
-                                    "description": "The updated nonce per contract address",
-                                    "type": "object",
-                                    "properties": {
-                                        "contract_address": {
-                                            "title": "Contract address",
-                                            "description": "The address of the contract",
-                                            "$ref": "#/components/schemas/ADDRESS"
-                                        },
-                                        "nonce": {
-                                            "title": "Nonce",
-                                            "description": "The nonce for the given address at the end of the block",
-                                            "$ref": "#/components/schemas/FELT"
-                                        }
-                                    }
-                                }
-                            }
-                        },
-                        "required": [
-                            "storage_diffs",
-                            "deprecated_declared_classes",
-                            "declared_classes",
-                            "replaced_classes",
-                            "deployed_contracts",
-                            "nonces"
-                        ]
+                        "$ref": "#/components/schemas/STATE_DIFF"
                     }
                 },
                 "required": [
                     "old_root",
                     "state_diff"
+                ]
+            },
+            "STATE_UPDATE": {
+                "title": "State update",
+                "type": "object",
+                "properties": {
+                    "block_hash": {
+                        "title": "Block hash",
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    },
+                    "old_root": {
+                        "title": "Old root",
+                        "description": "The previous global state root",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "new_root": {
+                        "title": "New root",
+                        "description": "The new global state root",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "state_diff": {
+                        "title": "State diff",
+                        "$ref": "#/components/schemas/STATE_DIFF"
+                    }
+                },
+                "required": [
+                    "state_diff",
+                    "block_hash",
+                    "old_root",
+                    "new_root"
                 ]
             },
             "ADDRESS": {
