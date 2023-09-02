@@ -289,8 +289,16 @@
             "result": {
                 "name": "result",
                 "schema": {
-                    "title": "Transaction receipt",
-                    "$ref": "#/components/schemas/TXN_RECEIPT"
+                    "oneOf": [
+                        {
+                            "title": "Transaction receipt",
+                            "$ref": "#/components/schemas/TXN_RECEIPT"
+                        },
+                        {
+                            "title": "Pending transaction receipt",
+                            "$ref": "#/components/schemas/PENDING_TXN_RECEIPT"
+                        }
+                    ]
                 }
             },
             "errors": [
@@ -1357,6 +1365,16 @@
                         "title": "Sequencer address",
                         "description": "The StarkNet identity of the sequencer submitting this block",
                         "$ref": "#/components/schemas/FELT"
+                    },
+                    "l1_gas_price": {
+                        "title": "L1 gas price",
+                        "descritpion": "The price of l1 gas in the block",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "starknet_version": {
+                        "title": "Starknet version",
+                        "description": "Semver of the current Starknet protocol",
+                        "type": "string"
                     }
                 },
                 "required": [
@@ -1592,6 +1610,10 @@
                     {
                         "title": "Declare transaction V2",
                         "$ref": "#/components/schemas/DECLARE_TXN_V2"
+                    },
+                    {
+                        "title": "Declare transaction V3",
+                        "$ref": "#/components/schemas/DECLARE_TXN_V3"
                     }
                 ]
             },
@@ -1773,6 +1795,107 @@
                     }
                 ]
             },
+            "DECLARE_TXN_V3": {
+                "title": "Declare Transaction V2",
+                "description": "Declare Contract Transaction V2",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "title": "Declare txn v2",
+                        "properties": {
+                            "type": {
+                                "title": "Declare",
+                                "type": "string",
+                                "enum": [
+                                    "DECLARE"
+                                ]
+                            },
+                            "sender_address": {
+                                "title": "Sender address",
+                                "description": "The address of the account contract sending the declaration transaction",
+                                "$ref": "#/components/schemas/ADDRESS"
+                            },
+                            "compiled_class_hash": {
+                                "title": "Compiled class hash",
+                                "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
+                                "$ref": "#/components/schemas/FELT"
+                            },
+                            "max_fee": {
+                                "title": "Max fee",
+                                "$ref": "#/components/schemas/FELT",
+                                "description": "The maximal fee that can be charged for including the transaction"
+                            },
+                            "version": {
+                                "title": "Version",
+                                "description": "Version of the transaction scheme",
+                                "type": "string",
+                                "enum": [
+                                    "0x2"
+                                ]
+                            },
+                            "signature": {
+                                "title": "Signature",
+                                "$ref": "#/components/schemas/SIGNATURE"
+                            },
+                            "nonce": {
+                                "title": "Nonce",
+                                "$ref": "#/components/schemas/FELT"
+                            },
+                            "class_hash": {
+                                "title": "Class hash",
+                                "description": "The hash of the declared class",
+                                "$ref": "#/components/schemas/FELT"
+                            },
+                            "l1_gas": {
+                                "title": "L1 Gas",
+                                "description": "The max amount and max price per unit of L1 gas used in this tx",
+                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                            },
+                            "l2_gas": {
+                                "title": "L2 Gas",
+                                "description": "The max amount and max price per unit of L2 gas used in this tx",
+                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                            },
+                            "tip": {
+                                "title": "Tip",
+                                "$ref": "#/components/schemas/FELT",
+                                "description": "the tip for the transaction"
+                            },
+                            "paymaster_address": {
+                                "title": "Paymaster",
+                                "$ref": "#/components/schemas/ADDRESS",
+                                "description": "the address of the paymaster that pays for the tx in native tokens, 0 if no paymaster is used"
+                            },
+                            "nonce_data_availability_mode": {
+                                "title": "Nonce DA mode",
+                                "description": "The storage domain of the account's nonce (an account has a nonce per DA mode)",
+                                "$ref": "#/components/schemas/DA_MODE"
+                            },
+                            "fee_data_availability_mode": {
+                                "title": "Fee DA mode",
+                                "description": "The storage domain of the account's balance from which fee will be charged",
+                                "$ref": "#/components/schemas/DA_MODE"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "sender_address",
+                            "compiled_class_hash",
+                            "max_fee",
+                            "version",
+                            "signature",
+                            "nonce",
+                            "class_hash",
+                            "l1_gas",
+                            "l2_gas",
+                            "tip",
+                            "paymaster_address",
+                            "nonce_data_availability_mode",
+                            "fee_data_availability_mode"
+                        ]
+                    }
+                ]
+            },
             "BROADCASTED_TXN": {
                 "oneOf": [
                     {
@@ -1788,7 +1911,16 @@
             },
             "BROADCASTED_INVOKE_TXN": {
                 "title": "Broadcasted invoke transaction",
-                "$ref": "#/components/schemas/INVOKE_TXN_V1"
+                "oneOf": [
+                    {
+                        "title": "Broadcasted invoke transaction V1",
+                        "$ref": "#/components/schemas/INVOKE_TXN_V1"
+                    },
+                    {
+                        "title": "Broadcasted invoke transaction V2",
+                        "$ref": "#/components/schemas/INVOKE_TXN_V3"
+                    }
+                ]
             },
             "BROADCASTED_DEPLOY_ACCOUNT_TXN": {
                 "title": "Broadcasted deploy account transaction",
@@ -1804,6 +1936,10 @@
                     {
                         "title": "Broadcasted declare transaction V2",
                         "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN_V2"
+                    },
+                    {
+                        "title": "Broadcasted declare transaction V3",
+                        "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN_V3"
                     }
                 ]
             },
@@ -1913,7 +2049,119 @@
                     }
                 ]
             },
+            "BROADCASTED_DECLARE_TXN_V3": {
+                "title": "Broadcasted declare Transaction V2",
+                "description": "Broadcasted declare Contract Transaction V2",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "title": "Declare txn v2",
+                        "properties": {
+                            "type": {
+                                "title": "Declare",
+                                "type": "string",
+                                "enum": [
+                                    "DECLARE"
+                                ]
+                            },
+                            "sender_address": {
+                                "title": "Sender address",
+                                "description": "The address of the account contract sending the declaration transaction",
+                                "$ref": "#/components/schemas/ADDRESS"
+                            },
+                            "compiled_class_hash": {
+                                "title": "Compiled class hash",
+                                "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
+                                "$ref": "#/components/schemas/FELT"
+                            },
+                            "max_fee": {
+                                "title": "Max fee",
+                                "$ref": "#/components/schemas/FELT",
+                                "description": "The maximal fee that can be charged for including the transaction"
+                            },
+                            "version": {
+                                "title": "Version",
+                                "description": "Version of the transaction scheme",
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                            },
+                            "signature": {
+                                "title": "Signature",
+                                "$ref": "#/components/schemas/SIGNATURE"
+                            },
+                            "nonce": {
+                                "title": "Nonce",
+                                "$ref": "#/components/schemas/FELT"
+                            },
+                            "contract_class": {
+                                "title": "Contract class",
+                                "description": "The class to be declared",
+                                "$ref": "#/components/schemas/CONTRACT_CLASS"
+                            },
+                            "l1_gas": {
+                                "title": "L1 Gas",
+                                "description": "The max amount and max price per unit of L1 gas used in this tx",
+                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                            },
+                            "l2_gas": {
+                                "title": "L2 Gas",
+                                "description": "The max amount and max price per unit of L2 gas used in this tx",
+                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                            },
+                            "tip": {
+                                "title": "Tip",
+                                "$ref": "#/components/schemas/FELT",
+                                "description": "the tip for the transaction"
+                            },
+                            "paymaster_address": {
+                                "title": "Paymaster",
+                                "$ref": "#/components/schemas/ADDRESS",
+                                "description": "the address of the paymaster that pays for the tx in native tokens, 0 if no paymaster is used"
+                            },
+                            "nonce_data_availability_mode": {
+                                "title": "Nonce DA mode",
+                                "description": "The storage domain of the account's nonce (an account has a nonce per DA mode)",
+                                "$ref": "#/components/schemas/DA_MODE"
+                            },
+                            "fee_data_availability_mode": {
+                                "title": "Fee DA mode",
+                                "description": "The storage domain of the account's balance from which fee will be charged",
+                                "$ref": "#/components/schemas/DA_MODE"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "sender_address",
+                            "compiled_class_hash",
+                            "max_fee",
+                            "version",
+                            "signature",
+                            "nonce",
+                            "contract_class",
+                            "l1_gas",
+                            "l2_gas",
+                            "tip",
+                            "paymaster_address",
+                            "nonce_data_availability_mode",
+                            "fee_data_availability_mode"
+                        ]
+                    }
+                ]
+            },
             "DEPLOY_ACCOUNT_TXN": {
+                "title": "Deploy account transaction",
+                "description": "deploys a new account contract",
+                "oneOf": [
+                    {
+                        "title": "Deploy account V1",
+                        "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN_V1"
+                    },
+                    {
+                        "title": "Deploy account V3",
+                        "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN_V3"
+                    }
+                ]
+            },
+            "DEPLOY_ACCOUNT_TXN_V1": {
                 "title": "Deploy account transaction",
                 "description": "Deploys an account contract, charges fee from the pre-funded account addresses",
                 "properties": {
@@ -1970,6 +2218,101 @@
                     "contract_address_salt",
                     "constructor_calldata",
                     "class_hash"
+                ]
+            },
+            "DEPLOY_ACCOUNT_TXN_V3": {
+                "title": "Deploy account transaction",
+                "description": "Deploys an account contract, charges fee from the pre-funded account addresses",
+                "properties": {
+                    "type": {
+                        "title": "Deploy account",
+                        "type": "string",
+                        "enum": [
+                            "DEPLOY_ACCOUNT"
+                        ]
+                    },
+                    "max_fee": {
+                        "title": "Max fee",
+                        "$ref": "#/components/schemas/FELT",
+                        "description": "The maximal fee that can be charged for including the transaction"
+                    },
+                    "version": {
+                        "title": "Version",
+                        "description": "Version of the transaction scheme",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "signature": {
+                        "title": "Signature",
+                        "$ref": "#/components/schemas/SIGNATURE"
+                    },
+                    "nonce": {
+                        "title": "Nonce",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "contract_address_salt": {
+                        "title": "Contract address salt",
+                        "description": "The salt for the address of the deployed contract",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "constructor_calldata": {
+                        "type": "array",
+                        "description": "The parameters passed to the constructor",
+                        "title": "Constructor calldata",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        }
+                    },
+                    "class_hash": {
+                        "title": "Class hash",
+                        "description": "The hash of the deployed contract's class",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "l1_gas": {
+                        "title": "L1 Gas",
+                        "description": "The max amount and max price per unit of L1 gas used in this tx",
+                        "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                    },
+                    "l2_gas": {
+                        "title": "L2 Gas",
+                        "description": "The max amount and max price per unit of L2 gas used in this tx",
+                        "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                    },
+                    "tip": {
+                        "title": "Tip",
+                        "$ref": "#/components/schemas/FELT",
+                        "description": "the tip for the transaction"
+                    },
+                    "paymaster_address": {
+                        "title": "Paymaster",
+                        "$ref": "#/components/schemas/ADDRESS",
+                        "description": "the address of the paymaster that pays for the tx in native tokens, 0 if no paymaster is used"
+                    },
+                    "nonce_data_availability_mode": {
+                        "title": "Nonce DA mode",
+                        "description": "The storage domain of the account's nonce (an account has a nonce per DA mode)",
+                        "$ref": "#/components/schemas/DA_MODE"
+                    },
+                    "fee_data_availability_mode": {
+                        "title": "Fee DA mode",
+                        "description": "The storage domain of the account's balance from which fee will be charged",
+                        "$ref": "#/components/schemas/DA_MODE"
+                    }
+                },
+                "required": [
+                    "max_fee",
+                    "version",
+                    "signature",
+                    "nonce",
+                    "type",
+                    "contract_address_salt",
+                    "constructor_calldata",
+                    "class_hash",
+                    "l1_gas",
+                    "l2_gas",
+                    "tip",
+                    "paymaster_address",
+                    "nonce_data_availability_mode",
+                    "fee_data_availability_mode"
                 ]
             },
             "DEPLOY_TXN": {
@@ -2133,6 +2476,94 @@
                     }
                 ]
             },
+            "INVOKE_TXN_V3": {
+                "title": "Invoke transaction V3",
+                "description": "initiates a transaction from a given account",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "title": "Type",
+                                "type": "string",
+                                "enum": [
+                                    "INVOKE"
+                                ]
+                            },
+                            "sender_address": {
+                                "title": "sender address",
+                                "$ref": "#/components/schemas/ADDRESS"
+                            },
+                            "calldata": {
+                                "type": "array",
+                                "title": "calldata",
+                                "description": "The data expected by the account's `execute` function (in most usecases, this includes the called contract address and a function selector)",
+                                "items": {
+                                    "$ref": "#/components/schemas/FELT"
+                                }
+                            },
+                            "version": {
+                                "title": "Version",
+                                "description": "Version of the transaction scheme",
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                            },
+                            "signature": {
+                                "title": "Signature",
+                                "$ref": "#/components/schemas/SIGNATURE"
+                            },
+                            "nonce": {
+                                "title": "Nonce",
+                                "$ref": "#/components/schemas/FELT"
+                            },
+                            "l1_gas": {
+                                "title": "L1 Gas",
+                                "description": "The max amount and max price per unit of L1 gas used in this tx",
+                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                            },
+                            "l2_gas": {
+                                "title": "L2 Gas",
+                                "description": "The max amount and max price per unit of L2 gas used in this tx",
+                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                            },
+                            "tip": {
+                                "title": "Tip",
+                                "$ref": "#/components/schemas/FELT",
+                                "description": "the tip for the transaction"
+                            },
+                            "paymaster_address": {
+                                "title": "Paymaster",
+                                "$ref": "#/components/schemas/ADDRESS",
+                                "description": "the address of the paymaster that pays for the tx in native tokens, 0 if no paymaster is used"
+                            },
+                            "nonce_data_availability_mode": {
+                                "title": "Nonce DA mode",
+                                "description": "The storage domain of the account's nonce (an account has a nonce per DA mode)",
+                                "$ref": "#/components/schemas/DA_MODE"
+                            },
+                            "fee_data_availability_mode": {
+                                "title": "Fee DA mode",
+                                "description": "The storage domain of the account's balance from which fee will be charged",
+                                "$ref": "#/components/schemas/DA_MODE"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "sender_address",
+                            "calldata",
+                            "max_fee",
+                            "version",
+                            "signature",
+                            "nonce",
+                            "l1_gas",
+                            "l2_gas",
+                            "tip",
+                            "paymaster_address",
+                            "nonce_data_availability_mode",
+                            "fee_data_availability_mode"
+                        ]
+                    }
+                ]
+            },
             "INVOKE_TXN": {
                 "title": "Invoke transaction",
                 "description": "Initiate a transaction from an account",
@@ -2144,6 +2575,10 @@
                     {
                         "title": "Invoke transaction V1",
                         "$ref": "#/components/schemas/INVOKE_TXN_V1"
+                    },
+                    {
+                        "title": "Invoke transaction V3",
+                        "$ref": "#/components/schemas/INVOKE_TXN_V3"
                     }
                 ]
             },
@@ -2236,6 +2671,11 @@
                         "items": {
                             "$ref": "#/components/schemas/EVENT"
                         }
+                    },
+                    "execution_reources": {
+                        "title": "Execution resources",
+                        "description": "The resources consumed by the transaction",
+                        "$ref": "#/components/schemas/EXECUTION_RESOURCES"
                     }
                 },
                 "required": [
@@ -2274,6 +2714,31 @@
                     }
                 ]
             },
+            "PENDING_INVOKE_TXN_RECEIPT": {
+                "title": "Invoke Transaction Receipt",
+                "allOf": [
+                    {
+                        "title": "Type",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "title": "Type",
+                                "type": "string",
+                                "enum": [
+                                    "INVOKE"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    {
+                        "title": "Common receipt properties",
+                        "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
+                    }
+                ]
+            },
             "DECLARE_TXN_RECEIPT": {
                 "title": "Declare Transaction Receipt",
                 "allOf": [
@@ -2299,12 +2764,68 @@
                     }
                 ]
             },
+            "PENDING_DECLARE_TXN_RECEIPT": {
+                "title": "Declare Transaction Receipt",
+                "allOf": [
+                    {
+                        "title": "Declare txn receipt",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "title": "Declare",
+                                "type": "string",
+                                "enum": [
+                                    "DECLARE"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    {
+                        "title": "Common receipt properties",
+                        "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
+                    }
+                ]
+            },
             "DEPLOY_ACCOUNT_TXN_RECEIPT": {
                 "title": "Deploy Account Transaction Receipt",
                 "allOf": [
                     {
                         "title": "Common receipt properties",
                         "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
+                    },
+                    {
+                        "title": "DeployAccount txn receipt",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "title": "Deploy account",
+                                "type": "string",
+                                "enum": [
+                                    "DEPLOY_ACCOUNT"
+                                ]
+                            },
+                            "contract_address": {
+                                "title": "Contract address",
+                                "description": "The address of the deployed contract",
+                                "$ref": "#/components/schemas/FELT"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "contract_address"
+                        ]
+                    }
+                ]
+            },
+            "PENDING_DEPLOY_ACCOUNT_TXN_RECEIPT": {
+                "title": "Deploy Account Transaction Receipt",
+                "allOf": [
+                    {
+                        "title": "Common receipt properties",
+                        "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
                     },
                     {
                         "title": "DeployAccount txn receipt",
@@ -2375,15 +2896,53 @@
                                 "enum": [
                                     "L1_HANDLER"
                                 ]
+                            },
+                            "message_hash": {
+                                "title": "Message hash",
+                                "description": "The message hash as it appears on the L1 core contract",
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
                             }
                         },
                         "required": [
-                            "type"
+                            "type",
+                            "message_hash"
                         ]
                     },
                     {
                         "title": "Common receipt properties",
                         "$ref": "#/components/schemas/COMMON_RECEIPT_PROPERTIES"
+                    }
+                ]
+            },
+            "PENDING_L1_HANDLER_TXN_RECEIPT": {
+                "title": "L1 Handler Transaction Receipt",
+                "description": "receipt for l1 handler transaction",
+                "allOf": [
+                    {
+                        "title": "Transaction type",
+                        "type": "object",
+                        "properties": {
+                            "type": {
+                                "title": "type",
+                                "type": "string",
+                                "enum": [
+                                    "L1_HANDLER"
+                                ]
+                            },
+                            "message_hash": {
+                                "title": "Message hash",
+                                "description": "The message hash as it appears on the L1 core contract",
+                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                            }
+                        },
+                        "required": [
+                            "type",
+                            "message_hash"
+                        ]
+                    },
+                    {
+                        "title": "Common receipt properties",
+                        "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
                     }
                 ]
             },
@@ -2409,10 +2968,27 @@
                     {
                         "title": "Deploy account transaction receipt",
                         "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN_RECEIPT"
+                    }
+                ]
+            },
+            "PENDING_TXN_RECEIPT": {
+                "title": "Transaction Receipt",
+                "oneOf": [
+                    {
+                        "title": "Pending Invoke transaction receipt",
+                        "$ref": "#/components/schemas/PENDING_INVOKE_TXN_RECEIPT"
                     },
                     {
-                        "title": "Pending transaction receipt",
-                        "$ref": "#/components/schemas/PENDING_TXN_RECEIPT"
+                        "title": "Pending L1 handler transaction receipt",
+                        "$ref": "#/components/schemas/PENDING_L1_HANDLER_TXN_RECEIPT"
+                    },
+                    {
+                        "title": "Pending Declare transaction receipt",
+                        "$ref": "#/components/schemas/PENDING_DECLARE_TXN_RECEIPT"
+                    },
+                    {
+                        "title": "Pending Deploy account transaction receipt",
+                        "$ref": "#/components/schemas/PENDING_DEPLOY_ACCOUNT_TXN_RECEIPT"
                     }
                 ]
             },
@@ -2464,9 +3040,10 @@
                         ],
                         "description": "The finality status of the transaction"
                     },
-                    "execution_status": {
-                        "title": "Execution status",
-                        "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
+                    "execution_reources": {
+                        "title": "Execution resources",
+                        "description": "The resources consumed by the transaction",
+                        "$ref": "#/components/schemas/EXECUTION_RESOURCES"
                     }
                 },
                 "required": [
@@ -2477,40 +3054,6 @@
                     "events",
                     "finality_status",
                     "execution_status"
-                ]
-            },
-            "PENDING_DEPLOY_TXN_RECEIPT": {
-                "title": "Pending deploy Transaction Receipt",
-                "allOf": [
-                    {
-                        "title": "Common receipt properties",
-                        "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
-                    },
-                    {
-                        "type": "object",
-                        "title": "Contract address",
-                        "properties": {
-                            "contract_address": {
-                                "title": "Contract address",
-                                "description": "The address of the deployed contract",
-                                "$ref": "#/components/schemas/FELT"
-                            }
-                        }
-                    }
-                ]
-            },
-            "PENDING_TXN_RECEIPT": {
-                "title": "Pending Transaction Receipt",
-                "oneOf": [
-                    {
-                        "title": "Pending deploy transaction receipt",
-                        "$ref": "#/components/schemas/PENDING_DEPLOY_TXN_RECEIPT"
-                    },
-                    {
-                        "title": "Pending common receipt properties",
-                        "$comment": "Used for pending invoke and declare transaction receipts",
-                        "$ref": "#/components/schemas/PENDING_COMMON_RECEIPT_PROPERTIES"
-                    }
                 ]
             },
             "MSG_TO_L1": {
@@ -3018,6 +3561,96 @@
                     "gas_consumed",
                     "gas_price",
                     "overall_fee"
+                ]
+            },
+            "DA_MODE": {
+                "title": "DA mode",
+                "type": "string",
+                "description": "Specifies a storage domain in Starknet. Each domain has different gurantess regarding availability",
+                "enum": [
+                    "L1",
+                    "L2"
+                ]
+            },
+            "RESOURCE_LIMITS": {
+                "type": "object",
+                "properties": {
+                    "max_amount": {
+                        "title": "max amount",
+                        "description": "the max amount of the resource that can be used in the tx",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "max_price_per_unit": {
+                        "title": "max price",
+                        "description": "the max price per unit of this resource for this tx",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    }
+                },
+                "required": [
+                    "max_amount",
+                    "max_price_per_unit"
+                ]
+            },
+            "EXECUTION_RESOURCES": {
+                "title": "Execution resources",
+                "description": "The resources consumed by the transaction",
+                "type": "object",
+                "properties": {
+                    "steps": {
+                        "title": "Steps",
+                        "description": "The number of Cairo steps used",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "memory_holes": {
+                        "title": "Memory holes",
+                        "description": "The number of memory holes caused by the tx (a memory hole is a wasted memory cell, and is roughly equivalent to half a step)",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "range_check_builtin_applications": {
+                        "title": "Range check applications",
+                        "description": "The number of RANGE_CHECK builtin instances",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "pedersen_builtin_applications": {
+                        "title": "Pedersen applications",
+                        "description": "The number of Pedersen builtin instances",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "poseidon_builtin_applications": {
+                        "title": "Poseidon applications",
+                        "description": "The number of Poseidon builtin instances",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "ec_op_builtin_applications": {
+                        "title": "EC_OP applications",
+                        "description": "the number of EC_OP builtin instances",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "ecdsa_builtin_applications": {
+                        "title": "ECDSA applications",
+                        "description": "the number of ECDSA builtin instances",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "bitwise_builtin_applications": {
+                        "title": "BITWISE applications",
+                        "description": "the number of BITWISE builtin instances",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "keccak_builtin_applications": {
+                        "title": "Keccak applications",
+                        "description": "The number of KECCAK builtin instances",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    }
+                },
+                "required": [
+                    "steps",
+                    "range_check_builtin_applications",
+                    "pedersen_builtin_applications",
+                    "poseidon_builtin_applications",
+                    "ec_op_builtin_applications",
+                    "ecdsa_builtin_applications",
+                    "bitwise_builtin_applications",
+                    "keccak_builtin_applications"
                 ]
             }
         },
