@@ -57,20 +57,7 @@
                         "type": "array",
                         "description": "a sequence of transactions to simulate, running each transaction on the state resulting from applying all the previous ones",
                         "items": {
-                            "oneOf": [
-                                {
-                                    "title": "Declare transaction",
-                                    "$ref": "#/components/schemas/BROADCASTED_DECLARE_TXN"
-                                },
-                                {
-                                    "title": "Invoke transaction",
-                                    "$ref": "#/components/schemas/INVOKE_TXN"
-                                },
-                                {
-                                    "title": "Deploy account transaction",
-                                    "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN"
-                                }
-                            ]
+                            "$ref": "#/components/schemas/BROADCASTED_TXN"
                         }
                     }
                 },
@@ -346,17 +333,8 @@
             "FEE_ESTIMATE": {
                 "$ref": "./starknet_api_openrpc.json#/components/schemas/FEE_ESTIMATE"
             },
-            "INVOKE_TXN": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/INVOKE_TXN"
-            },
-            "DECLARE_TXN": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/DECLARE_TXN"
-            },
-            "BROADCASTED_DECLARE_TXN": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/BROADCASTED_DECLARE_TXN"
-            },
-            "DEPLOY_ACCOUNT_TXN": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/DEPLOY_ACCOUNT_TXN"
+            "BROADCASTED_TXN": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_TXN"
             }
         },
         "errors": {
