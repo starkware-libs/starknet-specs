@@ -1283,7 +1283,7 @@
                 "type": "object",
                 "properties": {
                     "transactions": {
-                        "title": "Transaction",
+                        "title": "Transaction hashes",
                         "description": "The hashes of the transactions included in this block",
                         "type": "array",
                         "items": {

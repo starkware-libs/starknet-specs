@@ -180,8 +180,21 @@
                             },
                             "fee_transfer_invocation": {
                                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "type": {
+                                "title": "Type",
+                                "type": "string",
+                                "enum": [
+                                    "INVOKE"
+                                ]
                             }
-                        }
+                        },
+                        "required": [
+                            "validate_invocation",
+                            "execute_invocation",
+                            "fee_transfer_invocation",
+                            "type"
+                        ]
                     },
                     {
                         "name": "DECLARE_TXN_TRACE",
@@ -193,8 +206,20 @@
                             },
                             "fee_transfer_invocation": {
                                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "type": {
+                                "title": "Type",
+                                "type": "string",
+                                "enum": [
+                                    "DECLARE"
+                                ]
                             }
-                        }
+                        },
+                        "required": [
+                            "validate_invocation",
+                            "fee_transfer_invocation",
+                            "type"
+                        ]
                     },
                     {
                         "name": "DEPLOY_ACCOUNT_TXN_TRACE",
@@ -210,8 +235,21 @@
                             },
                             "fee_transfer_invocation": {
                                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "type": {
+                                "title": "Type",
+                                "type": "string",
+                                "enum": [
+                                    "DEPLOY_ACCOUNT"
+                                ]
                             }
-                        }
+                        },
+                        "required": [
+                            "validate_invocation",
+                            "constructor_invocation",
+                            "fee_transfer_invocation",
+                            "type"
+                        ]
                     },
                     {
                         "name": "L1_HANDLER_TXN_TRACE",
@@ -221,8 +259,19 @@
                             "function_invocation": {
                                 "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
                                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "type": {
+                                "title": "Type",
+                                "type": "string",
+                                "enum": [
+                                    "L1_HANDLER"
+                                ]
                             }
-                        }
+                        },
+                        "required": [
+                            "function_invocation",
+                            "type"
+                        ]
                     }
                 ]
             },
