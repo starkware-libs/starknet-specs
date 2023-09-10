@@ -9,7 +9,7 @@
     "methods": [
         {
             "name": "starknet_specVersion",
-            "summary": "Returns the version of the Starknet JSON-RPC spec being used",
+            "summary": "Returns the version of the Starknet JSON-RPC specification being used",
             "params": [],
             "result": {
                 "name": "result",
@@ -1892,7 +1892,16 @@
             },
             "BROADCASTED_INVOKE_TXN": {
                 "title": "Broadcasted invoke transaction",
-                "$ref": "#/components/schemas/INVOKE_TXN"
+                "oneOf": [
+                    {
+                        "title": "Broadcasted invoke transaction V0",
+                        "$ref": "#/components/schemas/INVOKE_TXN_V0"
+                    },
+                    {
+                        "title": "Broadcasted invoke transaction V1",
+                        "$ref": "#/components/schemas/INVOKE_TXN_V1"
+                    }
+                ]
             },
             "BROADCASTED_DEPLOY_ACCOUNT_TXN": {
                 "title": "Broadcasted deploy account transaction",
@@ -3476,7 +3485,10 @@
                         "description": "the price of one unit of the given resource, denominated in wei",
                         "$ref": "#/components/schemas/NUM_AS_HEX"
                     }
-                }
+                },
+                "required": [
+                    "price_in_wei"
+                ]
             },
             "EXECUTION_RESOURCES": {
                 "title": "Execution resources",
@@ -3490,7 +3502,7 @@
                     },
                     "memory_holes": {
                         "title": "Memory holes",
-                        "description": "The number of memory holes caused by the tx (a memory hole is a wasted memory cell, and is roughly equivalent to half a step)",
+                        "description": "The number of unused memory cells (each cell is roughly equivalent to a step)",
                         "$ref": "#/components/schemas/NUM_AS_HEX"
                     },
                     "range_check_builtin_applications": {
