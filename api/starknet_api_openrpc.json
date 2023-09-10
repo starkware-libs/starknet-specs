@@ -1,12 +1,26 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.4.0",
+        "version": "0.5.0",
         "title": "StarkNet Node API",
         "license": {}
     },
     "servers": [],
     "methods": [
+        {
+            "name": "starknet_specVersion",
+            "summary": "Returns the version of the Starknet JSON-RPC spec being used",
+            "params": [],
+            "result": {
+                "name": "result",
+                "description": "Semver of Starknet's JSON-RPC spec being used",
+                "required": true,
+                "schema": {
+                    "title": "JSON-RPC spec version",
+                    "type": "string"
+                }
+            }
+        },
         {
             "name": "starknet_getBlockWithTxHashes",
             "summary": "Get block information with transaction hashes given the block id",
@@ -1383,7 +1397,9 @@
                     "block_number",
                     "new_root",
                     "timestamp",
-                    "sequencer_address"
+                    "sequencer_address",
+                    "l1_gas_price",
+                    "starknet_version"
                 ]
             },
             "BLOCK_WITH_TX_HASHES": {
@@ -1876,16 +1892,7 @@
             },
             "BROADCASTED_INVOKE_TXN": {
                 "title": "Broadcasted invoke transaction",
-                "oneOf": [
-                    {
-                        "title": "Broadcasted invoke transaction V1",
-                        "$ref": "#/components/schemas/INVOKE_TXN_V1"
-                    },
-                    {
-                        "title": "Broadcasted invoke transaction V3",
-                        "$ref": "#/components/schemas/INVOKE_TXN_V3"
-                    }
-                ]
+                "$ref": "#/components/schemas/INVOKE_TXN"
             },
             "BROADCASTED_DEPLOY_ACCOUNT_TXN": {
                 "title": "Broadcasted deploy account transaction",
