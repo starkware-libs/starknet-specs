@@ -1369,7 +1369,7 @@
                     "l1_gas_price": {
                         "title": "L1 gas price",
                         "descritpion": "The price of l1 gas in the block",
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                        "$ref": "#/components/schemas/RESOURCE_PRICE"
                     },
                     "starknet_version": {
                         "title": "Starknet version",
@@ -1796,12 +1796,12 @@
                 ]
             },
             "DECLARE_TXN_V3": {
-                "title": "Declare Transaction V2",
-                "description": "Declare Contract Transaction V2",
+                "title": "Declare Transaction V3",
+                "description": "Declare Contract Transaction V3",
                 "allOf": [
                     {
                         "type": "object",
-                        "title": "Declare txn v2",
+                        "title": "Declare txn v3",
                         "properties": {
                             "type": {
                                 "title": "Declare",
@@ -1820,17 +1820,12 @@
                                 "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
                                 "$ref": "#/components/schemas/FELT"
                             },
-                            "max_fee": {
-                                "title": "Max fee",
-                                "$ref": "#/components/schemas/FELT",
-                                "description": "The maximal fee that can be charged for including the transaction"
-                            },
                             "version": {
                                 "title": "Version",
                                 "description": "Version of the transaction scheme",
                                 "type": "string",
                                 "enum": [
-                                    "0x2"
+                                    "0x3"
                                 ]
                             },
                             "signature": {
@@ -1850,31 +1845,6 @@
                                 "title": "L1 Gas",
                                 "description": "The max amount and max price per unit of L1 gas used in this tx",
                                 "$ref": "#/components/schemas/RESOURCE_LIMITS"
-                            },
-                            "l2_gas": {
-                                "title": "L2 Gas",
-                                "description": "The max amount and max price per unit of L2 gas used in this tx",
-                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
-                            },
-                            "tip": {
-                                "title": "Tip",
-                                "$ref": "#/components/schemas/FELT",
-                                "description": "the tip for the transaction"
-                            },
-                            "paymaster_address": {
-                                "title": "Paymaster",
-                                "$ref": "#/components/schemas/ADDRESS",
-                                "description": "the address of the paymaster that pays for the tx in native tokens, 0 if no paymaster is used"
-                            },
-                            "nonce_data_availability_mode": {
-                                "title": "Nonce DA mode",
-                                "description": "The storage domain of the account's nonce (an account has a nonce per DA mode)",
-                                "$ref": "#/components/schemas/DA_MODE"
-                            },
-                            "fee_data_availability_mode": {
-                                "title": "Fee DA mode",
-                                "description": "The storage domain of the account's balance from which fee will be charged",
-                                "$ref": "#/components/schemas/DA_MODE"
                             }
                         },
                         "required": [
@@ -1886,12 +1856,7 @@
                             "signature",
                             "nonce",
                             "class_hash",
-                            "l1_gas",
-                            "l2_gas",
-                            "tip",
-                            "paymaster_address",
-                            "nonce_data_availability_mode",
-                            "fee_data_availability_mode"
+                            "l1_gas"
                         ]
                     }
                 ]
@@ -1917,7 +1882,7 @@
                         "$ref": "#/components/schemas/INVOKE_TXN_V1"
                     },
                     {
-                        "title": "Broadcasted invoke transaction V2",
+                        "title": "Broadcasted invoke transaction V3",
                         "$ref": "#/components/schemas/INVOKE_TXN_V3"
                     }
                 ]
@@ -2050,12 +2015,12 @@
                 ]
             },
             "BROADCASTED_DECLARE_TXN_V3": {
-                "title": "Broadcasted declare Transaction V2",
-                "description": "Broadcasted declare Contract Transaction V2",
+                "title": "Broadcasted declare Transaction V3",
+                "description": "Broadcasted declare Contract Transaction V3",
                 "allOf": [
                     {
                         "type": "object",
-                        "title": "Declare txn v2",
+                        "title": "Declare txn v3",
                         "properties": {
                             "type": {
                                 "title": "Declare",
@@ -2073,11 +2038,6 @@
                                 "title": "Compiled class hash",
                                 "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
                                 "$ref": "#/components/schemas/FELT"
-                            },
-                            "max_fee": {
-                                "title": "Max fee",
-                                "$ref": "#/components/schemas/FELT",
-                                "description": "The maximal fee that can be charged for including the transaction"
                             },
                             "version": {
                                 "title": "Version",
@@ -2101,31 +2061,6 @@
                                 "title": "L1 Gas",
                                 "description": "The max amount and max price per unit of L1 gas used in this tx",
                                 "$ref": "#/components/schemas/RESOURCE_LIMITS"
-                            },
-                            "l2_gas": {
-                                "title": "L2 Gas",
-                                "description": "The max amount and max price per unit of L2 gas used in this tx",
-                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
-                            },
-                            "tip": {
-                                "title": "Tip",
-                                "$ref": "#/components/schemas/FELT",
-                                "description": "the tip for the transaction"
-                            },
-                            "paymaster_address": {
-                                "title": "Paymaster",
-                                "$ref": "#/components/schemas/ADDRESS",
-                                "description": "the address of the paymaster that pays for the tx in native tokens, 0 if no paymaster is used"
-                            },
-                            "nonce_data_availability_mode": {
-                                "title": "Nonce DA mode",
-                                "description": "The storage domain of the account's nonce (an account has a nonce per DA mode)",
-                                "$ref": "#/components/schemas/DA_MODE"
-                            },
-                            "fee_data_availability_mode": {
-                                "title": "Fee DA mode",
-                                "description": "The storage domain of the account's balance from which fee will be charged",
-                                "$ref": "#/components/schemas/DA_MODE"
                             }
                         },
                         "required": [
@@ -2137,12 +2072,7 @@
                             "signature",
                             "nonce",
                             "contract_class",
-                            "l1_gas",
-                            "l2_gas",
-                            "tip",
-                            "paymaster_address",
-                            "nonce_data_availability_mode",
-                            "fee_data_availability_mode"
+                            "l1_gas"
                         ]
                     }
                 ]
@@ -2231,11 +2161,6 @@
                             "DEPLOY_ACCOUNT"
                         ]
                     },
-                    "max_fee": {
-                        "title": "Max fee",
-                        "$ref": "#/components/schemas/FELT",
-                        "description": "The maximal fee that can be charged for including the transaction"
-                    },
                     "version": {
                         "title": "Version",
                         "description": "Version of the transaction scheme",
@@ -2271,31 +2196,6 @@
                         "title": "L1 Gas",
                         "description": "The max amount and max price per unit of L1 gas used in this tx",
                         "$ref": "#/components/schemas/RESOURCE_LIMITS"
-                    },
-                    "l2_gas": {
-                        "title": "L2 Gas",
-                        "description": "The max amount and max price per unit of L2 gas used in this tx",
-                        "$ref": "#/components/schemas/RESOURCE_LIMITS"
-                    },
-                    "tip": {
-                        "title": "Tip",
-                        "$ref": "#/components/schemas/FELT",
-                        "description": "the tip for the transaction"
-                    },
-                    "paymaster_address": {
-                        "title": "Paymaster",
-                        "$ref": "#/components/schemas/ADDRESS",
-                        "description": "the address of the paymaster that pays for the tx in native tokens, 0 if no paymaster is used"
-                    },
-                    "nonce_data_availability_mode": {
-                        "title": "Nonce DA mode",
-                        "description": "The storage domain of the account's nonce (an account has a nonce per DA mode)",
-                        "$ref": "#/components/schemas/DA_MODE"
-                    },
-                    "fee_data_availability_mode": {
-                        "title": "Fee DA mode",
-                        "description": "The storage domain of the account's balance from which fee will be charged",
-                        "$ref": "#/components/schemas/DA_MODE"
                     }
                 },
                 "required": [
@@ -2307,12 +2207,7 @@
                     "contract_address_salt",
                     "constructor_calldata",
                     "class_hash",
-                    "l1_gas",
-                    "l2_gas",
-                    "tip",
-                    "paymaster_address",
-                    "nonce_data_availability_mode",
-                    "fee_data_availability_mode"
+                    "l1_gas"
                 ]
             },
             "DEPLOY_TXN": {
@@ -2519,31 +2414,6 @@
                                 "title": "L1 Gas",
                                 "description": "The max amount and max price per unit of L1 gas used in this tx",
                                 "$ref": "#/components/schemas/RESOURCE_LIMITS"
-                            },
-                            "l2_gas": {
-                                "title": "L2 Gas",
-                                "description": "The max amount and max price per unit of L2 gas used in this tx",
-                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
-                            },
-                            "tip": {
-                                "title": "Tip",
-                                "$ref": "#/components/schemas/FELT",
-                                "description": "the tip for the transaction"
-                            },
-                            "paymaster_address": {
-                                "title": "Paymaster",
-                                "$ref": "#/components/schemas/ADDRESS",
-                                "description": "the address of the paymaster that pays for the tx in native tokens, 0 if no paymaster is used"
-                            },
-                            "nonce_data_availability_mode": {
-                                "title": "Nonce DA mode",
-                                "description": "The storage domain of the account's nonce (an account has a nonce per DA mode)",
-                                "$ref": "#/components/schemas/DA_MODE"
-                            },
-                            "fee_data_availability_mode": {
-                                "title": "Fee DA mode",
-                                "description": "The storage domain of the account's balance from which fee will be charged",
-                                "$ref": "#/components/schemas/DA_MODE"
                             }
                         },
                         "required": [
@@ -2554,12 +2424,7 @@
                             "version",
                             "signature",
                             "nonce",
-                            "l1_gas",
-                            "l2_gas",
-                            "tip",
-                            "paymaster_address",
-                            "nonce_data_availability_mode",
-                            "fee_data_availability_mode"
+                            "l1_gas"
                         ]
                     }
                 ]
@@ -3590,6 +3455,21 @@
                     "max_amount",
                     "max_price_per_unit"
                 ]
+            },
+            "RESOURCE_PRICE": {
+                "type": "object",
+                "properties": {
+                    "price_in_strk": {
+                        "title": "price in strk",
+                        "description": "the price of one unit of the given resource, denominated in strk",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "price_in_wei": {
+                        "title": "price in wei",
+                        "description": "the price of one unit of the given resource, denominated in wei",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                    }
+                }
             },
             "EXECUTION_RESOURCES": {
                 "title": "Execution resources",

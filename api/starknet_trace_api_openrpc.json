@@ -113,11 +113,11 @@
             "description": "Returns the execution traces of all transactions included in the given block",
             "params": [
                 {
-                    "name": "block_hash",
-                    "summary": "The hash of the requested block",
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 }
             ],
@@ -372,9 +372,6 @@
             },
             "MSG_TO_L1": {
                 "$ref": "./starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
-            },
-            "BLOCK_HASH": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
             },
             "BLOCK_ID": {
                 "$ref": "./starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
