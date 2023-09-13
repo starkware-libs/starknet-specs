@@ -3004,7 +3004,8 @@
                 "type": "string",
                 "enum": [
                     "ACCEPTED_ON_L2",
-                    "ACCEPTED_ON_L1"
+                    "ACCEPTED_ON_L1",
+                    "RECEIVED"
                 ],
                 "description": "The finality status of the transaction"
             },
@@ -3013,7 +3014,8 @@
                 "type": "string",
                 "enum": [
                     "SUCCEEDED",
-                    "REVERTED"
+                    "REVERTED",
+                    "REJECTED"
                 ],
                 "description": "The execution status of the transaction"
             },
