@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.4.0",
+        "version": "0.5.0",
         "title": "StarkNet Trace API",
         "license": {}
     },
@@ -113,11 +113,11 @@
             "description": "Returns the execution traces of all transactions included in the given block",
             "params": [
                 {
-                    "name": "block_hash",
-                    "summary": "The hash of the requested block",
+                    "name": "block_id",
+                    "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
                     "required": true,
                     "schema": {
-                        "$ref": "#/components/schemas/BLOCK_HASH"
+                        "$ref": "#/components/schemas/BLOCK_ID"
                     }
                 }
             ],
@@ -180,8 +180,21 @@
                             },
                             "fee_transfer_invocation": {
                                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "type": {
+                                "title": "Type",
+                                "type": "string",
+                                "enum": [
+                                    "INVOKE"
+                                ]
                             }
-                        }
+                        },
+                        "required": [
+                            "validate_invocation",
+                            "execute_invocation",
+                            "fee_transfer_invocation",
+                            "type"
+                        ]
                     },
                     {
                         "name": "DECLARE_TXN_TRACE",
@@ -193,8 +206,20 @@
                             },
                             "fee_transfer_invocation": {
                                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "type": {
+                                "title": "Type",
+                                "type": "string",
+                                "enum": [
+                                    "DECLARE"
+                                ]
                             }
-                        }
+                        },
+                        "required": [
+                            "validate_invocation",
+                            "fee_transfer_invocation",
+                            "type"
+                        ]
                     },
                     {
                         "name": "DEPLOY_ACCOUNT_TXN_TRACE",
@@ -210,8 +235,21 @@
                             },
                             "fee_transfer_invocation": {
                                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "type": {
+                                "title": "Type",
+                                "type": "string",
+                                "enum": [
+                                    "DEPLOY_ACCOUNT"
+                                ]
                             }
-                        }
+                        },
+                        "required": [
+                            "validate_invocation",
+                            "constructor_invocation",
+                            "fee_transfer_invocation",
+                            "type"
+                        ]
                     },
                     {
                         "name": "L1_HANDLER_TXN_TRACE",
@@ -221,8 +259,19 @@
                             "function_invocation": {
                                 "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
                                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                            },
+                            "type": {
+                                "title": "Type",
+                                "type": "string",
+                                "enum": [
+                                    "L1_HANDLER"
+                                ]
                             }
-                        }
+                        },
+                        "required": [
+                            "function_invocation",
+                            "type"
+                        ]
                     }
                 ]
             },
@@ -282,7 +331,12 @@
                                 "description": "The events emitted in this invocation",
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/EVENT"
+                                    "allOf": [
+                                        {},
+                                        {
+                                            "$ref": "#/components/schemas/EVENT"
+                                        }
+                                    ]
                                 }
                             },
                             "messages": {
@@ -293,7 +347,17 @@
                                     "$ref": "#/components/schemas/MSG_TO_L1"
                                 }
                             }
-                        }
+                        },
+                        "required": [
+                            "caller_address",
+                            "class_hash",
+                            "entry_point_type",
+                            "call_type",
+                            "result",
+                            "calls",
+                            "events",
+                            "messages"
+                        ]
                     }
                 ]
             },
@@ -312,6 +376,46 @@
                     "CALL"
                 ]
             },
+            "ORDERED_EVENT": {
+                "type": "object",
+                "title": "orderedEvent",
+                "description": "an event alongside its order within the transaction",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "order": {
+                                "title": "order",
+                                "description": "the order of the event within the transaction",
+                                "type": "number"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/EVENT"
+                    }
+                ]
+            },
+            "ORDERED_MESSAGE": {
+                "type": "object",
+                "title": "orderedMessage",
+                "description": "a message alongside its order within the transaction",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "order": {
+                                "title": "order",
+                                "description": "the order of the message within the transaction",
+                                "type": "number"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/MSG_TO_L1"
+                    }
+                ]
+            },
             "FELT": {
                 "$ref": "./starknet_api_openrpc.json#/components/schemas/FELT"
             },
@@ -323,9 +427,6 @@
             },
             "MSG_TO_L1": {
                 "$ref": "./starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
-            },
-            "BLOCK_HASH": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
             },
             "BLOCK_ID": {
                 "$ref": "./starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
