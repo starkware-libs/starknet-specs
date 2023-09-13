@@ -2553,7 +2553,7 @@
                             "$ref": "#/components/schemas/EVENT"
                         }
                     },
-                    "execution_reources": {
+                    "execution_resources": {
                         "title": "Execution resources",
                         "description": "The resources consumed by the transaction",
                         "$ref": "#/components/schemas/EXECUTION_RESOURCES"
