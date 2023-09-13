@@ -331,7 +331,12 @@
                                 "description": "The events emitted in this invocation",
                                 "type": "array",
                                 "items": {
-                                    "$ref": "#/components/schemas/EVENT"
+                                    "allOf": [
+                                        {},
+                                        {
+                                            "$ref": "#/components/schemas/EVENT"
+                                        }
+                                    ]
                                 }
                             },
                             "messages": {
@@ -342,7 +347,17 @@
                                     "$ref": "#/components/schemas/MSG_TO_L1"
                                 }
                             }
-                        }
+                        },
+                        "required": [
+                            "caller_address",
+                            "class_hash",
+                            "entry_point_type",
+                            "call_type",
+                            "result",
+                            "calls",
+                            "events",
+                            "messages"
+                        ]
                     }
                 ]
             },
@@ -359,6 +374,46 @@
                 "enum": [
                     "LIBRARY_CALL",
                     "CALL"
+                ]
+            },
+            "ORDERED_EVENT": {
+                "type": "object",
+                "title": "orderedEvent",
+                "description": "an event alongside its order within the transaction",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "order": {
+                                "title": "order",
+                                "description": "the order of the event within the transaction",
+                                "type": "number"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/EVENT"
+                    }
+                ]
+            },
+            "ORDERED_MESSAGE": {
+                "type": "object",
+                "title": "orderedMessage",
+                "description": "a message alongside its order within the transaction",
+                "allOf": [
+                    {
+                        "type": "object",
+                        "properties": {
+                            "order": {
+                                "title": "order",
+                                "description": "the order of the message within the transaction",
+                                "type": "number"
+                            }
+                        }
+                    },
+                    {
+                        "$ref": "#/components/schemas/MSG_TO_L1"
+                    }
                 ]
             },
             "FELT": {
