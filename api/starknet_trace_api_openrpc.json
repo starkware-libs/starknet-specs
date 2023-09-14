@@ -104,6 +104,9 @@
                 },
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/SERVER_NOT_SYNCED"
                 }
             ]
         },
@@ -142,7 +145,13 @@
             },
             "errors": [
                 {
+                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                },
+                {
                     "$ref": "#/components/errors/INVALID_BLOCK_HASH"
+                },
+                {
+                    "$ref": "#/components/errors/SERVER_NOT_SYNCED"
                 }
             ]
         }
@@ -471,6 +480,10 @@
             "INVALID_BLOCK_HASH": {
                 "code": 26,
                 "message": "Invalid block hash"
+            },
+            "SERVER_NOT_SYNCED": {
+                "code": 35,
+                "message": "Server is not synchronized"
             },
             "CONTRACT_ERROR": {
                 "code": 40,
