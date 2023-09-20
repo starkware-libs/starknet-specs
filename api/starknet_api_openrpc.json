@@ -185,6 +185,47 @@
             ]
         },
         {
+            "name": "starknet_getTransactionStatus",
+            "summary": "Gets the transaction status (possibly reflecting that the tx is still in the mempool, or dropped from it)",
+            "paramStructure": "by-name",
+            "params": [
+                {
+                    "name": "transaction_hash",
+                    "summary": "The hash of the requested transaction",
+                    "required": true,
+                    "schema": {
+                        "title": "Transaction hash",
+                        "$ref": "#/components/schemas/TXN_HASH"
+                    }
+                }
+            ],
+            "result": {
+                "name": "result",
+                "schema": {
+                    "title": "Transaction status",
+                    "type": "object",
+                    "properties": {
+                        "finality_status": {
+                            "title": "finality status",
+                            "$ref": "#/components/schemas/TXN_STATUS"
+                        },
+                        "execution_status": {
+                            "title": "execution status",
+                            "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
+                        }
+                    },
+                    "required": [
+                        "finality_status"
+                    ]
+                }
+            },
+            "errors": [
+                {
+                    "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
+                }
+            ]
+        },
+        {
             "name": "starknet_getTransactionByHash",
             "summary": "Get the details and status of a submitted transaction",
             "paramStructure": "by-name",
@@ -692,37 +733,6 @@
                 "schema": {
                     "title": "Chain id",
                     "$ref": "#/components/schemas/CHAIN_ID"
-                }
-            }
-        },
-        {
-            "name": "starknet_pendingTransactions",
-            "summary": "Returns the transactions in the transaction pool, recognized by this sequencer",
-            "params": [],
-            "result": {
-                "name": "result",
-                "schema": {
-                    "type": "array",
-                    "title": "Pending Transactions",
-                    "items": {
-                        "allOf": [
-                            {
-                                "$ref": "#/components/schemas/TXN"
-                            },
-                            {
-                                "type": "object",
-                                "properties": {
-                                    "transaction_hash": {
-                                        "title": "transaction hash",
-                                        "$ref": "#/components/schemas/TXN_HASH"
-                                    }
-                                },
-                                "required": [
-                                    "transaction_hash"
-                                ]
-                            }
-                        ]
-                    }
                 }
             }
         },
@@ -2567,7 +2577,8 @@
                     "block_hash",
                     "block_number",
                     "messages_sent",
-                    "events"
+                    "events",
+                    "execution_resources"
                 ]
             },
             "INVOKE_TXN_RECEIPT": {
@@ -2921,7 +2932,11 @@
                         ],
                         "description": "The finality status of the transaction"
                     },
-                    "execution_reources": {
+                    "execution_status": {
+                        "title": "Execution status",
+                        "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
+                    },
+                    "execution_resources": {
                         "title": "Execution resources",
                         "description": "The resources consumed by the transaction",
                         "$ref": "#/components/schemas/EXECUTION_RESOURCES"
@@ -2934,7 +2949,8 @@
                     "messages_sent",
                     "events",
                     "finality_status",
-                    "execution_status"
+                    "execution_status",
+                    "execution_resources"
                 ]
             },
             "MSG_TO_L1": {
@@ -2998,6 +3014,17 @@
                     "payload",
                     "entry_point_selector"
                 ]
+            },
+            "TXN_STATUS": {
+                "title": "Transaction status",
+                "type": "string",
+                "enum": [
+                    "RECEIVED",
+                    "REJECTED",
+                    "ACCEPTED_ON_L2",
+                    "ACCEPTED_ON_L1"
+                ],
+                "description": "The finality status of the transaction, including the case the txn is still in the mempool or failed validation during the block construction phase"
             },
             "TXN_FINALITY_STATUS": {
                 "title": "Finality status",
