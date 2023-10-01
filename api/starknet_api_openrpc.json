@@ -1874,6 +1874,11 @@
                                     "DECLARE"
                                 ]
                             },
+                            "sender_address": {
+                                "title": "Sender address",
+                                "description": "The address of the account contract sending the declaration transaction",
+                                "$ref": "#/components/schemas/ADDRESS"
+                            },
                             "max_fee": {
                                 "title": "Max fee",
                                 "$ref": "#/components/schemas/FELT",
@@ -1888,6 +1893,10 @@
                                 "title": "Signature",
                                 "$ref": "#/components/schemas/SIGNATURE"
                             },
+                            "nonce": {
+                                "title": "Nonce",
+                                "$ref": "#/components/schemas/FELT"
+                            },
                             "contract_class": {
                                 "title": "Contract class",
                                 "description": "The class to be declared",
@@ -1896,9 +1905,11 @@
                         },
                         "required": [
                             "type",
+                            "sender_address",
                             "max_fee",
                             "version",
                             "signature",
+                            "nonce",
                             "contract_class"
                         ]
                     }
