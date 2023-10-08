@@ -1231,7 +1231,8 @@
                 "required": [
                     "old_root",
                     "state_diff"
-                ]
+                ],
+                "additionalProperties": false
             },
             "STATE_UPDATE": {
                 "title": "State update",
