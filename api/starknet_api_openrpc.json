@@ -1417,10 +1417,6 @@
                 "title": "Pending block header",
                 "type": "object",
                 "properties": {
-                    "block_hash": {
-                        "title": "Block hash",
-                        "$ref": "#/components/schemas/BLOCK_HASH"
-                    },
                     "parent_hash": {
                         "title": "Parent hash",
                         "description": "The hash of this block's parent",
@@ -1449,7 +1445,6 @@
                     }
                 },
                 "required": [
-                    "block_hash",
                     "parent_hash",
                     "timestamp",
                     "sequencer_address",
