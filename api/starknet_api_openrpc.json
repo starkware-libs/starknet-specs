@@ -1413,6 +1413,51 @@
                     "starknet_version"
                 ]
             },
+            "PENDING_BLOCK_HEADER": {
+                "title": "Pending block header",
+                "type": "object",
+                "properties": {
+                    "block_hash": {
+                        "title": "Block hash",
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    },
+                    "parent_hash": {
+                        "title": "Parent hash",
+                        "description": "The hash of this block's parent",
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    },
+                    "timestamp": {
+                        "title": "Timestamp",
+                        "description": "The time in which the block was created, encoded in Unix time",
+                        "type": "integer",
+                        "minimum": 0
+                    },
+                    "sequencer_address": {
+                        "title": "Sequencer address",
+                        "description": "The StarkNet identity of the sequencer submitting this block",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "l1_gas_price": {
+                        "title": "L1 gas price",
+                        "descritpion": "The price of l1 gas in the block",
+                        "$ref": "#/components/schemas/RESOURCE_PRICE"
+                    },
+                    "starknet_version": {
+                        "title": "Starknet version",
+                        "description": "Semver of the current Starknet protocol",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "block_hash",
+                    "parent_hash",
+                    "timestamp",
+                    "sequencer_address",
+                    "l1_gas_price",
+                    "starknet_version"
+                ],
+                "additionalProperties": false
+            },
             "BLOCK_WITH_TX_HASHES": {
                 "title": "Block with transaction hashes",
                 "description": "The block object",
@@ -1477,25 +1522,7 @@
                     },
                     {
                         "title": "Pending block header",
-                        "type": "object",
-                        "properties": {
-                            "timestamp": {
-                                "title": "Timestamp",
-                                "description": "The time in which the block was created, encoded in Unix time",
-                                "type": "integer",
-                                "minimum": 0
-                            },
-                            "sequencer_address": {
-                                "title": "Sequencer address",
-                                "description": "The StarkNet identity of the sequencer submitting this block",
-                                "$ref": "#/components/schemas/FELT"
-                            },
-                            "parent_hash": {
-                                "title": "Parent hash",
-                                "description": "The hash of this block's parent",
-                                "$ref": "#/components/schemas/BLOCK_HASH"
-                            }
-                        }
+                        "$ref": "#/components/schemas/PENDING_BLOCK_HEADER"
                     }
                 ],
                 "additionalProperties": false
@@ -1509,26 +1536,8 @@
                         "$ref": "#/components/schemas/BLOCK_BODY_WITH_TXS"
                     },
                     {
-                        "type": "object",
-                        "title": "Block Info",
-                        "properties": {
-                            "timestamp": {
-                                "title": "Timestamp",
-                                "description": "The time in which the block was created, encoded in Unix time",
-                                "type": "integer",
-                                "minimum": 0
-                            },
-                            "sequencer_address": {
-                                "title": "Sequencer address",
-                                "description": "The StarkNet identity of the sequencer submitting this block",
-                                "$ref": "#/components/schemas/FELT"
-                            },
-                            "parent_hash": {
-                                "title": "Parent hash",
-                                "description": "The hash of this block's parent",
-                                "$ref": "#/components/schemas/BLOCK_HASH"
-                            }
-                        }
+                        "title": "Pending block header",
+                        "$ref": "#/components/schemas/PENDING_BLOCK_HEADER"
                     }
                 ],
                 "additionalProperties": false
