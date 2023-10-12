@@ -3205,17 +3205,17 @@
                     "gas_consumed": {
                         "title": "Gas consumed",
                         "description": "The Ethereum gas cost of the transaction (see https://docs.starknet.io/docs/Fees/fee-mechanism for more info)",
-                        "type": "integer"
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
                     },
                     "gas_price": {
                         "title": "Gas price",
                         "description": "The gas price (in gwei) that was used in the cost estimation",
-                        "type": "integer"
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
                     },
                     "overall_fee": {
                         "title": "Overall fee",
                         "description": "The estimated fee for the transaction (in gwei), product of gas_consumed and gas_price",
-                        "type": "integer"
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
                     }
                 },
                 "required": [
@@ -3239,12 +3239,12 @@
                     "max_amount": {
                         "title": "max amount",
                         "description": "the max amount of the resource that can be used in the tx",
-                        "type": "integer"
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
                     },
                     "max_price_per_unit": {
                         "title": "max price",
                         "description": "the max price per unit of this resource for this tx",
-                        "type": "integer"
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
                     }
                 },
                 "required": [
@@ -3258,12 +3258,12 @@
                     "price_in_strk": {
                         "title": "price in strk",
                         "description": "the price of one unit of the given resource, denominated in strk",
-                        "type": "integer"
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
                     },
                     "price_in_wei": {
                         "title": "price in wei",
                         "description": "the price of one unit of the given resource, denominated in wei",
-                        "type": "integer"
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
                     }
                 },
                 "required": [
