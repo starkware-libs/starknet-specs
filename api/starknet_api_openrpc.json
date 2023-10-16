@@ -1072,12 +1072,12 @@
                     },
                     "current_block_hash": {
                         "title": "Current block hash",
-                        "description": "The hash of the current block being synchronized",
+                        "description": "The hash of the most advanced block that's synchronized",
                         "$ref": "#/components/schemas/BLOCK_HASH"
                     },
                     "current_block_num": {
                         "title": "Current block number",
-                        "description": "The number (height) of the current block being synchronized",
+                        "description": "The number (height) of the most advanced block that's synchronized",
                         "$ref": "#/components/schemas/BLOCK_NUMBER"
                     },
                     "highest_block_hash": {
