@@ -400,7 +400,7 @@
                             "order": {
                                 "title": "order",
                                 "description": "the order of the event within the transaction",
-                                "type": "number"
+                                "type": "integer"
                             }
                         }
                     },
@@ -420,7 +420,7 @@
                             "order": {
                                 "title": "order",
                                 "description": "the order of the message within the transaction",
-                                "type": "number"
+                                "type": "integer"
                             }
                         }
                     },

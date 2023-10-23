@@ -1882,7 +1882,6 @@
                             "type",
                             "sender_address",
                             "compiled_class_hash",
-                            "max_fee",
                             "version",
                             "signature",
                             "nonce",
@@ -2100,7 +2099,6 @@
                             "type",
                             "sender_address",
                             "compiled_class_hash",
-                            "max_fee",
                             "version",
                             "signature",
                             "nonce",
@@ -2232,7 +2230,6 @@
                     }
                 },
                 "required": [
-                    "max_fee",
                     "version",
                     "signature",
                     "nonce",
@@ -2453,7 +2450,6 @@
                             "type",
                             "sender_address",
                             "calldata",
-                            "max_fee",
                             "version",
                             "signature",
                             "nonce",
@@ -2906,10 +2902,6 @@
                         "$ref": "#/components/schemas/FELT",
                         "description": "The fee that was charged by the sequencer"
                     },
-                    "type": {
-                        "title": "Transaction type",
-                        "$ref": "#/components/schemas/TXN_TYPE"
-                    },
                     "messages_sent": {
                         "type": "array",
                         "title": "Messages sent",
@@ -2952,7 +2944,6 @@
                 "required": [
                     "transaction_hash",
                     "actual_fee",
-                    "type",
                     "messages_sent",
                     "events",
                     "finality_status",
