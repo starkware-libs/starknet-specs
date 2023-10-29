@@ -1411,46 +1411,6 @@
                     "starknet_version"
                 ]
             },
-            "PENDING_BLOCK_HEADER": {
-                "title": "Pending block header",
-                "type": "object",
-                "properties": {
-                    "parent_hash": {
-                        "title": "Parent hash",
-                        "description": "The hash of this block's parent",
-                        "$ref": "#/components/schemas/BLOCK_HASH"
-                    },
-                    "timestamp": {
-                        "title": "Timestamp",
-                        "description": "The time in which the block was created, encoded in Unix time",
-                        "type": "integer",
-                        "minimum": 0
-                    },
-                    "sequencer_address": {
-                        "title": "Sequencer address",
-                        "description": "The StarkNet identity of the sequencer submitting this block",
-                        "$ref": "#/components/schemas/FELT"
-                    },
-                    "l1_gas_price": {
-                        "title": "L1 gas price",
-                        "descritpion": "The price of l1 gas in the block",
-                        "$ref": "#/components/schemas/RESOURCE_PRICE"
-                    },
-                    "starknet_version": {
-                        "title": "Starknet version",
-                        "description": "Semver of the current Starknet protocol",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "parent_hash",
-                    "timestamp",
-                    "sequencer_address",
-                    "l1_gas_price",
-                    "starknet_version"
-                ],
-                "additionalProperties": false
-            },
             "BLOCK_WITH_TX_HASHES": {
                 "title": "Block with transaction hashes",
                 "description": "The block object",
@@ -1508,31 +1468,103 @@
             "PENDING_BLOCK_WITH_TX_HASHES": {
                 "title": "Pending block with transaction hashes",
                 "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
-                "allOf": [
-                    {
-                        "title": "Block body with transactions hashes",
-                        "$ref": "#/components/schemas/BLOCK_BODY_WITH_TX_HASHES"
+                "properties": {
+                    "timestamp": {
+                        "title": "Timestamp",
+                        "description": "The time in which the block was created, encoded in Unix time",
+                        "type": "integer",
+                        "minimum": 0
                     },
-                    {
-                        "title": "Pending block header",
-                        "$ref": "#/components/schemas/PENDING_BLOCK_HEADER"
+                    "sequencer_address": {
+                        "title": "Sequencer address",
+                        "description": "The StarkNet identity of the sequencer submitting this block",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "parent_hash": {
+                        "title": "Parent hash",
+                        "description": "The hash of this block's parent",
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    },
+                    "l1_gas_price": {
+                        "title": "L1 gas price",
+                        "descritpion": "The price of l1 gas in the block",
+                        "$ref": "#/components/schemas/RESOURCE_PRICE"
+                    },
+                    "starknet_version": {
+                        "title": "Starknet version",
+                        "description": "Semver of the current Starknet protocol",
+                        "type": "string"
+                    },
+                    "transactions": {
+                        "title": "Transaction",
+                        "description": "The hashes of the transactions included in this block",
+                        "type": "array",
+                        "items": {
+                            "description": "The hash of a single transaction",
+                            "$ref": "#/components/schemas/TXN_HASH"
+                        }
                     }
-                ],
+                },
                 "additionalProperties": false
             },
             "PENDING_BLOCK_WITH_TXS": {
                 "title": "Pending block with transactions",
                 "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
-                "allOf": [
-                    {
-                        "title": "Block body with transactions",
-                        "$ref": "#/components/schemas/BLOCK_BODY_WITH_TXS"
+                "properties": {
+                    "timestamp": {
+                        "title": "Timestamp",
+                        "description": "The time in which the block was created, encoded in Unix time",
+                        "type": "integer",
+                        "minimum": 0
                     },
-                    {
-                        "title": "Pending block header",
-                        "$ref": "#/components/schemas/PENDING_BLOCK_HEADER"
+                    "sequencer_address": {
+                        "title": "Sequencer address",
+                        "description": "The StarkNet identity of the sequencer submitting this block",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "parent_hash": {
+                        "title": "Parent hash",
+                        "description": "The hash of this block's parent",
+                        "$ref": "#/components/schemas/BLOCK_HASH"
+                    },
+                    "l1_gas_price": {
+                        "title": "L1 gas price",
+                        "descritpion": "The price of l1 gas in the block",
+                        "$ref": "#/components/schemas/RESOURCE_PRICE"
+                    },
+                    "starknet_version": {
+                        "title": "Starknet version",
+                        "description": "Semver of the current Starknet protocol",
+                        "type": "string"
+                    },
+                    "transactions": {
+                        "title": "Transactions",
+                        "description": "The transactions in this block",
+                        "type": "array",
+                        "items": {
+                            "title": "transactions in block",
+                            "type": "object",
+                            "allOf": [
+                                {
+                                    "title": "transaction",
+                                    "$ref": "#/components/schemas/TXN"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "transaction_hash": {
+                                            "title": "transaction hash",
+                                            "$ref": "#/components/schemas/TXN_HASH"
+                                        }
+                                    },
+                                    "required": [
+                                        "transaction_hash"
+                                    ]
+                                }
+                            ]
+                        }
                     }
-                ],
+                },
                 "additionalProperties": false
             },
             "DEPLOYED_CONTRACT_ITEM": {
