@@ -1449,7 +1449,13 @@
                     "l1_gas_price",
                     "starknet_version"
                 ],
-                "additionalProperties": false
+                "not": {
+                    "required": [
+                        "block_hash",
+                        "block_number",
+                        "new_root"
+                    ]
+                }
             },
             "BLOCK_WITH_TX_HASHES": {
                 "title": "Block with transaction hashes",
@@ -1517,8 +1523,7 @@
                         "title": "Pending block header",
                         "$ref": "#/components/schemas/PENDING_BLOCK_HEADER"
                     }
-                ],
-                "additionalProperties": false
+                ]
             },
             "PENDING_BLOCK_WITH_TXS": {
                 "title": "Pending block with transactions",
@@ -1532,8 +1537,7 @@
                         "title": "Pending block header",
                         "$ref": "#/components/schemas/PENDING_BLOCK_HEADER"
                     }
-                ],
-                "additionalProperties": false
+                ]
             },
             "DEPLOYED_CONTRACT_ITEM": {
                 "title": "Deployed contract item",
