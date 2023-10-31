@@ -1894,6 +1894,7 @@
                             "version": {
                                 "title": "Version",
                                 "description": "Version of the transaction scheme",
+                                "$comment": "For estimateFee, add 2**128 to the version",
                                 "$ref": "#/components/schemas/NUM_AS_HEX"
                             },
                             "signature": {
@@ -1955,6 +1956,8 @@
                             "version": {
                                 "title": "Version",
                                 "description": "Version of the transaction scheme",
+                                "$comment": "For estimateFee, add 2**128 to the version",
+
                                 "$ref": "#/components/schemas/NUM_AS_HEX"
                             },
                             "signature": {
@@ -2013,6 +2016,7 @@
                     "version": {
                         "title": "Version",
                         "description": "Version of the transaction scheme",
+                        "$comment": "For estimateFee, add 2**128 to the version",
                         "$ref": "#/components/schemas/NUM_AS_HEX"
                     },
                     "signature": {
@@ -2191,6 +2195,7 @@
                             "version": {
                                 "title": "Version",
                                 "description": "Version of the transaction scheme",
+                                "$comment": "For estimateFee, add 2**128 to the version",
                                 "$ref": "#/components/schemas/NUM_AS_HEX"
                             },
                             "signature": {
