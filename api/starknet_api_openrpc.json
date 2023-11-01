@@ -2559,7 +2559,7 @@
                     },
                     "actual_fee": {
                         "title": "Actual fee",
-                        "$ref": "#/components/schemas/FELT",
+                        "$ref": "#/components/schemas/FEE_PAYMENT",
                         "description": "The fee that was charged by the sequencer"
                     },
                     "execution_status": {
@@ -2932,7 +2932,7 @@
                     },
                     "actual_fee": {
                         "title": "Actual fee",
-                        "$ref": "#/components/schemas/FELT",
+                        "$ref": "#/components/schemas/FEE_PAYMENT",
                         "description": "The fee that was charged by the sequencer"
                     },
                     "messages_sent": {
@@ -3500,6 +3500,30 @@
                     "gas_consumed",
                     "gas_price",
                     "overall_fee"
+                ]
+            },
+            "FEE_PAYMENT": {
+                "title": "Fee Payment",
+                "description": "fee payment info as it appears in receipts",
+                "type": "object",
+                "properties": {
+                    "amount": {
+                        "title": "Amunt",
+                        "description": "amount paid",
+                        "$ref": "#/components/schemas/FELT"
+                    },
+                    "unit": {
+                        "title": "fee unit",
+                        "type": "string",
+                        "enum": [
+                            "WEI",
+                            "STRK"
+                        ]
+                    }
+                },
+                "required": [
+                    "amount",
+                    "unit"
                 ]
             },
             "DA_MODE": {
