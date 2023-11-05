@@ -278,6 +278,11 @@
                                 "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
                                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
                             },
+                            "state_diff": {
+                                "title": "state_diff",
+                                "description": "the state diffs induced by the transaction",
+                                "$ref": "#/components/schemas/STATE_DIFF"
+                            },
                             "type": {
                                 "title": "Type",
                                 "type": "string",
@@ -288,6 +293,7 @@
                         },
                         "required": [
                             "function_invocation",
+                            "state_diff",
                             "type"
                         ]
                     }
@@ -386,7 +392,8 @@
                 "type": "string",
                 "enum": [
                     "LIBRARY_CALL",
-                    "CALL"
+                    "CALL",
+                    "DELEGATE"
                 ]
             },
             "ORDERED_EVENT": {
