@@ -400,7 +400,7 @@
                             "order": {
                                 "title": "order",
                                 "description": "the order of the event within the transaction",
-                                "type": "number"
+                                "type": "integer"
                             }
                         }
                     },
@@ -420,7 +420,7 @@
                             "order": {
                                 "title": "order",
                                 "description": "the order of the message within the transaction",
-                                "type": "number"
+                                "type": "integer"
                             }
                         }
                     },
@@ -482,7 +482,7 @@
             },
             "BLOCK_NOT_FOUND": {
                 "code": 24,
-                "message": "Invalid block hash"
+                "message": "Block not found"
             },
             "CONTRACT_ERROR": {
                 "code": 40,
