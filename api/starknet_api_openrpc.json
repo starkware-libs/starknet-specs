@@ -3577,8 +3577,25 @@
                 ]
             },
             "EXECUTION_RESOURCES": {
-                "title": "Execution resources",
-                "description": "The resources consumed by the transaction",
+                "type": "object",
+                "properties": {
+                    "vm_resources": {
+                        "title": "vm resources",
+                        "$ref": "#/components/schemas/VM_RESOURCES"
+                    },
+                    "syscall_counters": {
+                        "title": "syscall counter",
+                        "$ref": "#/components/schemas/SYSCALL_COUNTERS"
+                    }
+                },
+                "required": [
+                    "vm_resources",
+                    "syscall_counters"
+                ]
+            },
+            "VM_RESOURCES": {
+                "title": "VM resources",
+                "description": "The resources consumed by the VM",
                 "type": "object",
                 "properties": {
                     "steps": {
@@ -3636,6 +3653,51 @@
                     "ecdsa_builtin_applications",
                     "bitwise_builtin_applications",
                     "keccak_builtin_applications"
+                ]
+            },
+            "SYSCALL_COUNTERS": {
+                "type": "object",
+                "propertyNames": {
+                    "$ref": "#/components/schemas/SYSCALLS"
+                },
+                "additionalProperties": {
+                    "type": "integer"
+                }
+            },
+            "SYSCALLS": {
+                "type": "string",
+                "enum": [
+                    "CallContract",
+                    "DelegateCall",
+                    "DelegateL1Handler",
+                    "Deploy",
+                    "EmitEvent",
+                    "GetBlockHash",
+                    "GetBlockNumber",
+                    "GetBlockTimestamp",
+                    "GetCallerAddress",
+                    "GetContractAddress",
+                    "GetExecutionInfo",
+                    "GetSequencerAddress",
+                    "GetTxInfo",
+                    "GetTxSignature",
+                    "Keccak",
+                    "LibraryCall",
+                    "LibraryCallL1Handler",
+                    "ReplaceClass",
+                    "Secp256k1Add",
+                    "Secp256k1GetPointFromX",
+                    "Secp256k1GetXy",
+                    "Secp256k1Mul",
+                    "Secp256k1New",
+                    "Secp256r1Add",
+                    "Secp256r1GetPointFromX",
+                    "Secp256r1GetXy",
+                    "Secp256r1Mul",
+                    "Secp256r1New",
+                    "SendMessageToL1",
+                    "StorageRead",
+                    "StorageWrite"
                 ]
             }
         },
