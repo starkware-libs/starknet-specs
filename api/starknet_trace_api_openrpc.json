@@ -360,10 +360,10 @@
                                     "$ref": "#/components/schemas/ORDERED_MESSAGE"
                                 }
                             },
-                            "vm_resources": {
+                            "execution_resources": {
                                 "title": "Execution resources",
-                                "description": "Resources consumed by the transaction",
-                                "$ref": "#/components/schemas/VM_RESOURCES"
+                                "description": "Resources consumed by the internal call",
+                                "$ref": "#/components/schemas/EXECUTION_RESOURCES"
                             }
                         },
                         "required": [
@@ -375,7 +375,7 @@
                             "calls",
                             "events",
                             "messages",
-                            "vm_resources"
+                            "execution_resources"
                         ]
                     }
                 ]
@@ -459,8 +459,8 @@
             "STATE_DIFF": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/STATE_DIFF"
             },
-            "VM_RESOURCES": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/VM_RESOURCES"
+            "EXECUTION_RESOURCES": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EXECUTION_RESOURCES"
             }
         },
         "errors": {
