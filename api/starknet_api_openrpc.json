@@ -3578,7 +3578,7 @@
             },
             "EXECUTION_RESOURCES": {
                 "title": "Execution resources",
-                "description": "The resources consumed by the transaction",
+                "description": "The resources consumed by the VM",
                 "type": "object",
                 "properties": {
                     "steps": {
