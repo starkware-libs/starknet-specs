@@ -1878,15 +1878,10 @@
                                 "description": "The hash of the declared class",
                                 "$ref": "#/components/schemas/FELT"
                             },
-                            "l1_gas": {
-                                "title": "L1 Gas",
-                                "description": "The max amount and max price per unit of L1 gas used in this tx",
-                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
-                            },
-                            "l2_gas": {
-                                "title": "L2 Gas",
-                                "description": "The max amount and max price per unit of L2 gas used in this tx",
-                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                            "resource_bounds": {
+                                "title": "Resource bounds",
+                                "description": "resource bounds for the transaction execution",
+                                "$ref": "#/components/schemas/RESOURCE_BOUNDS_MAPPING"
                             },
                             "tip": {
                                 "title": "Tip",
@@ -1928,8 +1923,7 @@
                             "signature",
                             "nonce",
                             "class_hash",
-                            "l1_gas",
-                            "l2_gas",
+                            "resource_bounds",
                             "tip",
                             "paymaster_data",
                             "account_deployment_data",
@@ -2149,15 +2143,10 @@
                                 "description": "The class to be declared",
                                 "$ref": "#/components/schemas/CONTRACT_CLASS"
                             },
-                            "l1_gas": {
-                                "title": "L1 Gas",
-                                "description": "The max amount and max price per unit of L1 gas used in this tx",
-                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
-                            },
-                            "l2_gas": {
-                                "title": "L2 Gas",
-                                "description": "The max amount and max price per unit of L2 gas used in this tx",
-                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                            "resource_bounds": {
+                                "title": "Resource bounds",
+                                "description": "resource bounds for the transaction execution",
+                                "$ref": "#/components/schemas/RESOURCE_BOUNDS_MAPPING"
                             },
                             "tip": {
                                 "title": "Tip",
@@ -2199,8 +2188,7 @@
                             "signature",
                             "nonce",
                             "contract_class",
-                            "l1_gas",
-                            "l2_gas",
+                            "resource_bounds",
                             "tip",
                             "paymaster_data",
                             "account_deployment_data",
@@ -2333,15 +2321,10 @@
                         "description": "The hash of the deployed contract's class",
                         "$ref": "#/components/schemas/FELT"
                     },
-                    "l1_gas": {
-                        "title": "L1 Gas",
-                        "description": "The max amount and max price per unit of L1 gas used in this tx",
-                        "$ref": "#/components/schemas/RESOURCE_LIMITS"
-                    },
-                    "l2_gas": {
-                        "title": "L2 Gas",
-                        "description": "The max amount and max price per unit of L2 gas used in this tx",
-                        "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                    "resource_bounds": {
+                        "title": "Resource bounds",
+                        "description": "resource bounds for the transaction execution",
+                        "$ref": "#/components/schemas/RESOURCE_BOUNDS_MAPPING"
                     },
                     "tip": {
                         "title": "Tip",
@@ -2375,8 +2358,7 @@
                     "contract_address_salt",
                     "constructor_calldata",
                     "class_hash",
-                    "l1_gas",
-                    "l2_gas",
+                    "resource_bounds",
                     "tip",
                     "paymaster_data",
                     "nonce_data_availability_mode",
@@ -2592,15 +2574,10 @@
                                 "title": "Nonce",
                                 "$ref": "#/components/schemas/FELT"
                             },
-                            "l1_gas": {
-                                "title": "L1 Gas",
-                                "description": "The max amount and max price per unit of L1 gas used in this tx",
-                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
-                            },
-                            "l2_gas": {
-                                "title": "L2 Gas",
-                                "description": "The max amount and max price per unit of L2 gas used in this tx",
-                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                            "resource_bounds": {
+                                "title": "Resource bounds",
+                                "description": "resource bounds for the transaction execution",
+                                "$ref": "#/components/schemas/RESOURCE_BOUNDS_MAPPING"
                             },
                             "tip": {
                                 "title": "Tip",
@@ -2641,8 +2618,7 @@
                             "version",
                             "signature",
                             "nonce",
-                            "l1_gas",
-                            "l2_gas",
+                            "resource_bounds",
                             "tip",
                             "paymaster_data",
                             "account_deployment_data",
@@ -3697,7 +3673,26 @@
                     "L2"
                 ]
             },
-            "RESOURCE_LIMITS": {
+            "RESOURCE_BOUNDS_MAPPING": {
+                "type": "object",
+                "properties": {
+                    "l1_gas": {
+                        "title": "L1 Gas",
+                        "description": "The max amount and max price per unit of L1 gas used in this tx",
+                        "$ref": "#/components/schemas/RESOURCE_BOUNDS"
+                    },
+                    "l2_gas": {
+                        "title": "L2 Gas",
+                        "description": "The max amount and max price per unit of L2 gas used in this tx",
+                        "$ref": "#/components/schemas/RESOURCE_BOUNDS"
+                    }
+                },
+                "required": [
+                    "l1_gas",
+                    "l2_gas"
+                ]
+            },
+            "RESOURCE_BOUNDS": {
                 "type": "object",
                 "properties": {
                     "max_amount": {
