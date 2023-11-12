@@ -3802,7 +3802,10 @@
                     "keccak_builtin_applications": {
                         "title": "Keccak applications",
                         "description": "The number of KECCAK builtin instances",
-                        "type": "integer"
+                        "type": "integer",
+                        "not": {
+                            "const": 0
+                        }
                     },
                     "segment_arena_builtin": {
                         "title": "Segment arena",
