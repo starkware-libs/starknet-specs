@@ -1878,10 +1878,41 @@
                                 "description": "The hash of the declared class",
                                 "$ref": "#/components/schemas/FELT"
                             },
-                            "l1_gas": {
-                                "title": "L1 Gas",
-                                "description": "The max amount and max price per unit of L1 gas used in this tx",
-                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                            "resource_bounds": {
+                                "title": "Resource bounds",
+                                "description": "resource bounds for the transaction execution",
+                                "$ref": "#/components/schemas/RESOURCE_BOUNDS_MAPPING"
+                            },
+                            "tip": {
+                                "title": "Tip",
+                                "$ref": "#/components/schemas/FELT",
+                                "description": "the tip for the transaction"
+                            },
+                            "paymaster_data": {
+                                "title": "Paymaster data",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/FELT"
+                                },
+                                "description": "data needed to allow the paymaster to pay for the transaction in native tokens"
+                            },
+                            "account_deployment_data": {
+                                "title": "Account deployment data",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/FELT"
+                                },
+                                "description": "data needed to deploy the account contract from which this tx will be initiated"
+                            },
+                            "nonce_data_availability_mode": {
+                                "title": "Nonce DA mode",
+                                "description": "The storage domain of the account's nonce (an account has a nonce per DA mode)",
+                                "$ref": "#/components/schemas/DA_MODE"
+                            },
+                            "fee_data_availability_mode": {
+                                "title": "Fee DA mode",
+                                "description": "The storage domain of the account's balance from which fee will be charged",
+                                "$ref": "#/components/schemas/DA_MODE"
                             }
                         },
                         "required": [
@@ -1892,7 +1923,12 @@
                             "signature",
                             "nonce",
                             "class_hash",
-                            "l1_gas"
+                            "resource_bounds",
+                            "tip",
+                            "paymaster_data",
+                            "account_deployment_data",
+                            "nonce_data_availability_mode",
+                            "fee_data_availability_mode"
                         ]
                     }
                 ]
@@ -2107,10 +2143,41 @@
                                 "description": "The class to be declared",
                                 "$ref": "#/components/schemas/CONTRACT_CLASS"
                             },
-                            "l1_gas": {
-                                "title": "L1 Gas",
-                                "description": "The max amount and max price per unit of L1 gas used in this tx",
-                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                            "resource_bounds": {
+                                "title": "Resource bounds",
+                                "description": "resource bounds for the transaction execution",
+                                "$ref": "#/components/schemas/RESOURCE_BOUNDS_MAPPING"
+                            },
+                            "tip": {
+                                "title": "Tip",
+                                "$ref": "#/components/schemas/FELT",
+                                "description": "the tip for the transaction"
+                            },
+                            "paymaster_data": {
+                                "title": "Paymaster data",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/FELT"
+                                },
+                                "description": "data needed to allow the paymaster to pay for the transaction in native tokens"
+                            },
+                            "account_deployment_data": {
+                                "title": "Account deployment data",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/FELT"
+                                },
+                                "description": "data needed to deploy the account contract from which this tx will be initiated"
+                            },
+                            "nonce_data_availability_mode": {
+                                "title": "Nonce DA mode",
+                                "description": "The storage domain of the account's nonce (an account has a nonce per DA mode)",
+                                "$ref": "#/components/schemas/DA_MODE"
+                            },
+                            "fee_data_availability_mode": {
+                                "title": "Fee DA mode",
+                                "description": "The storage domain of the account's balance from which fee will be charged",
+                                "$ref": "#/components/schemas/DA_MODE"
                             }
                         },
                         "required": [
@@ -2121,7 +2188,12 @@
                             "signature",
                             "nonce",
                             "contract_class",
-                            "l1_gas"
+                            "resource_bounds",
+                            "tip",
+                            "paymaster_data",
+                            "account_deployment_data",
+                            "nonce_data_availability_mode",
+                            "fee_data_availability_mode"
                         ]
                     }
                 ]
@@ -2249,10 +2321,33 @@
                         "description": "The hash of the deployed contract's class",
                         "$ref": "#/components/schemas/FELT"
                     },
-                    "l1_gas": {
-                        "title": "L1 Gas",
-                        "description": "The max amount and max price per unit of L1 gas used in this tx",
-                        "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                    "resource_bounds": {
+                        "title": "Resource bounds",
+                        "description": "resource bounds for the transaction execution",
+                        "$ref": "#/components/schemas/RESOURCE_BOUNDS_MAPPING"
+                    },
+                    "tip": {
+                        "title": "Tip",
+                        "$ref": "#/components/schemas/FELT",
+                        "description": "the tip for the transaction"
+                    },
+                    "paymaster_data": {
+                        "title": "Paymaster data",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FELT"
+                        },
+                        "description": "data needed to allow the paymaster to pay for the transaction in native tokens"
+                    },
+                    "nonce_data_availability_mode": {
+                        "title": "Nonce DA mode",
+                        "description": "The storage domain of the account's nonce (an account has a nonce per DA mode)",
+                        "$ref": "#/components/schemas/DA_MODE"
+                    },
+                    "fee_data_availability_mode": {
+                        "title": "Fee DA mode",
+                        "description": "The storage domain of the account's balance from which fee will be charged",
+                        "$ref": "#/components/schemas/DA_MODE"
                     }
                 },
                 "required": [
@@ -2263,7 +2358,11 @@
                     "contract_address_salt",
                     "constructor_calldata",
                     "class_hash",
-                    "l1_gas"
+                    "resource_bounds",
+                    "tip",
+                    "paymaster_data",
+                    "nonce_data_availability_mode",
+                    "fee_data_availability_mode"
                 ]
             },
             "DEPLOY_TXN": {
@@ -2475,10 +2574,41 @@
                                 "title": "Nonce",
                                 "$ref": "#/components/schemas/FELT"
                             },
-                            "l1_gas": {
-                                "title": "L1 Gas",
-                                "description": "The max amount and max price per unit of L1 gas used in this tx",
-                                "$ref": "#/components/schemas/RESOURCE_LIMITS"
+                            "resource_bounds": {
+                                "title": "Resource bounds",
+                                "description": "resource bounds for the transaction execution",
+                                "$ref": "#/components/schemas/RESOURCE_BOUNDS_MAPPING"
+                            },
+                            "tip": {
+                                "title": "Tip",
+                                "$ref": "#/components/schemas/FELT",
+                                "description": "the tip for the transaction"
+                            },
+                            "paymaster_data": {
+                                "title": "Paymaster data",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/FELT"
+                                },
+                                "description": "data needed to allow the paymaster to pay for the transaction in native tokens"
+                            },
+                            "account_deployment_data": {
+                                "title": "Account deployment data",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/FELT"
+                                },
+                                "description": "data needed to deploy the account contract from which this tx will be initiated"
+                            },
+                            "nonce_data_availability_mode": {
+                                "title": "Nonce DA mode",
+                                "description": "The storage domain of the account's nonce (an account has a nonce per DA mode)",
+                                "$ref": "#/components/schemas/DA_MODE"
+                            },
+                            "fee_data_availability_mode": {
+                                "title": "Fee DA mode",
+                                "description": "The storage domain of the account's balance from which fee will be charged",
+                                "$ref": "#/components/schemas/DA_MODE"
                             }
                         },
                         "required": [
@@ -2488,7 +2618,12 @@
                             "version",
                             "signature",
                             "nonce",
-                            "l1_gas"
+                            "resource_bounds",
+                            "tip",
+                            "paymaster_data",
+                            "account_deployment_data",
+                            "nonce_data_availability_mode",
+                            "fee_data_availability_mode"
                         ]
                     }
                 ]
@@ -3538,7 +3673,26 @@
                     "L2"
                 ]
             },
-            "RESOURCE_LIMITS": {
+            "RESOURCE_BOUNDS_MAPPING": {
+                "type": "object",
+                "properties": {
+                    "l1_gas": {
+                        "title": "L1 Gas",
+                        "description": "The max amount and max price per unit of L1 gas used in this tx",
+                        "$ref": "#/components/schemas/RESOURCE_BOUNDS"
+                    },
+                    "l2_gas": {
+                        "title": "L2 Gas",
+                        "description": "The max amount and max price per unit of L2 gas used in this tx",
+                        "$ref": "#/components/schemas/RESOURCE_BOUNDS"
+                    }
+                },
+                "required": [
+                    "l1_gas",
+                    "l2_gas"
+                ]
+            },
+            "RESOURCE_BOUNDS": {
                 "type": "object",
                 "properties": {
                     "max_amount": {
