@@ -3779,6 +3779,11 @@
                         "title": "Keccak applications",
                         "description": "The number of KECCAK builtin instances",
                         "type": "integer"
+                    },
+                    "segment_arena_builtin": {
+                        "title": "Segment arena",
+                        "description": "The number of accesses to the segment arena",
+                        "type": "integer"
                     }
                 },
                 "required": [
