@@ -2376,7 +2376,7 @@
                             "version": {
                                 "title": "Version",
                                 "description": "Version of the transaction scheme",
-                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                                "$ref": "#/components/schemas/FELT"
                             },
                             "type": {
                                 "title": "Deploy",
@@ -2657,7 +2657,7 @@
                             "version": {
                                 "title": "Version",
                                 "description": "Version of the transaction scheme",
-                                "$ref": "#/components/schemas/NUM_AS_HEX"
+                                "$ref": "#/components/schemas/FELT"
                             },
                             "type": {
                                 "title": "type",
@@ -3621,17 +3621,17 @@
                     "gas_consumed": {
                         "title": "Gas consumed",
                         "description": "The Ethereum gas cost of the transaction (see https://docs.starknet.io/docs/Fees/fee-mechanism for more info)",
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                        "$ref": "#/components/schemas/FELT"
                     },
                     "gas_price": {
                         "title": "Gas price",
                         "description": "The gas price (in gwei) that was used in the cost estimation",
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                        "$ref": "#/components/schemas/FELT"
                     },
                     "overall_fee": {
                         "title": "Overall fee",
                         "description": "The estimated fee for the transaction (in gwei), product of gas_consumed and gas_price",
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                        "$ref": "#/components/schemas/FELT"
                     }
                 },
                 "required": [
@@ -3698,12 +3698,12 @@
                     "max_amount": {
                         "title": "max amount",
                         "description": "the max amount of the resource that can be used in the tx",
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                        "$ref": "#/components/schemas/FELT"
                     },
                     "max_price_per_unit": {
                         "title": "max price",
                         "description": "the max price per unit of this resource for this tx",
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                        "$ref": "#/components/schemas/FELT"
                     }
                 },
                 "required": [
@@ -3717,12 +3717,12 @@
                     "price_in_strk": {
                         "title": "price in strk",
                         "description": "the price of one unit of the given resource, denominated in strk",
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                        "$ref": "#/components/schemas/FELT"
                     },
                     "price_in_wei": {
                         "title": "price in wei",
                         "description": "the price of one unit of the given resource, denominated in wei",
-                        "$ref": "#/components/schemas/NUM_AS_HEX"
+                        "$ref": "#/components/schemas/FELT"
                     }
                 },
                 "required": [
@@ -3782,14 +3782,7 @@
                     }
                 },
                 "required": [
-                    "steps",
-                    "range_check_builtin_applications",
-                    "pedersen_builtin_applications",
-                    "poseidon_builtin_applications",
-                    "ec_op_builtin_applications",
-                    "ecdsa_builtin_applications",
-                    "bitwise_builtin_applications",
-                    "keccak_builtin_applications"
+                    "steps"
                 ]
             }
         },
