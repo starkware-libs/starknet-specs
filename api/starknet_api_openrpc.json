@@ -3807,7 +3807,7 @@
                             "const": 0
                         }
                     },
-                    "segment_arena_builtin": {
+                    "segment_arena_builtin_applications": {
                         "title": "Segment arena",
                         "description": "The number of accesses to the segment arena",
                         "type": "integer",
