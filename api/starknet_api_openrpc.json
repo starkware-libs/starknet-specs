@@ -1885,8 +1885,9 @@
                             },
                             "tip": {
                                 "title": "Tip",
-                                "$ref": "#/components/schemas/FELT",
-                                "description": "the tip for the transaction"
+                                "description": "the tip for the transaction",
+                                "type": "integer",
+                                "minimum": 0
                             },
                             "paymaster_data": {
                                 "title": "Paymaster data",
