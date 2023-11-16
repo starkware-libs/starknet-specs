@@ -1735,7 +1735,7 @@
                                 "description": "Version of the transaction scheme",
                                 "type": "string",
                                 "enum": [
-                                    "0x0",
+                                    "0x1",
                                     "0x100000000000000000000000000000001"
                                 ]
                             },
