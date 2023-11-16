@@ -278,6 +278,11 @@
                                 "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
                                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
                             },
+                            "state_diff": {
+                                "title": "state_diff",
+                                "description": "the state diffs induced by the transaction",
+                                "$ref": "#/components/schemas/STATE_DIFF"
+                            },
                             "type": {
                                 "title": "Type",
                                 "type": "string",
@@ -288,6 +293,7 @@
                         },
                         "required": [
                             "function_invocation",
+                            "state_diff",
                             "type"
                         ]
                     }
@@ -359,6 +365,11 @@
                                 "items": {
                                     "$ref": "#/components/schemas/ORDERED_MESSAGE"
                                 }
+                            },
+                            "execution_resources": {
+                                "title": "Execution resources",
+                                "description": "Resources consumed by the internal call",
+                                "$ref": "#/components/schemas/EXECUTION_RESOURCES"
                             }
                         },
                         "required": [
@@ -369,7 +380,8 @@
                             "result",
                             "calls",
                             "events",
-                            "messages"
+                            "messages",
+                            "execution_resources"
                         ]
                     }
                 ]
@@ -386,7 +398,8 @@
                 "type": "string",
                 "enum": [
                     "LIBRARY_CALL",
-                    "CALL"
+                    "CALL",
+                    "DELEGATE"
                 ]
             },
             "ORDERED_EVENT": {
@@ -400,7 +413,7 @@
                             "order": {
                                 "title": "order",
                                 "description": "the order of the event within the transaction",
-                                "type": "number"
+                                "type": "integer"
                             }
                         }
                     },
@@ -420,7 +433,7 @@
                             "order": {
                                 "title": "order",
                                 "description": "the order of the message within the transaction",
-                                "type": "number"
+                                "type": "integer"
                             }
                         }
                     },
@@ -452,6 +465,9 @@
             },
             "STATE_DIFF": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/STATE_DIFF"
+            },
+            "EXECUTION_RESOURCES": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EXECUTION_RESOURCES"
             }
         },
         "errors": {
@@ -482,7 +498,7 @@
             },
             "BLOCK_NOT_FOUND": {
                 "code": 24,
-                "message": "Invalid block hash"
+                "message": "Block not found"
             },
             "CONTRACT_ERROR": {
                 "code": 40,
