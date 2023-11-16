@@ -1104,6 +1104,18 @@
                 "type": "string",
                 "pattern": "^0x[a-fA-F0-9]+$"
             },
+            "u64": {
+                "type": "string",
+                "title": "u64",
+                "description": "64 bit integers, represented by hex string of length at most 16",
+                "pattern": "^0x(0|[a-fA-F1-9]{1}[a-fA-F0-9]{0,15})$"
+            },
+            "u128": {
+                "type": "string",
+                "title": "u128",
+                "description": "64 bit integers, represented by hex string of length at most 32",
+                "pattern": "^0x(0|[a-fA-F1-9]{1}[a-fA-F0-9]{0,31})$"
+            },
             "CHAIN_ID": {
                 "title": "Chain id",
                 "description": "StarkNet chain id, given in hex representation.",
@@ -1885,7 +1897,7 @@
                             },
                             "tip": {
                                 "title": "Tip",
-                                "$ref": "#/components/schemas/FELT",
+                                "$ref": "#/components/schemas/u64",
                                 "description": "the tip for the transaction"
                             },
                             "paymaster_data": {
@@ -2150,7 +2162,7 @@
                             },
                             "tip": {
                                 "title": "Tip",
-                                "$ref": "#/components/schemas/FELT",
+                                "$ref": "#/components/schemas/u64",
                                 "description": "the tip for the transaction"
                             },
                             "paymaster_data": {
@@ -2328,7 +2340,7 @@
                     },
                     "tip": {
                         "title": "Tip",
-                        "$ref": "#/components/schemas/FELT",
+                        "$ref": "#/components/schemas/u64",
                         "description": "the tip for the transaction"
                     },
                     "paymaster_data": {
@@ -2581,7 +2593,7 @@
                             },
                             "tip": {
                                 "title": "Tip",
-                                "$ref": "#/components/schemas/FELT",
+                                "$ref": "#/components/schemas/u64",
                                 "description": "the tip for the transaction"
                             },
                             "paymaster_data": {
@@ -3698,12 +3710,12 @@
                     "max_amount": {
                         "title": "max amount",
                         "description": "the max amount of the resource that can be used in the tx",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/u64"
                     },
                     "max_price_per_unit": {
                         "title": "max price",
                         "description": "the max price per unit of this resource for this tx",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/u128"
                     }
                 },
                 "required": [
