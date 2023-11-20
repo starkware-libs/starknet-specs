@@ -55,6 +55,9 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -92,6 +95,9 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -129,6 +135,9 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -181,6 +190,9 @@
                 },
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -323,6 +335,9 @@
                 },
                 {
                     "$ref": "#/components/errors/INVALID_TXN_INDEX"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -408,6 +423,9 @@
                 },
                 {
                     "$ref": "#/components/errors/CLASS_HASH_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -448,6 +466,9 @@
                 },
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -497,6 +518,9 @@
                 },
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -528,6 +552,9 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -576,6 +603,9 @@
                 },
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -628,6 +658,9 @@
                 },
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -688,6 +721,9 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/NO_BLOCKS"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -720,6 +756,9 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/NO_BLOCKS"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -804,6 +843,9 @@
                 },
                 {
                     "$ref": "#/components/errors/TOO_MANY_KEYS_IN_FILTER"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -844,6 +886,9 @@
                 },
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
+                },
+                {
+                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         }
@@ -3873,6 +3918,10 @@
             "TOO_MANY_KEYS_IN_FILTER": {
                 "code": 34,
                 "message": "Too many keys provided in a filter"
+            },
+            "NODE_NOT_SYNCED": {
+                "code": 35,
+                "message": "Node is not synchronized"
             },
             "CONTRACT_ERROR": {
                 "code": 40,
