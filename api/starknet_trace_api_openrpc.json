@@ -104,9 +104,6 @@
                 },
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
-                },
-                {
-                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         },
@@ -146,9 +143,6 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
-                },
-                {
-                    "$ref": "#/components/errors/NODE_NOT_SYNCED"
                 }
             ]
         }
@@ -201,11 +195,8 @@
                             }
                         },
                         "required": [
-                            "validate_invocation",
-                            "execute_invocation",
-                            "fee_transfer_invocation",
-                            "state_diff",
-                            "type"
+                            "type",
+                            "execute_invocation"
                         ]
                     },
                     {
@@ -233,9 +224,6 @@
                             }
                         },
                         "required": [
-                            "validate_invocation",
-                            "fee_transfer_invocation",
-                            "state_diff",
                             "type"
                         ]
                     },
@@ -268,11 +256,8 @@
                             }
                         },
                         "required": [
-                            "validate_invocation",
-                            "constructor_invocation",
-                            "fee_transfer_invocation",
-                            "state_diff",
-                            "type"
+                            "type",
+                            "constructor_invocation"
                         ]
                     },
                     {
@@ -298,9 +283,8 @@
                             }
                         },
                         "required": [
-                            "function_invocation",
-                            "state_diff",
-                            "type"
+                            "type",
+                            "function_invocation"
                         ]
                     }
                 ]
@@ -505,10 +489,6 @@
             "BLOCK_NOT_FOUND": {
                 "code": 24,
                 "message": "Block not found"
-            },
-            "NODE_NOT_SYNCED": {
-                "code": 35,
-                "message": "Node is not synchronized"
             },
             "CONTRACT_ERROR": {
                 "code": 40,
