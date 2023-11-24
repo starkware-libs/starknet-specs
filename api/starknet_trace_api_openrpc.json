@@ -30,7 +30,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/INVALID_TXN_HASH"
+                    "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
                 },
                 {
                     "$ref": "#/components/errors/NO_TRACE_AVAILABLE"
@@ -479,9 +479,9 @@
                 "code": 20,
                 "message": "Contract not found"
             },
-            "INVALID_TXN_HASH": {
-                "code": 25,
-                "message": "Invalid transaction hash"
+            "TXN_HASH_NOT_FOUND": {
+                "code": 29,
+                "message": "Transaction hash not found"
             },
             "BLOCK_NOT_FOUND": {
                 "code": 24,
