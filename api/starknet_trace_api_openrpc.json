@@ -39,7 +39,7 @@
         },
         {
             "name": "starknet_simulateTransactions",
-            "summary": "simulate a given sequence of transactions on the requested state, and generate the execution traces. If one of the transactions is reverted, raises CONTRACT_ERROR.",
+            "summary": "Simulate a given sequence of transactions on the requested state, and generate the execution traces. Note that some of the transactions may revert, in which case no error is thrown, but revert details can be seen on the returned trace object.",
             "params": [
                 {
                     "name": "block_id",
@@ -98,9 +98,6 @@
             "errors": [
                 {
                     "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
-                },
-                {
-                    "$ref": "#/components/errors/CONTRACT_ERROR"
                 },
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
