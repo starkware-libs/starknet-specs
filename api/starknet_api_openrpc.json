@@ -3903,7 +3903,7 @@
                 }
             },
             "TRANSACTION_EXECUTION_ERROR": {
-                "code": 40,
+                "code": 41,
                 "message": "Transaction execution error",
                 "data": {
                     "type": "object",
