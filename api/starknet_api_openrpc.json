@@ -582,7 +582,7 @@
         {
             "name": "starknet_estimateFee",
             "summary": "estimate the fee for of StarkNet transactions",
-            "description": "estimates the resources required by transactions when applyed on a given state",
+            "description": "Estimates the resources required by a given sequence of transactions when applied on a given state. If one of the transaction reverts, a TRANSACTION_EXECUTION_ERROR is returned.",
             "params": [
                 {
                     "name": "request",
@@ -596,6 +596,17 @@
                         }
                     },
                     "required": true
+                },
+                {
+                    "name": "simulation_flags",
+                    "description": "describes what parts of the transaction should be executed",
+                    "required": false,
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/SIMULATION_FLAG_FOR_ESTIMATE_FEE"
+                        }
+                    }
                 },
                 {
                     "name": "block_id",
@@ -621,10 +632,7 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
-                },
-                {
-                    "$ref": "#/components/errors/CONTRACT_ERROR"
+                    "$ref": "#/components/errors/TRANSACTION_EXECUTION_ERROR"
                 },
                 {
                     "$ref": "#/components/errors/BLOCK_NOT_FOUND"
@@ -662,9 +670,6 @@
                 }
             },
             "errors": [
-                {
-                    "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
-                },
                 {
                     "$ref": "#/components/errors/CONTRACT_ERROR"
                 },
@@ -3626,6 +3631,13 @@
                     "type"
                 ]
             },
+            "SIMULATION_FLAG_FOR_ESTIMATE_FEE": {
+                "type": "string",
+                "enum": [
+                    "SKIP_VALIDATE"
+                ],
+                "description": "Flags that indicate how to simulate a given transaction. By default, the sequencer behavior is replicated locally"
+            },
             "FEE_ESTIMATE": {
                 "title": "Fee estimation",
                 "type": "object",
@@ -3637,12 +3649,12 @@
                     },
                     "gas_price": {
                         "title": "Gas price",
-                        "description": "The gas price (in gwei) that was used in the cost estimation",
+                        "description": "The gas price (in gwei or fri, depending on the tx version) that was used in the cost estimation",
                         "$ref": "#/components/schemas/FELT"
                     },
                     "overall_fee": {
                         "title": "Overall fee",
-                        "description": "The estimated fee for the transaction (in gwei), product of gas_consumed and gas_price",
+                        "description": "The estimated fee for the transaction (in gwei or fri, depending on the tx version), product of gas_consumed and gas_price",
                         "$ref": "#/components/schemas/FELT"
                     }
                 },
@@ -3667,7 +3679,7 @@
                         "type": "string",
                         "enum": [
                             "WEI",
-                            "STRK"
+                            "FRI"
                         ]
                     }
                 },
@@ -3726,9 +3738,9 @@
             "RESOURCE_PRICE": {
                 "type": "object",
                 "properties": {
-                    "price_in_strk": {
-                        "title": "price in strk",
-                        "description": "the price of one unit of the given resource, denominated in strk",
+                    "price_in_fri": {
+                        "title": "price in fri",
+                        "description": "the price of one unit of the given resource, denominated in fri (10^-18 strk)",
                         "$ref": "#/components/schemas/FELT"
                     },
                     "price_in_wei": {
@@ -3739,7 +3751,7 @@
                 },
                 "required": [
                     "price_in_wei",
-                    "price_in_strk"
+                    "price_in_fri"
                 ]
             },
             "EXECUTION_RESOURCES": {
@@ -3888,6 +3900,30 @@
                         }
                     },
                     "required": "revert_error"
+                }
+            },
+            "TRANSACTION_EXECUTION_ERROR": {
+                "code": 41,
+                "message": "Transaction execution error",
+                "data": {
+                    "type": "object",
+                    "description": "More data about the execution failure",
+                    "properties": {
+                        "transaction_index": {
+                            "title": "Transaction index",
+                            "description": "The index of the first transaction failing in a sequence of given transactions",
+                            "type": "integer"
+                        },
+                        "execution_error": {
+                            "title": "revert error",
+                            "description": "a string encoding the execution trace up to the point of failure",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "transaction_index",
+                        "revert_error"
+                    ]
                 }
             }
         }
