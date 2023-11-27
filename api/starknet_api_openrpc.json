@@ -582,7 +582,7 @@
         {
             "name": "starknet_estimateFee",
             "summary": "estimate the fee for of StarkNet transactions",
-            "description": "Estimates the resources required by a given sequence of transactions when applied on a given state. If one of the transaction reverts, a TRANSACTION_EXECUTION_ERROR is returned.",
+            "description": "Estimates the resources required by a given sequence of transactions when applied on a given state. If one of the transactions reverts or fails due to any reason (e.g. validation failure or an internal error), a TRANSACTION_EXECUTION_ERROR is returned. For v0-2 transactions the estimate is given in wei, and for v3 transactions it is given in fri.",
             "params": [
                 {
                     "name": "request",
@@ -3638,6 +3638,14 @@
                 ],
                 "description": "Flags that indicate how to simulate a given transaction. By default, the sequencer behavior is replicated locally"
             },
+            "PRICE_UNIT": {
+                "title": "price unit",
+                "type": "string",
+                "enum": [
+                    "WEI",
+                    "FRI"
+                ]
+            },
             "FEE_ESTIMATE": {
                 "title": "Fee estimation",
                 "type": "object",
@@ -3656,12 +3664,18 @@
                         "title": "Overall fee",
                         "description": "The estimated fee for the transaction (in gwei or fri, depending on the tx version), product of gas_consumed and gas_price",
                         "$ref": "#/components/schemas/FELT"
+                    },
+                    "unit": {
+                        "title": "Fee unit",
+                        "description": "units in which the fee is given",
+                        "$ref": "#/components/schemas/PRICE_UNIT"
                     }
                 },
                 "required": [
                     "gas_consumed",
                     "gas_price",
-                    "overall_fee"
+                    "overall_fee",
+                    "unit"
                 ]
             },
             "FEE_PAYMENT": {
@@ -3675,12 +3689,9 @@
                         "$ref": "#/components/schemas/FELT"
                     },
                     "unit": {
-                        "title": "fee unit",
-                        "type": "string",
-                        "enum": [
-                            "WEI",
-                            "FRI"
-                        ]
+                        "title": "Fee unit",
+                        "description": "units in which the fee is given",
+                        "$ref": "#/components/schemas/PRICE_UNIT"
                     }
                 },
                 "required": [
