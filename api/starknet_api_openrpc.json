@@ -3649,12 +3649,12 @@
                     },
                     "gas_price": {
                         "title": "Gas price",
-                        "description": "The gas price (in gwei) that was used in the cost estimation",
+                        "description": "The gas price (in gwei or fri, depending on the tx version) that was used in the cost estimation",
                         "$ref": "#/components/schemas/FELT"
                     },
                     "overall_fee": {
                         "title": "Overall fee",
-                        "description": "The estimated fee for the transaction (in gwei), product of gas_consumed and gas_price",
+                        "description": "The estimated fee for the transaction (in gwei or fri, depending on the tx version), product of gas_consumed and gas_price",
                         "$ref": "#/components/schemas/FELT"
                     }
                 },
