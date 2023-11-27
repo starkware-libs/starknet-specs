@@ -3914,7 +3914,7 @@
                             "description": "The index of the first transaction failing in a sequence of given transactions",
                             "type": "integer"
                         },
-                        "revert_error": {
+                        "execution_error": {
                             "title": "revert error",
                             "description": "a string encoding the execution trace up to the point of failure",
                             "type": "string"
