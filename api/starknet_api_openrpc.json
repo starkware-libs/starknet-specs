@@ -2635,7 +2635,10 @@
                         "title": "Pending Deploy account transaction receipt",
                         "$ref": "#/components/schemas/PENDING_DEPLOY_ACCOUNT_TXN_RECEIPT"
                     }
-                ]
+                ],
+                "not": {
+                    "$ref": "#/components/schemas/TXN_RECEIPT"
+                }
             },
             "PENDING_COMMON_RECEIPT_PROPERTIES": {
                 "title": "Pending common receipt properties",
@@ -2651,10 +2654,6 @@
                         "title": "Actual fee",
                         "$ref": "#/components/schemas/FELT",
                         "description": "The fee that was charged by the sequencer"
-                    },
-                    "type": {
-                        "title": "Transaction type",
-                        "$ref": "#/components/schemas/TXN_TYPE"
                     },
                     "messages_sent": {
                         "type": "array",
@@ -2698,7 +2697,6 @@
                 "required": [
                     "transaction_hash",
                     "actual_fee",
-                    "type",
                     "messages_sent",
                     "events",
                     "finality_status",
@@ -3319,6 +3317,11 @@
                         "title": "Keccak applications",
                         "description": "The number of KECCAK builtin instances",
                         "$ref": "#/components/schemas/NUM_AS_HEX"
+                    },
+                    "segment_arena_builtin_applications": {
+                        "title": "Keccak applications",
+                        "description": "The number of KECCAK builtin instances",
+                        "$ref": "#/components/schemas/NUM_AS_HEX"
                     }
                 },
                 "required": [
@@ -3329,7 +3332,8 @@
                     "ec_op_builtin_applications",
                     "ecdsa_builtin_applications",
                     "bitwise_builtin_applications",
-                    "keccak_builtin_applications"
+                    "keccak_builtin_applications",
+                    "segment_arena_builtin_applications"
                 ]
             }
         },
