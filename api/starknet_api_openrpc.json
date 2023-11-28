@@ -600,7 +600,7 @@
                 {
                     "name": "simulation_flags",
                     "description": "describes what parts of the transaction should be executed",
-                    "required": false,
+                    "required": true,
                     "schema": {
                         "type": "array",
                         "items": {
