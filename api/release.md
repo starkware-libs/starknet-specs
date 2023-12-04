@@ -3,7 +3,7 @@
 
 ## Goal
 
-Our goal is to allow collaboration on definition of the API specification for a StarkNet full node, while at the same time provide a reliable framework for understanding existing releases and ongoing work.
+Our goal is to allow collaboration on definition of the API specification for a Starknet full node, while at the same time provide a reliable framework for understanding existing releases and ongoing work.
 This document outlines how releases for the node API specification is managed and released.
 
 ## General Scheme
