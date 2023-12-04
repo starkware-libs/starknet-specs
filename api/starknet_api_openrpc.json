@@ -2,7 +2,7 @@
     "openrpc": "1.0.0-rc1",
     "info": {
         "version": "0.6.0",
-        "title": "StarkNet Node API",
+        "title": "Starknet Node API",
         "license": {}
     },
     "servers": [],
@@ -533,7 +533,7 @@
         },
         {
             "name": "starknet_call",
-            "summary": "call a starknet function without creating a StarkNet transaction",
+            "summary": "call a starknet function without creating a Starknet transaction",
             "description": "Calls a function in a contract and returns the return value.  Using this call will not create a transaction; hence, will not change the state",
             "params": [
                 {
@@ -581,7 +581,7 @@
         },
         {
             "name": "starknet_estimateFee",
-            "summary": "estimate the fee for of StarkNet transactions",
+            "summary": "estimate the fee for Starknet transactions",
             "description": "Estimates the resources required by a given sequence of transactions when applied on a given state. If one of the transactions reverts or fails due to any reason (e.g. validation failure or an internal error), a TRANSACTION_EXECUTION_ERROR is returned. For v0-2 transactions the estimate is given in wei, and for v3 transactions it is given in fri.",
             "params": [
                 {
@@ -730,7 +730,7 @@
         },
         {
             "name": "starknet_chainId",
-            "summary": "Return the currently configured StarkNet chain id",
+            "summary": "Return the currently configured Starknet chain id",
             "params": [],
             "result": {
                 "name": "result",
@@ -934,7 +934,7 @@
             },
             "EVENT": {
                 "title": "Event",
-                "description": "A StarkNet event",
+                "description": "A Starknet event",
                 "allOf": [
                     {
                         "title": "Event emitter",
@@ -1123,7 +1123,7 @@
             },
             "CHAIN_ID": {
                 "title": "Chain id",
-                "description": "StarkNet chain id, given in hex representation.",
+                "description": "Starknet chain id, given in hex representation.",
                 "type": "string",
                 "pattern": "^0x[a-fA-F0-9]+$"
             },
@@ -1299,7 +1299,7 @@
             },
             "TXN_HASH": {
                 "$ref": "#/components/schemas/FELT",
-                "description": "The transaction hash, as assigned in StarkNet",
+                "description": "The transaction hash, as assigned in Starknet",
                 "title": "Transaction hash"
             },
             "FELT": {
@@ -1403,7 +1403,7 @@
                     },
                     "sequencer_address": {
                         "title": "Sequencer address",
-                        "description": "The StarkNet identity of the sequencer submitting this block",
+                        "description": "The Starknet identity of the sequencer submitting this block",
                         "$ref": "#/components/schemas/FELT"
                     },
                     "l1_gas_price": {
@@ -1445,7 +1445,7 @@
                     },
                     "sequencer_address": {
                         "title": "Sequencer address",
-                        "description": "The StarkNet identity of the sequencer submitting this block",
+                        "description": "The Starknet identity of the sequencer submitting this block",
                         "$ref": "#/components/schemas/FELT"
                     },
                     "l1_gas_price": {
@@ -3347,7 +3347,7 @@
             },
             "DEPRECATED_CONTRACT_CLASS": {
                 "title": "Deprecated contract class",
-                "description": "The definition of a StarkNet contract class",
+                "description": "The definition of a Starknet contract class",
                 "type": "object",
                 "properties": {
                     "program": {

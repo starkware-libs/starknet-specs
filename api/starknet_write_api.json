@@ -2,7 +2,7 @@
     "openrpc": "1.0.0-rc1",
     "info": {
         "version": "0.5.0",
-        "title": "StarkNet Node Write API",
+        "title": "Starknet Node Write API",
         "license": {}
     },
     "servers": [],
