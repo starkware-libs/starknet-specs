@@ -9,4 +9,4 @@ for spec_file in "api/starknet_api_openrpc.json" "api/starknet_trace_api_openrpc
     node validate.js $spec_file || failure_count=$((failure_count + 1))
 done
 
-exit failure_count
+exit $failure_count
