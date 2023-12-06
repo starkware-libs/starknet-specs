@@ -1,27 +1,39 @@
 #!/usr/bin/env node
 
-const { parseOpenRPCDocument, validateOpenRPCDocument, dereferenceDocument } = require("@open-rpc/schema-utils-js");
+const { parseOpenRPCDocument, validateOpenRPCDocument } = require("@open-rpc/schema-utils-js");
 const Dereferencer = require("@json-schema-tools/dereferencer");
 const fs = require('fs-extra');
+const path = require('path');
+
+/**
+ * Prints to STDERR and exits with a non-zero exit code
+ * @param {string} msg 
+ */
+function exitWithError(msg) {
+    console.error(msg);
+    process.exit(1);
+}
 
 async function runValidation(filename) {
+    process.stdout.write(`Validating ${filename}: `);
     try {
-        let docToParse = await fileContentAsJSON(filename)
-        let docToParseWithExternalRefs = await fetchExternalRefsFor(docToParse);
+        let docToParse = await fileContentAsJSON(filename);
+        let parentDir = path.dirname(filename);
+        let docToParseWithExternalRefs = await fetchExternalRefsFor(docToParse, parentDir);
         let dereffedDoc = await derefAll(docToParseWithExternalRefs);
 
         let doc = await parseOpenRPCDocument(dereffedDoc, { dereference: true });
 
         const errors = validateOpenRPCDocument(doc);
         if (errors === true) {
-            console.log("Ok!")
+            console.log("Ok!");
         } else {
-            console.error(errors.name)
-            console.error(errors.message)
+            console.error(errors.name);
+            exitWithError(errors.message);
         }
     }
     catch (exn) {
-        console.error(exn && exn.message)
+        exitWithError(exn && exn.message);
     }
 }
 
@@ -29,11 +41,12 @@ async function runValidation(filename) {
  * Given a JSON document with an OpenRPC schema, fetch all references pointing to schemas in external files,
  * and add them to the schemas in this document.
  * @param {JSON} docToParse The OpenRPC document
+ * @param {string} parentDir The parent directory of docToParse
  * @returns The amended objects.
  */
-async function fetchExternalRefsFor(docToParse) {
+async function fetchExternalRefsFor(docToParse, parentDir) {
     let externalRefs = await externalRefsFrom(docToParse.components.schemas);
-    let allExternalSchemas = await fetchExternalSchemas(externalRefs);
+    let allExternalSchemas = await fetchExternalSchemas(externalRefs, parentDir);
     Object.keys(allExternalSchemas).forEach(key => docToParse.components.schemas[key] = allExternalSchemas[key]);
 
     return docToParse;
@@ -81,20 +94,21 @@ async function derefAll(doc) {
 /**
  * Retrieve external schema definitions, from other files.
  * @param {Map<string,string} externalRefs Mapping of schema definitions, pointing to external files.
+ * @param {string} parentDir The parent directory of the file where the references were used
  * @returns The actual referenced schema objects
  */
-async function fetchExternalSchemas(externalRefs) {
-    let externalFilenames = Object.values(externalRefs).map(ref => filenameFromExternalRef(ref.value))
-    let uniqueExtFilenames = [...new Set(externalFilenames)]
+async function fetchExternalSchemas(externalRefs, parentDir) {
+    let externalFilenames = Object.values(externalRefs).map(ref => filenameFromExternalRef(ref.value));
+    let uniqueExtFilenames = [...new Set(externalFilenames)];
     let externalJSONPromises = uniqueExtFilenames
-        .map(relative => { return { key: relative, fullpath: fullPathForRefFile(relative) } })
+        .map(relative => ({ key: relative, fullpath: path.join(parentDir, relative) }))
         .map(entry => fileContentAsJSON(entry.fullpath).then(c => {
             return { key: entry.key, content: c }
         }));
 
     let externalJSONs = await Promise.all(externalJSONPromises);
 
-    let ret = {}
+    let ret = {};
 
     //collect all schema objects into `ret` and return it.
     externalJSONs
@@ -139,20 +153,11 @@ async function externalRefsFrom(allSchemas) {
  */
 const filenameFromExternalRef = ref => ref.split("#")[0];
 
-//TODO: this assumes the script is run in a specific directory relative to the files.
-/**
- * Given a relative path, retrieve the full path to the relative API.
- * Note this assumes the references in the file are relative to the current working directory.
- * @param {String} relative The relative path
- * @returns The full filesystem path
- */
-const fullPathForRefFile = relative => `${process.cwd()}/${relative}` //should canonize this
-
 let args = process.argv.slice(2);
 
-if (args.length > 0) {
-    runValidation(args[0])
+if (args.length === 1) {
+    runValidation(args[0]);
+} else {
+    exitWithError(`Error: ${__filename} <SPEC_FILE>`);
 }
-else
-    console.error("Missing filename");
 

@@ -7,7 +7,7 @@
         "url": "https://github.com/starkware-libs/starknet-specs.git"
     },
     "scripts": {
-        "validate_all": "node validate.js api/starknet_api_openrpc.json && node validate.js api/starknet_write_api.json && node validate.js api/starknet_trace_api_openrpc.json"
+        "validate_all": "./validate_all.sh"
     },
     "author": "Lior Schejter",
     "license": "MIT",
