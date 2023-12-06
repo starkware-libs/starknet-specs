@@ -18,6 +18,8 @@ async function runValidation(filename) {
     process.stdout.write(`Validating ${filename}: `);
     try {
         let docToParse = await fileContentAsJSON(filename);
+        assertVersion(docToParse);
+
         let parentDir = path.dirname(filename);
         let docToParseWithExternalRefs = await fetchExternalRefsFor(docToParse, parentDir);
         let dereffedDoc = await derefAll(docToParseWithExternalRefs);
@@ -153,6 +155,18 @@ async function externalRefsFrom(allSchemas) {
  */
 const filenameFromExternalRef = ref => ref.split("#")[0];
 
+/**
+ * Exits if candidateObj version not the same as in package.json
+ * @param {JSON} candidateObj
+ */
+function assertVersion(candidateObj) {
+    const candidateVersion = candidateObj.info.version;
+    const expected = require("./package.json").version;
+    if (candidateVersion !== expected) {
+        exitWithError(`Version mismatch; expected ${expected}, got ${candidateVersion}`);
+    }
+}
+
 let args = process.argv.slice(2);
 
 if (args.length === 1) {
@@ -160,4 +174,3 @@ if (args.length === 1) {
 } else {
     exitWithError(`Error: ${__filename} <SPEC_FILE>`);
 }
-
