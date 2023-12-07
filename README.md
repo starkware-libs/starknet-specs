@@ -28,5 +28,5 @@ If everything is ok, an appropriate message is displayed; otherwise errors are o
 When updating the specification version, change the `"version"` property in all of the specification files. Also update the version in `package*.json` files by running:
 
 ```
-npm version <VERSION>
+npm version <VERSION> --no-git-tag-version
 ```
