@@ -37,16 +37,15 @@ Releases follow [semantic versioning](https://semver.org) for version tags.
 We use `rc`_i_ ( i = 1,2,...) suffix to qualify different release candidates.
 No suffix to a version means it's the recommendation version.
 
-When updating the specification version, change the `"version"` property in all of the specification files. Also update the version in `package*.json` files by running:
+## Different Specification Documents
+
+A release number is relevant to all API specification documents at the same time. In other words, they are all considered a single document.
+
+When updating the specification version, change the `"version"` property in all specification files. Also update the version in `package*.json` files by running:
 
 ```
 npm version <VERSION> --no-git-tag-version
 ```
-
-## Different Specification Documents
-
-A release number is relevant to all API specification documents at the same time. In other words, they are all considered a single document.
-Some parts of the API, e.g. the trace API, are considered optional. Still, they affect and adhere to the semantic version of the release.
 
 ## Technical Implementation
 
@@ -62,6 +61,3 @@ Examples for tags:
 - `v0.1.0-rc1`: release candidate 1 of version 0.1.0.
 - `v1.0.0`: First recommended release of the API
 - `v1.1.0-rc2`: 2nd release candidate for the release that has non-breaking changes over the first recommended release.
-
-
-
