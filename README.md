@@ -15,9 +15,18 @@ When developing the schema, you can validate the OpenRPC schema file, by running
 Note this requires node.js installed.
 
 The command:
+
 ```
 ./validate.js api/starknet_api_openrpc.json
 ```
 
 will run a validation on the `api/starknet_api_openrpc.json` schema file.
 If everything is ok, an appropriate message is displayed; otherwise errors are output to standard error.
+
+# Versioning
+
+When updating the specification version, change the `"version"` property in all of the specification files. Also update the version in `package*.json` files by running:
+
+```
+npm version <VERSION>
+```

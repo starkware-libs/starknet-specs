@@ -1,5 +1,5 @@
 {
-    "name": "openrpc_scripts",
+    "name": "starknet_specs",
     "version": "0.6.0",
     "description": "Tooling for OpenRPC files",
     "repository": {
