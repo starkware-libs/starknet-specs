@@ -33,9 +33,15 @@ Suggestions to API specification changes are made as pull requests on the master
 
 ## Version Numbering
 
-Release follow a [semantic versioning](semver.org) for version tags.
+Releases follow [semantic versioning](https://semver.org) for version tags.
 We use `rc`_i_ ( i = 1,2,...) suffix to qualify different release candidates.
 No suffix to a version means it's the recommendation version.
+
+When updating the specification version, change the `"version"` property in all of the specification files. Also update the version in `package*.json` files by running:
+
+```
+npm version <VERSION> --no-git-tag-version
+```
 
 ## Different Specification Documents
 
