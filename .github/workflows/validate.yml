@@ -28,3 +28,5 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run validate_all
+    - name: Check spelling
+      uses: crate-ci/typos@master
