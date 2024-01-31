@@ -3872,20 +3872,28 @@
                         "title": "DataResources",
                         "description": "the data-availability resources of this transaction",
                         "properties": {
-                            "l1_gas": {
-                                "title": "L1Gas",
-                                "description": "the gas consumed by this transaction's data, 0 if it uses data gas for DA",
-                                "type": "integer"
-                            },
-                            "l1_data_gas": {
-                                "title": "L1DataGas",
-                                "description": "the data gas consumed by this transaction's data, 0 if it uses gas for DA",
-                                "type": "integer"
+                            "data_availability": {
+                                "type": "object",
+                                "properties": {
+                                    "l1_gas": {
+                                        "title": "L1Gas",
+                                        "description": "the gas consumed by this transaction's data, 0 if it uses data gas for DA",
+                                        "type": "integer"
+                                    },
+                                    "l1_data_gas": {
+                                        "title": "L1DataGas",
+                                        "description": "the data gas consumed by this transaction's data, 0 if it uses gas for DA",
+                                        "type": "integer"
+                                    }
+                                },
+                                "required": [
+                                    "l1_gas",
+                                    "l1_data_gas"
+                                ]
                             }
                         },
                         "required": [
-                            "l1_gas",
-                            "l1_data_gas"
+                            "data_availability"
                         ]
                     }
                 ]
