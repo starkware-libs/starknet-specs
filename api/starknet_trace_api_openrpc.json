@@ -183,6 +183,11 @@
                                 "description": "the state diffs induced by the transaction",
                                 "$ref": "#/components/schemas/STATE_DIFF"
                             },
+                            "execution_resources": {
+                                "title": "Execution resources",
+                                "description": "the resources consumed by the transaction, includes both computation and data",
+                                "$ref": "#/components/schemas/EXECUTION_RESOURCES"
+                            },
                             "type": {
                                 "title": "Type",
                                 "type": "string",
@@ -193,7 +198,8 @@
                         },
                         "required": [
                             "type",
-                            "execute_invocation"
+                            "execute_invocation",
+                            "execution_resources"
                         ]
                     },
                     {
@@ -212,6 +218,11 @@
                                 "description": "the state diffs induced by the transaction",
                                 "$ref": "#/components/schemas/STATE_DIFF"
                             },
+                            "execution_resources": {
+                                "title": "Execution resources",
+                                "description": "the resources consumed by the transaction, includes both computation and data",
+                                "$ref": "#/components/schemas/EXECUTION_RESOURCES"
+                            },
                             "type": {
                                 "title": "Type",
                                 "type": "string",
@@ -221,7 +232,8 @@
                             }
                         },
                         "required": [
-                            "type"
+                            "type",
+                            "execution_resources"
                         ]
                     },
                     {
@@ -244,6 +256,11 @@
                                 "description": "the state diffs induced by the transaction",
                                 "$ref": "#/components/schemas/STATE_DIFF"
                             },
+                            "execution_resources": {
+                                "title": "Execution resources",
+                                "description": "the resources consumed by the transaction, includes both computation and data",
+                                "$ref": "#/components/schemas/EXECUTION_RESOURCES"
+                            },
                             "type": {
                                 "title": "Type",
                                 "type": "string",
@@ -254,6 +271,7 @@
                         },
                         "required": [
                             "type",
+                            "execution_resources",
                             "constructor_invocation"
                         ]
                     },
@@ -354,9 +372,9 @@
                                 }
                             },
                             "execution_resources": {
-                                "title": "Execution resources",
+                                "title": "Computation resources",
                                 "description": "Resources consumed by the internal call",
-                                "$ref": "#/components/schemas/EXECUTION_RESOURCES"
+                                "$ref": "#/components/schemas/COMPUTATION_RESOURCES"
                             }
                         },
                         "required": [
@@ -452,6 +470,9 @@
             },
             "STATE_DIFF": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/STATE_DIFF"
+            },
+            "COMPUTATION_RESOURCES": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/COMPUTATION_RESOURCES"
             },
             "EXECUTION_RESOURCES": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EXECUTION_RESOURCES"
