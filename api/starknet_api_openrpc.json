@@ -1418,25 +1418,21 @@
                         "description": "The transactions in this block",
                         "type": "array",
                         "items": {
-                            "title": "transactions in block",
                             "type": "object",
-                            "allOf": [
-                                {
+                            "title": "transaction and receipt",
+                            "properties": {
+                                "transaction": {
                                     "title": "transaction",
                                     "$ref": "#/components/schemas/TXN"
                                 },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "receipt": {
-                                            "title": "receipt",
-                                            "$ref": "#/components/schemas/TXN_RECEIPT"
-                                        }
-                                    },
-                                    "required": [
-                                        "receipt"
-                                    ]
+                                "receipt": {
+                                    "title": "receipt",
+                                    "$ref": "#/components/schemas/TXN_RECEIPT_IN_BLOCK"
                                 }
+                            },
+                            "required": [
+                                "transaction",
+                                "receipt"
                             ]
                         }
                     }
@@ -3207,6 +3203,10 @@
                         "$ref": "#/components/schemas/PENDING_DEPLOY_ACCOUNT_TXN_RECEIPT"
                     }
                 ]
+            },
+            "TXN_RECEIPT_IN_BLOCK": {
+                "title": "receipt in block",
+                "$ref": "#/components/schemas/PENDING_TXN_RECEIPT"
             },
             "PENDING_COMMON_RECEIPT_PROPERTIES": {
                 "title": "Pending common receipt properties",
