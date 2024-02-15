@@ -21,3 +21,7 @@ The command:
 
 will run a validation on the `api/starknet_api_openrpc.json` schema file.
 If everything is ok, an appropriate message is displayed; otherwise errors are output to standard error.
+
+starknet_vs_ethereum_node_apis.md
+ file has rpc related differences in - starknet_vs_ethereum_node_apis.md
+****
