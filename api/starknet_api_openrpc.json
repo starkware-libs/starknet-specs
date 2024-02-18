@@ -2852,6 +2852,7 @@
                     },
                     "finality_status": {
                         "title": "Finality status",
+                        "description": "finality status of the tx, which is ACCEPTED_ON_L2 when included in a pending receipt, and can be ACCEPTED_ON_L1 when part of a getBlockWithReceipts response",
                         "$ref": "#/components/schemas/TXN_FINALITY_STATUS"
                     },
                     "block_hash": {
@@ -3246,11 +3247,7 @@
                     },
                     "finality_status": {
                         "title": "Finality status",
-                        "type": "string",
-                        "enum": [
-                            "ACCEPTED_ON_L2"
-                        ],
-                        "description": "The finality status of the transaction"
+                        "$ref": "#/components/schemas/TXN_FINALITY_STATUS"
                     },
                     "execution_status": {
                         "title": "Execution status",
