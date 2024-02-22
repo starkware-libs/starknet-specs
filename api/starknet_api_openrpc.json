@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.6.0",
+        "version": "0.7.0",
         "title": "StarkNet Node API",
         "license": {}
     },
@@ -1508,6 +1508,8 @@
                     "timestamp",
                     "sequencer_address",
                     "l1_gas_price",
+                    "l1_data_gas_price",
+                    "l1_da_mode",
                     "starknet_version"
                 ]
             },
