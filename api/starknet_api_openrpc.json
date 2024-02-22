@@ -1512,6 +1512,8 @@
                     "timestamp",
                     "sequencer_address",
                     "l1_gas_price",
+                    "l1_data_gas_price",
+                    "l1_da_mode",
                     "starknet_version"
                 ]
             },
