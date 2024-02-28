@@ -4020,12 +4020,12 @@
                                     "l1_gas": {
                                         "title": "L1Gas",
                                         "description": "the gas consumed by this transaction's data, 0 if it uses data gas for DA",
-                                        "type": "integer"
+                                        "$ref": "#/components/schemas/FELT"
                                     },
                                     "l1_data_gas": {
                                         "title": "L1DataGas",
                                         "description": "the data gas consumed by this transaction's data, 0 if it uses gas for DA",
-                                        "type": "integer"
+                                        "$ref": "#/components/schemas/FELT"
                                     }
                                 },
                                 "required": [
