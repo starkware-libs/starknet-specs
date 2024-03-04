@@ -171,7 +171,10 @@
                                                 "description": "the revert reason for the failed execution",
                                                 "type": "string"
                                             }
-                                        }
+                                        },
+                                        "required": [
+                                            "revert_reason"
+                                        ]
                                     }
                                 ]
                             },
