@@ -2842,64 +2842,104 @@
                 ]
             },
             "COMMON_RECEIPT_PROPERTIES": {
-                "title": "Common receipt properties",
-                "description": "Common properties for a transaction receipt",
-                "type": "object",
-                "properties": {
-                    "transaction_hash": {
-                        "title": "Transaction hash",
-                        "$ref": "#/components/schemas/TXN_HASH",
-                        "description": "The hash identifying the transaction"
+                "allOf": [
+                    {
+                        "title": "Common receipt properties",
+                        "description": "Common properties for a transaction receipt",
+                        "type": "object",
+                        "properties": {
+                            "transaction_hash": {
+                                "title": "Transaction hash",
+                                "$ref": "#/components/schemas/TXN_HASH",
+                                "description": "The hash identifying the transaction"
+                            },
+                            "actual_fee": {
+                                "title": "Actual fee",
+                                "$ref": "#/components/schemas/FEE_PAYMENT",
+                                "description": "The fee that was charged by the sequencer"
+                            },
+                            "finality_status": {
+                                "title": "Finality status",
+                                "description": "finality status of the tx",
+                                "$ref": "#/components/schemas/TXN_FINALITY_STATUS"
+                            },
+                            "messages_sent": {
+                                "type": "array",
+                                "title": "Messages sent",
+                                "items": {
+                                    "$ref": "#/components/schemas/MSG_TO_L1"
+                                }
+                            },
+                            "events": {
+                                "description": "The events emitted as part of this transaction",
+                                "title": "Events",
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/EVENT"
+                                }
+                            },
+                            "execution_resources": {
+                                "title": "Execution resources",
+                                "description": "The resources consumed by the transaction",
+                                "$ref": "#/components/schemas/EXECUTION_RESOURCES"
+                            }
+                        },
+                        "required": [
+                            "transaction_hash",
+                            "actual_fee",
+                            "finality_status",
+                            "messages_sent",
+                            "events",
+                            "execution_resources"
+                        ]
                     },
-                    "actual_fee": {
-                        "title": "Actual fee",
-                        "$ref": "#/components/schemas/FEE_PAYMENT",
-                        "description": "The fee that was charged by the sequencer"
-                    },
-                    "execution_status": {
-                        "title": "Execution status",
-                        "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
-                    },
-                    "finality_status": {
-                        "title": "Finality status",
-                        "description": "finality status of the tx",
-                        "$ref": "#/components/schemas/TXN_FINALITY_STATUS"
-                    },
-                    "messages_sent": {
-                        "type": "array",
-                        "title": "Messages sent",
-                        "items": {
-                            "$ref": "#/components/schemas/MSG_TO_L1"
-                        }
-                    },
-                    "revert_reason": {
-                        "title": "Revert reason",
-                        "name": "revert reason",
-                        "description": "the revert reason for the failed execution",
-                        "type": "string"
-                    },
-                    "events": {
-                        "description": "The events emitted as part of this transaction",
-                        "title": "Events",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/EVENT"
-                        }
-                    },
-                    "execution_resources": {
-                        "title": "Execution resources",
-                        "description": "The resources consumed by the transaction",
-                        "$ref": "#/components/schemas/EXECUTION_RESOURCES"
+                    {
+                        "oneOf": [
+                            {
+                                "title": "Successful Common receipt properties",
+                                "description": "Common properties for a transaction receipt that was executed successfully",
+                                "type": "object",
+                                "properties": {
+                                    "execution_status": {
+                                        "title": "Execution status",
+                                        "type": "string",
+                                        "enum": [
+                                            "SUCCEEDED"
+                                        ],
+                                        "description": "The execution status of the transaction"
+                                    }
+                                },
+                                "required": [
+                                    "execution_status"
+                                ]
+                            },
+                            {
+                                "title": "Reverted Common receipt properties",
+                                "description": "Common properties for a transaction receipt that was reverted",
+                                "type": "object",
+                                "properties": {
+                                    "execution_status": {
+                                        "title": "Execution status",
+                                        "type": "string",
+                                        "enum": [
+                                            "REVERTED"
+                                        ],
+                                        "description": "The execution status of the transaction"
+                                    },
+                                    "revert_reason": {
+                                        "title": "Revert reason",
+                                        "name": "revert reason",
+                                        "description": "the revert reason for the failed execution",
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "execution_status",
+                                    "revert_reason"
+                                ]
+                            }
+                        ]
                     }
-                },
-                "required": [
-                    "transaction_hash",
-                    "actual_fee",
-                    "finality_status",
-                    "execution_status",
-                    "messages_sent",
-                    "events",
-                    "execution_resources"
                 ]
             },
             "INVOKE_TXN_RECEIPT": {
