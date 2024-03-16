@@ -47,6 +47,12 @@ When updating the specification version, change the `"version"` property in all 
 npm version <VERSION> --no-git-tag-version
 ```
 
+When updating the specification version, change the `"version"` property in all of the specification files. Also update the version in `package*.json` files by running:
+
+```
+npm version <VERSION> --no-git-tag-version
+```
+
 ## Technical Implementation
 
 We use github releases on this repo to publish releases.
