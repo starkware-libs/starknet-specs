@@ -292,6 +292,11 @@
                                 "description": "the state diffs induced by the transaction",
                                 "$ref": "#/components/schemas/STATE_DIFF"
                             },
+                            "execution_resources": {
+                                "title": "Execution resources",
+                                "description": "the resources consumed by the transaction, includes both computation and data",
+                                "$ref": "#/components/schemas/EXECUTION_RESOURCES"
+                            },
                             "type": {
                                 "title": "Type",
                                 "type": "string",
@@ -302,7 +307,8 @@
                         },
                         "required": [
                             "type",
-                            "function_invocation"
+                            "function_invocation",
+                            "execution_resources"
                         ]
                     }
                 ]
