@@ -1,0 +1,752 @@
+{
+  "openrpc": "1.0.0-rc1",
+  "info": {
+    "version": "0.1.0",
+    "title": "Starknet Wallet API",
+    "license": {}
+  },
+  "servers": [],
+  "methods": [
+    {
+      "name": "starknet_supportedSpecs",
+      "summary": "Returns a list of rpc spec versions compatible with the wallet",
+      "params": [],
+      "result": {
+        "name": "result",
+        "description": "Semver of Starknet's JSON-RPC supported by the wallet",
+        "required": true,
+        "schema": {
+          "type": "array",
+          "properties": {
+            "items": {
+              "$ref": "#/components/schemas/SPEC_VERSION"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "wallet_getPermissions",
+      "summary": "Opens a window in the wallet and ask the authorization to connect your DAPP",
+      "params": [],
+      "result": {
+        "name": "result",
+        "schema": {
+          "title": "Wallet permissions",
+          "oneOf": [
+            {
+              "type": "array",
+              "properties": {
+                "items": {
+                  "$ref": "#/components/schemas/PERMISSION"
+                }
+              }
+            },
+            {
+              "type": "array",
+              "title": "Empty array"
+            }
+          ],
+          "required": []
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "wallet_requestAccounts",
+      "summary": "Get the account address of the wallet active account",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "silent_mode",
+          "summary": "if true, the wallet will not show the wallet-unlock UI in case of a locked wallet, nor the dApp-approve UI in case of a non-allowed dApp",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "description": "The active account of the wallet",
+        "schema": {
+          "title": "Wallet Accounts",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/ADDRESS"
+          },
+          "required": []
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "wallet_deploymentData",
+      "summary": "Request from the current wallet the data required to deploy the account at the current address",
+      "params": [],
+      "result": {
+        "name": "result",
+        "schema": {
+          "title": "GetDeploymentDataResult",
+          "$ref": "#/components/schemas/ACCOUNT_DEPLOYMENT_DATA"
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "wallet_switchStarknetChain",
+      "summary": "Change the current network of the wallet",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "chainId",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/CHAIN_ID"
+          }
+        }
+      ],
+      "result": {
+        "name": "response",
+        "summary": "If wallet agrees to change network, return true. If the current network is selected, return true. If network is inconsistent, return false",
+        "required": true,
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "wallet_requestAccounts",
+      "summary": "Get the account address of the wallet active account",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "silent_mode",
+          "summary": "if true, the wallet will not show the wallet-unlock UI in case of a locked wallet, nor the dApp-approve UI in case of a non-allowed dApp",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "description": "The active account of the wallet",
+        "schema": {
+          "title": "Wallet Accounts",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/ADDRESS"
+          },
+          "required": []
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "wallet_watchAsset",
+      "summary": "Add a token in the list of assets displayed by the wallet",
+      "params": [
+        {
+          "name": "WatchAssetParameters",
+          "description": "Information needed to add asset",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/ASSET"
+          }
+        }
+      ],
+      "result": {
+        "name": "response",
+        "summary": "If adding a token is agreed, return true",
+        "required": true,
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/NOT_ERC20"
+        }
+      ]
+    },
+    {
+      "name": "wallet_addStarknetChain",
+      "summary": "Add a new network in the list of networks of the wallet",
+      "params": [
+        {
+          "name": "AddStarknetChainParameters",
+          "description": "Information for the chain to add to the wallet",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/STARKNET_CHAIN"
+          }
+        }
+      ],
+      "result": {
+        "name": "response",
+        "summary": "If agreed, return true. Inconsistent return false",
+        "required": true,
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/INCORRECT_NETWORK"
+        }
+      ]
+    },
+    {
+      "name": "starknet_addInvokeTransaction",
+      "summary": "Submit a new transaction to be added to the chain",
+      "params": [
+        {
+          "name": "invoke_transaction",
+          "description": "The information needed to invoke the function (or account, for version 1 transactions)",
+          "required": true,
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/INVOKE_CALL"
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "description": "The result of the transaction submission",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "transaction_hash": {
+              "title": "The hash of the invoke transaction",
+              "$ref": "#/components/schemas/TXN_HASH"
+            }
+          },
+          "required": ["transaction_hash"]
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/UNEXPECTED_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "starknet_addDeclareTransaction",
+      "summary": "Submit a declare transaction",
+      "params": [
+        {
+          "name": "declare_transaction",
+          "description": "The information needed to declare a new class",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/DECLARE_TXN"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "description": "The result of the transaction submission",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "transaction_hash": {
+              "title": "The hash of the declare transaction",
+              "$ref": "#/components/schemas/TXN_HASH"
+            },
+            "class_hash": {
+              "title": "The hash of the declared class",
+              "$ref": "#/components/schemas/FELT"
+            }
+          },
+          "required": ["transaction_hash", "class_hash"]
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/UNEXPECTED_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "starknet_addDeployAccountTransaction",
+      "summary": "Deploy a new account in the current network. It's not linked to the type of accounts provided by the wallet ; you have to define which class to use",
+      "params": [
+        {
+          "name": "deploy_account_transaction",
+          "description": "The deploy account transaction",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/DEPLOY_ACCOUNT_TXN"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "description": "The result of the transaction submission",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "transaction_hash": {
+              "title": "The hash of the deploy transaction",
+              "$ref": "#/components/schemas/TXN_HASH"
+            },
+            "contract_address": {
+              "title": "The address of the new contract",
+              "$ref": "#/components/schemas/FELT"
+            }
+          },
+          "required": ["transaction_hash", "contract_address"]
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/UNEXPECTED_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "starknet_signTypedData",
+      "summary": "Sign typed data using the wallet",
+      "params": [
+        {
+          "name": "typed_data",
+          "description": "The typed data to sign",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/TYPED_DATA"
+          }
+        }
+      ],
+      "result": {
+        "name": "response",
+        "summary": "The signature over the typed data",
+        "required": true,
+        "schema": {
+          "$ref": "#/components/schemas/SIGNATURE"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/UNEXPECTED_ERROR"
+        }
+      ]
+    }
+  ],
+  "components": {
+    "contentDescriptors": {},
+    "schemas": {
+      "TXN_HASH": {
+        "title": "Transaction hash",
+        "description": "The transaction hash, as assigned in StarkNet",
+        "$ref": "#/components/schemas/FELT"
+      },
+      "ADDRESS": {
+        "title": "Address",
+        "$ref": "#/components/schemas/FELT"
+      },
+      "SYMBOL": {
+        "title": "ERC20 Token Symbol",
+        "description": "The symbol of an contract",
+        "type": "string",
+        "minLength": 2,
+        "maxLength": 6,
+        "pattern": "^[A-Za-z0-9]{1,5}$"
+      },
+      "SPEC_VERSION": {
+        "title": "Starknet Spec Version",
+        "description": "A Starknet RPC spec version, only two numbers are provided",
+        "type": "string",
+        "pattern": "^[0-9]+\\.[0-9]+$"
+      },
+      "PERMISSION": {
+        "title": "Wallet permission",
+        "type": "string",
+        "enum": ["accounts"],
+        "description": "Optional wallet permissions"
+      },
+      "ASSET": {
+        "title": "Starknet Token",
+        "description": "Details of an onchain Starknet token",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["ERC20"]
+          },
+          "options": {
+            "type": "object",
+            "properties": {
+              "address": {
+                "title": "Token Address",
+                "$ref": "#/components/schemas/ADDRESS"
+              },
+              "symbol": {
+                "title": "Token Symbol",
+                "$ref": "#/components/schemas/SYMBOL"
+              },
+              "decimals": {
+                "type": "number",
+                "minimum": 0
+              },
+              "image": {
+                "type": "string",
+                "format": "uri"
+              },
+              "name": {
+                "type": "string"
+              }
+            },
+            "required": ["address"]
+          }
+        },
+        "required": ["type", "options"]
+      },
+      "CHAIN_ID": {
+        "title": "Chain id",
+        "description": "StarkNet chain id, given in hex representation.",
+        "type": "string",
+        "pattern": "^0x[a-fA-F0-9]+$"
+      },
+      "STARKNET_CHAIN_ID": {
+        "title": "Starknet Chain id",
+        "description": "Only chain IDs supported by Starknet officialy",
+        "allOf": [
+          {
+            "type": "string",
+            "enum": ["0x534e5f4d41494e", "0x534e5f474f45524c49", "0x534e5f5345504f4c4941"]
+          },
+          {
+            "$ref": "#/components/schemas/CHAIN_ID"
+          }
+        ]
+      },
+      "ACCOUNT_DEPLOYMENT_DATA": {
+        "title": "Account Deployment Data",
+        "description": "Data required to deploy an account at and address",
+        "type": "object",
+        "properties": {
+          "address": {
+            "title": "Address",
+            "description": "The expected address to be depolyed, used to double check",
+            "$ref": "#/components/schemas/ADDRESS"
+          },
+          "class_hash": {
+            "title": "Class hash",
+            "description": "The hash of the deployed contract's class",
+            "$ref": "#/components/schemas/FELT"
+          },
+          "salt": {
+            "title": "Class hash",
+            "description": "The hash of the deployed contract's class",
+            "$ref": "#/components/schemas/FELT"
+          },
+          "calldata": {
+            "type": "array",
+            "description": "The parameters passed to the constructor",
+            "title": "Constructor calldata",
+            "items": {
+              "$ref": "#/components/schemas/FELT"
+            }
+          },
+          "sigdata": {
+            "title": "Signature Data",
+            "type": "array",
+            "description": "Optional array of felts to be added to the signature",
+            "items": {
+              "$ref": "#/components/schemas/FELT"
+            }
+          },
+          "version": {
+            "title": "Contract Version",
+            "description": "The Cairo version of the contract 0 or 1",
+            "type": "integer",
+            "enum": [0, 1]
+          }
+        },
+        "required": ["address", "class_hash", "salt", "calldata", "version"]
+      },
+      "INVOKE_CALL": {
+        "title": "Invoke transaction",
+        "description": "initiates a transaction from a given account",
+        "type": "object",
+        "properties": {
+          "contract_address": {
+            "title": "sender address",
+            "$ref": "#/components/schemas/ADDRESS"
+          },
+          "entry_point": {
+            "title": "Contract entry point",
+            "$ref": "#/components/schemas/FELT"
+          },
+          "calldata": {
+            "type": "array",
+            "title": "calldata",
+            "description": "Calldata to be passed to the entrypoint",
+            "items": {
+              "$ref": "#/components/schemas/FELT"
+            }
+          }
+        },
+        "required": ["contract_address", "calldata", "entry_point"]
+      },
+      "DECLARE_TXN": {
+        "title": "Declare Transaction",
+        "description": "Declare Contract Transaction",
+        "type": "object",
+        "properties": {
+          "compiled_class_hash": {
+            "title": "Compiled class hash",
+            "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
+            "$ref": "#/components/schemas/FELT"
+          },
+          "contract_class": {
+            "title": "Contract class",
+            "description": "The class to be declared",
+            "$ref": "#/components/schemas/CONTRACT_CLASS"
+          }
+        },
+        "required": ["compiled_class_hash", "contract_class"]
+      },
+      "DEPLOY_ACCOUNT_TXN": {
+        "title": "Deploy account transaction",
+        "description": "Deploys an account contract, charges fee from the pre-funded account addresses",
+        "type": "object",
+        "properties": {
+          "contract_address_salt": {
+            "title": "Contract address salt",
+            "description": "The salt for the address of the deployed contract",
+            "$ref": "#/components/schemas/FELT"
+          },
+          "constructor_calldata": {
+            "type": "array",
+            "description": "The parameters passed to the constructor",
+            "title": "Constructor calldata",
+            "items": {
+              "$ref": "#/components/schemas/FELT"
+            }
+          },
+          "class_hash": {
+            "title": "Class hash",
+            "description": "The hash of the deployed contract's class",
+            "$ref": "#/components/schemas/FELT"
+          }
+        },
+        "required": ["contract_address_salt", "constructor_calldata", "class_hash"]
+      },
+      "STARKNET_CHAIN": {
+        "title": "AddStarknetChainParameters",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "chainId": {
+            "title": "Starknet Chain Id",
+            "$ref": "#/components/schemas/CHAIN_ID"
+          },
+          "chainName": {
+            "type": "string"
+          },
+          "rpcUrls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "blockExplorerUrls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          },
+          "nativeCurrency": {
+            "title": "Native Currency",
+            "$ref": "#/components/schemas/ASSET"
+          },
+          "iconUrls": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+          }
+        },
+        "required": ["id", "chainId", "chainName"]
+      },
+      "SIERRA_ENTRY_POINT": {
+        "title": "Sierra entry point",
+        "type": "object",
+        "properties": {
+          "selector": {
+            "title": "Selector",
+            "description": "A unique identifier of the entry point (function) in the program",
+            "$ref": "#/components/schemas/FELT"
+          },
+          "function_idx": {
+            "title": "Function index",
+            "description": "The index of the function in the program",
+            "type": "integer"
+          }
+        },
+        "required": ["selector", "function_idx"]
+      },
+      "STARKNET_MERKLE_TYPE": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["merkletree"]
+          },
+          "contains": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "type", "contains"]
+      },
+      "STARKNET_TYPE": {
+        "description": "A single type, as part of a struct. The `type` field can be any of the EIP-712 supported types",
+        "schema": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "type": { "type": "string" }
+              },
+              "required": ["name", "type"]
+            },
+            {
+              "$ref": "#/components/schemas/STARKNET_MERKLE_TYPE"
+            }
+          ]
+        }
+      },
+      "TYPED_DATA": {
+        "title": "TypedData",
+        "type": "object",
+        "properties": {
+          "types": {
+            "description": "primaryType represents the top-level type of the object in the message",
+            "type": "array",
+            "itmes": {
+              "$ref": "#/components/schemas/STARKNET_TYPE"
+            }
+          },
+          "primaryType": {
+            "type": "string",
+            "description": "primaryType represents the top-level type of the object in the message"
+          },
+          "domain": {
+            "description": "The EIP712 domain struct. Any of these fields are optional, but it must contain at least one field",
+            "$ref": "#/components/schemas/STARKNET_DOMAIN"
+          },
+          "message": {
+            "type": "object",
+            "description": "The message to be signed"
+          }
+        },
+        "required": ["types", "primaryType", "domain", "message"]
+      },
+      "STARKNET_DOMAIN": {
+        "type": "object",
+        "minProperties": 1,
+        "properties": {
+          "name": { "type": "string" },
+          "version": { "type": "string" },
+          "chainId": {
+            "anyOf": [{ "type": "string" }, { "type": "number" }]
+          }
+        }
+      },
+      "CONTRACT_CLASS": {
+        "title": "Contract class",
+        "type": "object",
+        "properties": {
+          "sierra_program": {
+            "title": "Sierra program",
+            "type": "array",
+            "description": "The list of Sierra instructions of which the program consists",
+            "items": {
+              "$ref": "#/components/schemas/FELT"
+            }
+          },
+          "contract_class_version": {
+            "title": "Contract class version",
+            "type": "string",
+            "description": "The version of the contract class object. Currently, the Starknet OS supports version 0.1.0"
+          },
+          "entry_points_by_type": {
+            "title": "Entry points by type",
+            "type": "object",
+            "properties": {
+              "CONSTRUCTOR": {
+                "type": "array",
+                "title": "Constructor",
+                "items": {
+                  "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
+                }
+              },
+              "EXTERNAL": {
+                "title": "External",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
+                }
+              },
+              "L1_HANDLER": {
+                "title": "L1 handler",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
+                }
+              }
+            },
+            "required": ["CONSTRUCTOR", "EXTERNAL", "L1_HANDLER"]
+          },
+          "abi": {
+            "title": "ABI",
+            "type": "string",
+            "description": "The class ABI, as supplied by the user declaring the class"
+          }
+        },
+        "required": ["sierra_program", "contract_class_version", "entry_points_by_type"]
+      },
+      "SIGNATURE": {
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/SIGNATURE"
+      },
+      "FELT": {
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
+      }
+    },
+    "errors": {
+      "NOT_ERC20": {
+        "code": 11,
+        "message": "Asset is not an ERC20"
+      },
+      "INCORRECT_NETWORK": {
+        "code": 12,
+        "message": "Network details are incorrect"
+      },
+      "UNEXPECTED_ERROR": {
+        "code": 63,
+        "message": "An unexpected error occurred",
+        "data": "string"
+      }
+    }
+  }
+}
