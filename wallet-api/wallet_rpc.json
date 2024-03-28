@@ -55,7 +55,6 @@
     {
       "name": "wallet_requestAccounts",
       "summary": "Get the account address of the wallet active account",
-      "paramStructure": "by-name",
       "params": [
         {
           "name": "silent_mode",
@@ -76,6 +75,19 @@
             "$ref": "#/components/schemas/ADDRESS"
           },
           "required": []
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "wallet_requestChainId",
+      "summary": "Request the current Chain Id",
+      "params": [],
+      "result": {
+        "name": "result",
+        "description": "The active chainId",
+        "schema": {
+          "$ref": "#/components/schemas/STARKNET_CHAIN_ID"
         }
       },
       "errors": []
