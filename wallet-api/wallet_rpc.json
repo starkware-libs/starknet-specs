@@ -54,7 +54,7 @@
     },
     {
       "name": "wallet_requestAccounts",
-      "summary": "Get the account address of the wallet active account",
+      "summary": "Get the account addresses of the wallet active account",
       "params": [
         {
           "name": "silent_mode",
@@ -99,7 +99,6 @@
       "result": {
         "name": "result",
         "schema": {
-          "title": "GetDeploymentDataResult",
           "$ref": "#/components/schemas/ACCOUNT_DEPLOYMENT_DATA"
         }
       },
@@ -108,7 +107,6 @@
     {
       "name": "wallet_switchStarknetChain",
       "summary": "Change the current network of the wallet",
-      "paramStructure": "by-name",
       "params": [
         {
           "name": "chainId",
@@ -126,12 +124,18 @@
           "type": "boolean"
         }
       },
-      "errors": []
+      "errors": [
+        {
+          "$ref": "#/components/errors/INCORRECT_NETWORK"
+        },
+        {
+          "$ref": "#/components/errors/USER_REFUSED"
+        }
+      ]
     },
     {
       "name": "wallet_requestAccounts",
       "summary": "Get the account address of the wallet active account",
-      "paramStructure": "by-name",
       "params": [
         {
           "name": "silent_mode",
@@ -161,7 +165,7 @@
       "summary": "Add a token in the list of assets displayed by the wallet",
       "params": [
         {
-          "name": "WatchAssetParameters",
+          "name": "Asset to add",
           "description": "Information needed to add asset",
           "required": true,
           "schema": {
@@ -188,7 +192,7 @@
       "summary": "Add a new network in the list of networks of the wallet",
       "params": [
         {
-          "name": "AddStarknetChainParameters",
+          "name": "Starknet Chain Id to add",
           "description": "Information for the chain to add to the wallet",
           "required": true,
           "schema": {
@@ -207,6 +211,9 @@
       "errors": [
         {
           "$ref": "#/components/errors/INCORRECT_NETWORK"
+        },
+        {
+          "$ref": "#/components/errors/USER_REFUSED"
         }
       ]
     },
@@ -233,7 +240,7 @@
           "type": "object",
           "properties": {
             "transaction_hash": {
-              "title": "The hash of the invoke transaction",
+              "title": "Transaction Hash",
               "$ref": "#/components/schemas/TXN_HASH"
             }
           },
@@ -241,6 +248,9 @@
         }
       },
       "errors": [
+        {
+          "$ref": "#/components/errors/USER_REFUSED"
+        },
         {
           "$ref": "#/components/errors/UNEXPECTED_ERROR"
         }
@@ -279,6 +289,9 @@
       },
       "errors": [
         {
+          "$ref": "#/components/errors/USER_REFUSED"
+        },
+        {
           "$ref": "#/components/errors/UNEXPECTED_ERROR"
         }
       ]
@@ -316,6 +329,9 @@
       },
       "errors": [
         {
+          "$ref": "#/components/errors/USER_REFUSED"
+        },
+        {
           "$ref": "#/components/errors/UNEXPECTED_ERROR"
         }
       ]
@@ -343,6 +359,9 @@
       },
       "errors": [
         {
+          "$ref": "#/components/errors/USER_REFUSED"
+        },
+        {
           "$ref": "#/components/errors/UNEXPECTED_ERROR"
         }
       ]
@@ -353,7 +372,7 @@
     "schemas": {
       "TXN_HASH": {
         "title": "Transaction hash",
-        "description": "The transaction hash, as assigned in StarkNet",
+        "description": "The transaction hash, as assigned in Starknet",
         "$ref": "#/components/schemas/FELT"
       },
       "ADDRESS": {
@@ -366,7 +385,7 @@
         "type": "string",
         "minLength": 2,
         "maxLength": 6,
-        "pattern": "^[A-Za-z0-9]{1,5}$"
+        "pattern": "^[A-Za-z0-9]{1,6}$"
       },
       "SPEC_VERSION": {
         "title": "Starknet Spec Version",
@@ -419,13 +438,13 @@
       },
       "CHAIN_ID": {
         "title": "Chain id",
-        "description": "StarkNet chain id, given in hex representation.",
+        "description": "Starknet chain id, given in hex representation.",
         "type": "string",
         "pattern": "^0x[a-fA-F0-9]+$"
       },
       "STARKNET_CHAIN_ID": {
         "title": "Starknet Chain id",
-        "description": "Only chain IDs supported by Starknet officialy",
+        "description": "Only officially supported Starknet IDs",
         "allOf": [
           {
             "type": "string",
@@ -443,7 +462,7 @@
         "properties": {
           "address": {
             "title": "Address",
-            "description": "The expected address to be depolyed, used to double check",
+            "description": "The expected address to be deployed, used to double check",
             "$ref": "#/components/schemas/ADDRESS"
           },
           "class_hash": {
@@ -550,7 +569,7 @@
         "required": ["contract_address_salt", "constructor_calldata", "class_hash"]
       },
       "STARKNET_CHAIN": {
-        "title": "AddStarknetChainParameters",
+        "title": "Starknet Chain",
         "type": "object",
         "properties": {
           "id": {
@@ -597,24 +616,8 @@
         },
         "required": ["id", "chainId", "chainName"]
       },
-      "SIERRA_ENTRY_POINT": {
-        "title": "Sierra entry point",
-        "type": "object",
-        "properties": {
-          "selector": {
-            "title": "Selector",
-            "description": "A unique identifier of the entry point (function) in the program",
-            "$ref": "#/components/schemas/FELT"
-          },
-          "function_idx": {
-            "title": "Function index",
-            "description": "The index of the function in the program",
-            "type": "integer"
-          }
-        },
-        "required": ["selector", "function_idx"]
-      },
       "STARKNET_MERKLE_TYPE": {
+        "title": "Starknet Merkle Type",
         "type": "object",
         "properties": {
           "name": {
@@ -631,6 +634,7 @@
         "required": ["name", "type", "contains"]
       },
       "STARKNET_TYPE": {
+        "title": "Starknet Type",
         "description": "A single type, as part of a struct. The `type` field can be any of the EIP-712 supported types",
         "schema": {
           "anyOf": [
@@ -649,7 +653,7 @@
         }
       },
       "TYPED_DATA": {
-        "title": "TypedData",
+        "title": "Typed Data",
         "type": "object",
         "properties": {
           "types": {
@@ -675,6 +679,7 @@
         "required": ["types", "primaryType", "domain", "message"]
       },
       "STARKNET_DOMAIN": {
+        "title": "Starknet Domain",
         "type": "object",
         "minProperties": 1,
         "properties": {
@@ -685,58 +690,11 @@
           }
         }
       },
+      "SIERRA_ENTRY_POINT": {
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/SIERRA_ENTRY_POINT"
+      },
       "CONTRACT_CLASS": {
-        "title": "Contract class",
-        "type": "object",
-        "properties": {
-          "sierra_program": {
-            "title": "Sierra program",
-            "type": "array",
-            "description": "The list of Sierra instructions of which the program consists",
-            "items": {
-              "$ref": "#/components/schemas/FELT"
-            }
-          },
-          "contract_class_version": {
-            "title": "Contract class version",
-            "type": "string",
-            "description": "The version of the contract class object. Currently, the Starknet OS supports version 0.1.0"
-          },
-          "entry_points_by_type": {
-            "title": "Entry points by type",
-            "type": "object",
-            "properties": {
-              "CONSTRUCTOR": {
-                "type": "array",
-                "title": "Constructor",
-                "items": {
-                  "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
-                }
-              },
-              "EXTERNAL": {
-                "title": "External",
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
-                }
-              },
-              "L1_HANDLER": {
-                "title": "L1 handler",
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/SIERRA_ENTRY_POINT"
-                }
-              }
-            },
-            "required": ["CONSTRUCTOR", "EXTERNAL", "L1_HANDLER"]
-          },
-          "abi": {
-            "title": "ABI",
-            "type": "string",
-            "description": "The class ABI, as supplied by the user declaring the class"
-          }
-        },
-        "required": ["sierra_program", "contract_class_version", "entry_points_by_type"]
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/CONTRACT_CLASS"
       },
       "SIGNATURE": {
         "$ref": "./api/starknet_api_openrpc.json#/components/schemas/SIGNATURE"
@@ -747,15 +705,19 @@
     },
     "errors": {
       "NOT_ERC20": {
-        "code": 11,
+        "code": 111,
         "message": "Asset is not an ERC20"
       },
       "INCORRECT_NETWORK": {
-        "code": 12,
+        "code": 112,
         "message": "Network details are incorrect"
       },
+      "USER_REFUSED": {
+        "code": 113,
+        "message": "User refused the operation"
+      },
       "UNEXPECTED_ERROR": {
-        "code": 63,
+        "code": 163,
         "message": "An unexpected error occurred",
         "data": "string"
       }
