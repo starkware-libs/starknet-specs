@@ -501,6 +501,11 @@
             "description": "The hash of the Cairo assembly resulting from the Sierra compilation",
             "$ref": "#/components/schemas/FELT"
           },
+          "class_hash": {
+            "title": "Class hash",
+            "description": "The hash of the declared class",
+            "$ref": "#/components/schemas/FELT"
+          },
           "contract_class": {
             "title": "Contract class",
             "description": "The class to be declared",
