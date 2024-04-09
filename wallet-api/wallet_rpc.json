@@ -107,7 +107,7 @@
           "$ref": "#/components/errors/USER_REFUSED_OP"
         },
         {
-          "$ref": "#/components/errors/UNEXPECTED_ERROR"
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
     },
@@ -139,7 +139,7 @@
           "$ref": "#/components/errors/USER_REFUSED_OP"
         },
         {
-          "$ref": "#/components/errors/UNEXPECTED_ERROR"
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
     },
@@ -175,7 +175,7 @@
           "$ref": "#/components/errors/USER_REFUSED_OP"
         },
         {
-          "$ref": "#/components/errors/UNEXPECTED_ERROR"
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
     },
@@ -208,7 +208,7 @@
           "$ref": "#/components/errors/USER_REFUSED_OP"
         },
         {
-          "$ref": "#/components/errors/UNEXPECTED_ERROR"
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
     },
@@ -250,7 +250,7 @@
           "$ref": "#/components/errors/USER_REFUSED_OP"
         },
         {
-          "$ref": "#/components/errors/UNEXPECTED_ERROR"
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
     },
@@ -293,10 +293,7 @@
           "$ref": "#/components/errors/USER_REFUSED_OP"
         },
         {
-          "$ref": "#/components/errors/USER_REFUSED"
-        },
-        {
-          "$ref": "#/components/errors/UNEXPECTED_ERROR"
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
     },
@@ -329,7 +326,7 @@
           "$ref": "#/components/errors/USER_REFUSED_OP"
         },
         {
-          "$ref": "#/components/errors/UNEXPECTED_ERROR"
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
     }
@@ -652,27 +649,23 @@
     "errors": {
       "NOT_ERC20": {
         "code": 111,
-        "message": "Asset is not an ERC20, or contract not deployed"
+        "message": "An error occured (NOT_ERC20)"
       },
       "UNLISTED_NETWORK": {
         "code": 112,
-        "message": "The network is not supported by the wallet"
+        "message": "An error occurred (INLISTED_NETWORK)"
       },
       "USER_REFUSED_OP": {
         "code": 113,
-        "message": "User refused the operation"
+        "message": "An error occurred (USER_REFUSED_OP)"
       },
       "INVALID_REQUEST_PAYLOAD": {
         "code": 114,
-        "message": "Request payload parameters are invalid or incorrect"
+        "message": "An error occured (INVALID_REQUEST_PAYLOAD)"
       },
-      "USER_REFUSED": {
-        "code": 113,
-        "message": "User refused the operation"
-      },
-      "UNEXPECTED_ERROR": {
+      "UNKNOWN_ERROR": {
         "code": 163,
-        "message": "An unexpected error occurred",
+        "message": "An error occurred (UNKNOWN_ERROR)",
         "data": "string"
       }
     }
