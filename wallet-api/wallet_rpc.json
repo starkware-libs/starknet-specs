@@ -660,7 +660,7 @@
       },
       "UNLISTED_NETWORK": {
         "code": 112,
-        "message": "An error occurred (INLISTED_NETWORK)"
+        "message": "An error occurred (UNLISTED_NETWORK)"
       },
       "USER_REFUSED_OP": {
         "code": 113,
