@@ -668,7 +668,7 @@
       },
       "INVALID_REQUEST_PAYLOAD": {
         "code": 114,
-        "message": "An error occured (INVALID_REQUEST_PAYLOAD)"
+        "message": "An error occurred (INVALID_REQUEST_PAYLOAD)"
       },
       "UNKNOWN_ERROR": {
         "code": 163,
