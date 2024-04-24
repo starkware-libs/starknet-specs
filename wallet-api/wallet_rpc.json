@@ -236,7 +236,7 @@
           "properties": {
             "transaction_hash": {
               "title": "Transaction Hash",
-              "$ref": "#/components/schemas/TXN_HASH"
+              "$ref": "#/components/schemas/PADDED_TXN_HASH"
             }
           },
           "required": ["transaction_hash"]
@@ -275,7 +275,7 @@
           "properties": {
             "transaction_hash": {
               "title": "The hash of the declare transaction",
-              "$ref": "#/components/schemas/TXN_HASH"
+              "$ref": "#/components/schemas/PADDED_TXN_HASH"
             },
             "class_hash": {
               "title": "The hash of the declared class",
@@ -334,18 +334,18 @@
   "components": {
     "contentDescriptors": {},
     "schemas": {
-      "TXN_HASH": {
-        "title": "Transaction hash",
-        "description": "The transaction hash, as assigned in Starknet",
+      "PADDED_TXN_HASH": {
+        "title": "Padded Transaction Hash",
+        "description": "The transaction hash, as assigned in Starknet, padded to 64 hex digits",
         "$ref": "#/components/schemas/PADDED_FELT"
       },
       "ADDRESS": {
         "title": "Address",
         "$ref": "#/components/schemas/FELT"
       },
-      "SYMBOL": {
+      "TOKEN_SYMBOL": {
         "title": "ERC20 Token Symbol",
-        "description": "The symbol of an contract",
+        "description": "The symbol of the token",
         "type": "string",
         "minLength": 1,
         "maxLength": 6,
@@ -381,7 +381,7 @@
               },
               "symbol": {
                 "title": "Token Symbol",
-                "$ref": "#/components/schemas/SYMBOL"
+                "$ref": "#/components/schemas/TOKEN_SYMBOL"
               },
               "decimals": {
                 "type": "number",
@@ -577,6 +577,23 @@
         },
         "required": ["name", "type", "contains"]
       },
+      "STARKNET_ENUM_TYPE": {
+        "title": "Starknet Enum Type",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["enum"]
+          },
+          "contains": {
+            "type": "string"
+          }
+        },
+        "required": ["name", "type", "contains"]
+      },
       "STARKNET_TYPE": {
         "title": "Starknet Type",
         "description": "A single type, as part of a struct. The `type` field can be any of the EIP-712 supported types",
@@ -592,6 +609,9 @@
             },
             {
               "$ref": "#/components/schemas/STARKNET_MERKLE_TYPE"
+            },
+            {
+              "$ref": "#/components/schemas/STARKNET_ENUM_TYPE"
             }
           ]
         }
@@ -602,12 +622,15 @@
         "properties": {
           "types": {
             "description": "Defines the types of the typed data object",
-            "type": "array",
-            "itmes": {
-              "$ref": "#/components/schemas/STARKNET_TYPE"
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "itmes": {
+                "$ref": "#/components/schemas/STARKNET_TYPE"
+              }
             }
           },
-          "primary_type": {
+          "primaryType": {
             "type": "string",
             "description": "primaryType represents the top-level type of the object in the message"
           },
@@ -620,7 +643,7 @@
             "description": "The message to be signed"
           }
         },
-        "required": ["types", "primary_type", "domain", "message"]
+        "required": ["types", "primaryType", "domain", "message"]
       },
       "STARKNET_DOMAIN": {
         "title": "Starknet Domain",
@@ -629,8 +652,12 @@
         "properties": {
           "name": { "type": "string" },
           "version": { "type": "string" },
-          "chain_id": {
+          "chainId": {
             "anyOf": [{ "type": "string" }, { "type": "number" }]
+          },
+          "revision": {
+            "type": "string",
+            "enum": ["0", "1"]
           }
         }
       },
@@ -638,7 +665,7 @@
         "type": "string",
         "title": "Padded felt",
         "description": "A padded felt represented as 62 hex digits, 3 bits, and 5 leading zero bits.",
-        "pattern": "^0x(0[0-7]{1}[a-fA-F0-9]{62}$)"
+        "pattern": "^0x(0[0-8]{1}[a-fA-F0-9]{62}$)"
       },
       "CONTRACT_CLASS": {
         "$ref": "./api/starknet_api_openrpc.json#/components/schemas/CONTRACT_CLASS"
