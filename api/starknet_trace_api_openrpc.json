@@ -17,7 +17,7 @@
                     "summary": "The hash of the transaction to trace",
                     "required": true,
                     "schema": {
-                        "$ref": "./starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+                        "$ref": "api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
                     }
                 }
             ],
@@ -457,34 +457,34 @@
                 ]
             },
             "FELT": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/FELT"
+                "$ref": "api/starknet_api_openrpc.json#/components/schemas/FELT"
             },
             "FUNCTION_CALL": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
+                "$ref": "api/starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
             },
             "EVENT": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/EVENT_CONTENT"
+                "$ref": "api/starknet_api_openrpc.json#/components/schemas/EVENT_CONTENT"
             },
             "MSG_TO_L1": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
+                "$ref": "api/starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
             },
             "BLOCK_ID": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
+                "$ref": "api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
             },
             "FEE_ESTIMATE": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/FEE_ESTIMATE"
+                "$ref": "api/starknet_api_openrpc.json#/components/schemas/FEE_ESTIMATE"
             },
             "BROADCASTED_TXN": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_TXN"
+                "$ref": "api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_TXN"
             },
             "STATE_DIFF": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/STATE_DIFF"
+                "$ref": "api/starknet_api_openrpc.json#/components/schemas/STATE_DIFF"
             },
             "COMPUTATION_RESOURCES": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/COMPUTATION_RESOURCES"
+                "$ref": "api/starknet_api_openrpc.json#/components/schemas/COMPUTATION_RESOURCES"
             },
             "EXECUTION_RESOURCES": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EXECUTION_RESOURCES"
+                "$ref": "api/starknet_api_openrpc.json#/components/schemas/EXECUTION_RESOURCES"
             }
         },
         "errors": {
@@ -506,13 +506,36 @@
                 }
             },
             "TXN_HASH_NOT_FOUND": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/errors/TXN_HASH_NOT_FOUND"
+                "code": 29,
+                "message": "Transaction hash not found"
             },
             "BLOCK_NOT_FOUND": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/errors/BLOCK_NOT_FOUND"
+                "code": 24,
+                "message": "Block not found"
             },
             "TRANSACTION_EXECUTION_ERROR": {
-                "$ref": "./api/starknet_api_openrpc.json#/components/errors/TRANSACTION_EXECUTION_ERROR"
+                "code": 41,
+                "message": "Transaction execution error",
+                "data": {
+                    "type": "object",
+                    "description": "More data about the execution failure",
+                    "properties": {
+                        "transaction_index": {
+                            "title": "Transaction index",
+                            "description": "The index of the first transaction failing in a sequence of given transactions",
+                            "type": "integer"
+                        },
+                        "execution_error": {
+                            "title": "revert error",
+                            "description": "a string encoding the execution trace up to the point of failure",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "transaction_index",
+                        "execution_error"
+                    ]
+                }
             }
         }
     }
