@@ -28,7 +28,15 @@
     {
       "name": "wallet_getPermissions",
       "summary": "Get the existing permissions for the Dapp from the wallet",
-      "params": [],
+      "params": [
+        {
+          "name": "wallet_api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/WALLET_API_VERSION"
+          }
+        }
+      ],
       "result": {
         "name": "result",
         "schema": {
@@ -50,7 +58,14 @@
           "required": []
         }
       },
-      "errors": []
+      "errors": [
+        {
+          "$ref": "#/components/errors/WALLET_API_VERSION_NOT_SUPPORTED"
+        },
+        {
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
+        }
+      ]
     },
     {
       "name": "wallet_requestAccounts",
@@ -62,6 +77,13 @@
           "required": false,
           "schema": {
             "type": "boolean"
+          }
+        },
+        {
+          "name": "wallet_api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/WALLET_API_VERSION"
           }
         }
       ],
@@ -77,12 +99,27 @@
           "required": []
         }
       },
-      "errors": []
+      "errors": [
+        {
+          "$ref": "#/components/errors/WALLET_API_VERSION_NOT_SUPPORTED"
+        },
+        {
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
+        }
+      ]
     },
     {
       "name": "wallet_requestChainId",
       "summary": "Request the current Chain Id",
-      "params": [],
+      "params": [
+        {
+          "name": "wallet_api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/WALLET_API_VERSION"
+          }
+        }
+      ],
       "result": {
         "name": "result",
         "description": "The active chainId",
@@ -90,12 +127,27 @@
           "$ref": "#/components/schemas/CHAIN_ID"
         }
       },
-      "errors": []
+      "errors": [
+        {
+          "$ref": "#/components/errors/WALLET_API_VERSION_NOT_SUPPORTED"
+        },
+        {
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
+        }
+      ]
     },
     {
       "name": "wallet_deploymentData",
       "summary": "Request from the current wallet the data required to deploy the account at the current address",
-      "params": [],
+      "params": [
+        {
+          "name": "wallet_api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/WALLET_API_VERSION"
+          }
+        }
+      ],
       "result": {
         "name": "result",
         "schema": {
@@ -104,7 +156,10 @@
       },
       "errors": [
         {
-          "$ref": "#/components/errors/USER_REFUSED_OP"
+          "$ref": "#/components/errors/ACCOUNT_ALREADY_DEPLOYED"
+        },
+        {
+          "$ref": "#/components/errors/WALLET_API_VERSION_NOT_SUPPORTED"
         },
         {
           "$ref": "#/components/errors/UNKNOWN_ERROR"
@@ -120,6 +175,13 @@
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/CHAIN_ID"
+          }
+        },
+        {
+          "name": "wallet_api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/WALLET_API_VERSION"
           }
         }
       ],
@@ -139,6 +201,9 @@
           "$ref": "#/components/errors/USER_REFUSED_OP"
         },
         {
+          "$ref": "#/components/errors/WALLET_API_VERSION_NOT_SUPPORTED"
+        },
+        {
           "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
@@ -153,6 +218,13 @@
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/ASSET"
+          }
+        },
+        {
+          "name": "wallet_api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/WALLET_API_VERSION"
           }
         }
       ],
@@ -175,6 +247,9 @@
           "$ref": "#/components/errors/USER_REFUSED_OP"
         },
         {
+          "$ref": "#/components/errors/WALLET_API_VERSION_NOT_SUPPORTED"
+        },
+        {
           "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
@@ -189,6 +264,13 @@
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/STARKNET_CHAIN"
+          }
+        },
+        {
+          "name": "wallet_api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/WALLET_API_VERSION"
           }
         }
       ],
@@ -208,6 +290,9 @@
           "$ref": "#/components/errors/USER_REFUSED_OP"
         },
         {
+          "$ref": "#/components/errors/WALLET_API_VERSION_NOT_SUPPORTED"
+        },
+        {
           "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
@@ -225,6 +310,13 @@
             "items": {
               "$ref": "#/components/schemas/INVOKE_CALL"
             }
+          }
+        },
+        {
+          "name": "wallet_api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/WALLET_API_VERSION"
           }
         }
       ],
@@ -250,6 +342,9 @@
           "$ref": "#/components/errors/USER_REFUSED_OP"
         },
         {
+          "$ref": "#/components/errors/WALLET_API_VERSION_NOT_SUPPORTED"
+        },
+        {
           "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
@@ -264,6 +359,13 @@
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/DECLARE_TXN"
+          }
+        },
+        {
+          "name": "wallet_api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/WALLET_API_VERSION"
           }
         }
       ],
@@ -293,6 +395,9 @@
           "$ref": "#/components/errors/USER_REFUSED_OP"
         },
         {
+          "$ref": "#/components/errors/WALLET_API_VERSION_NOT_SUPPORTED"
+        },
+        {
           "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
@@ -307,6 +412,13 @@
           "required": true,
           "schema": {
             "$ref": "#/components/schemas/TYPED_DATA"
+          }
+        },
+        {
+          "name": "wallet_api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/WALLET_API_VERSION"
           }
         }
       ],
@@ -324,6 +436,9 @@
         },
         {
           "$ref": "#/components/errors/USER_REFUSED_OP"
+        },
+        {
+          "$ref": "#/components/errors/WALLET_API_VERSION_NOT_SUPPORTED"
         },
         {
           "$ref": "#/components/errors/UNKNOWN_ERROR"
@@ -354,6 +469,12 @@
       "SPEC_VERSION": {
         "title": "Starknet Spec Version",
         "description": "A Starknet RPC spec version, only two numbers are provided",
+        "type": "string",
+        "pattern": "^[0-9]+\\.[0-9]+$"
+      },
+      "WALLET_API_VERSION": {
+        "title": "Wallet API version",
+        "description": "The version of wallet API the request expecting. If not specified, the latest is assumed",
         "type": "string",
         "pattern": "^[0-9]+\\.[0-9]+$"
       },
@@ -693,6 +814,15 @@
       "INVALID_REQUEST_PAYLOAD": {
         "code": 114,
         "message": "An error occurred (INVALID_REQUEST_PAYLOAD)"
+      },
+      "ACCOUNT_ALREADY_DEPLOYED": {
+        "code": 115,
+        "message": "An error occurred (ACCOUNT_ALREADY_DEPLOYED)"
+      },
+      "WALLET_API_VERSION_NOT_SUPPORTED": {
+        "code": 162,
+        "message": "An error occurred (WALLET_API_VERSION_NOT_SUPPORTED)",
+        "data": "string"
       },
       "UNKNOWN_ERROR": {
         "code": 163,
