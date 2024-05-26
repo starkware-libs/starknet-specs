@@ -1,12 +1,30 @@
 {
   "openrpc": "1.0.0-rc1",
   "info": {
-    "version": "0.1.0",
+    "version": "0.7.2",
     "title": "Starknet Wallet API",
     "license": {}
   },
   "servers": [],
   "methods": [
+    {
+      "name": "wallet_supportedWalletApi",
+      "summary": "Returns a list of wallet api versions compatible with the wallet. Notice this might be different from Starknet JSON-RPC spec",
+      "params": [],
+      "result": {
+        "name": "result",
+        "description": "Semver of the wallet api versions supported by the wallet",
+        "required": true,
+        "schema": {
+          "type": "array",
+          "properties": {
+            "items": {
+              "$ref": "#/components/schemas/API_VERSION"
+            }
+          }
+        }
+      }
+    },
     {
       "name": "wallet_supportedSpecs",
       "summary": "Returns a list of rpc spec versions compatible with the wallet",
@@ -20,24 +38,6 @@
           "properties": {
             "items": {
               "$ref": "#/components/schemas/SPEC_VERSION"
-            }
-          }
-        }
-      }
-    },
-    {
-      "name": "wallet_supportedWalletApi",
-      "summary": "Returns a list of wallet api versions compatible with the wallet. Notic this might be different from Starknet JSON-RPC spec",
-      "params": [],
-      "result": {
-        "name": "result",
-        "description": "Semver of the wallet api versions supported by the wallet",
-        "required": true,
-        "schema": {
-          "type": "array",
-          "properties": {
-            "items": {
-              "$ref": "#/components/schemas/API_VERSION"
             }
           }
         }
@@ -492,7 +492,7 @@
       },
       "API_VERSION": {
         "title": "Wallet API version",
-        "description": "The version of wallet API the request expecting. If not specified, the latest is assumed",
+        "description": "The version of wallet API expected by the request. If not specified, the latest is assumed",
         "type": "string",
         "pattern": "^[0-9]+\\.[0-9]+$"
       },
@@ -795,8 +795,16 @@
             "anyOf": [{ "type": "string" }, { "type": "number" }]
           },
           "revision": {
-            "type": "string",
-            "enum": ["0", "1"]
+            "oneOf": [
+              {
+                "type": "string",
+                "enum": ["2"]
+              },
+              {
+                "type": "number",
+                "enum": [0, 1]
+              }
+            ]
           }
         }
       },
