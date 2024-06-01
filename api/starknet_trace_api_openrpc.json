@@ -90,7 +90,11 @@
                                     "title": "the transaction's resources and fee",
                                     "$ref": "#/components/schemas/FEE_ESTIMATE"
                                 }
-                            }
+                            },
+                            "required": [
+                                "transaction_trace",
+                                "fee_estimation"
+                            ]
                         }
                     }
                 }
@@ -133,7 +137,11 @@
                             "trace_root": {
                                 "$ref": "#/components/schemas/TRANSACTION_TRACE"
                             }
-                        }
+                        },
+                        "required": [
+                            "transaction_hash",
+                            "trace_root"
+                        ]
                     }
                 }
             },
@@ -429,7 +437,10 @@
                                 "description": "the order of the event within the transaction",
                                 "type": "integer"
                             }
-                        }
+                        },
+                        "required": [
+                            "order"
+                        ]
                     },
                     {
                         "$ref": "#/components/schemas/EVENT"
@@ -449,7 +460,10 @@
                                 "description": "the order of the message within the transaction",
                                 "type": "integer"
                             }
-                        }
+                        },
+                        "required": [
+                            "order"
+                        ]
                     },
                     {
                         "$ref": "#/components/schemas/MSG_TO_L1"
@@ -502,7 +516,10 @@
                                 "REJECTED"
                             ]
                         }
-                    }
+                    },
+                    "required": [
+                        "status"
+                    ]
                 }
             },
             "TXN_HASH_NOT_FOUND": {

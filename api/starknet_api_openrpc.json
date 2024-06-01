@@ -1194,7 +1194,11 @@
                                     "description": "The Cairo assembly hash corresponding to the declared class",
                                     "$ref": "#/components/schemas/FELT"
                                 }
-                            }
+                            },
+                            "required": [
+                                "class_hash",
+                                "compiled_class_hash"
+                            ]
                         }
                     },
                     "deployed_contracts": {
@@ -1223,7 +1227,11 @@
                                     "description": "The new class hash",
                                     "$ref": "#/components/schemas/FELT"
                                 }
-                            }
+                            },
+                            "required": [
+                                "contract_address",
+                                "class_hash"
+                            ]
                         }
                     },
                     "nonces": {
@@ -1244,7 +1252,11 @@
                                     "description": "The nonce for the given address at the end of the block",
                                     "$ref": "#/components/schemas/FELT"
                                 }
-                            }
+                            },
+                            "required": [
+                                "contract_address",
+                                "nonce"
+                            ]
                         }
                     }
                 },
@@ -1737,6 +1749,10 @@
                                     "description": "The new value applied to the given address",
                                     "$ref": "#/components/schemas/FELT"
                                 }
+                            },
+                            "required": {
+                                "key",
+                                "value"
                             }
                         }
                     }
@@ -3131,7 +3147,8 @@
                                 "$ref": "#/components/schemas/BLOCK_NUMBER",
                                 "description": "If this field is missing, it means the receipt belongs to the pending block"
                             }
-                        }
+                        },
+                        "required": []
                     }
                 ]
             },
@@ -3374,7 +3391,12 @@
                                     "$ref": "#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
                                 }
                             }
-                        }
+                        },
+                        "required": [
+                            "CONSTRUCTOR",
+                            "EXTERNAL",
+                            "L1_HANDLER"
+                        ]
                     },
                     "abi": {
                         "title": "Contract ABI",
@@ -3522,7 +3544,10 @@
                                 "description": "offset of this property within the struct",
                                 "type": "integer"
                             }
-                        }
+                        },
+                        "required": [
+                            "offset"
+                        ]
                     }
                 ]
             },
@@ -3958,7 +3983,9 @@
                             "type": "string"
                         }
                     },
-                    "required": "revert_error"
+                    "required": [
+                        "revert_error"
+                    ]
                 }
             },
             "TRANSACTION_EXECUTION_ERROR": {
