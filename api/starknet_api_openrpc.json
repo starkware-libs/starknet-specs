@@ -3346,7 +3346,7 @@
                     "program": {
                         "type": "string",
                         "title": "Program",
-                        "description": "A base64 representation of the compressed program code",
+                        "description": "A base64 representation of the compressed program code using gzip",
                         "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$"
                     },
                     "entry_points_by_type": {
