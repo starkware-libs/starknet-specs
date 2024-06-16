@@ -1,0 +1,93 @@
+{
+  "openrpc": "1.0.0-rc1",
+  "info": {
+    "version": "0.7.1",
+    "title": "StarkNet WebSocket PRC API",
+    "license": {}
+  },
+  "methods": [
+    {
+      "name": "starknet_subscribe",
+      "summary": "Open a new websocket subscription",
+      "description": "Creates a websocket stream which will fire events of the requested subscription type. Only available for websocket connections.",
+      "params": {
+        "type": "array",
+        "items": [
+          {
+            "type": "string",
+            "enum": ["newHeads", "syncing", "events"]
+          }
+        ]
+      },
+      "result": {
+        "name": "subscription ID",
+        "description": "An identifier for this subscription stream used to associate events with this subscription.",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      "errors": []
+    }
+  ],
+
+  "components": {
+    "schemas": {
+      "FELT": {
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
+      },
+      "SUBSCRIPTION_REQUEST": {
+        "schema": {
+          "oneOf": [
+            {
+              "name": "newHeads",
+              "summary": "Receive new block headers",
+              "schema": {
+                "type": "string",
+                "enum": ["newHeads"]
+              }
+            },
+            {
+              "name": "syncing",
+              "summary": "Receive information on the node syncing state",
+              "schema": {
+                "type": "string",
+                "enum": ["syncing"]
+              }
+            },
+            [
+              {
+                "name": "events",
+                "summary": "Subscribe to Starknet events by address and key",
+                "required": true,
+                "schema": {
+                  "type": "string",
+                  "enum": ["events"]
+                }
+              },
+              {
+                "name": "address",
+                "summary": "The from_address to filter events by",
+                "required": false,
+                "schema": {
+                  "$ref": "#/components/schemas/FELT"
+                }
+              },
+              {
+                "name": "keys",
+                "summary": "The keys to filter events by",
+                "required": false,
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FELT"
+                  }
+                }
+              }
+            ]
+          ]
+        }
+      }
+    },
+    "errors": {}
+  }
+}
