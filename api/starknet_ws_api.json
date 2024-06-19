@@ -10,15 +10,16 @@
       "name": "starknet_subscribe",
       "summary": "Open a new websocket subscription",
       "description": "Creates a websocket stream which will fire events of the requested subscription type. Only available for websocket connections.",
-      "params": {
-        "type": "array",
-        "items": [
-          {
-            "type": "string",
-            "enum": ["newHeads", "syncing", "events"]
+      "params": [
+        {
+          "name": "subscription ID",
+          "summary": "The subscription to close",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/SUBSCRIPTION_REQUEST"
           }
-        ]
-      },
+        }
+      ],
       "result": {
         "name": "subscription ID",
         "description": "An identifier for this subscription stream used to associate events with this subscription.",
@@ -27,6 +28,55 @@
         }
       },
       "errors": []
+    },
+    {
+      "name": "starknet_unsubscribe",
+      "summary": "Closes a websocket subscription",
+      "description": "Close a previously opened ws stream, with the corresponding subscription ID",
+      "params": [
+        {
+          "name": "subscription ID",
+          "summary": "The subscription to close",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "result": {
+        "name": "Unsubscription result",
+        "description": "True if the unsubscription was successful",
+        "schema": {
+          "type": "boolean"
+        }
+      }
+    },
+    {
+      "name": "starknet_subscription",
+      "summary": "A subscription event notification sent by the node.",
+      "params": [],
+      "result": {
+        "name": "Subscription event",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "subscription": {
+              "name": "Subscription ID",
+              "summary": "The subscription this event is for",
+              "type": "integer"
+            },
+            "event": {
+              "$ref": "#/components/schemas/SUBSCRIPTION_EVENT"
+            }
+          },
+          "required": ["subscription", "event"]
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        }
+      ]
     }
   ],
 
@@ -35,15 +85,57 @@
       "FELT": {
         "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
       },
+      "BLOCK_STATUS": {
+        "title": "Block syncing status",
+        "type": "object",
+        "properties": {
+          "starting_block": {
+            "type": "integer"
+          },
+          "current_block": {
+            "type": "integer"
+          },
+          "highest_block": {
+            "type": "integer"
+          }
+        }
+      },
+      "SYNCING_STATUS": {
+        "title": "Node syncing status",
+        "type": "object",
+        "properties": {
+          "syncing": {
+            "type": "boolean"
+          },
+          "status": {
+            "$ref": "#/components/schemas/BLOCK_STATUS"
+          }
+        }
+      },
+
+      "SUBSCRIPTION_EVENT": {
+        "title": "Subscription event",
+        "oneOf": [
+          {
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HEADER"
+          },
+          {
+            "$ref": "#/components/schemas/SYNCING_STATUS"
+          }
+        ]
+      },
       "SUBSCRIPTION_REQUEST": {
         "schema": {
           "oneOf": [
             {
               "name": "newHeads",
               "summary": "Receive new block headers",
-              "schema": {
-                "type": "string",
-                "enum": ["newHeads"]
+              "type": "array",
+              "items": {
+                "schema": {
+                  "type": "string",
+                  "enum": ["newHeads"]
+                }
               }
             },
             {
@@ -88,6 +180,28 @@
         }
       }
     },
-    "errors": {}
+    "errors": {
+      "WEBSOCKET_SUBSCRIPTION_CLOSED": {
+        "code": -32099,
+        "message": "Websocket subscription closed",
+        "data": {
+          "type": "object",
+          "description": "More data about the execution failure",
+          "properties": {
+            "id": {
+              "title": "Subscription ID",
+              "description": "The ID of the closed subscription",
+              "type": "integer"
+            },
+            "reason": {
+              "title": "Closing reason",
+              "description": "The reason why the subscription was closed",
+              "type": "string"
+            }
+          },
+          "required": ["id", "reason"]
+        }
+      }
+    }
   }
 }
