@@ -1,5 +1,5 @@
 {
-  "openrpc": "1.0.0-rc1",
+  "openrpc": "1.3.2",
   "info": {
     "version": "0.7.1",
     "title": "StarkNet WebSocket PRC API",
@@ -7,27 +7,41 @@
   },
   "methods": [
     {
-      "name": "starknet_subscribe",
-      "summary": "Open a new websocket subscription",
-      "description": "Creates a websocket stream which will fire events of the requested subscription type. Only available for websocket connections.",
-      "params": [
-        {
-          "name": "subscription ID",
-          "summary": "The subscription to close",
-          "required": true,
-          "schema": {
-            "$ref": "#/components/schemas/SUBSCRIPTION_REQUEST"
-          }
-        }
-      ],
+      "name": "starknet_subscribeNewHeads",
+      "summary": "New block headers subscription",
+      "description": "Creates a WebSocket stream which will fire events for new block headers type. Only available for WebSocket connections.",
+      "params": [],
       "result": {
-        "name": "subscription ID",
-        "description": "An identifier for this subscription stream used to associate events with this subscription.",
+        "name": "NewHeads subscription ID",
         "schema": {
-          "type": "integer"
+          "$ref": "#/components/schemas/SUBSCRIPTION_ID"
         }
       },
       "errors": []
+    },
+    {
+      "name": "starknet_subscribtionNewHeads",
+      "summary": "New block headers notification",
+      "description": "Notification to the client of a new block header",
+      "params": [],
+      "result": {
+        "name": "NewHeads subscription notification",
+        "schema": {
+          "allOf": [
+            {
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HEADER"
+            },
+            {
+              "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+            }
+          ]
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        }
+      ]
     },
     {
       "name": "starknet_unsubscribe",
@@ -50,33 +64,6 @@
           "type": "boolean"
         }
       }
-    },
-    {
-      "name": "starknet_subscription",
-      "summary": "A subscription event notification sent by the node.",
-      "params": [],
-      "result": {
-        "name": "Subscription event",
-        "schema": {
-          "type": "object",
-          "properties": {
-            "subscription": {
-              "name": "Subscription ID",
-              "summary": "The subscription this event is for",
-              "type": "integer"
-            },
-            "event": {
-              "$ref": "#/components/schemas/SUBSCRIPTION_EVENT"
-            }
-          },
-          "required": ["subscription", "event"]
-        }
-      },
-      "errors": [
-        {
-          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
-        }
-      ]
     }
   ],
 
@@ -112,71 +99,11 @@
           }
         }
       },
-
-      "SUBSCRIPTION_EVENT": {
-        "title": "Subscription event",
-        "oneOf": [
-          {
-            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HEADER"
-          },
-          {
-            "$ref": "#/components/schemas/SYNCING_STATUS"
-          }
-        ]
-      },
-      "SUBSCRIPTION_REQUEST": {
+      "SUBSCRIPTION_ID": {
+        "name": "subscription ID",
+        "description": "An identifier for this subscription stream used to associate events with this subscription.",
         "schema": {
-          "oneOf": [
-            {
-              "name": "newHeads",
-              "summary": "Receive new block headers",
-              "type": "array",
-              "items": {
-                "schema": {
-                  "type": "string",
-                  "enum": ["newHeads"]
-                }
-              }
-            },
-            {
-              "name": "syncing",
-              "summary": "Receive information on the node syncing state",
-              "schema": {
-                "type": "string",
-                "enum": ["syncing"]
-              }
-            },
-            [
-              {
-                "name": "events",
-                "summary": "Subscribe to Starknet events by address and key",
-                "required": true,
-                "schema": {
-                  "type": "string",
-                  "enum": ["events"]
-                }
-              },
-              {
-                "name": "address",
-                "summary": "The from_address to filter events by",
-                "required": false,
-                "schema": {
-                  "$ref": "#/components/schemas/FELT"
-                }
-              },
-              {
-                "name": "keys",
-                "summary": "The keys to filter events by",
-                "required": false,
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/FELT"
-                  }
-                }
-              }
-            ]
-          ]
+          "type": "integer"
         }
       }
     },
