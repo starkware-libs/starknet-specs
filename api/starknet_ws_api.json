@@ -44,6 +44,30 @@
       ]
     },
     {
+      "name": "starknet_subscribtionNewHeads",
+      "summary": "New block headers notification",
+      "description": "Notification to the client of a new block header",
+      "params": [],
+      "result": {
+        "name": "NewHeads subscription notification",
+        "schema": {
+          "allOf": [
+            {
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HEADER"
+            },
+            {
+              "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+            }
+          ]
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        }
+      ]
+    },
+    {
       "name": "starknet_subscribeEvents",
       "summary": "Events Subscription subscription",
       "description": "Creates a WebSocket stream which will fire events new events with applied filters",
@@ -86,27 +110,38 @@
       "errors": []
     },
     {
-      "name": "starknet_subscribeEvents",
-      "summary": "Events Subscription subscription",
-      "description": "Creates a WebSocket stream which will fire events new events with applied filters",
+      "name": "starknet_subscribeTransactionStatus",
+      "summary": "Transaction Status subscription",
+      "description": "Creates a WebSocket stream which will fire events when a transaction status is updated",
       "params": [
         {
-          "name": "address",
-          "summary": "The from_address to filter events by",
-          "required": false,
+          "name": "transaction_hash",
+          "summary": "The transaction hash to fetch status updates for",
+          "required": true,
           "schema": {
             "$ref": "#/components/schemas/FELT"
           }
-        },
+        }
+      ],
+      "result": {
+        "name": "Subscription ID",
+        "schema": {
+          "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "starknet_subscribePendingTransactions",
+      "summary": "New Pending Transactions subscription",
+      "description": "Creates a WebSocket stream which will fire events when a new pending transaction is added. While there is no mempool, this notifies of transactions in the pending block",
+      "params": [
         {
-          "name": "keys",
-          "summary": "The keys to filter events by",
+          "name": "transaction_details",
+          "summary": "Get all transaction details, and not only the hash. If not provided, only hash is returned",
           "required": false,
           "schema": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/FELT"
-            }
+            "type": "boolean"
           }
         }
       ],
@@ -117,30 +152,6 @@
         }
       },
       "errors": []
-    },
-    {
-      "name": "starknet_subscribtionNewHeads",
-      "summary": "New block headers notification",
-      "description": "Notification to the client of a new block header",
-      "params": [],
-      "result": {
-        "name": "NewHeads subscription notification",
-        "schema": {
-          "allOf": [
-            {
-              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HEADER"
-            },
-            {
-              "$ref": "#/components/schemas/SUBSCRIPTION_ID"
-            }
-          ]
-        }
-      },
-      "errors": [
-        {
-          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
-        }
-      ]
     },
     {
       "name": "starknet_unsubscribe",
