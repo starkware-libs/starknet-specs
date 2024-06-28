@@ -1414,8 +1414,24 @@
                             "title": "transaction and receipt",
                             "properties": {
                                 "transaction": {
-                                    "title": "transaction",
-                                    "$ref": "#/components/schemas/TXN"
+                                    "allOf": [
+                                        {
+                                            "title": "transaction",
+                                            "$ref": "#/components/schemas/TXN"
+                                        },
+                                        {
+                                            "type": "object",
+                                            "properties": {
+                                                "transaction_hash": {
+                                                    "title": "transaction hash",
+                                                    "$ref": "#/components/schemas/TXN_HASH"
+                                                }
+                                            },
+                                            "required": [
+                                                "transaction_hash"
+                                            ]
+                                        }
+                                    ]
                                 },
                                 "receipt": {
                                     "title": "receipt",
