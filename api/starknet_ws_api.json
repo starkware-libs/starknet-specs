@@ -9,7 +9,7 @@
     {
       "name": "starknet_subscribeNewHeads",
       "summary": "New block headers subscription",
-      "description": "Creates a WebSocket stream which will fire events for new block headers type",
+      "description": "Creates a WebSocket stream which will fire events for new block headers",
       "params": [],
       "result": {
         "name": "subscription_ID",
@@ -40,13 +40,16 @@
       "errors": [
         {
           "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        },
+        {
+          "$ref": "#/components/errors/STARKNET_REORG_DETECTED"
         }
       ]
     },
     {
       "name": "starknet_subscribeEvents",
-      "summary": "Events Subscription subscription",
-      "description": "Creates a WebSocket stream which will fire events new events with applied filters",
+      "summary": "Events subscription",
+      "description": "Creates a WebSocket stream which will fire events for new Starknet events with applied filters",
       "params": [
         {
           "name": "address",
@@ -152,6 +155,9 @@
       "errors": [
         {
           "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        },
+        {
+          "$ref": "#/components/errors/STARKNET_REORG_DETECTED"
         }
       ]
     },
@@ -162,7 +168,7 @@
       "params": [
         {
           "name": "transaction_details",
-          "summary": "Get all transaction details, and not only the hash. If not provided, only hash is returned",
+          "summary": "Get all transaction details, and not only the hash. If not provided, only hash is returned. Default is false",
           "required": false,
           "schema": {
             "type": "boolean"
@@ -206,6 +212,9 @@
       "errors": [
         {
           "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        },
+        {
+          "$ref": "#/components/errors/STARKNET_REORG_DETECTED"
         }
       ]
     },
@@ -235,7 +244,6 @@
         },
         {
           "name": "result",
-          "description": "Either a tranasaction hash or full transaction details, based on subscription",
           "schema": {
             "$ref": "#/components/schemas/SYNCING_STATUS"
           }
@@ -244,6 +252,9 @@
       "errors": [
         {
           "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        },
+        {
+          "$ref": "#/components/errors/STARKNET_REORG_DETECTED"
         }
       ]
     },
@@ -357,6 +368,41 @@
             }
           },
           "required": ["id", "reason"]
+        }
+      },
+      "STARKNET_REORG_DETECTED": {
+        "code": 202,
+        "message": "Reorg detected",
+        "data": {
+          "type": "object",
+          "description": "Data about reorganized blocks",
+          "properties": {
+            "starting_block_hash": {
+              "title": "Starting Block Hash",
+              "description": "Hash of the first known block of the orphaned chain",
+              "schema": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
+              }
+            },
+            "starting_block_number": {
+              "title": "Starting Block Number",
+              "description": "Number of the first known block of the orphaned chain",
+              "type": "integer"
+            },
+            "ending_block_hash": {
+              "title": "Ending Block",
+              "description": "The last known block of the orphaned chain",
+              "schema": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
+              }
+            },
+            "ending_block_number": {
+              "title": "Ending Block Number",
+              "description": "Number of the last known block of the orphaned chain",
+              "type": "integer"
+            }
+          },
+          "required": ["starting_block_hash", "starting_block_number", "ending_block_hash", "ending_block_number"]
         }
       }
     }
