@@ -1,7 +1,7 @@
 {
   "openrpc": "1.3.2",
   "info": {
-    "version": "0.7.1",
+    "version": "0.8.0-rc0",
     "title": "StarkNet WebSocket PRC API",
     "license": {}
   },
@@ -9,10 +9,10 @@
     {
       "name": "starknet_subscribeNewHeads",
       "summary": "New block headers subscription",
-      "description": "Creates a WebSocket stream which will fire events for new block headers type. Only available for WebSocket connections.",
+      "description": "Creates a WebSocket stream which will fire events for new block headers type",
       "params": [],
       "result": {
-        "name": "NewHeads subscription ID",
+        "name": "subscription_ID",
         "schema": {
           "$ref": "#/components/schemas/SUBSCRIPTION_ID"
         }
@@ -23,44 +23,20 @@
       "name": "starknet_subscribtionNewHeads",
       "summary": "New block headers notification",
       "description": "Notification to the client of a new block header",
-      "params": [],
-      "result": {
-        "name": "NewHeads subscription notification",
-        "schema": {
-          "allOf": [
-            {
-              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HEADER"
-            },
-            {
-              "$ref": "#/components/schemas/SUBSCRIPTION_ID"
-            }
-          ]
-        }
-      },
-      "errors": [
+      "params": [
         {
-          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+          "name": "subscription_ID",
+          "schema": {
+            "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+          }
+        },
+        {
+          "name": "result",
+          "schema": {
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HEADER"
+          }
         }
-      ]
-    },
-    {
-      "name": "starknet_subscribtionNewHeads",
-      "summary": "New block headers notification",
-      "description": "Notification to the client of a new block header",
-      "params": [],
-      "result": {
-        "name": "NewHeads subscription notification",
-        "schema": {
-          "allOf": [
-            {
-              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HEADER"
-            },
-            {
-              "$ref": "#/components/schemas/SUBSCRIPTION_ID"
-            }
-          ]
-        }
-      },
+      ],
       "errors": [
         {
           "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
@@ -93,7 +69,7 @@
         },
         {
           "name": "block",
-          "summary": "The block to get notifications from",
+          "summary": "The block to get notifications from, default is latest",
           "required": false,
           "schema": {
             "type": "string",
@@ -102,12 +78,36 @@
         }
       ],
       "result": {
-        "name": "NewHeads subscription ID",
+        "name": "subscription_ID",
         "schema": {
           "$ref": "#/components/schemas/SUBSCRIPTION_ID"
         }
       },
       "errors": []
+    },
+    {
+      "name": "starknet_subscribtionEvents",
+      "summary": "New events notification",
+      "description": "Notification to the client of a new event",
+      "params": [
+        {
+          "name": "subscription_ID",
+          "schema": {
+            "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+          }
+        },
+        {
+          "name": "result",
+          "schema": {
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EMITTED_EVENT"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        }
+      ]
     },
     {
       "name": "starknet_subscribeTransactionStatus",
@@ -124,12 +124,36 @@
         }
       ],
       "result": {
-        "name": "Subscription ID",
+        "name": "subscription_ID",
         "schema": {
           "$ref": "#/components/schemas/SUBSCRIPTION_ID"
         }
       },
       "errors": []
+    },
+    {
+      "name": "starknet_subscribtionTransactionsStatus",
+      "summary": "New transaction status notification",
+      "description": "Notification to the client of a new transaction status",
+      "params": [
+        {
+          "name": "subscription_ID",
+          "schema": {
+            "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+          }
+        },
+        {
+          "name": "result",
+          "schema": {
+            "$ref": "#/components/schemas/NEW_TXN_STATUS"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        }
+      ]
     },
     {
       "name": "starknet_subscribePendingTransactions",
@@ -146,6 +170,51 @@
         }
       ],
       "result": {
+        "name": "subscription_ID",
+        "schema": {
+          "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "starknet_subscribtionPendingTransaction",
+      "summary": "New pending transaction notification",
+      "description": "Notification to the client of a new pending transaction",
+      "params": [
+        {
+          "name": "subscription_ID",
+          "schema": {
+            "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+          }
+        },
+        {
+          "name": "result",
+          "description": "Either a tranasaction hash or full transaction details, based on subscription",
+          "schema": {
+            "oneOf": [
+              {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+              },
+              {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN"
+              }
+            ]
+          }
+        }
+      ],
+      "errors": [
+        {
+          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        }
+      ]
+    },
+    {
+      "name": "starknet_subscribeSyncing",
+      "summary": "New syncing status subscription",
+      "description": "Creates a WebSocket stream which will fire events for new node syncing status.",
+      "params": [],
+      "result": {
         "name": "NewHeads subscription ID",
         "schema": {
           "$ref": "#/components/schemas/SUBSCRIPTION_ID"
@@ -154,12 +223,37 @@
       "errors": []
     },
     {
+      "name": "starknet_subscribtionSyncing",
+      "summary": "New sync status notification",
+      "description": "Notification to the client of a new status of the node sync",
+      "params": [
+        {
+          "name": "subscription_ID",
+          "schema": {
+            "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+          }
+        },
+        {
+          "name": "result",
+          "description": "Either a tranasaction hash or full transaction details, based on subscription",
+          "schema": {
+            "$ref": "#/components/schemas/SYNCING_STATUS"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        }
+      ]
+    },
+    {
       "name": "starknet_unsubscribe",
       "summary": "Closes a websocket subscription",
       "description": "Close a previously opened ws stream, with the corresponding subscription ID",
       "params": [
         {
-          "name": "subscription ID",
+          "name": "subscription_ID",
           "summary": "The subscription to close",
           "required": true,
           "schema": {
@@ -182,7 +276,7 @@
       "FELT": {
         "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
       },
-      "BLOCK_STATUS": {
+      "BLOCK_SYNCING_STATUS": {
         "title": "Block syncing status",
         "type": "object",
         "properties": {
@@ -206,6 +300,32 @@
           },
           "status": {
             "$ref": "#/components/schemas/BLOCK_STATUS"
+          }
+        }
+      },
+      "NEW_TXN_STATUS": {
+        "title": "New transaction Status",
+        "type": "object",
+        "properties": {
+          "transaction_hash": {
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+          },
+          "status": {
+            "schema": {
+              "title": "Transaction status",
+              "type": "object",
+              "properties": {
+                "finality_status": {
+                  "title": "finality status",
+                  "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_STATUS"
+                },
+                "execution_status": {
+                  "title": "execution status",
+                  "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_EXECUTION_STATUS"
+                }
+              },
+              "required": ["finality_status"]
+            }
           }
         }
       },
