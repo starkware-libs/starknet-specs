@@ -17,7 +17,7 @@
                     "summary": "The hash of the transaction to trace",
                     "required": true,
                     "schema": {
-                        "$ref": "./starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+                        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
                     }
                 }
             ],
@@ -457,22 +457,22 @@
                 ]
             },
             "FELT": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/FELT"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
             },
             "FUNCTION_CALL": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
             },
             "EVENT": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/EVENT_CONTENT"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EVENT_CONTENT"
             },
             "MSG_TO_L1": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
             },
             "BLOCK_ID": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
             },
             "FEE_ESTIMATE": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/FEE_ESTIMATE"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FEE_ESTIMATE"
             },
             "BROADCASTED_TXN": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_TXN"

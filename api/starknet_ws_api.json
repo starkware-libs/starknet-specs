@@ -1,0 +1,371 @@
+{
+  "openrpc": "1.3.2",
+  "info": {
+    "version": "0.8.0-rc0",
+    "title": "StarkNet WebSocket PRC API",
+    "license": {}
+  },
+  "methods": [
+    {
+      "name": "starknet_subscribeNewHeads",
+      "summary": "New block headers subscription",
+      "description": "Creates a WebSocket stream which will fire events for new block headers",
+      "params": [],
+      "result": {
+        "name": "subscription_ID",
+        "schema": {
+          "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "starknet_subscriptionNewHeads",
+      "summary": "New block headers notification",
+      "description": "Notification to the client of a new block header",
+      "params": [
+        {
+          "name": "subscription_ID",
+          "schema": {
+            "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+          }
+        },
+        {
+          "name": "result",
+          "schema": {
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HEADER"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        },
+        {
+          "$ref": "#/components/errors/STARKNET_REORG_DETECTED"
+        }
+      ]
+    },
+    {
+      "name": "starknet_subscribeEvents",
+      "summary": "Events subscription",
+      "description": "Creates a WebSocket stream which will fire events for new Starknet events with applied filters",
+      "params": [
+        {
+          "name": "address",
+          "summary": "The from_address to filter events by",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/FELT"
+          }
+        },
+        {
+          "name": "keys",
+          "summary": "The keys to filter events by",
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FELT"
+            }
+          }
+        },
+        {
+          "name": "block",
+          "summary": "The block to get notifications from, default is latest",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": ["pending", "latest"]
+          }
+        }
+      ],
+      "result": {
+        "name": "subscription_ID",
+        "schema": {
+          "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "starknet_subscriptionEvents",
+      "summary": "New events notification",
+      "description": "Notification to the client of a new event",
+      "params": [
+        {
+          "name": "subscription_ID",
+          "schema": {
+            "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+          }
+        },
+        {
+          "name": "result",
+          "schema": {
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EMITTED_EVENT"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        }
+      ]
+    },
+    {
+      "name": "starknet_subscribeTransactionStatus",
+      "summary": "Transaction Status subscription",
+      "description": "Creates a WebSocket stream which will fire events when a transaction status is updated",
+      "params": [
+        {
+          "name": "transaction_hash",
+          "summary": "The transaction hash to fetch status updates for",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/FELT"
+          }
+        }
+      ],
+      "result": {
+        "name": "subscription_ID",
+        "schema": {
+          "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "starknet_subscriptionTransactionsStatus",
+      "summary": "New transaction status notification",
+      "description": "Notification to the client of a new transaction status",
+      "params": [
+        {
+          "name": "subscription_ID",
+          "schema": {
+            "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+          }
+        },
+        {
+          "name": "result",
+          "schema": {
+            "$ref": "#/components/schemas/NEW_TXN_STATUS"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        },
+        {
+          "$ref": "#/components/errors/STARKNET_REORG_DETECTED"
+        }
+      ]
+    },
+    {
+      "name": "starknet_subscribePendingTransactions",
+      "summary": "New Pending Transactions subscription",
+      "description": "Creates a WebSocket stream which will fire events when a new pending transaction is added. While there is no mempool, this notifies of transactions in the pending block",
+      "params": [
+        {
+          "name": "transaction_details",
+          "summary": "Get all transaction details, and not only the hash. If not provided, only hash is returned. Default is false",
+          "required": false,
+          "schema": {
+            "type": "boolean"
+          }
+        }
+      ],
+      "result": {
+        "name": "subscription_ID",
+        "schema": {
+          "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "starknet_subscriptionPendingTransaction",
+      "summary": "New pending transaction notification",
+      "description": "Notification to the client of a new pending transaction",
+      "params": [
+        {
+          "name": "subscription_ID",
+          "schema": {
+            "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+          }
+        },
+        {
+          "name": "result",
+          "description": "Either a tranasaction hash or full transaction details, based on subscription",
+          "schema": {
+            "oneOf": [
+              {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+              },
+              {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN"
+              }
+            ]
+          }
+        }
+      ],
+      "errors": [
+        {
+          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        },
+        {
+          "$ref": "#/components/errors/STARKNET_REORG_DETECTED"
+        }
+      ]
+    },
+    {
+      "name": "starknet_subscribeSyncing",
+      "summary": "New syncing status subscription",
+      "description": "Creates a WebSocket stream which will fire events for new node syncing status.",
+      "params": [],
+      "result": {
+        "name": "NewHeads subscription ID",
+        "schema": {
+          "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+        }
+      },
+      "errors": []
+    },
+    {
+      "name": "starknet_subscriptionSyncing",
+      "summary": "New sync status notification",
+      "description": "Notification to the client of a new status of the node sync",
+      "params": [
+        {
+          "name": "subscription_ID",
+          "schema": {
+            "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+          }
+        },
+        {
+          "name": "result",
+          "schema": {
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/SYNC_STATUS"
+          }
+        }
+      ],
+      "errors": [
+        {
+          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
+        },
+        {
+          "$ref": "#/components/errors/STARKNET_REORG_DETECTED"
+        }
+      ]
+    },
+    {
+      "name": "starknet_unsubscribe",
+      "summary": "Closes a websocket subscription",
+      "description": "Close a previously opened ws stream, with the corresponding subscription ID",
+      "params": [
+        {
+          "name": "subscription_ID",
+          "summary": "The subscription to close",
+          "required": true,
+          "schema": {
+            "type": "integer"
+          }
+        }
+      ],
+      "result": {
+        "name": "Unsubscription result",
+        "description": "True if the unsubscription was successful",
+        "schema": {
+          "type": "boolean"
+        }
+      }
+    }
+  ],
+
+  "components": {
+    "schemas": {
+      "FELT": {
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
+      },
+      "NEW_TXN_STATUS": {
+        "title": "New transaction Status",
+        "type": "object",
+        "properties": {
+          "transaction_hash": {
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+          },
+          "status": {
+            "schema": {
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_STATUS_RESULT"
+            }
+          }
+        }
+      },
+      "SUBSCRIPTION_ID": {
+        "name": "subscription ID",
+        "description": "An identifier for this subscription stream used to associate events with this subscription.",
+        "schema": {
+          "type": "integer"
+        }
+      }
+    },
+    "errors": {
+      "WEBSOCKET_SUBSCRIPTION_CLOSED": {
+        "code": -32099,
+        "message": "Websocket subscription closed",
+        "data": {
+          "type": "object",
+          "description": "More data about the execution failure",
+          "properties": {
+            "id": {
+              "title": "Subscription ID",
+              "description": "The ID of the closed subscription",
+              "type": "integer"
+            },
+            "reason": {
+              "title": "Closing reason",
+              "description": "The reason why the subscription was closed",
+              "type": "string"
+            }
+          },
+          "required": ["id", "reason"]
+        }
+      },
+      "STARKNET_REORG_DETECTED": {
+        "code": 202,
+        "message": "Reorg detected",
+        "data": {
+          "type": "object",
+          "description": "Data about reorganized blocks",
+          "properties": {
+            "starting_block_hash": {
+              "title": "Starting Block Hash",
+              "description": "Hash of the first known block of the orphaned chain",
+              "schema": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
+              }
+            },
+            "starting_block_number": {
+              "title": "Starting Block Number",
+              "description": "Number of the first known block of the orphaned chain",
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_NUMBER"
+            },
+            "ending_block_hash": {
+              "title": "Ending Block",
+              "description": "The last known block of the orphaned chain",
+              "schema": {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
+              }
+            },
+            "ending_block_number": {
+              "title": "Ending Block Number",
+              "description": "Number of the last known block of the orphaned chain",
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_NUMBER"
+            }
+          },
+          "required": ["starting_block_hash", "starting_block_number", "ending_block_hash", "ending_block_number"]
+        }
+      }
+    }
+  }
+}

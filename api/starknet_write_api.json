@@ -214,13 +214,13 @@
                 "pattern": "^0x[a-fA-F0-9]+$"
             },
             "SIGNATURE": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/SIGNATURE"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/SIGNATURE"
             },
             "FELT": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/FELT"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
             },
             "TXN_HASH": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
             },
             "BROADCASTED_INVOKE_TXN": {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_INVOKE_TXN"
@@ -232,7 +232,7 @@
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
             },
             "FUNCTION_CALL": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
             }
         },
         "errors": {
