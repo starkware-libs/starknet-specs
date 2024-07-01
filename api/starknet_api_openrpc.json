@@ -239,21 +239,7 @@
             "result": {
                 "name": "result",
                 "schema": {
-                    "title": "Transaction status",
-                    "type": "object",
-                    "properties": {
-                        "finality_status": {
-                            "title": "finality status",
-                            "$ref": "#/components/schemas/TXN_STATUS"
-                        },
-                        "execution_status": {
-                            "title": "execution status",
-                            "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
-                        }
-                    },
-                    "required": [
-                        "finality_status"
-                    ]
+                    "$ref": "#/components/schemas/TXN_STATUS_RESULT"
                 }
             },
             "errors": [
@@ -3196,6 +3182,25 @@
                     "payload",
                     "entry_point_selector"
                 ]
+            },
+            "TXN_STATUS_RESULT": {
+                "title": "Transaction status result",
+                "description": "Transaction status result, including finality status and execution status",
+                "schema": {
+                    "title": "Transaction status result",
+                    "type": "object",
+                    "properties": {
+                        "finality_status": {
+                        "title": "finality status",
+                        "$ref": "#/components/schemas/TXN_STATUS"
+                    },
+                    "execution_status": {
+                        "title": "execution status",
+                        "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
+                    }
+                },
+                    "required": ["finality_status"]
+                }
             },
             "TXN_STATUS": {
                 "title": "Transaction status",

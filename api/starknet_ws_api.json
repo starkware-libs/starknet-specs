@@ -296,19 +296,7 @@
           },
           "status": {
             "schema": {
-              "title": "Transaction status",
-              "type": "object",
-              "properties": {
-                "finality_status": {
-                  "title": "finality status",
-                  "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_STATUS"
-                },
-                "execution_status": {
-                  "title": "execution status",
-                  "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_EXECUTION_STATUS"
-                }
-              },
-              "required": ["finality_status"]
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_STATUS_RESULT"
             }
           }
         }
