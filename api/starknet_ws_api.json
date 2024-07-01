@@ -20,7 +20,7 @@
       "errors": []
     },
     {
-      "name": "starknet_subscribtionNewHeads",
+      "name": "starknet_subscriptionNewHeads",
       "summary": "New block headers notification",
       "description": "Notification to the client of a new block header",
       "params": [
@@ -89,7 +89,7 @@
       "errors": []
     },
     {
-      "name": "starknet_subscribtionEvents",
+      "name": "starknet_subscriptionEvents",
       "summary": "New events notification",
       "description": "Notification to the client of a new event",
       "params": [
@@ -135,7 +135,7 @@
       "errors": []
     },
     {
-      "name": "starknet_subscribtionTransactionsStatus",
+      "name": "starknet_subscriptionTransactionsStatus",
       "summary": "New transaction status notification",
       "description": "Notification to the client of a new transaction status",
       "params": [
@@ -184,7 +184,7 @@
       "errors": []
     },
     {
-      "name": "starknet_subscribtionPendingTransaction",
+      "name": "starknet_subscriptionPendingTransaction",
       "summary": "New pending transaction notification",
       "description": "Notification to the client of a new pending transaction",
       "params": [
@@ -232,7 +232,7 @@
       "errors": []
     },
     {
-      "name": "starknet_subscribtionSyncing",
+      "name": "starknet_subscriptionSyncing",
       "summary": "New sync status notification",
       "description": "Notification to the client of a new status of the node sync",
       "params": [
@@ -245,7 +245,7 @@
         {
           "name": "result",
           "schema": {
-            "$ref": "#/components/schemas/SYNCING_STATUS"
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/SYNC_STATUS"
           }
         }
       ],
@@ -286,33 +286,6 @@
     "schemas": {
       "FELT": {
         "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
-      },
-      "BLOCK_SYNCING_STATUS": {
-        "title": "Block syncing status",
-        "type": "object",
-        "properties": {
-          "starting_block": {
-            "type": "integer"
-          },
-          "current_block": {
-            "type": "integer"
-          },
-          "highest_block": {
-            "type": "integer"
-          }
-        }
-      },
-      "SYNCING_STATUS": {
-        "title": "Node syncing status",
-        "type": "object",
-        "properties": {
-          "syncing": {
-            "type": "boolean"
-          },
-          "status": {
-            "$ref": "#/components/schemas/BLOCK_STATUS"
-          }
-        }
       },
       "NEW_TXN_STATUS": {
         "title": "New transaction Status",
@@ -387,7 +360,7 @@
             "starting_block_number": {
               "title": "Starting Block Number",
               "description": "Number of the first known block of the orphaned chain",
-              "type": "integer"
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_NUMBER"
             },
             "ending_block_hash": {
               "title": "Ending Block",
@@ -399,7 +372,7 @@
             "ending_block_number": {
               "title": "Ending Block Number",
               "description": "Number of the last known block of the orphaned chain",
-              "type": "integer"
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_NUMBER"
             }
           },
           "required": ["starting_block_hash", "starting_block_number", "ending_block_hash", "ending_block_number"]
