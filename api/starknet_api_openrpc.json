@@ -1465,7 +1465,7 @@
                     "sequencer_address": {
                         "title": "Sequencer address",
                         "description": "The StarkNet identity of the sequencer submitting this block",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS"
                     },
                     "l1_gas_price": {
                         "title": "L1 gas price",
@@ -1523,7 +1523,7 @@
                     "sequencer_address": {
                         "title": "Sequencer address",
                         "description": "The StarkNet identity of the sequencer submitting this block",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS"
                     },
                     "l1_gas_price": {
                         "title": "L1 gas price",
@@ -1697,7 +1697,7 @@
                     "address": {
                         "title": "Address",
                         "description": "The address of the contract",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS"
                     },
                     "class_hash": {
                         "title": "Class hash",
@@ -1717,7 +1717,7 @@
                     "address": {
                         "title": "Address",
                         "description": "The contract address for which the storage changed",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS"
                     },
                     "storage_entries": {
                         "title": "Storage entries",
@@ -3013,7 +3013,7 @@
                             "contract_address": {
                                 "title": "Contract address",
                                 "description": "The address of the deployed contract",
-                                "$ref": "#/components/schemas/FELT"
+                                "$ref": "#/components/schemas/ADDRESS"
                             }
                         },
                         "required": [
@@ -3044,7 +3044,7 @@
                             "contract_address": {
                                 "title": "Contract address",
                                 "description": "The address of the deployed contract",
-                                "$ref": "#/components/schemas/FELT"
+                                "$ref": "#/components/schemas/ADDRESS"
                             }
                         },
                         "required": [
@@ -3141,12 +3141,12 @@
                 "properties": {
                     "from_address": {
                         "description": "The address of the L2 contract sending the message",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ADDRESS"
                     },
                     "to_address": {
                         "title": "To address",
                         "description": "The target L1 address the message is sent to",
-                        "$ref": "#/components/schemas/FELT"
+                        "$ref": "#/components/schemas/ETH_ADDRESS"
                     },
                     "payload": {
                         "description": "The payload of the message",

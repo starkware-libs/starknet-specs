@@ -335,7 +335,7 @@
                             "caller_address": {
                                 "title": "Caller Address",
                                 "description": "The address of the invoking contract. 0 for the root invocation",
-                                "$ref": "#/components/schemas/FELT"
+                                "$ref": "#/components/schemas/ADDRESS"
                             },
                             "class_hash": {
                                 "title": "Class hash",
