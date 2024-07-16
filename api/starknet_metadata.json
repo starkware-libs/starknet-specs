@@ -419,7 +419,7 @@
             "title": "kind",
             "description": "specifies how the field should be serialized, via the starknet::Event trait or the serde::Serde trait",
             "type": "string",
-            "enum": ["key", "data", "nested"]
+            "enum": ["key", "data", "nested", "flat"]
           }
         },
         "required": ["name", "type", "kind"]
