@@ -39,7 +39,7 @@
           "$ref": "#/components/errors/INSUFFICIENT_ACCOUNT_BALANCE"
         },
         {
-          "$ref": "#/components/errors/INSUFFICIENT_MAX_FEE"
+          "$ref": "#/components/errors/INSUFFICIENT_RESOURCES_FOR_VALIDATE"
         },
         {
           "$ref": "#/components/errors/INVALID_TRANSACTION_NONCE"
@@ -107,7 +107,7 @@
           "$ref": "#/components/errors/INSUFFICIENT_ACCOUNT_BALANCE"
         },
         {
-          "$ref": "#/components/errors/INSUFFICIENT_MAX_FEE"
+          "$ref": "#/components/errors/INSUFFICIENT_RESOURCES_FOR_VALIDATE"
         },
         {
           "$ref": "#/components/errors/INVALID_TRANSACTION_NONCE"
@@ -171,7 +171,7 @@
           "$ref": "#/components/errors/INSUFFICIENT_ACCOUNT_BALANCE"
         },
         {
-          "$ref": "#/components/errors/INSUFFICIENT_MAX_FEE"
+          "$ref": "#/components/errors/INSUFFICIENT_RESOURCES_FOR_VALIDATE"
         },
         {
           "$ref": "#/components/errors/INVALID_TRANSACTION_NONCE"
@@ -240,9 +240,9 @@
         "code": 52,
         "message": "Invalid transaction nonce"
       },
-      "INSUFFICIENT_MAX_FEE": {
+      "INSUFFICIENT_RESOURCES_FOR_VALIDATE": {
         "code": 53,
-        "message": "Max fee is smaller than the minimal transaction cost (validation plus fee transfer)"
+        "message": "The transaction's resources don't cover validation or the minimal transaction fee"
       },
       "INSUFFICIENT_ACCOUNT_BALANCE": {
         "code": 54,
