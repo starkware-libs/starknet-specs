@@ -3682,6 +3682,36 @@
             "node"
           ]
         }
+    },
+    "CONTRACT_EXECUTION_ERROR": {
+        "description": "structured error that can later be processed by wallets or sdks",
+        "titel": "contract execution error",
+        "oneOf": [
+          {
+            "type": "object",
+            "title": "inner call",
+            "description": "error frame",
+            "properties": {
+              "contract_address": {
+                "$ref": "#/components/schemas/ADDRESS"
+              },
+              "class_hash": {
+                "$ref": "#/components/schemas/FELT"
+              },
+              "selector": {
+                "$ref": "#/components/schemas/FELT"
+              },
+              "error": {
+                "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
+              }
+            }
+          },
+          {
+            "title": "error message",
+            "description": "the error raised during execution",
+            "type": "string"
+          }
+        ]
       }
     },
     "errors": {
@@ -3734,8 +3764,8 @@
           "properties": {
             "revert_error": {
               "title": "revert error",
-              "description": "a string encoding the execution trace up to the point of failure",
-              "type": "string"
+              "description": "the execution trace up to the point of failure",
+              "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
             }
           },
           "required": "revert_error"
@@ -3755,8 +3785,8 @@
             },
             "execution_error": {
               "title": "revert error",
-              "description": "a string encoding the execution trace up to the point of failure",
-              "type": "string"
+              "description": "the§ execution trace up to the point of failure",
+              "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
             }
           },
           "required": ["transaction_index", "execution_error"]
