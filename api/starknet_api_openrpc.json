@@ -882,7 +882,7 @@
       ]
     },
     {
-      "name": "starknet_getProof",
+      "name": "starknet_getStorageProof",
       "summary": "get merkle paths in one of the state tries: global state, classes, individual contract",
       "params": [
         {
