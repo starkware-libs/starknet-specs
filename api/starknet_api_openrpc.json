@@ -266,6 +266,52 @@
       ]
     },
     {
+      "name": "starknet_getMessagesStatus",
+      "summary": "Given an l1 tx hash, returns the associated l1_handler tx hashes and statuses for all L1 -> L2 messages sent by the l1 ransaction, ordered by the l1 tx sending order",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "transaction_hash",
+          "summary": "The hash of the L1 transaction that sent L1->L2 messages",
+          "required": true,
+          "schema": {
+            "title": "Transaction hash",
+            "$ref": "#/components/schemas/L1_TXN_HASH"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "title": "status",
+            "properties": {
+              "transaction_hash": {
+                "$ref": "#/components/schemas/TXN_HASH"
+              },
+              "finality_status": {
+                "title": "finality status",
+                "$ref": "#/components/schemas/TXN_STATUS"
+              },
+              "failure_reason": {
+                "title": "failure reason",
+                "description": "the failure reason, only appears if finality_status is REJECTED",
+                "type": "string"
+              }
+            },
+            "required": ["transaction_hash", "finality_status"]
+          }
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
+        }
+      ]
+    },
+    {
       "name": "starknet_getTransactionByHash",
       "summary": "Get the details and status of a submitted transaction",
       "paramStructure": "by-name",
@@ -1371,8 +1417,12 @@
       },
       "TXN_HASH": {
         "$ref": "#/components/schemas/FELT",
-        "description": "The transaction hash, as assigned in StarkNet",
+        "description": "The hash of a Starknet transaction",
         "title": "Transaction hash"
+      },
+      "L1_TXN_HASH": {
+        "$ref": "#/components/schemas/NUM_AS_HEX",
+        "description": "The hash of an Ethereum transaction"
       },
       "FELT": {
         "type": "string",
