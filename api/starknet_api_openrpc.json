@@ -2931,7 +2931,7 @@
           "to_address": {
             "title": "To address",
             "description": "The target L1 address the message is sent to",
-            "$ref": "#/components/schemas/FELT"
+            "$ref": "#/components/schemas/ETH_ADDRESS"
           },
           "payload": {
             "description": "The payload of the message",
