@@ -995,17 +995,8 @@
             "$ref": "#/components/schemas/ADDRESS"
           },
           "keys": {
-            "title": "Keys",
-            "description": "The values used to filter the events",
-            "type": "array",
-            "items": {
-              "title": "Keys",
-              "description": "Per key (by position), designate the possible values to be matched for events to be returned. Empty array designates 'any' value",
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/FELT"
-              }
-            }
+            "title": "event keys",
+            "$ref": "#/components/schemas/EVENT_KEYS"
           }
         },
         "required": []
@@ -3252,6 +3243,19 @@
             }
           }
         ]
+      },
+      "EVENT_KEYS": {
+        "title": "Keys",
+        "description": "The values used to filter the events",
+        "type": "array",
+        "items": {
+          "title": "Keys",
+          "description": "Per key (by position), designate the possible values to be matched for events to be returned. Empty array designates 'any' value",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/FELT"
+          }
+        }
       },
       "EVENT_ABI_ENTRY": {
         "title": "Event ABI entry",
