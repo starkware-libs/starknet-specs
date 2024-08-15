@@ -37,11 +37,7 @@
           }
         }
       ],
-      "errors": [
-        {
-          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
-        }
-      ]
+      "errors": []
     },
     {
       "name": "starknet_subscribeEvents",
@@ -101,11 +97,7 @@
           }
         }
       ],
-      "errors": [
-        {
-          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
-        }
-      ]
+      "errors": []
     },
     {
       "name": "starknet_subscribeTransactionStatus",
@@ -147,11 +139,7 @@
           }
         }
       ],
-      "errors": [
-        {
-          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
-        }
-      ]
+      "errors": []
     },
     {
       "name": "starknet_subscribePendingTransactions",
@@ -212,47 +200,20 @@
           }
         }
       ],
-      "errors": [
-        {
-          "$ref": "#/components/errors/WEBSOCKET_SUBSCRIPTION_CLOSED"
-        }
-      ]
+      "errors": []
     },
     {
       "name": "starknet_subscriptionReorg",
       "description": "Notifies the subscriber of a reorganization of the chain",
       "summary": "Can be received from subscribing to newHeads, Events, TransactionStatus",
-      "params": {
-        "type": "object",
-        "description": "Data about reorganized blocks",
-        "properties": {
-          "starting_block_hash": {
-            "title": "Starting Block Hash",
-            "description": "Hash of the first known block of the orphaned chain",
-            "schema": {
-              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
-            }
-          },
-          "starting_block_number": {
-            "title": "Starting Block Number",
-            "description": "Number of the first known block of the orphaned chain",
-            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_NUMBER"
-          },
-          "ending_block_hash": {
-            "title": "Ending Block",
-            "description": "The last known block of the orphaned chain",
-            "schema": {
-              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
-            }
-          },
-          "ending_block_number": {
-            "title": "Ending Block Number",
-            "description": "Number of the last known block of the orphaned chain",
-            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_NUMBER"
+      "params": [
+        {
+          "name": "subscription_id",
+          "schema": {
+            "$ref": "#/components/schemas/REORG_DATA"
           }
-        },
-        "required": ["starting_block_hash", "starting_block_number", "ending_block_hash", "ending_block_number"]
-      }
+        }
+      ]
     },
     {
       "name": "starknet_unsubscribe",
@@ -274,7 +235,12 @@
         "schema": {
           "type": "boolean"
         }
-      }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/INVALID_SUBSCRIPTION_ID"
+        }
+      ]
     }
   ],
 
@@ -306,29 +272,43 @@
         "schema": {
           "type": "integer"
         }
+      },
+      "REORG_DATA": {
+        "name": "Reorg Data",
+        "description": "Data about reorganized blocks, starting and ending block number and hash",
+        "properties": {
+          "starting_block_hash": {
+            "title": "Starting Block Hash",
+            "description": "Hash of the first known block of the orphaned chain",
+            "schema": {
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
+            }
+          },
+          "starting_block_number": {
+            "title": "Starting Block Number",
+            "description": "Number of the first known block of the orphaned chain",
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_NUMBER"
+          },
+          "ending_block_hash": {
+            "title": "Ending Block",
+            "description": "The last known block of the orphaned chain",
+            "schema": {
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
+            }
+          },
+          "ending_block_number": {
+            "title": "Ending Block Number",
+            "description": "Number of the last known block of the orphaned chain",
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_NUMBER"
+          }
+        },
+        "required": ["starting_block_hash", "starting_block_number", "ending_block_hash", "ending_block_number"]
       }
     },
     "errors": {
-      "WEBSOCKET_SUBSCRIPTION_CLOSED": {
-        "code": -32099,
-        "message": "Websocket subscription closed",
-        "data": {
-          "type": "object",
-          "description": "More data about the execution failure",
-          "properties": {
-            "id": {
-              "title": "Subscription id",
-              "description": "The id of the closed subscription",
-              "type": "integer"
-            },
-            "reason": {
-              "title": "Closing reason",
-              "description": "The reason why the subscription was closed",
-              "type": "string"
-            }
-          },
-          "required": ["id", "reason"]
-        }
+      "INVALID_SUBSCRIPTION_ID": {
+        "code": 0,
+        "message": "Invalid subscription id"
       }
     }
   }
