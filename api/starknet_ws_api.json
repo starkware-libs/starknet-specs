@@ -45,14 +45,11 @@
       "description": "Creates a WebSocket stream which will fire events for new Starknet events with applied filters",
       "params": [
         {
-          "name": "sender_address",
-          "summary": "Filter events by sender_address in the provided list",
+          "name": "from_address",
+          "summary": "Filter events by from_address which emmited the event",
           "required": false,
           "schema": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/ADDRESS"
-            }
+            "$ref": "#/components/schemas/ADDRESS"
           }
         },
         {
