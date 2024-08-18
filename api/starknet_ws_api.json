@@ -45,11 +45,14 @@
       "description": "Creates a WebSocket stream which will fire events for new Starknet events with applied filters",
       "params": [
         {
-          "name": "address",
-          "summary": "The from_address to filter events by",
+          "name": "sender_address",
+          "summary": "Filter events by sender_address in the provided list",
           "required": false,
           "schema": {
-            "$ref": "#/components/schemas/ADDRESS"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ADDRESS"
+            }
           }
         },
         {
@@ -77,7 +80,14 @@
           "$ref": "#/components/schemas/SUBSCRIPTION_ID"
         }
       },
-      "errors": []
+      "errors": [
+        {
+          "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TOO_MANY_KEYS_IN_FILTER"
+        },
+        {
+          "$ref": "#/components/schemas/TOO_MANY_ADDRESSES_IN_FILTER"
+        }
+      ]
     },
     {
       "name": "starknet_subscriptionEvents",
@@ -172,7 +182,11 @@
           "$ref": "#/components/schemas/SUBSCRIPTION_ID"
         }
       },
-      "errors": []
+      "errors": [
+        {
+          "$ref": "#/components/schemas/TOO_MANY_ADDRESSES_IN_FILTER"
+        }
+      ]
     },
     {
       "name": "starknet_subscriptionPendingTransaction",
@@ -307,8 +321,12 @@
     },
     "errors": {
       "INVALID_SUBSCRIPTION_ID": {
-        "code": 0,
+        "code": 66,
         "message": "Invalid subscription id"
+      },
+      "TOO_MANY_ADDRESSES_IN_FILTER": {
+        "code": 67,
+        "message": "Too many addresses in filter sender_address filter"
       }
     }
   }
