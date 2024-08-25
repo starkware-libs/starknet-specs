@@ -10,14 +10,27 @@
       "name": "starknet_subscribeNewHeads",
       "summary": "New block headers subscription",
       "description": "Creates a WebSocket stream which will fire events for new block headers",
-      "params": [],
+      "params": [
+        {
+          "name": "block",
+          "summary": "The block to get notifications from, default is latest, limited to 1024 blocks back",
+          "required": false,
+          "schema": {
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
+          }
+        }
+      ],
       "result": {
         "name": "subscription_id",
         "schema": {
           "$ref": "#/components/schemas/SUBSCRIPTION_ID"
         }
       },
-      "errors": []
+      "errors": [
+        {
+          "$ref": "#/components/errors/TOO_MANY_BLOCKS_BACK"
+        }
+      ]
     },
     {
       "name": "starknet_subscriptionNewHeads",
@@ -63,11 +76,10 @@
         },
         {
           "name": "block",
-          "summary": "The block to get notifications from, default is latest",
+          "summary": "The block to get notifications from, default is latest, limited to 1024 blocks back",
           "required": false,
           "schema": {
-            "type": "string",
-            "enum": ["pending", "latest"]
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
           }
         }
       ],
@@ -79,10 +91,10 @@
       },
       "errors": [
         {
-          "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TOO_MANY_KEYS_IN_FILTER"
+          "$ref": "./api/starknet_api_openrpc.json#/components/errors/TOO_MANY_KEYS_IN_FILTER"
         },
         {
-          "$ref": "#/components/schemas/TOO_MANY_ADDRESSES_IN_FILTER"
+          "$ref": "#/components/errors/TOO_MANY_BLOCKS_BACK"
         }
       ]
     },
@@ -118,6 +130,14 @@
           "schema": {
             "$ref": "#/components/schemas/FELT"
           }
+        },
+        {
+          "name": "block",
+          "summary": "The block to get notifications from, default is latest, limited to 1024 blocks back",
+          "required": false,
+          "schema": {
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
+          }
         }
       ],
       "result": {
@@ -126,7 +146,11 @@
           "$ref": "#/components/schemas/SUBSCRIPTION_ID"
         }
       },
-      "errors": []
+      "errors": [
+        {
+          "$ref": "#/components/errors/TOO_MANY_BLOCKS_BACK"
+        }
+      ]
     },
     {
       "name": "starknet_subscriptionTransactionsStatus",
@@ -181,7 +205,7 @@
       },
       "errors": [
         {
-          "$ref": "#/components/schemas/TOO_MANY_ADDRESSES_IN_FILTER"
+          "$ref": "#/components/errors/TOO_MANY_ADDRESSES_IN_FILTER"
         }
       ]
     },
@@ -324,6 +348,10 @@
       "TOO_MANY_ADDRESSES_IN_FILTER": {
         "code": 67,
         "message": "Too many addresses in filter sender_address filter"
+      },
+      "TOO_MANY_BLOCKS_BACK": {
+        "code": 68,
+        "message": "Cannot go back more than 1024 blocks"
       }
     }
   }
