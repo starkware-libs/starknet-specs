@@ -1426,6 +1426,11 @@
             "description": "The price of l1 gas in the block",
             "$ref": "#/components/schemas/RESOURCE_PRICE"
           },
+          "l2_gas_price": {
+            "title": "L2 gas price",
+            "description": "The price of l2 gas in the block",
+            "$ref": "#/components/schemas/RESOURCE_PRICE"
+          },
           "l1_data_gas_price": {
             "title": "L1 data gas price",
             "description": "The price of l1 data gas in the block",
@@ -3346,23 +3351,33 @@
         "title": "Fee estimation",
         "type": "object",
         "properties": {
-          "gas_consumed": {
-            "title": "Gas consumed",
-            "description": "The Ethereum gas consumption of the transaction",
+          "l1_gas_consumed": {
+            "title": "L1 gas consumed",
+            "description": "The Ethereum gas consumption of the transaction, charged for L1->L2 messages and, depending on the block's DA_MODE, state diffs",
             "$ref": "#/components/schemas/FELT"
           },
-          "gas_price": {
-            "title": "Gas price",
+          "l1_gas_price": {
+            "title": "L1 gas price",
             "description": "The gas price (in wei or fri, depending on the tx version) that was used in the cost estimation",
             "$ref": "#/components/schemas/FELT"
           },
-          "data_gas_consumed": {
-            "title": "Data gas consumed",
+          "l2_gas_consumed": {
+            "title": "L2 gas consumed",
+            "description": "The L2 gas consumption of the transaction",
+            "$ref": "#/components/schemas/FELT"
+          },
+          "l2_gas_price": {
+            "title": "L2 gas price",
+            "description": "The L2 gas price (in wei or fri, depending on the tx version) that was used in the cost estimation",
+            "$ref": "#/components/schemas/FELT"
+          },
+          "l1_data_gas_consumed": {
+            "title": "L1 data gas consumed",
             "description": "The Ethereum data gas consumption of the transaction",
             "$ref": "#/components/schemas/FELT"
           },
-          "data_gas_price": {
-            "title": "Data gas price",
+          "l1_data_gas_price": {
+            "title": "L1 data gas price",
             "description": "The data gas price (in wei or fri, depending on the tx version) that was used in the cost estimation",
             "$ref": "#/components/schemas/FELT"
           },
