@@ -871,7 +871,80 @@
           "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
         }
       ]
-    }
+    },
+    {
+        "name": "starknet_getStorageProof",
+        "summary": "get merkle paths in one of the state tries: global state, classes, individual contract",
+        "params": [
+          {
+            "name": "class_hashes",
+            "description": "a list of the class hashes for which we want to prove membership in the classes trie",
+            "required": false,
+            "schema": {
+              "title": "classes",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/FELT"
+              }
+            }
+          },
+          {
+            "name": "contract_addresses",
+            "description": "a list of contracts for which we want to prove membership in the global state trie",
+            "required": false,
+            "schema": {
+              "title": "contracts",
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/ADDRESS"
+              }
+            }
+          },
+          {
+            "name": "contracts_storage_keys",
+            "description": "a list of (contract_address, storage_keys) pairs",
+            "required": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "contract_address": {
+                    "$ref": "#/components/schemas/ADDRESS"
+                  },
+                  "storage_keys": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/FELT"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "result": {
+          "name": "result",
+          "description": "The contract's nonce at the requested state",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "classes_proof": {
+                "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
+              },
+              "contracts_proof": {
+                "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
+              },
+              "contracts_storage_proofs": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
+                }
+              }
+            }
+          }
+        }
+      }
   ],
   "components": {
     "contentDescriptors": {},
@@ -3486,6 +3559,60 @@
             "description": "l2 gas consumed by this transaction, used for computation and calldata",
             "type": "integer"
           }
+        }
+      },
+      "MERKLE_NODE": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "integer"
+          },
+          "length": {
+            "type": "integer"
+          },
+          "value": {
+            "$ref": "#/components/schemas/FELT"
+          },
+          "children_hashes": {
+            "type": "object",
+            "description": "the hash of the child nodes, if not present then the node is a leaf",
+            "properties": {
+              "left": {
+                "$ref": "#/components/schemas/FELT"
+              },
+              "right": {
+                "$ref": "#/components/schemas/FELT"
+              }
+            },
+            "required": [
+              "left",
+              "right"
+            ]
+          }
+        },
+        "required": [
+          "path",
+          "length",
+          "value"
+        ]
+      },
+      "NODE_HASH_TO_NODE_MAPPING": {
+        "description": "a node_hash -> node mapping of all the nodes in the union of the paths between the requested leaves and the root (for each node present, its sibling is also present)",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "node_hash": {
+              "$ref": "#/components/schemas/FELT"
+            },
+            "node": {
+              "$ref": "#/components/schemas/MERKLE_NODE"
+            }
+          },
+          "required": [
+            "node_hash",
+            "node"
+          ]
         }
       }
     },
