@@ -249,6 +249,11 @@
             "execution_status": {
               "title": "execution status",
               "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
+            },
+            "failure_reason": {
+              "title": "failure reason",
+              "description": "the failure reason, only appears if finality_status is REJECTED or execution_status is REVERTED",
+              "type": "string"
             }
           },
           "required": ["finality_status"]
