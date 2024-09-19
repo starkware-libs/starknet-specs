@@ -239,24 +239,7 @@
       "result": {
         "name": "result",
         "schema": {
-          "title": "Transaction status",
-          "type": "object",
-          "properties": {
-            "finality_status": {
-              "title": "finality status",
-              "$ref": "#/components/schemas/TXN_STATUS"
-            },
-            "execution_status": {
-              "title": "execution status",
-              "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
-            },
-            "failure_reason": {
-              "title": "failure reason",
-              "description": "the failure reason, only appears if finality_status is REJECTED or execution_status is REVERTED",
-              "type": "string"
-            }
-          },
-          "required": ["finality_status"]
+          "$ref": "#/components/schemas/TXN_STATUS_RESULT"
         }
       },
       "errors": [
@@ -266,50 +249,50 @@
       ]
     },
     {
-      "name": "starknet_getMessagesStatus",
-      "summary": "Given an l1 tx hash, returns the associated l1_handler tx hashes and statuses for all L1 -> L2 messages sent by the l1 ransaction, ordered by the l1 tx sending order",
-      "paramStructure": "by-name",
-      "params": [
-        {
-          "name": "transaction_hash",
-          "summary": "The hash of the L1 transaction that sent L1->L2 messages",
-          "required": true,
-          "schema": {
-            "title": "Transaction hash",
-            "$ref": "#/components/schemas/L1_TXN_HASH"
-          }
-        }
-      ],
-      "result": {
-        "name": "result",
-        "schema": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "title": "status",
-            "properties": {
-              "transaction_hash": {
-                "$ref": "#/components/schemas/TXN_HASH"
-              },
-              "finality_status": {
-                "title": "finality status",
-                "$ref": "#/components/schemas/TXN_STATUS"
-              },
-              "failure_reason": {
-                "title": "failure reason",
-                "description": "the failure reason, only appears if finality_status is REJECTED",
-                "type": "string"
-              }
-            },
-            "required": ["transaction_hash", "finality_status"]
-          }
-        }
-      },
-      "errors": [
-        {
-          "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
-        }
-      ]
+        "name": "starknet_getMessagesStatus",
+        "summary": "Given an l1 tx hash, returns the associated l1_handler tx hashes and statuses for all L1 -> L2 messages sent by the l1 ransaction, ordered by the l1 tx sending order",
+        "paramStructure": "by-name",
+        "params": [
+            {
+            "name": "transaction_hash",
+            "summary": "The hash of the L1 transaction that sent L1->L2 messages",
+            "required": true,
+            "schema": {
+                "title": "Transaction hash",
+                "$ref": "#/components/schemas/L1_TXN_HASH"
+            }
+            }
+        ],
+        "result": {
+            "name": "result",
+            "schema": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "title": "status",
+                    "properties": {
+                    "transaction_hash": {
+                        "$ref": "#/components/schemas/TXN_HASH"
+                    },
+                    "finality_status": {
+                        "title": "finality status",
+                        "$ref": "#/components/schemas/TXN_STATUS"
+                    },
+                    "failure_reason": {
+                        "title": "failure reason",
+                        "description": "the failure reason, only appears if finality_status is REJECTED",
+                        "type": "string"
+                    }
+                    },
+                    "required": ["transaction_hash", "finality_status"]
+                }
+            }
+        },
+        "errors": [
+            {
+            "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
+            }
+        ]
     },
     {
       "name": "starknet_getTransactionByHash",
@@ -1113,6 +1096,19 @@
         },
         "required": ["keys", "data"]
       },
+      "EVENT_KEYS": {
+        "title": "Keys",
+        "description": "The keys to filter over",
+        "type": "array",
+        "items": {
+          "title": "Keys",
+          "description": "Per key (by position), designate the possible values to be matched for events to be returned. Empty array designates 'any' value",
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/FELT"
+          }
+        }
+      },
       "EVENT_FILTER": {
         "title": "Event filter",
         "description": "An event filter/query",
@@ -1131,17 +1127,10 @@
             "$ref": "#/components/schemas/ADDRESS"
           },
           "keys": {
-            "title": "Keys",
-            "description": "The values used to filter the events",
-            "type": "array",
-            "items": {
-              "title": "Keys",
-              "description": "Per key (by position), designate the possible values to be matched for events to be returned. Empty array designates 'any' value",
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/FELT"
-              }
-            }
+            "title": "event keys",
+            "description": "The keys to filter over",
+            "$ref": "#/components/schemas/EVENT_KEYS"
+
           }
         },
         "required": []
@@ -3105,6 +3094,30 @@
           }
         },
         "required": ["from_address", "to_address", "payload", "entry_point_selector"]
+      },
+      "TXN_STATUS_RESULT": {
+        "title": "Transaction status result",
+        "description": "Transaction status result, including finality status and execution status",
+        "schema": {
+          "title": "Transaction status result",
+          "type": "object",
+          "properties": {
+            "finality_status": {
+              "title": "finality status",
+              "$ref": "#/components/schemas/TXN_STATUS"
+            },
+            "execution_status": {
+              "title": "execution status",
+              "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
+            },
+            "failure_reason": {
+                "title": "failure reason",
+                "description": "the failure reason, only appears if finality_status is REJECTED or execution_status is REVERTED",
+                "type": "string"
+            }
+          },
+          "required": ["finality_status"]
+        }
       },
       "TXN_STATUS": {
         "title": "Transaction status",
