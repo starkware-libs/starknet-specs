@@ -3785,7 +3785,7 @@
             },
             "execution_error": {
               "title": "revert error",
-              "description": "the§ execution trace up to the point of failure",
+              "description": "the execution trace up to the point of failure",
               "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
             }
           },
