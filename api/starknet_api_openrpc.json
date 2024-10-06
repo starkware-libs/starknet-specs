@@ -952,7 +952,8 @@
                       "$ref": "#/components/schemas/FELT"
                     }
                   }
-                }
+                },
+                "required": ["contract_address", "storage_keys"]
               }
             }
           }
@@ -975,7 +976,12 @@
                   "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
                 }
               }
-            }
+            },
+            "required": [
+              "classes_proof",
+              "contracts_proof",
+              "contracts_storage_proofs"
+            ]
           }
         }
       }
@@ -3098,26 +3104,23 @@
       "TXN_STATUS_RESULT": {
         "title": "Transaction status result",
         "description": "Transaction status result, including finality status and execution status",
-        "schema": {
-          "title": "Transaction status result",
-          "type": "object",
-          "properties": {
-            "finality_status": {
-              "title": "finality status",
-              "$ref": "#/components/schemas/TXN_STATUS"
-            },
-            "execution_status": {
-              "title": "execution status",
-              "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
-            },
-            "failure_reason": {
-                "title": "failure reason",
-                "description": "the failure reason, only appears if finality_status is REJECTED or execution_status is REVERTED",
-                "type": "string"
-            }
+        "type": "object",
+        "properties": {
+          "finality_status": {
+            "title": "finality status",
+            "$ref": "#/components/schemas/TXN_STATUS"
           },
-          "required": ["finality_status"]
-        }
+          "execution_status": {
+            "title": "execution status",
+            "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
+          },
+          "failure_reason": {
+              "title": "failure reason",
+              "description": "the failure reason, only appears if finality_status is REJECTED or execution_status is REVERTED",
+              "type": "string"
+          }
+        },
+        "required": ["finality_status"]
       },
       "TXN_STATUS": {
         "title": "Transaction status",
@@ -3627,7 +3630,8 @@
             "description": "l2 gas consumed by this transaction, used for computation and calldata",
             "type": "integer"
           }
-        }
+        },
+        "required": ["l1_gas", "l1_data_gas", "l2_gas"]
       },
       "MERKLE_NODE": {
         "type": "object",
@@ -3685,7 +3689,7 @@
     },
     "CONTRACT_EXECUTION_ERROR": {
         "description": "structured error that can later be processed by wallets or sdks",
-        "titel": "contract execution error",
+        "title": "contract execution error",
         "oneOf": [
           {
             "type": "object",
@@ -3704,7 +3708,8 @@
               "error": {
                 "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
               }
-            }
+            },
+            "required": ["contract_address", "class_hash", "selector", "error"]
           },
           {
             "title": "error message",
