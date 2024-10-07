@@ -423,7 +423,7 @@
       "INNER_CALL_EXECUTION_RESOURCES": {
         "type": "object",
         "title": "Execution resources",
-        "description": "the resources consumed by an inner call (does not account for state diffs since data is squashed accross the transaction)",
+        "description": "the resources consumed by an inner call (does not account for state diffs since data is squashed across the transaction)",
         "properties": {
           "l1_gas": {
             "title": "L1Gas",
