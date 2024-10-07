@@ -4016,42 +4016,66 @@
         ]
       },
       "MERKLE_NODE": {
-        "type": "object",
-        "properties": {
-          "path": {
-            "type": "integer"
-          },
-          "length": {
-            "type": "integer"
-          },
-          "value": {
-            "$ref": "#/components/schemas/FELT"
-          },
-          "children_hashes": {
-            "type": "object",
-            "description": "the hash of the child nodes, if not present then the node is a leaf",
-            "properties": {
-              "left": {
-                "$ref": "#/components/schemas/FELT"
-              },
-              "right": {
-                "$ref": "#/components/schemas/FELT"
-              }
+        "title": "MP node",
+        "description": "a node in the Merkle-Patricia tree, can be a leaf, binary node, or an edge node",
+        "oneOf": [
+            {
+                "$ref": "#/components/schemas/BINARY_NODE"
             },
-            "required": [
-              "left",
-              "right"
-            ]
-          }
-        },
-        "required": [
-          "path",
-          "length",
-          "value"
+            {
+                "$ref": "#/components/schemas/EDGE_NODE"
+            },
+            {
+                "$ref": "#/components/schemas/LEAF_NODE"
+            }
         ]
       },
+      "BINARY_NODE": {
+        "type": "object",
+        "description": "an internal node whose both children are non-zero",
+        "properties": {
+            "left": {
+                "description": "the hash of the left child",
+                "$ref": "#/components/schemas/FELT"
+            },
+            "right": {
+                "description": "the hash of the right child",
+                "$ref": "#/components/schemas/FELT"
+            }
+        },
+        "required": ["left", "right"]
+      },
+      "EDGE_NODE": {
+        "type": "object",
+        "description": "represents a path to the highest non-zero descendant node",
+        "properties": {
+            "path": {
+                "description": "an integer whose binary representation represents the path from the current node to its highest non-zero descendant",
+                "type": "integer"
+            },
+            "length": {
+                "description": "the length of the path",
+                "type": "integer"
+            },
+            "child": {
+                "description": "the hash of the unique non-zero maximal-height descendant node",
+                "$ref": "#/components/schemas/FELT"
+            }
+        },
+        "required": ["path", "length", "child"]
+      },
+      "LEAF_NODE": {
+        "type": "object",
+        "description": "a leaf in the Merkle-Patricia tree",
+        "properties": {
+            "value": {
+                "$ref": "#/components/schemas/FELT"
+            }
+        },
+        "required": ["value"]
+      },
       "NODE_HASH_TO_NODE_MAPPING": {
-        "description": "a node_hash -> node mapping of all the nodes in the union of the paths between the requested leaves and the root (for each node present, its sibling is also present)",
+        "description": "a node_hash -> node mapping of all the nodes in the union of the paths between the requested leaves and the root",
         "type": "array",
         "items": {
           "type": "object",
