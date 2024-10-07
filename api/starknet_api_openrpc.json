@@ -1016,8 +1016,13 @@
                     },
                     "classes_tree_root": {
                         "$ref": "#/components/schemas/FELT"
+                    },
+                    "block_hash": {
+                        "description": "the associated block hash (needed in case the caller used a block tag for the block_id parameter)",
+                        "$ref": "#/components/schemas/FELT"
                     }
-                }
+                },
+                "required": ["contracts_tree_root", "classes_tree_root", "block_hash"]
               }
             },
             "required": [
