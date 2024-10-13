@@ -986,7 +986,7 @@
                     "contract_leaves_data": {
                         "type": "array",
                         "items": {
-                            "description": "the nonce and class hash for each requested contract address, these values are needed to compute the associated leaf node",
+                            "description": "The nonce and class hash for each requested contract address, in the order in which they appear in the request. These values are needed to construct the associated leaf node",
                             "type": "object",
                             "properties": {
                                 "nonce": {
