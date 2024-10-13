@@ -3717,11 +3717,11 @@
         "description": "represents a path to the highest non-zero descendant node",
         "properties": {
             "path": {
-                "description": "an integer whose binary representation represents the path from the current node to its highest non-zero descendant",
+                "description": "an integer whose binary representation represents the path from the current node to its highest non-zero descendant (bounded by 2^251)",
                 "type": "integer"
             },
             "length": {
-                "description": "the length of the path",
+                "description": "the length of the path (bounded by 251)",
                 "type": "integer"
             },
             "child": {
