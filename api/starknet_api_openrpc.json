@@ -969,7 +969,7 @@
         ],
         "result": {
           "name": "result",
-          "description": "The contract's nonce at the requested state",
+          "description": "The requested storage proofs. Note that if a requested leaf has the default value, the path to it may end in an edge node whose path is not a prefix of the requested leaf, thus effecitvely proving non-membership",
           "schema": {
             "type": "object",
             "properties": {
@@ -980,7 +980,7 @@
                 "type": "object",
                 "properties": {
                     "nodes": {
-                        "description": "the nodes in the union of the paths from the contracts tree root to the requested leaves",
+                        "description": "The nodes in the union of the paths from the contracts tree root to the requested leaves",
                         "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
                     },
                     "contract_leaves_data": {
@@ -1031,7 +1031,15 @@
               "contracts_storage_proofs",
               "global_roots"
             ]
-          }
+          },
+          "errors": [
+            {
+              "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+            },
+            {
+              "$ref": "#/components/errors/STORAGE_PROOF_NOT_SUPPORTED"
+            }
+          ]
         }
       }
   ],
@@ -3691,9 +3699,6 @@
             },
             {
                 "$ref": "#/components/schemas/EDGE_NODE"
-            },
-            {
-                "$ref": "#/components/schemas/LEAF_NODE"
             }
         ]
       },
@@ -3718,7 +3723,7 @@
         "properties": {
             "path": {
                 "description": "an integer whose binary representation represents the path from the current node to its highest non-zero descendant (bounded by 2^251)",
-                "type": "integer"
+                "$ref": "#/components/schemas/NUM_AS_HEX"
             },
             "length": {
                 "description": "the length of the path (bounded by 251)",
@@ -3730,16 +3735,6 @@
             }
         },
         "required": ["path", "length", "child"]
-      },
-      "LEAF_NODE": {
-        "type": "object",
-        "description": "a leaf in the Merkle-Patricia tree",
-        "properties": {
-            "value": {
-                "$ref": "#/components/schemas/FELT"
-            }
-        },
-        "required": ["value"]
       },
       "NODE_HASH_TO_NODE_MAPPING": {
         "description": "a node_hash -> node mapping of all the nodes in the union of the paths between the requested leaves and the root",
@@ -3869,6 +3864,10 @@
           },
           "required": ["transaction_index", "execution_error"]
         }
+      },
+      "STORAGE_PROOF_NOT_SUPPORTED": {
+        "code": 42,
+        "message": "the node doesn't support storage proofs for blocks that are too far in the past"
       }
     }
   }
