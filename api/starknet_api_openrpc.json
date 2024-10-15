@@ -4024,9 +4024,6 @@
             },
             {
                 "$ref": "#/components/schemas/EDGE_NODE"
-            },
-            {
-                "$ref": "#/components/schemas/LEAF_NODE"
             }
         ]
       },
@@ -4051,7 +4048,7 @@
         "properties": {
             "path": {
                 "description": "an integer whose binary representation represents the path from the current node to its highest non-zero descendant (bounded by 2^251)",
-                "type": "integer"
+                "$ref": "#/components/schemas/NUM_AS_HEX"
             },
             "length": {
                 "description": "the length of the path (bounded by 251)",
@@ -4063,16 +4060,6 @@
             }
         },
         "required": ["path", "length", "child"]
-      },
-      "LEAF_NODE": {
-        "type": "object",
-        "description": "a leaf in the Merkle-Patricia tree",
-        "properties": {
-            "value": {
-                "$ref": "#/components/schemas/FELT"
-            }
-        },
-        "required": ["value"]
       },
       "NODE_HASH_TO_NODE_MAPPING": {
         "description": "a node_hash -> node mapping of all the nodes in the union of the paths between the requested leaves and the root",
@@ -4213,6 +4200,10 @@
             "execution_error"
           ]
         }
+      },
+      "STORAGE_PROOF_NOT_SUPPORTED": {
+        "code": 42,
+        "message": "the node doesn't support storage proofs for blocks that are too far in the past"
       }
     }
   }
