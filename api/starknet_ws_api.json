@@ -2,7 +2,7 @@
   "openrpc": "1.3.2",
   "info": {
     "version": "0.8.0-rc0",
-    "title": "StarkNet WebSocket PRC API",
+    "title": "StarkNet WebSocket RPC API",
     "license": {}
   },
   "methods": [
