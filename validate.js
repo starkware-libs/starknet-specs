@@ -9,7 +9,6 @@ async function runValidation(filename) {
     let docToParse = await fileContentAsJSON(filename);
     let docToParseWithExternalRefs = await fetchExternalRefsFor(docToParse);
     let dereffedDoc = await derefAll(docToParseWithExternalRefs);
-    console.log(JSON.stringify(dereffedDoc, null, 2));
 
     let doc = await parseOpenRPCDocument(dereffedDoc, { dereference: true });
 
@@ -60,7 +59,7 @@ function fixRefs(dereffer) {
 async function derefAll(doc) {
   let allSchemas = doc.components.schemas;
   let refCacheWithRecursiveRef = {
-    "#/components/schemas/EXECUTION_ERROR": allSchemas["EXECUTION_ERROR"],
+    "#/components/schemas/CONTRACT_EXECUTION_ERROR": allSchemas["CONTRACT_EXECUTION_ERROR"],
     "#/components/schemas/NESTED_CALL": allSchemas["NESTED_CALL"],
   };
   let dereferencerOptions = {
