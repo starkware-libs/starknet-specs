@@ -3672,43 +3672,35 @@
           "required": ["node_hash", "node"]
         }
       },
+      "INNER_CALL": {
+        "type": "object",
+        "title": "inner call",
+        "description": "error frame",
+        "properties": {
+          "contract_address": {
+            "$ref": "#/components/schemas/ADDRESS"
+          },
+          "class_hash": {
+            "$ref": "#/components/schemas/FELT"
+          },
+          "selector": {
+            "$ref": "#/components/schemas/FELT"
+          },
+          "error": {
+            "$ref": "#/components/schemas/EXECUTION_ERROR"
+          }
+        },
+        "required": ["contract_address", "class_hash", "selector", "error"]
+      },
       "EXECUTION_ERROR": {
         "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
       },
       "CONTRACT_EXECUTION_ERROR": {
-        "allOf": [
-          {
-            "type": "object",
-            "properties": {
-              "result": {
-                "title": "Invocation Result",
-                "description": "The value returned from the function invocation",
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/FELT"
-                }
-              },
-              "calls": {
-                "title": "Nested Calls",
-                "description": "The calls made by this invocation",
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/EXECUTION_ERROR"
-                }
-              }
-            },
-            "required": ["result", "calls"]
-          }
-        ]
-      },
-      "CONTRACT_EXECUTION_ERROR_TEMP": {
         "description": "structured error that can later be processed by wallets or sdks",
         "title": "contract execution error",
         "oneOf": [
           {
             "type": "object",
-            "title": "inner call",
-            "description": "error frame",
             "properties": {
               "contract_address": {
                 "$ref": "#/components/schemas/ADDRESS"
@@ -3719,11 +3711,15 @@
               "selector": {
                 "$ref": "#/components/schemas/FELT"
               },
-              "error": {
-                "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
+              "errors": {
+                "title": "Nested Errors",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EXECUTION_ERROR"
+                }
               }
             },
-            "required": ["contract_address", "class_hash", "selector", "error"]
+            "required": ["contract_address", "class_hash", "selector", "errors"]
           },
           {
             "title": "error message",
