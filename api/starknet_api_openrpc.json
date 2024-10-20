@@ -3672,10 +3672,10 @@
           "required": ["node_hash", "node"]
         }
       },
-      "ABC": {
-        "$ref": "#/components/schemas/ASDF"
+      "EXECUTION_ERROR": {
+        "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
       },
-      "ASDF": {
+      "CONTRACT_EXECUTION_ERROR": {
         "allOf": [
           {
             "type": "object",
@@ -3693,7 +3693,7 @@
                 "description": "The calls made by this invocation",
                 "type": "array",
                 "items": {
-                  "$ref": "#/components/schemas/ABC"
+                  "$ref": "#/components/schemas/EXECUTION_ERROR"
                 }
               }
             },
@@ -3701,7 +3701,7 @@
           }
         ]
       },
-      "CONTRACT_EXECUTION_ERROR": {
+      "CONTRACT_EXECUTION_ERROR_TEMP": {
         "description": "structured error that can later be processed by wallets or sdks",
         "title": "contract execution error",
         "oneOf": [
@@ -3718,6 +3718,9 @@
               },
               "selector": {
                 "$ref": "#/components/schemas/FELT"
+              },
+              "error": {
+                "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
               }
             },
             "required": ["contract_address", "class_hash", "selector", "error"]
