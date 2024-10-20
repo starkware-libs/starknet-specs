@@ -60,7 +60,7 @@ function fixRefs(dereffer) {
 async function derefAll(doc) {
   let allSchemas = doc.components.schemas;
   let refCacheWithRecursiveRef = {
-    "#/components/schemas/ABC": allSchemas["ABC"],
+    "#/components/schemas/EXECUTION_ERROR": allSchemas["EXECUTION_ERROR"],
     "#/components/schemas/NESTED_CALL": allSchemas["NESTED_CALL"],
   };
   let dereferencerOptions = {
