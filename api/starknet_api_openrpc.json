@@ -249,50 +249,50 @@
       ]
     },
     {
-        "name": "starknet_getMessagesStatus",
-        "summary": "Given an l1 tx hash, returns the associated l1_handler tx hashes and statuses for all L1 -> L2 messages sent by the l1 ransaction, ordered by the l1 tx sending order",
-        "paramStructure": "by-name",
-        "params": [
-            {
-            "name": "transaction_hash",
-            "summary": "The hash of the L1 transaction that sent L1->L2 messages",
-            "required": true,
-            "schema": {
-                "title": "Transaction hash",
-                "$ref": "#/components/schemas/L1_TXN_HASH"
-            }
-            }
-        ],
-        "result": {
-            "name": "result",
-            "schema": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "title": "status",
-                    "properties": {
-                    "transaction_hash": {
-                        "$ref": "#/components/schemas/TXN_HASH"
-                    },
-                    "finality_status": {
-                        "title": "finality status",
-                        "$ref": "#/components/schemas/TXN_STATUS"
-                    },
-                    "failure_reason": {
-                        "title": "failure reason",
-                        "description": "the failure reason, only appears if finality_status is REJECTED",
-                        "type": "string"
-                    }
-                    },
-                    "required": ["transaction_hash", "finality_status"]
-                }
-            }
-        },
-        "errors": [
-            {
-            "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
-            }
-        ]
+      "name": "starknet_getMessagesStatus",
+      "summary": "Given an l1 tx hash, returns the associated l1_handler tx hashes and statuses for all L1 -> L2 messages sent by the l1 ransaction, ordered by the l1 tx sending order",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "transaction_hash",
+          "summary": "The hash of the L1 transaction that sent L1->L2 messages",
+          "required": true,
+          "schema": {
+            "title": "Transaction hash",
+            "$ref": "#/components/schemas/L1_TXN_HASH"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "title": "status",
+            "properties": {
+              "transaction_hash": {
+                "$ref": "#/components/schemas/TXN_HASH"
+              },
+              "finality_status": {
+                "title": "finality status",
+                "$ref": "#/components/schemas/TXN_STATUS"
+              },
+              "failure_reason": {
+                "title": "failure reason",
+                "description": "the failure reason, only appears if finality_status is REJECTED",
+                "type": "string"
+              }
+            },
+            "required": ["transaction_hash", "finality_status"]
+          }
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
+        }
+      ]
     },
     {
       "name": "starknet_getTransactionByHash",
@@ -907,84 +907,80 @@
       ]
     },
     {
-        "name": "starknet_getStorageProof",
-        "summary": "get merkle paths in one of the state tries: global state, classes, individual contract",
-        "params": [
-          {
-            "name": "class_hashes",
-            "description": "a list of the class hashes for which we want to prove membership in the classes trie",
-            "required": false,
-            "schema": {
-              "title": "classes",
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/FELT"
-              }
-            }
-          },
-          {
-            "name": "contract_addresses",
-            "description": "a list of contracts for which we want to prove membership in the global state trie",
-            "required": false,
-            "schema": {
-              "title": "contracts",
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/ADDRESS"
-              }
-            }
-          },
-          {
-            "name": "contracts_storage_keys",
-            "description": "a list of (contract_address, storage_keys) pairs",
-            "required": false,
-            "schema": {
-              "type": "array",
-              "items": {
-                "type": "object",
-                "properties": {
-                  "contract_address": {
-                    "$ref": "#/components/schemas/ADDRESS"
-                  },
-                  "storage_keys": {
-                    "type": "array",
-                    "items": {
-                      "$ref": "#/components/schemas/FELT"
-                    }
-                  }
-                },
-                "required": ["contract_address", "storage_keys"]
-              }
+      "name": "starknet_getStorageProof",
+      "summary": "get merkle paths in one of the state tries: global state, classes, individual contract",
+      "params": [
+        {
+          "name": "class_hashes",
+          "description": "a list of the class hashes for which we want to prove membership in the classes trie",
+          "required": false,
+          "schema": {
+            "title": "classes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FELT"
             }
           }
-        ],
-        "result": {
-          "name": "result",
-          "description": "The contract's nonce at the requested state",
+        },
+        {
+          "name": "contract_addresses",
+          "description": "a list of contracts for which we want to prove membership in the global state trie",
+          "required": false,
           "schema": {
-            "type": "object",
-            "properties": {
-              "classes_proof": {
-                "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
-              },
-              "contracts_proof": {
-                "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
-              },
-              "contracts_storage_proofs": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
+            "title": "contracts",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ADDRESS"
+            }
+          }
+        },
+        {
+          "name": "contracts_storage_keys",
+          "description": "a list of (contract_address, storage_keys) pairs",
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "contract_address": {
+                  "$ref": "#/components/schemas/ADDRESS"
+                },
+                "storage_keys": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FELT"
+                  }
                 }
-              }
-            },
-            "required": [
-              "classes_proof",
-              "contracts_proof",
-              "contracts_storage_proofs"
-            ]
+              },
+              "required": ["contract_address", "storage_keys"]
+            }
           }
         }
+      ],
+      "result": {
+        "name": "result",
+        "description": "The contract's nonce at the requested state",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "classes_proof": {
+              "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
+            },
+            "contracts_proof": {
+              "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
+            },
+            "contracts_storage_proofs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
+              }
+            }
+          },
+          "required": ["classes_proof", "contracts_proof", "contracts_storage_proofs"]
+        }
       }
+    }
   ],
   "components": {
     "contentDescriptors": {},
@@ -1136,7 +1132,6 @@
             "title": "event keys",
             "description": "The keys to filter over",
             "$ref": "#/components/schemas/EVENT_KEYS"
-
           }
         },
         "required": []
@@ -3115,9 +3110,9 @@
             "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
           },
           "failure_reason": {
-              "title": "failure reason",
-              "description": "the failure reason, only appears if finality_status is REJECTED or execution_status is REVERTED",
-              "type": "string"
+            "title": "failure reason",
+            "description": "the failure reason, only appears if finality_status is REJECTED or execution_status is REVERTED",
+            "type": "string"
           }
         },
         "required": ["finality_status"]
@@ -3656,17 +3651,10 @@
                 "$ref": "#/components/schemas/FELT"
               }
             },
-            "required": [
-              "left",
-              "right"
-            ]
+            "required": ["left", "right"]
           }
         },
-        "required": [
-          "path",
-          "length",
-          "value"
-        ]
+        "required": ["path", "length", "value"]
       },
       "NODE_HASH_TO_NODE_MAPPING": {
         "description": "a node_hash -> node mapping of all the nodes in the union of the paths between the requested leaves and the root (for each node present, its sibling is also present)",
@@ -3681,13 +3669,39 @@
               "$ref": "#/components/schemas/MERKLE_NODE"
             }
           },
-          "required": [
-            "node_hash",
-            "node"
-          ]
+          "required": ["node_hash", "node"]
         }
-    },
-    "CONTRACT_EXECUTION_ERROR": {
+      },
+      "ABC": {
+        "$ref": "#/components/schemas/ASDF"
+      },
+      "ASDF": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "result": {
+                "title": "Invocation Result",
+                "description": "The value returned from the function invocation",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/FELT"
+                }
+              },
+              "calls": {
+                "title": "Nested Calls",
+                "description": "The calls made by this invocation",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ABC"
+                }
+              }
+            },
+            "required": ["result", "calls"]
+          }
+        ]
+      },
+      "CONTRACT_EXECUTION_ERROR": {
         "description": "structured error that can later be processed by wallets or sdks",
         "title": "contract execution error",
         "oneOf": [
@@ -3704,9 +3718,6 @@
               },
               "selector": {
                 "$ref": "#/components/schemas/FELT"
-              },
-              "error": {
-                "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
               }
             },
             "required": ["contract_address", "class_hash", "selector", "error"]
