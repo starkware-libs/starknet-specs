@@ -153,7 +153,7 @@
       ]
     },
     {
-      "name": "starknet_subscriptionTransactionsStatus",
+      "name": "starknet_subscriptionTransactionStatus",
       "summary": "New transaction status notification",
       "description": "Notification to the client of a new transaction status",
       "params": [
