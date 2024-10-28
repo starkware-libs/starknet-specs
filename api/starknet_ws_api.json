@@ -2,7 +2,7 @@
   "openrpc": "1.3.2",
   "info": {
     "version": "0.8.0-rc0",
-    "title": "StarkNet WebSocket PRC API",
+    "title": "StarkNet WebSocket RPC API",
     "license": {}
   },
   "methods": [
@@ -153,7 +153,7 @@
       ]
     },
     {
-      "name": "starknet_subscriptionTransactionsStatus",
+      "name": "starknet_subscriptionTransactionStatus",
       "summary": "New transaction status notification",
       "description": "Notification to the client of a new transaction status",
       "params": [
