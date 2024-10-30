@@ -110,13 +110,13 @@
                             "minItems": 2,
                             "maxItems": 2
                         }
-                    }
-                },
-                "bytecode_segment_lengths": {
-                    "type": "array",
-                    "description": "a list of sizes of segments in the bytecode, each segment is hashed invidually when computing the bytecode hash",
-                    "items": {
-                        "type": "integer"
+                    },
+                    "bytecode_segment_lengths": {
+                        "type": "array",
+                        "description": "a list of sizes of segments in the bytecode, each segment is hashed invidually when computing the bytecode hash",
+                        "items": {
+                            "type": "integer"
+                        }
                     }
                 },
                 "required": [
@@ -202,7 +202,7 @@
                 ]
             },
             "Immediate": {
-                "title": "Imeediate",
+                "title": "Immediate",
                 "type": "object",
                 "properties": {
                     "Immediate": {
