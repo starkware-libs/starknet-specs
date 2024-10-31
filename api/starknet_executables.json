@@ -213,11 +213,13 @@
                     "Immediate"
                 ]
             },
-            "BinOp": {
+            "BinOp":{
                 "title": "BinOperand",
                 "type": "object",
-                "properties": {
+                "properties":{
                     "BinOp": {
+                        "type": "object",
+                        "properties": {
                         "op": {
                             "type": "string",
                             "enum": [
@@ -238,12 +240,16 @@
                                 }
                             ]
                         }
+                        },
+                        "required":[
+                            "op",
+                            "a",
+                            "b"
+                        ]
                     }
                 },
-                "required": [
-                    "BinOp",
-                    "a",
-                    "b"
+                "required":[
+                    "BinOp"
                 ]
             },
             "ResOperand": {
