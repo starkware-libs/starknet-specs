@@ -1636,6 +1636,7 @@
           "timestamp",
           "sequencer_address",
           "l1_gas_price",
+          "l2_gas_price",
           "l1_data_gas_price",
           "l1_da_mode",
           "starknet_version"
@@ -1666,6 +1667,11 @@
             "description": "The price of l1 gas in the block",
             "$ref": "#/components/schemas/RESOURCE_PRICE"
           },
+          "l2_gas_price": {
+            "title": "L2 gas price",
+            "description": "The price of l2 gas in the block",
+            "$ref": "#/components/schemas/RESOURCE_PRICE"
+          },
           "l1_data_gas_price": {
             "title": "L1 data gas price",
             "description": "The price of l1 data gas in the block",
@@ -1688,6 +1694,7 @@
           "timestamp",
           "sequencer_address",
           "l1_gas_price",
+          "l2_gas_price",
           "l1_data_gas_price",
           "l1_da_mode",
           "starknet_version"
