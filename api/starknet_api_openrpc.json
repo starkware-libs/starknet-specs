@@ -3778,7 +3778,7 @@
                 "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
               }
             },
-            "required": ["contract_address", "class_hash", "selector", "errors"]
+            "required": ["contract_address", "class_hash", "selector", "error"]
           },
           {
             "title": "error message",
