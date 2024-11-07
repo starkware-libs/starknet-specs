@@ -245,6 +245,12 @@
         {
           "name": "subscription_id",
           "schema": {
+            "$ref": "#/components/schemas/SUBSCRIPTION_ID"
+          }
+        },
+        {
+          "name": "result",
+          "schema": {
             "$ref": "#/components/schemas/REORG_DATA"
           }
         }
