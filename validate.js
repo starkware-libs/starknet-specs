@@ -59,6 +59,7 @@ function fixRefs(dereffer) {
 async function derefAll(doc) {
   let allSchemas = doc.components.schemas;
   let refCacheWithRecursiveRef = {
+    "#/components/schemas/CONTRACT_EXECUTION_ERROR": allSchemas["CONTRACT_EXECUTION_ERROR"],
     "#/components/schemas/NESTED_CALL": allSchemas["NESTED_CALL"],
   };
   let dereferencerOptions = {
