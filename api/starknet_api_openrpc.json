@@ -1,7 +1,7 @@
 {
   "openrpc": "1.0.0-rc1",
   "info": {
-    "version": "0.7.1",
+    "version": "0.8.0-rc.0",
     "title": "StarkNet Node API",
     "license": {}
   },
@@ -1682,6 +1682,7 @@
           "timestamp",
           "sequencer_address",
           "l1_gas_price",
+          "l2_gas_price",
           "l1_data_gas_price",
           "l1_da_mode",
           "starknet_version"
@@ -1712,6 +1713,11 @@
             "description": "The price of l1 gas in the block",
             "$ref": "#/components/schemas/RESOURCE_PRICE"
           },
+          "l2_gas_price": {
+            "title": "L2 gas price",
+            "description": "The price of l2 gas in the block",
+            "$ref": "#/components/schemas/RESOURCE_PRICE"
+          },
           "l1_data_gas_price": {
             "title": "L1 data gas price",
             "description": "The price of l1 data gas in the block",
@@ -1737,6 +1743,7 @@
           "timestamp",
           "sequencer_address",
           "l1_gas_price",
+          "l2_gas_price",
           "l1_data_gas_price",
           "l1_da_mode",
           "starknet_version"
@@ -4016,42 +4023,53 @@
         ]
       },
       "MERKLE_NODE": {
-        "type": "object",
-        "properties": {
-          "path": {
-            "type": "integer"
-          },
-          "length": {
-            "type": "integer"
-          },
-          "value": {
-            "$ref": "#/components/schemas/FELT"
-          },
-          "children_hashes": {
-            "type": "object",
-            "description": "the hash of the child nodes, if not present then the node is a leaf",
-            "properties": {
-              "left": {
-                "$ref": "#/components/schemas/FELT"
-              },
-              "right": {
-                "$ref": "#/components/schemas/FELT"
-              }
+        "title": "MP node",
+        "description": "a node in the Merkle-Patricia tree, can be a leaf, binary node, or an edge node",
+        "oneOf": [
+            {
+                "$ref": "#/components/schemas/BINARY_NODE"
             },
-            "required": [
-              "left",
-              "right"
-            ]
-          }
-        },
-        "required": [
-          "path",
-          "length",
-          "value"
+            {
+                "$ref": "#/components/schemas/EDGE_NODE"
+            }
         ]
       },
+      "BINARY_NODE": {
+        "type": "object",
+        "description": "an internal node whose both children are non-zero",
+        "properties": {
+            "left": {
+                "description": "the hash of the left child",
+                "$ref": "#/components/schemas/FELT"
+            },
+            "right": {
+                "description": "the hash of the right child",
+                "$ref": "#/components/schemas/FELT"
+            }
+        },
+        "required": ["left", "right"]
+      },
+      "EDGE_NODE": {
+        "type": "object",
+        "description": "represents a path to the highest non-zero descendant node",
+        "properties": {
+            "path": {
+                "description": "an integer whose binary representation represents the path from the current node to its highest non-zero descendant (bounded by 2^251)",
+                "$ref": "#/components/schemas/NUM_AS_HEX"
+            },
+            "length": {
+                "description": "the length of the path (bounded by 251)",
+                "type": "integer"
+            },
+            "child": {
+                "description": "the hash of the unique non-zero maximal-height descendant node",
+                "$ref": "#/components/schemas/FELT"
+            }
+        },
+        "required": ["path", "length", "child"]
+      },
       "NODE_HASH_TO_NODE_MAPPING": {
-        "description": "a node_hash -> node mapping of all the nodes in the union of the paths between the requested leaves and the root (for each node present, its sibling is also present)",
+        "description": "a node_hash -> node mapping of all the nodes in the union of the paths between the requested leaves and the root",
         "type": "array",
         "items": {
           "type": "object",
@@ -4189,6 +4207,10 @@
             "execution_error"
           ]
         }
+      },
+      "STORAGE_PROOF_NOT_SUPPORTED": {
+        "code": 42,
+        "message": "the node doesn't support storage proofs for blocks that are too far in the past"
       }
     }
   }
