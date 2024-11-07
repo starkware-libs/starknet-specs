@@ -7,7 +7,8 @@
     "url": "https://github.com/starkware-libs/starknet-specs.git"
   },
   "scripts": {
-    "validate_all": "node validate.js api/starknet_api_openrpc.json && node validate.js api/starknet_write_api.json && node validate.js api/starknet_trace_api_openrpc.json && node validate.js ./api/starknet_ws_api.json && node validate.js ./wallet-api/wallet_rpc.json"
+    "format_all": "node format.js ./api/starknet_api_openrpc.json && node format.js ./api/starknet_write_api.json && node format.js ./api/starknet_trace_api_openrpc.json && node format.js ./api/starknet_ws_api.json && node format.js ./api/starknet_executables.json && node format.js ./wallet-api/wallet_rpc.json",
+    "validate_all": "node validate.js ./api/starknet_api_openrpc.json && node validate.js ./api/starknet_write_api.json && node validate.js ./api/starknet_trace_api_openrpc.json && node validate.js ./api/starknet_ws_api.json && node validate.js ./wallet-api/wallet_rpc.json"
   },
   "author": "Lior Schejter",
   "license": "MIT",

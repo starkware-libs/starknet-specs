@@ -349,7 +349,9 @@
               "$ref": "#/components/schemas/PADDED_TXN_HASH"
             }
           },
-          "required": ["transaction_hash"]
+          "required": [
+            "transaction_hash"
+          ]
         }
       },
       "errors": [
@@ -402,7 +404,10 @@
               "$ref": "#/components/schemas/PADDED_FELT"
             }
           },
-          "required": ["transaction_hash", "class_hash"]
+          "required": [
+            "transaction_hash",
+            "class_hash"
+          ]
         }
       },
       "errors": [
@@ -499,7 +504,9 @@
       "PERMISSION": {
         "title": "Wallet permission",
         "type": "string",
-        "enum": ["accounts"],
+        "enum": [
+          "accounts"
+        ],
         "description": "Optional wallet permissions"
       },
       "ASSET": {
@@ -509,7 +516,9 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": ["ERC20"]
+            "enum": [
+              "ERC20"
+            ]
           },
           "options": {
             "type": "object",
@@ -534,10 +543,15 @@
                 "type": "string"
               }
             },
-            "required": ["address"]
+            "required": [
+              "address"
+            ]
           }
         },
-        "required": ["type", "options"]
+        "required": [
+          "type",
+          "options"
+        ]
       },
       "CHAIN_ID": {
         "title": "Chain id",
@@ -551,7 +565,11 @@
         "allOf": [
           {
             "type": "string",
-            "enum": ["0x534e5f4d41494e", "0x534e5f474f45524c49", "0x534e5f5345504f4c4941"]
+            "enum": [
+              "0x534e5f4d41494e",
+              "0x534e5f474f45524c49",
+              "0x534e5f5345504f4c4941"
+            ]
           },
           {
             "$ref": "#/components/schemas/CHAIN_ID"
@@ -598,10 +616,19 @@
             "title": "Contract Version",
             "description": "The Cairo version of the contract 0 or 1",
             "type": "integer",
-            "enum": [0, 1]
+            "enum": [
+              0,
+              1
+            ]
           }
         },
-        "required": ["address", "class_hash", "salt", "calldata", "version"]
+        "required": [
+          "address",
+          "class_hash",
+          "salt",
+          "calldata",
+          "version"
+        ]
       },
       "INVOKE_CALL": {
         "title": "Invoke transaction",
@@ -626,7 +653,10 @@
             }
           }
         },
-        "required": ["contract_address", "entry_point"]
+        "required": [
+          "contract_address",
+          "entry_point"
+        ]
       },
       "DECLARE_TXN": {
         "title": "Declare Transaction",
@@ -649,7 +679,10 @@
             "$ref": "#/components/schemas/CONTRACT_CLASS"
           }
         },
-        "required": ["compiled_class_hash", "contract_class"]
+        "required": [
+          "compiled_class_hash",
+          "contract_class"
+        ]
       },
       "STARKNET_CHAIN": {
         "title": "Starknet Chain",
@@ -697,7 +730,11 @@
             "uniqueItems": true
           }
         },
-        "required": ["id", "chain_id", "chain_name"]
+        "required": [
+          "id",
+          "chain_id",
+          "chain_name"
+        ]
       },
       "STARKNET_MERKLE_TYPE": {
         "title": "Starknet Merkle Type",
@@ -708,13 +745,19 @@
           },
           "type": {
             "type": "string",
-            "enum": ["merkletree"]
+            "enum": [
+              "merkletree"
+            ]
           },
           "contains": {
             "type": "string"
           }
         },
-        "required": ["name", "type", "contains"]
+        "required": [
+          "name",
+          "type",
+          "contains"
+        ]
       },
       "STARKNET_ENUM_TYPE": {
         "title": "Starknet Enum Type",
@@ -725,13 +768,19 @@
           },
           "type": {
             "type": "string",
-            "enum": ["enum"]
+            "enum": [
+              "enum"
+            ]
           },
           "contains": {
             "type": "string"
           }
         },
-        "required": ["name", "type", "contains"]
+        "required": [
+          "name",
+          "type",
+          "contains"
+        ]
       },
       "STARKNET_TYPE": {
         "title": "Starknet Type",
@@ -741,10 +790,17 @@
             {
               "type": "object",
               "properties": {
-                "name": { "type": "string" },
-                "type": { "type": "string" }
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                }
               },
-              "required": ["name", "type"]
+              "required": [
+                "name",
+                "type"
+              ]
             },
             {
               "$ref": "#/components/schemas/STARKNET_MERKLE_TYPE"
@@ -782,27 +838,48 @@
             "description": "The message to be signed"
           }
         },
-        "required": ["types", "primaryType", "domain", "message"]
+        "required": [
+          "types",
+          "primaryType",
+          "domain",
+          "message"
+        ]
       },
       "STARKNET_DOMAIN": {
         "title": "Starknet Domain",
         "type": "object",
         "minProperties": 1,
         "properties": {
-          "name": { "type": "string" },
-          "version": { "type": "string" },
+          "name": {
+            "type": "string"
+          },
+          "version": {
+            "type": "string"
+          },
           "chainId": {
-            "anyOf": [{ "type": "string" }, { "type": "number" }]
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "number"
+              }
+            ]
           },
           "revision": {
             "oneOf": [
               {
                 "type": "string",
-                "enum": ["2"]
+                "enum": [
+                  "2"
+                ]
               },
               {
                 "type": "number",
-                "enum": [0, 1]
+                "enum": [
+                  0,
+                  1
+                ]
               }
             ]
           }
