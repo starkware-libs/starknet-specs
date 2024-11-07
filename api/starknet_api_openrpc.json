@@ -249,50 +249,50 @@
       ]
     },
     {
-        "name": "starknet_getMessagesStatus",
-        "summary": "Given an l1 tx hash, returns the associated l1_handler tx hashes and statuses for all L1 -> L2 messages sent by the l1 transaction, ordered by the l1 tx sending order",
-        "paramStructure": "by-name",
-        "params": [
-            {
-            "name": "transaction_hash",
-            "summary": "The hash of the L1 transaction that sent L1->L2 messages",
-            "required": true,
-            "schema": {
-                "title": "Transaction hash",
-                "$ref": "#/components/schemas/L1_TXN_HASH"
-            }
-            }
-        ],
-        "result": {
-            "name": "result",
-            "schema": {
-                "type": "array",
-                "items": {
-                    "type": "object",
-                    "title": "status",
-                    "properties": {
-                    "transaction_hash": {
-                        "$ref": "#/components/schemas/TXN_HASH"
-                    },
-                    "finality_status": {
-                        "title": "finality status",
-                        "$ref": "#/components/schemas/TXN_STATUS"
-                    },
-                    "failure_reason": {
-                        "title": "failure reason",
-                        "description": "the failure reason, only appears if finality_status is REJECTED",
-                        "type": "string"
-                    }
-                    },
-                    "required": ["transaction_hash", "finality_status"]
-                }
-            }
-        },
-        "errors": [
-            {
-            "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
-            }
-        ]
+      "name": "starknet_getMessagesStatus",
+      "summary": "Given an l1 tx hash, returns the associated l1_handler tx hashes and statuses for all L1 -> L2 messages sent by the l1 transaction, ordered by the l1 tx sending order",
+      "paramStructure": "by-name",
+      "params": [
+        {
+          "name": "transaction_hash",
+          "summary": "The hash of the L1 transaction that sent L1->L2 messages",
+          "required": true,
+          "schema": {
+            "title": "Transaction hash",
+            "$ref": "#/components/schemas/L1_TXN_HASH"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "title": "status",
+            "properties": {
+              "transaction_hash": {
+                "$ref": "#/components/schemas/TXN_HASH"
+              },
+              "finality_status": {
+                "title": "finality status",
+                "$ref": "#/components/schemas/TXN_STATUS"
+              },
+              "failure_reason": {
+                "title": "failure reason",
+                "description": "the failure reason, only appears if finality_status is REJECTED",
+                "type": "string"
+              }
+            },
+            "required": ["transaction_hash", "finality_status"]
+          }
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
+        }
+      ]
     },
     {
       "name": "starknet_getTransactionByHash",
@@ -325,9 +325,7 @@
                   "$ref": "#/components/schemas/TXN_HASH"
                 }
               },
-              "required": [
-                "transaction_hash"
-              ]
+              "required": ["transaction_hash"]
             }
           ]
         }
@@ -379,9 +377,7 @@
                   "$ref": "#/components/schemas/TXN_HASH"
                 }
               },
-              "required": [
-                "transaction_hash"
-              ]
+              "required": ["transaction_hash"]
             }
           ]
         }
@@ -777,10 +773,7 @@
               "$ref": "#/components/schemas/BLOCK_NUMBER"
             }
           },
-          "required": [
-            "block_hash",
-            "block_number"
-          ]
+          "required": ["block_hash", "block_number"]
         }
       },
       "errors": [
@@ -914,141 +907,136 @@
       ]
     },
     {
-        "name": "starknet_getStorageProof",
-        "summary": "Get merkle paths in one of the state tries: global state, classes, individual contract. A single request can query for any mix of the three types of storage proofs (classes, contracts, and storage).",
-        "params": [
-            {
-                "name": "block_id",
-                "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
-                "required": true,
-                "schema": {
-                    "title": "Block id",
-                    "$ref": "#/components/schemas/BLOCK_ID"
-                }
-            },
-            {
-                "name": "class_hashes",
-                "description": "a list of the class hashes for which we want to prove membership in the classes trie",
-                "required": false,
-                "schema": {
-                    "title": "classes",
-                    "type": "array",
-                        "items": {
-                        "$ref": "#/components/schemas/FELT"
-                    }
-                }
-            },
-            {
-                "name": "contract_addresses",
-                "description": "a list of contracts for which we want to prove membership in the global state trie",
-                "required": false,
-                "schema": {
-                    "title": "contracts",
-                    "type": "array",
-                        "items": {
-                        "$ref": "#/components/schemas/ADDRESS"
-                    }
-                }
-            },
-            {
-                "name": "contracts_storage_keys",
-                "description": "a list of (contract_address, storage_keys) pairs",
-                "required": false,
-                "schema": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "contract_address": {
-                                "$ref": "#/components/schemas/ADDRESS"
-                            },
-                            "storage_keys": {
-                                "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/FELT"
-                                    }
-                                }
-                        },
-                        "required": ["contract_address", "storage_keys"]
-                    }
-                }
-            }
-        ],
-        "result": {
-          "name": "result",
-          "description": "The requested storage proofs. Note that if a requested leaf has the default value, the path to it may end in an edge node whose path is not a prefix of the requested leaf, thus effecitvely proving non-membership",
+      "name": "starknet_getStorageProof",
+      "summary": "Get merkle paths in one of the state tries: global state, classes, individual contract. A single request can query for any mix of the three types of storage proofs (classes, contracts, and storage).",
+      "params": [
+        {
+          "name": "block_id",
+          "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
+          "required": true,
           "schema": {
-            "type": "object",
-            "properties": {
-              "classes_proof": {
-                "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
-              },
-              "contracts_proof": {
-                "type": "object",
-                "properties": {
-                    "nodes": {
-                        "description": "The nodes in the union of the paths from the contracts tree root to the requested leaves",
-                        "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
-                    },
-                    "contract_leaves_data": {
-                        "type": "array",
-                        "items": {
-                            "description": "The nonce and class hash for each requested contract address, in the order in which they appear in the request. These values are needed to construct the associated leaf node",
-                            "type": "object",
-                            "properties": {
-                                "nonce": {
-                                    "$ref": "#/components/schemas/FELT"
-                                },
-                                "class_hash": {
-                                    "$ref": "#/components/schemas/FELT"
-                                }
-                            },
-                            "required": ["nonce", "class_hash"] 
-                        }
-                    }
+            "title": "Block id",
+            "$ref": "#/components/schemas/BLOCK_ID"
+          }
+        },
+        {
+          "name": "class_hashes",
+          "description": "a list of the class hashes for which we want to prove membership in the classes trie",
+          "required": false,
+          "schema": {
+            "title": "classes",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FELT"
+            }
+          }
+        },
+        {
+          "name": "contract_addresses",
+          "description": "a list of contracts for which we want to prove membership in the global state trie",
+          "required": false,
+          "schema": {
+            "title": "contracts",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ADDRESS"
+            }
+          }
+        },
+        {
+          "name": "contracts_storage_keys",
+          "description": "a list of (contract_address, storage_keys) pairs",
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "contract_address": {
+                  "$ref": "#/components/schemas/ADDRESS"
                 },
-                "required": ["nodes", "contract_leaves_data"]
-              },
-              "contracts_storage_proofs": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
+                "storage_keys": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FELT"
+                  }
                 }
               },
-              "global_roots": {
-                "type": "object",
-                "properties": {
-                    "contracts_tree_root": {
-                        "$ref": "#/components/schemas/FELT"
-                    },
-                    "classes_tree_root": {
-                        "$ref": "#/components/schemas/FELT"
-                    },
-                    "block_hash": {
-                        "description": "the associated block hash (needed in case the caller used a block tag for the block_id parameter)",
-                        "$ref": "#/components/schemas/FELT"
-                    }
+              "required": ["contract_address", "storage_keys"]
+            }
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "description": "The requested storage proofs. Note that if a requested leaf has the default value, the path to it may end in an edge node whose path is not a prefix of the requested leaf, thus effecitvely proving non-membership",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "classes_proof": {
+              "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
+            },
+            "contracts_proof": {
+              "type": "object",
+              "properties": {
+                "nodes": {
+                  "description": "The nodes in the union of the paths from the contracts tree root to the requested leaves",
+                  "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
                 },
-                "required": ["contracts_tree_root", "classes_tree_root", "block_hash"]
+                "contract_leaves_data": {
+                  "type": "array",
+                  "items": {
+                    "description": "The nonce and class hash for each requested contract address, in the order in which they appear in the request. These values are needed to construct the associated leaf node",
+                    "type": "object",
+                    "properties": {
+                      "nonce": {
+                        "$ref": "#/components/schemas/FELT"
+                      },
+                      "class_hash": {
+                        "$ref": "#/components/schemas/FELT"
+                      }
+                    },
+                    "required": ["nonce", "class_hash"]
+                  }
+                }
+              },
+              "required": ["nodes", "contract_leaves_data"]
+            },
+            "contracts_storage_proofs": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/NODE_HASH_TO_NODE_MAPPING"
               }
             },
-            "required": [
-              "classes_proof",
-              "contracts_proof",
-              "contracts_storage_proofs",
-              "global_roots"
-            ]
-          },
-          "errors": [
-            {
-              "$ref": "#/components/errors/BLOCK_NOT_FOUND"
-            },
-            {
-              "$ref": "#/components/errors/STORAGE_PROOF_NOT_SUPPORTED"
+            "global_roots": {
+              "type": "object",
+              "properties": {
+                "contracts_tree_root": {
+                  "$ref": "#/components/schemas/FELT"
+                },
+                "classes_tree_root": {
+                  "$ref": "#/components/schemas/FELT"
+                },
+                "block_hash": {
+                  "description": "the associated block hash (needed in case the caller used a block tag for the block_id parameter)",
+                  "$ref": "#/components/schemas/FELT"
+                }
+              },
+              "required": ["contracts_tree_root", "classes_tree_root", "block_hash"]
             }
-          ]
+          },
+          "required": ["classes_proof", "contracts_proof", "contracts_storage_proofs", "global_roots"]
         }
-      }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+        },
+        {
+          "$ref": "#/components/errors/STORAGE_PROOF_NOT_SUPPORTED"
+        }
+      ]
+    }
   ],
   "components": {
     "contentDescriptors": {},
@@ -1070,9 +1058,7 @@
             "type": "string"
           }
         },
-        "required": [
-          "events"
-        ]
+        "required": ["events"]
       },
       "RESULT_PAGE_REQUEST": {
         "title": "Result page request",
@@ -1089,9 +1075,7 @@
             "minimum": 1
           }
         },
-        "required": [
-          "chunk_size"
-        ]
+        "required": ["chunk_size"]
       },
       "EMITTED_EVENT": {
         "title": "Emitted event",
@@ -1123,9 +1107,7 @@
                 "$ref": "#/components/schemas/TXN_HASH"
               }
             },
-            "required": [
-              "transaction_hash"
-            ]
+            "required": ["transaction_hash"]
           }
         ]
       },
@@ -1142,9 +1124,7 @@
                 "$ref": "#/components/schemas/ADDRESS"
               }
             },
-            "required": [
-              "from_address"
-            ]
+            "required": ["from_address"]
           },
           {
             "title": "Event content",
@@ -1172,10 +1152,7 @@
             }
           }
         },
-        "required": [
-          "keys",
-          "data"
-        ]
+        "required": ["keys", "data"]
       },
       "EVENT_KEYS": {
         "title": "Keys",
@@ -1228,9 +1205,7 @@
                 "$ref": "#/components/schemas/BLOCK_HASH"
               }
             },
-            "required": [
-              "block_hash"
-            ]
+            "required": ["block_hash"]
           },
           {
             "title": "Block number",
@@ -1241,9 +1216,7 @@
                 "$ref": "#/components/schemas/BLOCK_NUMBER"
               }
             },
-            "required": [
-              "block_number"
-            ]
+            "required": ["block_number"]
           },
           {
             "title": "Block tag",
@@ -1255,10 +1228,7 @@
         "title": "Block tag",
         "type": "string",
         "description": "A tag specifying a dynamic reference to a block",
-        "enum": [
-          "latest",
-          "pending"
-        ]
+        "enum": ["latest", "pending"]
       },
       "SYNC_STATUS": {
         "title": "Sync status",
@@ -1445,10 +1415,7 @@
             "$ref": "#/components/schemas/STATE_DIFF"
           }
         },
-        "required": [
-          "old_root",
-          "state_diff"
-        ],
+        "required": ["old_root", "state_diff"],
         "additionalProperties": false
       },
       "STATE_UPDATE": {
@@ -1474,12 +1441,7 @@
             "$ref": "#/components/schemas/STATE_DIFF"
           }
         },
-        "required": [
-          "state_diff",
-          "block_hash",
-          "old_root",
-          "new_root"
-        ]
+        "required": ["state_diff", "block_hash", "old_root", "new_root"]
       },
       "ADDRESS": {
         "title": "Address",
@@ -1538,9 +1500,7 @@
             }
           }
         },
-        "required": [
-          "transactions"
-        ]
+        "required": ["transactions"]
       },
       "BLOCK_BODY_WITH_TXS": {
         "title": "Block body with transactions",
@@ -1566,17 +1526,13 @@
                       "$ref": "#/components/schemas/TXN_HASH"
                     }
                   },
-                  "required": [
-                    "transaction_hash"
-                  ]
+                  "required": ["transaction_hash"]
                 }
               ]
             }
           }
         },
-        "required": [
-          "transactions"
-        ]
+        "required": ["transactions"]
       },
       "BLOCK_BODY_WITH_RECEIPTS": {
         "title": "Block body with transactions and receipts",
@@ -1599,16 +1555,11 @@
                   "$ref": "#/components/schemas/TXN_RECEIPT"
                 }
               },
-              "required": [
-                "transaction",
-                "receipt"
-              ]
+              "required": ["transaction", "receipt"]
             }
           }
         },
-        "required": [
-          "transactions"
-        ]
+        "required": ["transactions"]
       },
       "BLOCK_HEADER": {
         "title": "Block header",
@@ -1663,10 +1614,7 @@
             "title": "L1 da mode",
             "type": "string",
             "description": "specifies whether the data of this block is published via blob data or calldata",
-            "enum": [
-              "BLOB",
-              "CALLDATA"
-            ]
+            "enum": ["BLOB", "CALLDATA"]
           },
           "starknet_version": {
             "title": "Starknet version",
@@ -1727,10 +1675,7 @@
             "title": "L1 da mode",
             "type": "string",
             "description": "specifies whether the data of this block is published via blob data or calldata",
-            "enum": [
-              "BLOB",
-              "CALLDATA"
-            ]
+            "enum": ["BLOB", "CALLDATA"]
           },
           "starknet_version": {
             "title": "Starknet version",
@@ -1749,11 +1694,7 @@
           "starknet_version"
         ],
         "not": {
-          "required": [
-            "block_hash",
-            "block_number",
-            "new_root"
-          ]
+          "required": ["block_hash", "block_number", "new_root"]
         }
       },
       "BLOCK_WITH_TX_HASHES": {
@@ -1769,9 +1710,7 @@
                 "$ref": "#/components/schemas/BLOCK_STATUS"
               }
             },
-            "required": [
-              "status"
-            ]
+            "required": ["status"]
           },
           {
             "title": "Block header",
@@ -1796,9 +1735,7 @@
                 "$ref": "#/components/schemas/BLOCK_STATUS"
               }
             },
-            "required": [
-              "status"
-            ]
+            "required": ["status"]
           },
           {
             "title": "Block header",
@@ -1823,9 +1760,7 @@
                 "$ref": "#/components/schemas/BLOCK_STATUS"
               }
             },
-            "required": [
-              "status"
-            ]
+            "required": ["status"]
           },
           {
             "title": "Block header",
@@ -1894,10 +1829,7 @@
             "$ref": "#/components/schemas/FELT"
           }
         },
-        "required": [
-          "address",
-          "class_hash"
-        ]
+        "required": ["address", "class_hash"]
       },
       "CONTRACT_STORAGE_DIFF_ITEM": {
         "title": "Contract storage diff item",
@@ -1930,10 +1862,7 @@
             }
           }
         },
-        "required": [
-          "address",
-          "storage_entries"
-        ]
+        "required": ["address", "storage_entries"]
       },
       "TXN": {
         "title": "Transaction",
@@ -2001,9 +1930,7 @@
               "type": {
                 "title": "Declare",
                 "type": "string",
-                "enum": [
-                  "DECLARE"
-                ]
+                "enum": ["DECLARE"]
               },
               "sender_address": {
                 "title": "Sender address",
@@ -2019,10 +1946,7 @@
                 "title": "Version",
                 "description": "Version of the transaction scheme",
                 "type": "string",
-                "enum": [
-                  "0x0",
-                  "0x100000000000000000000000000000000"
-                ]
+                "enum": ["0x0", "0x100000000000000000000000000000000"]
               },
               "signature": {
                 "title": "Signature",
@@ -2034,14 +1958,7 @@
                 "$ref": "#/components/schemas/FELT"
               }
             },
-            "required": [
-              "type",
-              "sender_address",
-              "max_fee",
-              "version",
-              "signature",
-              "class_hash"
-            ]
+            "required": ["type", "sender_address", "max_fee", "version", "signature", "class_hash"]
           }
         ]
       },
@@ -2056,9 +1973,7 @@
               "type": {
                 "title": "Declare",
                 "type": "string",
-                "enum": [
-                  "DECLARE"
-                ]
+                "enum": ["DECLARE"]
               },
               "sender_address": {
                 "title": "Sender address",
@@ -2074,10 +1989,7 @@
                 "title": "Version",
                 "description": "Version of the transaction scheme",
                 "type": "string",
-                "enum": [
-                  "0x1",
-                  "0x100000000000000000000000000000001"
-                ]
+                "enum": ["0x1", "0x100000000000000000000000000000001"]
               },
               "signature": {
                 "title": "Signature",
@@ -2093,15 +2005,7 @@
                 "$ref": "#/components/schemas/FELT"
               }
             },
-            "required": [
-              "type",
-              "sender_address",
-              "max_fee",
-              "version",
-              "signature",
-              "nonce",
-              "class_hash"
-            ]
+            "required": ["type", "sender_address", "max_fee", "version", "signature", "nonce", "class_hash"]
           }
         ]
       },
@@ -2116,9 +2020,7 @@
               "type": {
                 "title": "Declare",
                 "type": "string",
-                "enum": [
-                  "DECLARE"
-                ]
+                "enum": ["DECLARE"]
               },
               "sender_address": {
                 "title": "Sender address",
@@ -2139,10 +2041,7 @@
                 "title": "Version",
                 "description": "Version of the transaction scheme",
                 "type": "string",
-                "enum": [
-                  "0x2",
-                  "0x100000000000000000000000000000002"
-                ]
+                "enum": ["0x2", "0x100000000000000000000000000000002"]
               },
               "signature": {
                 "title": "Signature",
@@ -2182,9 +2081,7 @@
               "type": {
                 "title": "Declare",
                 "type": "string",
-                "enum": [
-                  "DECLARE"
-                ]
+                "enum": ["DECLARE"]
               },
               "sender_address": {
                 "title": "Sender address",
@@ -2200,10 +2097,7 @@
                 "title": "Version",
                 "description": "Version of the transaction scheme",
                 "type": "string",
-                "enum": [
-                  "0x3",
-                  "0x100000000000000000000000000000003"
-                ]
+                "enum": ["0x3", "0x100000000000000000000000000000003"]
               },
               "signature": {
                 "title": "Signature",
@@ -2321,9 +2215,7 @@
               "type": {
                 "title": "Declare",
                 "type": "string",
-                "enum": [
-                  "DECLARE"
-                ]
+                "enum": ["DECLARE"]
               },
               "sender_address": {
                 "title": "Sender address",
@@ -2339,10 +2231,7 @@
                 "title": "Version",
                 "description": "Version of the transaction scheme",
                 "type": "string",
-                "enum": [
-                  "0x1",
-                  "0x100000000000000000000000000000001"
-                ]
+                "enum": ["0x1", "0x100000000000000000000000000000001"]
               },
               "signature": {
                 "title": "Signature",
@@ -2358,15 +2247,7 @@
                 "$ref": "#/components/schemas/DEPRECATED_CONTRACT_CLASS"
               }
             },
-            "required": [
-              "type",
-              "sender_address",
-              "max_fee",
-              "version",
-              "signature",
-              "nonce",
-              "contract_class"
-            ]
+            "required": ["type", "sender_address", "max_fee", "version", "signature", "nonce", "contract_class"]
           }
         ]
       },
@@ -2381,9 +2262,7 @@
               "type": {
                 "title": "Declare",
                 "type": "string",
-                "enum": [
-                  "DECLARE"
-                ]
+                "enum": ["DECLARE"]
               },
               "sender_address": {
                 "title": "Sender address",
@@ -2404,10 +2283,7 @@
                 "title": "Version",
                 "description": "Version of the transaction scheme",
                 "type": "string",
-                "enum": [
-                  "0x2",
-                  "0x100000000000000000000000000000002"
-                ]
+                "enum": ["0x2", "0x100000000000000000000000000000002"]
               },
               "signature": {
                 "title": "Signature",
@@ -2447,9 +2323,7 @@
               "type": {
                 "title": "Declare",
                 "type": "string",
-                "enum": [
-                  "DECLARE"
-                ]
+                "enum": ["DECLARE"]
               },
               "sender_address": {
                 "title": "Sender address",
@@ -2465,10 +2339,7 @@
                 "title": "Version",
                 "description": "Version of the transaction scheme",
                 "type": "string",
-                "enum": [
-                  "0x3",
-                  "0x100000000000000000000000000000003"
-                ]
+                "enum": ["0x3", "0x100000000000000000000000000000003"]
               },
               "signature": {
                 "title": "Signature",
@@ -2560,9 +2431,7 @@
           "type": {
             "title": "Deploy account",
             "type": "string",
-            "enum": [
-              "DEPLOY_ACCOUNT"
-            ]
+            "enum": ["DEPLOY_ACCOUNT"]
           },
           "max_fee": {
             "title": "Max fee",
@@ -2573,10 +2442,7 @@
             "title": "Version",
             "description": "Version of the transaction scheme",
             "type": "string",
-            "enum": [
-              "0x1",
-              "0x100000000000000000000000000000001"
-            ]
+            "enum": ["0x1", "0x100000000000000000000000000000001"]
           },
           "signature": {
             "title": "Signature",
@@ -2624,18 +2490,13 @@
           "type": {
             "title": "Deploy account",
             "type": "string",
-            "enum": [
-              "DEPLOY_ACCOUNT"
-            ]
+            "enum": ["DEPLOY_ACCOUNT"]
           },
           "version": {
             "title": "Version",
             "description": "Version of the transaction scheme",
             "type": "string",
-            "enum": [
-              "0x3",
-              "0x100000000000000000000000000000003"
-            ]
+            "enum": ["0x3", "0x100000000000000000000000000000003"]
           },
           "signature": {
             "title": "Signature",
@@ -2723,9 +2584,7 @@
               "type": {
                 "title": "Deploy",
                 "type": "string",
-                "enum": [
-                  "DEPLOY"
-                ]
+                "enum": ["DEPLOY"]
               },
               "contract_address_salt": {
                 "description": "The salt for the address of the deployed contract",
@@ -2746,13 +2605,7 @@
                 "$ref": "#/components/schemas/FELT"
               }
             },
-            "required": [
-              "version",
-              "type",
-              "constructor_calldata",
-              "contract_address_salt",
-              "class_hash"
-            ]
+            "required": ["version", "type", "constructor_calldata", "contract_address_salt", "class_hash"]
           }
         ]
       },
@@ -2764,9 +2617,7 @@
           "type": {
             "title": "Type",
             "type": "string",
-            "enum": [
-              "INVOKE"
-            ]
+            "enum": ["INVOKE"]
           },
           "max_fee": {
             "title": "Max fee",
@@ -2777,10 +2628,7 @@
             "title": "Version",
             "description": "Version of the transaction scheme",
             "type": "string",
-            "enum": [
-              "0x0",
-              "0x100000000000000000000000000000000"
-            ]
+            "enum": ["0x0", "0x100000000000000000000000000000000"]
           },
           "signature": {
             "title": "Signature",
@@ -2803,15 +2651,7 @@
             }
           }
         },
-        "required": [
-          "type",
-          "contract_address",
-          "entry_point_selector",
-          "calldata",
-          "max_fee",
-          "version",
-          "signature"
-        ]
+        "required": ["type", "contract_address", "entry_point_selector", "calldata", "max_fee", "version", "signature"]
       },
       "INVOKE_TXN_V1": {
         "title": "Invoke transaction V1",
@@ -2823,9 +2663,7 @@
               "type": {
                 "title": "Type",
                 "type": "string",
-                "enum": [
-                  "INVOKE"
-                ]
+                "enum": ["INVOKE"]
               },
               "sender_address": {
                 "title": "sender address",
@@ -2848,10 +2686,7 @@
                 "title": "Version",
                 "description": "Version of the transaction scheme",
                 "type": "string",
-                "enum": [
-                  "0x1",
-                  "0x100000000000000000000000000000001"
-                ]
+                "enum": ["0x1", "0x100000000000000000000000000000001"]
               },
               "signature": {
                 "title": "Signature",
@@ -2862,15 +2697,7 @@
                 "$ref": "#/components/schemas/FELT"
               }
             },
-            "required": [
-              "type",
-              "sender_address",
-              "calldata",
-              "max_fee",
-              "version",
-              "signature",
-              "nonce"
-            ]
+            "required": ["type", "sender_address", "calldata", "max_fee", "version", "signature", "nonce"]
           }
         ]
       },
@@ -2884,9 +2711,7 @@
               "type": {
                 "title": "Type",
                 "type": "string",
-                "enum": [
-                  "INVOKE"
-                ]
+                "enum": ["INVOKE"]
               },
               "sender_address": {
                 "title": "sender address",
@@ -2904,10 +2729,7 @@
                 "title": "Version",
                 "description": "Version of the transaction scheme",
                 "type": "string",
-                "enum": [
-                  "0x3",
-                  "0x100000000000000000000000000000003"
-                ]
+                "enum": ["0x3", "0x100000000000000000000000000000003"]
               },
               "signature": {
                 "title": "Signature",
@@ -3001,16 +2823,12 @@
                 "title": "Version",
                 "description": "Version of the transaction scheme",
                 "type": "string",
-                "enum": [
-                  "0x0"
-                ]
+                "enum": ["0x0"]
               },
               "type": {
                 "title": "type",
                 "type": "string",
-                "enum": [
-                  "L1_HANDLER"
-                ]
+                "enum": ["L1_HANDLER"]
               },
               "nonce": {
                 "title": "Nonce",
@@ -3018,11 +2836,7 @@
                 "$ref": "#/components/schemas/NUM_AS_HEX"
               }
             },
-            "required": [
-              "version",
-              "type",
-              "nonce"
-            ]
+            "required": ["version", "type", "nonce"]
           },
           {
             "title": "Function call",
@@ -3092,15 +2906,11 @@
                   "execution_status": {
                     "title": "Execution status",
                     "type": "string",
-                    "enum": [
-                      "SUCCEEDED"
-                    ],
+                    "enum": ["SUCCEEDED"],
                     "description": "The execution status of the transaction"
                   }
                 },
-                "required": [
-                  "execution_status"
-                ]
+                "required": ["execution_status"]
               },
               {
                 "title": "Reverted Common receipt properties",
@@ -3110,9 +2920,7 @@
                   "execution_status": {
                     "title": "Execution status",
                     "type": "string",
-                    "enum": [
-                      "REVERTED"
-                    ],
+                    "enum": ["REVERTED"],
                     "description": "The execution status of the transaction"
                   },
                   "revert_reason": {
@@ -3122,10 +2930,7 @@
                     "type": "string"
                   }
                 },
-                "required": [
-                  "execution_status",
-                  "revert_reason"
-                ]
+                "required": ["execution_status", "revert_reason"]
               }
             ]
           }
@@ -3141,14 +2946,10 @@
               "type": {
                 "title": "Type",
                 "type": "string",
-                "enum": [
-                  "INVOKE"
-                ]
+                "enum": ["INVOKE"]
               }
             },
-            "required": [
-              "type"
-            ]
+            "required": ["type"]
           },
           {
             "title": "Common receipt properties",
@@ -3166,14 +2967,10 @@
               "type": {
                 "title": "Declare",
                 "type": "string",
-                "enum": [
-                  "DECLARE"
-                ]
+                "enum": ["DECLARE"]
               }
             },
-            "required": [
-              "type"
-            ]
+            "required": ["type"]
           },
           {
             "title": "Common receipt properties",
@@ -3195,9 +2992,7 @@
               "type": {
                 "title": "Deploy account",
                 "type": "string",
-                "enum": [
-                  "DEPLOY_ACCOUNT"
-                ]
+                "enum": ["DEPLOY_ACCOUNT"]
               },
               "contract_address": {
                 "title": "Contract address",
@@ -3205,10 +3000,7 @@
                 "$ref": "#/components/schemas/FELT"
               }
             },
-            "required": [
-              "type",
-              "contract_address"
-            ]
+            "required": ["type", "contract_address"]
           }
         ]
       },
@@ -3226,9 +3018,7 @@
               "type": {
                 "title": "Deploy",
                 "type": "string",
-                "enum": [
-                  "DEPLOY"
-                ]
+                "enum": ["DEPLOY"]
               },
               "contract_address": {
                 "title": "Contract address",
@@ -3236,10 +3026,7 @@
                 "$ref": "#/components/schemas/FELT"
               }
             },
-            "required": [
-              "type",
-              "contract_address"
-            ]
+            "required": ["type", "contract_address"]
           }
         ]
       },
@@ -3254,9 +3041,7 @@
               "type": {
                 "title": "type",
                 "type": "string",
-                "enum": [
-                  "L1_HANDLER"
-                ]
+                "enum": ["L1_HANDLER"]
               },
               "message_hash": {
                 "title": "Message hash",
@@ -3264,10 +3049,7 @@
                 "$ref": "#/components/schemas/NUM_AS_HEX"
               }
             },
-            "required": [
-              "type",
-              "message_hash"
-            ]
+            "required": ["type", "message_hash"]
           },
           {
             "title": "Common receipt properties",
@@ -3346,11 +3128,7 @@
             }
           }
         },
-        "required": [
-          "from_address",
-          "to_address",
-          "payload"
-        ]
+        "required": ["from_address", "to_address", "payload"]
       },
       "MSG_FROM_L1": {
         "title": "Message from L1",
@@ -3379,12 +3157,7 @@
             }
           }
         },
-        "required": [
-          "from_address",
-          "to_address",
-          "payload",
-          "entry_point_selector"
-        ]
+        "required": ["from_address", "to_address", "payload", "entry_point_selector"]
       },
       "TXN_STATUS_RESULT": {
         "title": "Transaction status result",
@@ -3405,60 +3178,36 @@
             "type": "string"
           }
         },
-        "required": [
-          "finality_status"
-        ]
+        "required": ["finality_status"]
       },
       "TXN_STATUS": {
         "title": "Transaction status",
         "type": "string",
-        "enum": [
-          "RECEIVED",
-          "REJECTED",
-          "ACCEPTED_ON_L2",
-          "ACCEPTED_ON_L1"
-        ],
+        "enum": ["RECEIVED", "REJECTED", "ACCEPTED_ON_L2", "ACCEPTED_ON_L1"],
         "description": "The finality status of the transaction, including the case the txn is still in the mempool or failed validation during the block construction phase"
       },
       "TXN_FINALITY_STATUS": {
         "title": "Finality status",
         "type": "string",
-        "enum": [
-          "ACCEPTED_ON_L2",
-          "ACCEPTED_ON_L1"
-        ],
+        "enum": ["ACCEPTED_ON_L2", "ACCEPTED_ON_L1"],
         "description": "The finality status of the transaction"
       },
       "TXN_EXECUTION_STATUS": {
         "title": "Execution status",
         "type": "string",
-        "enum": [
-          "SUCCEEDED",
-          "REVERTED"
-        ],
+        "enum": ["SUCCEEDED", "REVERTED"],
         "description": "The execution status of the transaction"
       },
       "TXN_TYPE": {
         "title": "Transaction type",
         "type": "string",
-        "enum": [
-          "DECLARE",
-          "DEPLOY",
-          "DEPLOY_ACCOUNT",
-          "INVOKE",
-          "L1_HANDLER"
-        ],
+        "enum": ["DECLARE", "DEPLOY", "DEPLOY_ACCOUNT", "INVOKE", "L1_HANDLER"],
         "description": "The type of the transaction"
       },
       "BLOCK_STATUS": {
         "title": "Block status",
         "type": "string",
-        "enum": [
-          "PENDING",
-          "ACCEPTED_ON_L2",
-          "ACCEPTED_ON_L1",
-          "REJECTED"
-        ],
+        "enum": ["PENDING", "ACCEPTED_ON_L2", "ACCEPTED_ON_L1", "REJECTED"],
         "description": "The status of the block"
       },
       "FUNCTION_CALL": {
@@ -3483,11 +3232,7 @@
             }
           }
         },
-        "required": [
-          "contract_address",
-          "entry_point_selector",
-          "calldata"
-        ]
+        "required": ["contract_address", "entry_point_selector", "calldata"]
       },
       "CONTRACT_CLASS": {
         "title": "Contract class",
@@ -3532,11 +3277,7 @@
                 }
               }
             },
-            "required": [
-              "CONSTRUCTOR",
-              "EXTERNAL",
-              "L1_HANDLER"
-            ]
+            "required": ["CONSTRUCTOR", "EXTERNAL", "L1_HANDLER"]
           },
           "abi": {
             "title": "ABI",
@@ -3544,11 +3285,7 @@
             "description": "The class ABI, as supplied by the user declaring the class"
           }
         },
-        "required": [
-          "sierra_program",
-          "contract_class_version",
-          "entry_points_by_type"
-        ]
+        "required": ["sierra_program", "contract_class_version", "entry_points_by_type"]
       },
       "DEPRECATED_CONTRACT_CLASS": {
         "title": "Deprecated contract class",
@@ -3593,10 +3330,7 @@
             "$ref": "#/components/schemas/CONTRACT_ABI"
           }
         },
-        "required": [
-          "program",
-          "entry_points_by_type"
-        ]
+        "required": ["program", "entry_points_by_type"]
       },
       "DEPRECATED_CAIRO_ENTRY_POINT": {
         "title": "Deprecated Cairo entry point",
@@ -3613,10 +3347,7 @@
             "$ref": "#/components/schemas/FELT"
           }
         },
-        "required": [
-          "offset",
-          "selector"
-        ]
+        "required": ["offset", "selector"]
       },
       "SIERRA_ENTRY_POINT": {
         "title": "Sierra entry point",
@@ -3633,10 +3364,7 @@
             "type": "integer"
           }
         },
-        "required": [
-          "selector",
-          "function_idx"
-        ]
+        "required": ["selector", "function_idx"]
       },
       "CONTRACT_ABI": {
         "title": "Contract ABI",
@@ -3665,25 +3393,17 @@
       "STRUCT_ABI_TYPE": {
         "title": "Struct ABI type",
         "type": "string",
-        "enum": [
-          "struct"
-        ]
+        "enum": ["struct"]
       },
       "EVENT_ABI_TYPE": {
         "title": "Event ABI type",
         "type": "string",
-        "enum": [
-          "event"
-        ]
+        "enum": ["event"]
       },
       "FUNCTION_ABI_TYPE": {
         "title": "Function ABI type",
         "type": "string",
-        "enum": [
-          "function",
-          "l1_handler",
-          "constructor"
-        ]
+        "enum": ["function", "l1_handler", "constructor"]
       },
       "STRUCT_ABI_ENTRY": {
         "title": "Struct ABI entry",
@@ -3711,12 +3431,7 @@
             }
           }
         },
-        "required": [
-          "type",
-          "name",
-          "size",
-          "members"
-        ]
+        "required": ["type", "name", "size", "members"]
       },
       "STRUCT_MEMBER": {
         "title": "Struct member",
@@ -3766,19 +3481,12 @@
             }
           }
         },
-        "required": [
-          "type",
-          "name",
-          "keys",
-          "data"
-        ]
+        "required": ["type", "name", "keys", "data"]
       },
       "FUNCTION_STATE_MUTABILITY": {
         "title": "Function state mutability type",
         "type": "string",
-        "enum": [
-          "view"
-        ]
+        "enum": ["view"]
       },
       "FUNCTION_ABI_ENTRY": {
         "title": "Function ABI entry",
@@ -3812,12 +3520,7 @@
             "$ref": "#/components/schemas/FUNCTION_STATE_MUTABILITY"
           }
         },
-        "required": [
-          "type",
-          "name",
-          "inputs",
-          "outputs"
-        ]
+        "required": ["type", "name", "inputs", "outputs"]
       },
       "TYPED_PARAMETER": {
         "title": "Typed parameter",
@@ -3834,25 +3537,17 @@
             "type": "string"
           }
         },
-        "required": [
-          "name",
-          "type"
-        ]
+        "required": ["name", "type"]
       },
       "SIMULATION_FLAG_FOR_ESTIMATE_FEE": {
         "type": "string",
-        "enum": [
-          "SKIP_VALIDATE"
-        ],
+        "enum": ["SKIP_VALIDATE"],
         "description": "Flags that indicate how to simulate a given transaction. By default, the sequencer behavior is replicated locally"
       },
       "PRICE_UNIT": {
         "title": "price unit",
         "type": "string",
-        "enum": [
-          "WEI",
-          "FRI"
-        ]
+        "enum": ["WEI", "FRI"]
       },
       "FEE_ESTIMATE": {
         "title": "Fee estimation",
@@ -3899,14 +3594,7 @@
             "$ref": "#/components/schemas/PRICE_UNIT"
           }
         },
-        "required": [
-          "gas_consumed",
-          "gas_price",
-          "data_gas_consumed",
-          "data_gas_price",
-          "overall_fee",
-          "unit"
-        ]
+        "required": ["gas_consumed", "gas_price", "data_gas_consumed", "data_gas_price", "overall_fee", "unit"]
       },
       "FEE_PAYMENT": {
         "title": "Fee Payment",
@@ -3924,19 +3612,13 @@
             "$ref": "#/components/schemas/PRICE_UNIT"
           }
         },
-        "required": [
-          "amount",
-          "unit"
-        ]
+        "required": ["amount", "unit"]
       },
       "DA_MODE": {
         "title": "DA mode",
         "type": "string",
         "description": "Specifies a storage domain in Starknet. Each domain has different gurantess regarding availability",
-        "enum": [
-          "L1",
-          "L2"
-        ]
+        "enum": ["L1", "L2"]
       },
       "RESOURCE_BOUNDS_MAPPING": {
         "type": "object",
@@ -3952,10 +3634,7 @@
             "$ref": "#/components/schemas/RESOURCE_BOUNDS"
           }
         },
-        "required": [
-          "l1_gas",
-          "l2_gas"
-        ]
+        "required": ["l1_gas", "l2_gas"]
       },
       "RESOURCE_BOUNDS": {
         "type": "object",
@@ -3971,10 +3650,7 @@
             "$ref": "#/components/schemas/u128"
           }
         },
-        "required": [
-          "max_amount",
-          "max_price_per_unit"
-        ]
+        "required": ["max_amount", "max_price_per_unit"]
       },
       "RESOURCE_PRICE": {
         "type": "object",
@@ -3990,10 +3666,7 @@
             "$ref": "#/components/schemas/FELT"
           }
         },
-        "required": [
-          "price_in_wei",
-          "price_in_fri"
-        ]
+        "required": ["price_in_wei", "price_in_fri"]
       },
       "EXECUTION_RESOURCES": {
         "type": "object",
@@ -4016,36 +3689,32 @@
             "type": "integer"
           }
         },
-        "required": [
-          "l1_gas",
-          "l1_data_gas",
-          "l2_gas"
-        ]
+        "required": ["l1_gas", "l1_data_gas", "l2_gas"]
       },
       "MERKLE_NODE": {
         "title": "MP node",
         "description": "a node in the Merkle-Patricia tree, can be a leaf, binary node, or an edge node",
         "oneOf": [
-            {
-                "$ref": "#/components/schemas/BINARY_NODE"
-            },
-            {
-                "$ref": "#/components/schemas/EDGE_NODE"
-            }
+          {
+            "$ref": "#/components/schemas/BINARY_NODE"
+          },
+          {
+            "$ref": "#/components/schemas/EDGE_NODE"
+          }
         ]
       },
       "BINARY_NODE": {
         "type": "object",
         "description": "an internal node whose both children are non-zero",
         "properties": {
-            "left": {
-                "description": "the hash of the left child",
-                "$ref": "#/components/schemas/FELT"
-            },
-            "right": {
-                "description": "the hash of the right child",
-                "$ref": "#/components/schemas/FELT"
-            }
+          "left": {
+            "description": "the hash of the left child",
+            "$ref": "#/components/schemas/FELT"
+          },
+          "right": {
+            "description": "the hash of the right child",
+            "$ref": "#/components/schemas/FELT"
+          }
         },
         "required": ["left", "right"]
       },
@@ -4053,18 +3722,18 @@
         "type": "object",
         "description": "represents a path to the highest non-zero descendant node",
         "properties": {
-            "path": {
-                "description": "an integer whose binary representation represents the path from the current node to its highest non-zero descendant (bounded by 2^251)",
-                "$ref": "#/components/schemas/NUM_AS_HEX"
-            },
-            "length": {
-                "description": "the length of the path (bounded by 251)",
-                "type": "integer"
-            },
-            "child": {
-                "description": "the hash of the unique non-zero maximal-height descendant node",
-                "$ref": "#/components/schemas/FELT"
-            }
+          "path": {
+            "description": "an integer whose binary representation represents the path from the current node to its highest non-zero descendant (bounded by 2^251)",
+            "$ref": "#/components/schemas/NUM_AS_HEX"
+          },
+          "length": {
+            "description": "the length of the path (bounded by 251)",
+            "type": "integer"
+          },
+          "child": {
+            "description": "the hash of the unique non-zero maximal-height descendant node",
+            "$ref": "#/components/schemas/FELT"
+          }
         },
         "required": ["path", "length", "child"]
       },
@@ -4081,10 +3750,7 @@
               "$ref": "#/components/schemas/MERKLE_NODE"
             }
           },
-          "required": [
-            "node_hash",
-            "node"
-          ]
+          "required": ["node_hash", "node"]
         }
       },
       "CONTRACT_EXECUTION_ERROR": {
@@ -4112,12 +3778,7 @@
                 "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
               }
             },
-            "required": [
-              "contract_address",
-              "class_hash",
-              "selector",
-              "errors"
-            ]
+            "required": ["contract_address", "class_hash", "selector", "errors"]
           },
           {
             "title": "error message",
@@ -4202,10 +3863,7 @@
               "$ref": "#/components/schemas/CONTRACT_EXECUTION_ERROR"
             }
           },
-          "required": [
-            "transaction_index",
-            "execution_error"
-          ]
+          "required": ["transaction_index", "execution_error"]
         }
       },
       "STORAGE_PROOF_NOT_SUPPORTED": {
