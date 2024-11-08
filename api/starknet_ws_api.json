@@ -71,7 +71,7 @@
           "required": false,
           "schema": {
             "title": "event keys",
-            "$ref": "#/components/schemas/EVENT_KEYS"
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EVENT_KEYS"
           }
         },
         {
