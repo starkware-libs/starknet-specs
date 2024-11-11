@@ -12,7 +12,7 @@
       "description": "Creates a WebSocket stream which will fire events for new block headers",
       "params": [
         {
-          "name": "block",
+          "name": "block_id",
           "summary": "The block to get notifications from, default is latest, limited to 1024 blocks back",
           "required": false,
           "schema": {
@@ -78,7 +78,7 @@
           }
         },
         {
-          "name": "block",
+          "name": "block_id",
           "summary": "The block to get notifications from, default is latest, limited to 1024 blocks back",
           "required": false,
           "schema": {
@@ -138,7 +138,7 @@
           }
         },
         {
-          "name": "block",
+          "name": "block_id",
           "summary": "The block to get notifications from, default is latest, limited to 1024 blocks back",
           "required": false,
           "schema": {
