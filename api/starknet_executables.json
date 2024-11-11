@@ -34,7 +34,7 @@
                     "$ref": "#/components/errors/COMPILATION_ERROR"
                 },
                 {
-                    "$ref": "./starknet_api_openrpc.json#/components/errors/CLASS_HASH_NOT_FOUND"
+                    "$ref": "./api/starknet_api_openrpc.json#/components/errors/CLASS_HASH_NOT_FOUND"
                 }
             ]
         }
@@ -1337,13 +1337,13 @@
                 ]
             },
             "FELT": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/FELT"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
             },
             "NUM_AS_HEX": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/NUM_AS_HEX"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/NUM_AS_HEX"
             },
             "DEPRECATED_CAIRO_ENTRY_POINT": {
-                "$ref": "./starknet_api_openrpc.json#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/DEPRECATED_CAIRO_ENTRY_POINT"
             }
         },
         "errors": {
