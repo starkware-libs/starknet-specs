@@ -32,6 +32,9 @@
         },
         {
           "$ref": "./api/starknet_api_openrpc.json#/components/errors/BLOCK_NOT_FOUND"
+        },
+        {
+            "$ref": "#/components/errors/CALL_ON_PENDING"
         }
       ]
     },
@@ -101,6 +104,9 @@
         },
         {
           "$ref": "./api/starknet_api_openrpc.json#/components/errors/BLOCK_NOT_FOUND"
+        },
+        {
+            "$ref": "#/components/errors/CALL_ON_PENDING"
         }
       ]
     },
@@ -367,6 +373,10 @@
       "TOO_MANY_BLOCKS_BACK": {
         "code": 68,
         "message": "Cannot go back more than 1024 blocks"
+      },
+      "CALL_ON_PENDING": {
+        "code": 69,
+        "message": "This method does not support being called on the pending block"
       }
     }
   }
