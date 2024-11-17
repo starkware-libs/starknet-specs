@@ -244,7 +244,7 @@
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
               },
               {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN"
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_WITH_HASH"
               }
             ]
           }
