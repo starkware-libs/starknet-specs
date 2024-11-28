@@ -249,7 +249,8 @@
       },
       "COMPILATION_FAILED": {
         "code": 56,
-        "message": "Compilation failed"
+        "message": "Compilation failed",
+        "data": "string"
       },
       "CONTRACT_CLASS_SIZE_IS_TOO_LARGE": {
         "code": 57,
