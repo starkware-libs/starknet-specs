@@ -7,7 +7,7 @@
     "url": "https://github.com/starkware-libs/starknet-specs.git"
   },
   "scripts": {
-    "validate_all": "find api/ -name '*.json' -not -name 'starknet_metadata.json' -exec node validate.js {} ';'"
+    "validate_all": "find api/ -name '*.json' -not -name 'starknet_metadata.json' -exec node validate.js {} ';' && node check_component_uniqueness.js"
   },
   "author": "Lior Schejter",
   "license": "MIT",
