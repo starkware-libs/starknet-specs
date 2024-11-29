@@ -27,4 +27,4 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: npm run validate_all
-    - run: npm run check_uniqueness
+    - run: npm run check_component_uniqueness
