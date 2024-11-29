@@ -12,16 +12,20 @@ async function runValidation(filename) {
 
     let doc = await parseOpenRPCDocument(dereffedDoc, { dereference: true });
 
-    const errors = validateOpenRPCDocument(doc);
-    if (errors === true) {
-      console.log("Ok!");
-    } else {
+    const validation = validateOpenRPCDocument(doc);
+    if (validation !== true) {
+      const errors = validation;
       console.error(errors.name);
       console.error(errors.message);
+      process.exit(1);
     }
   } catch (exn) {
-    console.error(exn && exn.message);
+    console.error("Error in", filename);
+    console.error("\t", exn && exn.message);
+    process.exit(2);
   }
+
+  console.log("Ok!");
 }
 
 /**
