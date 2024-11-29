@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { parseOpenRPCDocument, validateOpenRPCDocument, dereferenceDocument } = require("@open-rpc/schema-utils-js");
+const { parseOpenRPCDocument, validateOpenRPCDocument } = require("@open-rpc/schema-utils-js");
 const Dereferencer = require("@json-schema-tools/dereferencer");
 const fs = require("fs-extra");
 
