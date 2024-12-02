@@ -3594,7 +3594,7 @@
             "$ref": "#/components/schemas/PRICE_UNIT"
           }
         },
-        "required": ["gas_consumed", "gas_price", "data_gas_consumed", "data_gas_price", "overall_fee", "unit"]
+        "required": ["l1_gas_consumed", "l1_gas_price", "l2_gas_consumed", "l2_gas_price","l1_data_gas_consumed", "l1_data_gas_price", "overall_fee", "unit"]
       },
       "FEE_PAYMENT": {
         "title": "Fee Payment",
