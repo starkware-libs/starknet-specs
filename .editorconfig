@@ -3,6 +3,7 @@ root = true
 [*]
 end_of_line = lf
 insert_final_newline = false
+charset = utf-8
 
 [*.js]
 indent_style = space
