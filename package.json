@@ -7,7 +7,9 @@
     "url": "https://github.com/starkware-libs/starknet-specs.git"
   },
   "scripts": {
-    "validate_all": "node validate.js api/starknet_api_openrpc.json && node validate.js api/starknet_write_api.json && node validate.js api/starknet_trace_api_openrpc.json && node validate.js ./api/starknet_ws_api.json && node ./api/starknet_executables.json && node validate.js ./wallet-api/wallet_rpc.json"
+    "validate_all": "node validate.js api/starknet_api_openrpc.json && node validate.js api/starknet_write_api.json && node validate.js api/starknet_trace_api_openrpc.json && node validate.js ./api/starknet_ws_api.json && node ./api/starknet_executables.json && node validate.js ./wallet-api/wallet_rpc.json",
+    "format": "prettier --write .",
+    "format-check": "prettier ."
   },
   "author": "Lior Schejter",
   "license": "MIT",
@@ -15,5 +17,8 @@
     "@json-schema-tools/dereferencer": "1.6.3",
     "@open-rpc/schema-utils-js": "^2.0.3",
     "fs-extra": "10.1.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.4.1"
   }
 }
