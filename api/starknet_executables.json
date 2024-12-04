@@ -895,7 +895,7 @@
                             "InitSquashData": {
                                 "type": "object",
                                 "properties": {
-                                    "dict_access": {
+                                    "dict_accesses": {
                                         "$ref": "#/components/schemas/ResOperand"
                                     },
                                     "ptr_diff": {
