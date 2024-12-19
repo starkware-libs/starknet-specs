@@ -551,7 +551,11 @@
         "allOf": [
           {
             "type": "string",
-            "enum": ["0x534e5f4d41494e", "0x534e5f474f45524c49", "0x534e5f5345504f4c4941"]
+            "enum": [
+              "0x534e5f4d41494e",
+              "0x534e5f474f45524c49",
+              "0x534e5f5345504f4c4941"
+            ]
           },
           {
             "$ref": "#/components/schemas/CHAIN_ID"
