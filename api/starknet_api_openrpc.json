@@ -1290,7 +1290,7 @@
       "u128": {
         "type": "string",
         "title": "u128",
-        "description": "64 bit integers, represented by hex string of length at most 32",
+        "description": "128 bit integers, represented by hex string of length at most 32",
         "pattern": "^0x(0|[a-fA-F1-9]{1}[a-fA-F0-9]{0,31})$"
       },
       "CHAIN_ID": {
@@ -3339,7 +3339,7 @@
           "offset": {
             "title": "Offset",
             "description": "The offset of the entry point in the program",
-            "$ref": "#/components/schemas/NUM_AS_HEX"
+            "type": "integer"
           },
           "selector": {
             "title": "Selector",
@@ -3594,7 +3594,7 @@
             "$ref": "#/components/schemas/PRICE_UNIT"
           }
         },
-        "required": ["gas_consumed", "gas_price", "data_gas_consumed", "data_gas_price", "overall_fee", "unit"]
+        "required": ["l1_gas_consumed", "l1_gas_price", "l2_gas_consumed", "l2_gas_price","l1_data_gas_consumed", "l1_data_gas_price", "overall_fee", "unit"]
       },
       "FEE_PAYMENT": {
         "title": "Fee Payment",

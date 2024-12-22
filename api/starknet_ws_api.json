@@ -244,7 +244,23 @@
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
               },
               {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TXN"
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "transaction_hash": {
+                        "title": "transaction hash",
+                        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+                      }
+                    },
+                    "required": [
+                      "transaction_hash"
+                    ]
+                  }
+                ]
               }
             ]
           }
@@ -316,9 +332,7 @@
             "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
           },
           "status": {
-            "schema": {
-              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_STATUS_RESULT"
-            }
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_STATUS_RESULT"
           }
         }
       },
@@ -336,9 +350,7 @@
           "starting_block_hash": {
             "title": "Starting Block Hash",
             "description": "Hash of the first known block of the orphaned chain",
-            "schema": {
-              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
-            }
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
           },
           "starting_block_number": {
             "title": "Starting Block Number",
@@ -348,9 +360,7 @@
           "ending_block_hash": {
             "title": "Ending Block",
             "description": "The last known block of the orphaned chain",
-            "schema": {
-              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
-            }
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_HASH"
           },
           "ending_block_number": {
             "title": "Ending Block Number",
