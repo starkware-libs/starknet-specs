@@ -240,6 +240,9 @@
           "$ref": "#/components/errors/API_VERSION_NOT_SUPPORTED"
         },
         {
+          "$ref": "#/components/errors/CHAIN_ID_NOT_SUPPORTED"
+        },
+        {
           "$ref": "#/components/errors/UNKNOWN_ERROR"
         }
       ]
@@ -574,11 +577,7 @@
         "allOf": [
           {
             "type": "string",
-            "enum": [
-              "0x534e5f4d41494e",
-              "0x534e5f474f45524c49",
-              "0x534e5f5345504f4c4941"
-            ]
+            "enum": ["0x534e5f4d41494e", "0x534e5f5345504f4c4941"]
           },
           {
             "$ref": "#/components/schemas/CHAIN_ID"
