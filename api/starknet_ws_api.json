@@ -13,7 +13,7 @@
       "params": [
         {
           "name": "block_id",
-          "summary": "The block to get notifications from, default is latest, limited to 1024 blocks back",
+          "summary": "Start block to get notifications from, default is latest, limited to 1024 blocks back",
           "required": false,
           "schema": {
             "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
@@ -81,8 +81,9 @@
           }
         },
         {
+
           "name": "block_id",
-          "summary": "The block to get notifications from, default is latest, limited to 1024 blocks back",
+          "summary": "Start block to get notifications from, default is latest, limited to 1024 blocks back",
           "required": false,
           "schema": {
             "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
@@ -145,7 +146,7 @@
         },
         {
           "name": "block_id",
-          "summary": "The block to get notifications from, default is latest, limited to 1024 blocks back",
+          "summary": "Start block to get notifications from, default is latest, limited to 1024 blocks back",
           "required": false,
           "schema": {
             "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
@@ -164,6 +165,9 @@
         },
         {
           "$ref": "./api/starknet_api_openrpc.json#/components/errors/BLOCK_NOT_FOUND"
+        },
+        {
+            "$ref": "#/components/errors/CALL_ON_PENDING"
         }
       ]
     },
