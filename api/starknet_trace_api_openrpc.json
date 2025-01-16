@@ -360,7 +360,7 @@
               "is_reverted": {
                 "title": "Is Reverted",
                 "description": "true if this inner call panicked",
-                "type": "bool"
+                "type": "boolean"
               }
             },
             "required": [
