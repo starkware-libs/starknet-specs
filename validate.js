@@ -46,7 +46,7 @@ async function fetchExternalRefsFor(docToParse) {
  * For a given dereferencer object, make sure its initial refs don't include refs that are already
  * in the ref cache it has. So it won't try to resolve these.
  *
- * @param {Dereferencer} dereffer The dereferncer object
+ * @param {Dereferencer} dereffer The dereferencer object
  * @returns The amended dereferencer.
  */
 function fixRefs(dereffer) {
@@ -84,7 +84,7 @@ async function derefAll(doc) {
 
 /**
  * Retrieve external schema definitions, from other files.
- * @param {Map<string,string} externalRefs Mapping of schema definitions, pointing to external files.
+ * @param {Map<string,string>} externalRefs Mapping of schema definitions, pointing to external files.
  * @returns The actual referenced schema objects
  */
 async function fetchExternalSchemas(externalRefs) {
