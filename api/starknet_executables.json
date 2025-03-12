@@ -9,7 +9,7 @@
     "methods": [
         {
             "name": "starknet_getCompiledCasm",
-            "summary": "Get the contract class definition in the given block associated with the given hash",
+            "summary": "Get the CASM code resulting from compiling a given class",
             "params": [
                 {
                     "name": "class_hash",
