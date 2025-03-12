@@ -913,7 +913,7 @@
                                     }
                                 },
                                 "required": [
-                                    "dict_access",
+                                    "dict_accesses",
                                     "ptr_diff",
                                     "n_accesses",
                                     "big_keys",
