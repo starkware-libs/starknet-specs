@@ -889,7 +889,17 @@
           "required": true,
           "schema": {
             "title": "Block id",
-            "$ref": "#/components/schemas/BLOCK_ID"
+            "allOf": [
+                {
+                    "$ref": "#/components/schemas/BLOCK_ID"
+                },
+                {
+                    "not": {
+                      "type": "string",
+                      "enum": ["pending"]
+                    }
+                }
+            ]
           }
         },
         {
