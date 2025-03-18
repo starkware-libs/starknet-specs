@@ -1,26 +1,26 @@
 {
-    "endOfLine": "lf",
-    "insertPragma": false,
-    "tabWidth": 2,
-    "useTabs": false,
-    "overrides": [
-        {
-            "files": "*.js",
-            "options": {
-                "tabWidth": 2
-            }
-        },
-        {
-            "files": "*.json",
-            "options": {
-                "tabWidth": 2
-            }
-        },
-        {
-            "files": "*.md",
-            "options": {
-                "tabWidth": 2
-            }
-        }
-    ]
+  "endOfLine": "lf",
+  "insertPragma": false,
+  "tabWidth": 2,
+  "useTabs": false,
+  "overrides": [
+    {
+      "files": "*.js",
+      "options": {
+        "tabWidth": 2
+      }
+    },
+    {
+      "files": "*.json",
+      "options": {
+        "tabWidth": 2
+      }
+    },
+    {
+      "files": "*.md",
+      "options": {
+        "tabWidth": 2
+      }
+    }
+  ]
 }
