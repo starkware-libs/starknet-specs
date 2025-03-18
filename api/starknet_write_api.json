@@ -1,7 +1,7 @@
 {
   "openrpc": "1.0.0-rc1",
   "info": {
-    "version": "0.7.1",
+    "version": "0.8.0",
     "title": "StarkNet Node Write API",
     "license": {}
   },
@@ -39,7 +39,7 @@
           "$ref": "#/components/errors/INSUFFICIENT_ACCOUNT_BALANCE"
         },
         {
-          "$ref": "#/components/errors/INSUFFICIENT_MAX_FEE"
+          "$ref": "#/components/errors/INSUFFICIENT_RESOURCES_FOR_VALIDATE"
         },
         {
           "$ref": "#/components/errors/INVALID_TRANSACTION_NONCE"
@@ -107,7 +107,7 @@
           "$ref": "#/components/errors/INSUFFICIENT_ACCOUNT_BALANCE"
         },
         {
-          "$ref": "#/components/errors/INSUFFICIENT_MAX_FEE"
+          "$ref": "#/components/errors/INSUFFICIENT_RESOURCES_FOR_VALIDATE"
         },
         {
           "$ref": "#/components/errors/INVALID_TRANSACTION_NONCE"
@@ -171,7 +171,7 @@
           "$ref": "#/components/errors/INSUFFICIENT_ACCOUNT_BALANCE"
         },
         {
-          "$ref": "#/components/errors/INSUFFICIENT_MAX_FEE"
+          "$ref": "#/components/errors/INSUFFICIENT_RESOURCES_FOR_VALIDATE"
         },
         {
           "$ref": "#/components/errors/INVALID_TRANSACTION_NONCE"
@@ -183,7 +183,7 @@
           "$ref": "#/components/errors/NON_ACCOUNT"
         },
         {
-          "$ref": "#/components/errors/CLASS_HASH_NOT_FOUND"
+          "$ref": "./api/starknet_api_openrpc.json#/components/errors/CLASS_HASH_NOT_FOUND"
         },
         {
           "$ref": "#/components/errors/DUPLICATE_TX"
@@ -201,18 +201,16 @@
     "contentDescriptors": {},
     "schemas": {
       "NUM_AS_HEX": {
-        "title": "An integer number in hex format (0x...)",
-        "type": "string",
-        "pattern": "^0x[a-fA-F0-9]+$"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/NUM_AS_HEX"
       },
       "SIGNATURE": {
-        "$ref": "./starknet_api_openrpc.json#/components/schemas/SIGNATURE"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/SIGNATURE"
       },
       "FELT": {
-        "$ref": "./starknet_api_openrpc.json#/components/schemas/FELT"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
       },
       "TXN_HASH": {
-        "$ref": "./starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
       },
       "BROADCASTED_INVOKE_TXN": {
         "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_INVOKE_TXN"
@@ -224,14 +222,10 @@
         "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_DEPLOY_ACCOUNT_TXN"
       },
       "FUNCTION_CALL": {
-        "$ref": "./starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
       }
     },
     "errors": {
-      "CLASS_HASH_NOT_FOUND": {
-        "code": 28,
-        "message": "Class hash not found"
-      },
       "CLASS_ALREADY_DECLARED": {
         "code": 51,
         "message": "Class already declared"
@@ -240,13 +234,13 @@
         "code": 52,
         "message": "Invalid transaction nonce"
       },
-      "INSUFFICIENT_MAX_FEE": {
+      "INSUFFICIENT_RESOURCES_FOR_VALIDATE": {
         "code": 53,
-        "message": "Max fee is smaller than the minimal transaction cost (validation plus fee transfer)"
+        "message": "The transaction's resources don't cover validation or the minimal transaction fee"
       },
       "INSUFFICIENT_ACCOUNT_BALANCE": {
         "code": 54,
-        "message": "Account balance is smaller than the transaction's max_fee"
+        "message": "Account balance is smaller than the transaction's maximal fee (calculated as the sum of each resource's limit x max price)"
       },
       "VALIDATION_FAILURE": {
         "code": 55,
@@ -255,7 +249,8 @@
       },
       "COMPILATION_FAILED": {
         "code": 56,
-        "message": "Compilation failed"
+        "message": "Compilation failed",
+        "data": "string"
       },
       "CONTRACT_CLASS_SIZE_IS_TOO_LARGE": {
         "code": 57,

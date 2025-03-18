@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const { parseOpenRPCDocument, validateOpenRPCDocument, dereferenceDocument } = require("@open-rpc/schema-utils-js");
+const { parseOpenRPCDocument, validateOpenRPCDocument } = require("@open-rpc/schema-utils-js");
 const Dereferencer = require("@json-schema-tools/dereferencer");
 const fs = require("fs-extra");
 
@@ -12,16 +12,20 @@ async function runValidation(filename) {
 
     let doc = await parseOpenRPCDocument(dereffedDoc, { dereference: true });
 
-    const errors = validateOpenRPCDocument(doc);
-    if (errors === true) {
-      console.log("Ok!");
-    } else {
+    const validation = validateOpenRPCDocument(doc);
+    if (validation !== true) {
+      const errors = validation;
       console.error(errors.name);
       console.error(errors.message);
+      process.exit(1);
     }
   } catch (exn) {
-    console.error(exn && exn.message);
+    console.error("Error in", filename);
+    console.error("\t", exn && exn.message);
+    process.exit(2);
   }
+
+  console.log("Ok!");
 }
 
 /**
@@ -59,6 +63,7 @@ function fixRefs(dereffer) {
 async function derefAll(doc) {
   let allSchemas = doc.components.schemas;
   let refCacheWithRecursiveRef = {
+    "#/components/schemas/CONTRACT_EXECUTION_ERROR": allSchemas["CONTRACT_EXECUTION_ERROR"],
     "#/components/schemas/NESTED_CALL": allSchemas["NESTED_CALL"],
   };
   let dereferencerOptions = {

@@ -1,7 +1,7 @@
 {
   "openrpc": "1.0.0-rc1",
   "info": {
-    "version": "0.7.1",
+    "version": "0.8.0",
     "title": "StarkNet Trace API",
     "license": {}
   },
@@ -13,11 +13,11 @@
       "description": "Returns the execution trace of the transaction designated by the input hash",
       "params": [
         {
-            "name": "transaction_hash",
+          "name": "transaction_hash",
           "summary": "The hash of the transaction to trace",
           "required": true,
           "schema": {
-            "$ref": "./starknet_api_openrpc.json#/components/schemas/TXN_HASH"
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
           }
         }
       ],
@@ -30,7 +30,7 @@
       },
       "errors": [
         {
-          "$ref": "#/components/errors/TXN_HASH_NOT_FOUND"
+          "$ref": "./api/starknet_api_openrpc.json#/components/errors/TXN_HASH_NOT_FOUND"
         },
         {
           "$ref": "#/components/errors/NO_TRACE_AVAILABLE"
@@ -39,7 +39,7 @@
     },
     {
       "name": "starknet_simulateTransactions",
-      "summary": "Simulate a given sequence of transactions on the requested state, and generate the execution traces. Note that some of the transactions may revert, in which case no error is thrown, but revert details can be seen on the returned trace object. . Note that some of the transactions may revert, this will be reflected by the revert_error property in the trace. Other types of failures (e.g. unexpected error or failure in the validation phase) will result in TRANSACTION_EXECUTION_ERROR.",
+      "summary": "Simulate a given sequence of transactions on the requested state, and generate the execution traces. Note that some of the transactions may revert, in which case no error is thrown, but revert details can be seen on the returned trace object. Note that some of the transactions may revert, this will be reflected by the revert_error property in the trace. Other types of failures (e.g. unexpected error or failure in the validation phase) will result in TRANSACTION_EXECUTION_ERROR.",
       "params": [
         {
           "name": "block_id",
@@ -75,7 +75,7 @@
       ],
       "result": {
         "name": "simulated_transactions",
-        "description": "The execution trace and consuemd resources of the required transactions",
+        "description": "The execution trace and consumed resources of the required transactions",
         "schema": {
           "type": "array",
           "items": {
@@ -97,10 +97,10 @@
       },
       "errors": [
         {
-          "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+          "$ref": "./api/starknet_api_openrpc.json#/components/errors/BLOCK_NOT_FOUND"
         },
         {
-          "$ref": "#/components/errors/TRANSACTION_EXECUTION_ERROR"
+          "$ref": "./api/starknet_api_openrpc.json#/components/errors/TRANSACTION_EXECUTION_ERROR"
         }
       ]
     },
@@ -139,7 +139,7 @@
       },
       "errors": [
         {
-          "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+          "$ref": "./api/starknet_api_openrpc.json#/components/errors/BLOCK_NOT_FOUND"
         }
       ]
     }
@@ -353,9 +353,14 @@
                 }
               },
               "execution_resources": {
-                "title": "Computation resources",
-                "description": "Resources consumed by the internal call. This is named execution_resources for legacy reasons",
-                "$ref": "#/components/schemas/COMPUTATION_RESOURCES"
+                "title": "Execution resources",
+                "description": "Resources consumed by the call tree rooted at this given call (including the root)",
+                "$ref": "#/components/schemas/INNER_CALL_EXECUTION_RESOURCES"
+              },
+              "is_reverted": {
+                "title": "Is Reverted",
+                "description": "true if this inner call panicked",
+                "type": "boolean"
               }
             },
             "required": [
@@ -367,7 +372,8 @@
               "calls",
               "events",
               "messages",
-              "execution_resources"
+              "execution_resources",
+              "is_reverted"
             ]
           }
         ]
@@ -420,32 +426,47 @@
           }
         ]
       },
+      "INNER_CALL_EXECUTION_RESOURCES": {
+        "type": "object",
+        "title": "Execution resources",
+        "description": "the resources consumed by an inner call (does not account for state diffs since data is squashed across the transaction)",
+        "properties": {
+          "l1_gas": {
+            "title": "L1Gas",
+            "description": "l1 gas consumed by this transaction, used for l2-->l1 messages and state updates if blobs are not used",
+            "type": "integer"
+          },
+          "l2_gas": {
+            "title": "L2Gas",
+            "description": "l2 gas consumed by this transaction, used for computation and calldata",
+            "type": "integer"
+          }
+        },
+        "required": ["l1_gas", "l2_gas"]
+      },
       "FELT": {
-        "$ref": "./starknet_api_openrpc.json#/components/schemas/FELT"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
       },
       "FUNCTION_CALL": {
-        "$ref": "./starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FUNCTION_CALL"
       },
       "EVENT": {
-        "$ref": "./starknet_api_openrpc.json#/components/schemas/EVENT_CONTENT"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EVENT_CONTENT"
       },
       "MSG_TO_L1": {
-        "$ref": "./starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
       },
       "BLOCK_ID": {
-        "$ref": "./starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
       },
       "FEE_ESTIMATE": {
-        "$ref": "./starknet_api_openrpc.json#/components/schemas/FEE_ESTIMATE"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FEE_ESTIMATE"
       },
       "BROADCASTED_TXN": {
         "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_TXN"
       },
       "STATE_DIFF": {
         "$ref": "./api/starknet_api_openrpc.json#/components/schemas/STATE_DIFF"
-      },
-      "COMPUTATION_RESOURCES": {
-        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/COMPUTATION_RESOURCES"
       },
       "EXECUTION_RESOURCES": {
         "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EXECUTION_RESOURCES"
@@ -465,15 +486,6 @@
             }
           }
         }
-      },
-      "TXN_HASH_NOT_FOUND": {
-        "$ref": "./api/starknet_api_openrpc.json#/components/errors/TXN_HASH_NOT_FOUND"
-      },
-      "BLOCK_NOT_FOUND": {
-        "$ref": "./api/starknet_api_openrpc.json#/components/errors/BLOCK_NOT_FOUND"
-      },
-      "TRANSACTION_EXECUTION_ERROR": {
-        "$ref": "./api/starknet_api_openrpc.json#/components/errors/TRANSACTION_EXECUTION_ERROR"
       }
     }
   }
