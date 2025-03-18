@@ -28,7 +28,7 @@ function addComponents(globalComponents, newComponents, newComponentsOrigin) {
         const previousLocation = globalComponents[componentType][componentName];
         duplicates++;
         console.error(
-          `Duplicate entry in ${componentType}: ${componentName} defined in ${previousLocation} and ${newComponentsOrigin}`
+          `Duplicate entry in ${componentType}: ${componentName} defined in ${previousLocation} and ${newComponentsOrigin}`,
         );
       } else if (!isReference) {
         globalComponents[componentType][componentName] = newComponentsOrigin;
@@ -45,7 +45,7 @@ function main() {
   let duplicates = 0;
 
   console.error(
-    "Temporarily ignoring starknet_metadata.json in uniqueness check. Perhaps remove it or use it better."
+    "Temporarily ignoring starknet_metadata.json in uniqueness check. Perhaps remove it or use it better.",
   );
   for (const fileName of fs.readdirSync(specDir)) {
     if (fileName.endsWith(".json") && fileName !== "starknet_metadata.json") {

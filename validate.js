@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
-const { parseOpenRPCDocument, validateOpenRPCDocument } = require("@open-rpc/schema-utils-js");
+const {
+  parseOpenRPCDocument,
+  validateOpenRPCDocument,
+} = require("@open-rpc/schema-utils-js");
 const Dereferencer = require("@json-schema-tools/dereferencer");
 const fs = require("fs-extra");
 
@@ -37,7 +40,9 @@ async function runValidation(filename) {
 async function fetchExternalRefsFor(docToParse) {
   let externalRefs = await externalRefsFrom(docToParse.components.schemas);
   let allExternalSchemas = await fetchExternalSchemas(externalRefs);
-  Object.keys(allExternalSchemas).forEach(key => (docToParse.components.schemas[key] = allExternalSchemas[key]));
+  Object.keys(allExternalSchemas).forEach(
+    (key) => (docToParse.components.schemas[key] = allExternalSchemas[key]),
+  );
 
   return docToParse;
 }
@@ -50,7 +55,9 @@ async function fetchExternalRefsFor(docToParse) {
  * @returns The amended dereferencer.
  */
 function fixRefs(dereffer) {
-  dereffer.refs = dereffer.refs.filter(r => dereffer.refCache[r] === undefined);
+  dereffer.refs = dereffer.refs.filter(
+    (r) => dereffer.refCache[r] === undefined,
+  );
   return dereffer;
 }
 
@@ -63,7 +70,8 @@ function fixRefs(dereffer) {
 async function derefAll(doc) {
   let allSchemas = doc.components.schemas;
   let refCacheWithRecursiveRef = {
-    "#/components/schemas/CONTRACT_EXECUTION_ERROR": allSchemas["CONTRACT_EXECUTION_ERROR"],
+    "#/components/schemas/CONTRACT_EXECUTION_ERROR":
+      allSchemas["CONTRACT_EXECUTION_ERROR"],
     "#/components/schemas/NESTED_CALL": allSchemas["NESTED_CALL"],
   };
   let dereferencerOptions = {
@@ -72,7 +80,7 @@ async function derefAll(doc) {
   };
   //resolve all schemas, and remember them
   await Promise.all(
-    Object.keys(allSchemas).map(async k => {
+    Object.keys(allSchemas).map(async (k) => {
       let s = allSchemas[k];
       let dereffer = fixRefs(new Dereferencer.default(s, dereferencerOptions));
       allSchemas[k] = await dereffer.resolve();
@@ -88,14 +96,16 @@ async function derefAll(doc) {
  * @returns The actual referenced schema objects
  */
 async function fetchExternalSchemas(externalRefs) {
-  let externalFilenames = Object.values(externalRefs).map(ref => filenameFromExternalRef(ref.value));
+  let externalFilenames = Object.values(externalRefs).map((ref) =>
+    filenameFromExternalRef(ref.value),
+  );
   let uniqueExtFilenames = [...new Set(externalFilenames)];
   let externalJSONPromises = uniqueExtFilenames
-    .map(relative => {
+    .map((relative) => {
       return { key: relative, fullpath: fullPathForRefFile(relative) };
     })
-    .map(entry =>
-      fileContentAsJSON(entry.fullpath).then(c => {
+    .map((entry) =>
+      fileContentAsJSON(entry.fullpath).then((c) => {
         return { key: entry.key, content: c };
       }),
     );
@@ -106,9 +116,11 @@ async function fetchExternalSchemas(externalRefs) {
 
   //collect all schema objects into `ret` and return it.
   externalJSONs
-    .map(entry => entry.content.components.schemas)
+    .map((entry) => entry.content.components.schemas)
     //note: this means that if we have duplicates, the last file will win. not a problem for now.
-    .forEach(schemaParent => Object.keys(schemaParent).forEach(k => (ret[k] = schemaParent[k])));
+    .forEach((schemaParent) =>
+      Object.keys(schemaParent).forEach((k) => (ret[k] = schemaParent[k])),
+    );
 
   return ret;
 }
@@ -130,12 +142,14 @@ async function fileContentAsJSON(filename) {
  * @returns The external schema references, keyed by their original keys.
  */
 async function externalRefsFrom(allSchemas) {
-  const isExternalRef = ref => ref && ref.length > 0 && ref.charAt(0) != "#";
+  const isExternalRef = (ref) => ref && ref.length > 0 && ref.charAt(0) != "#";
 
   let externalKeys = Object.keys(allSchemas).filter(
-    k => allSchemas[k]["$ref"] !== undefined && isExternalRef(allSchemas[k]["$ref"]),
+    (k) =>
+      allSchemas[k]["$ref"] !== undefined &&
+      isExternalRef(allSchemas[k]["$ref"]),
   );
-  return externalKeys.map(k => {
+  return externalKeys.map((k) => {
     return { key: k, value: allSchemas[k]["$ref"] };
   });
 }
@@ -145,7 +159,7 @@ async function externalRefsFrom(allSchemas) {
  * @param {String} ref The external reference
  * @returns The file name the reference refers to.
  */
-const filenameFromExternalRef = ref => ref.split("#")[0];
+const filenameFromExternalRef = (ref) => ref.split("#")[0];
 
 //TODO: this assumes the script is run in a specific directory relative to the files.
 /**
@@ -154,7 +168,7 @@ const filenameFromExternalRef = ref => ref.split("#")[0];
  * @param {String} relative The relative path
  * @returns The full filesystem path
  */
-const fullPathForRefFile = relative => `${process.cwd()}/${relative}`; //should canonize this
+const fullPathForRefFile = (relative) => `${process.cwd()}/${relative}`; //should canonize this
 
 let args = process.argv.slice(2);
 
