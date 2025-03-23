@@ -3511,7 +3511,7 @@
           },
           "overall_fee": {
             "title": "Overall fee",
-            "description": "The estimated fee for the transaction (in wei or fri, depending on the tx version), equals to gas_consumed*gas_price + data_gas_consumed*data_gas_price",
+            "description": "The estimated fee for the transaction (in wei or fri, depending on the tx version), equals to l1_gas_consumed*l1_gas_price + l1_data_gas_consumed*l1_data_gas_price + l2_gas_consumed*l2_gas_price",
             "$ref": "#/components/schemas/u128"
           },
           "unit": {
