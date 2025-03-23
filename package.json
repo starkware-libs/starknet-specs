@@ -8,7 +8,9 @@
   },
   "scripts": {
     "validate_all": "find api/ -name '*.json' -not -name 'starknet_metadata.json' | xargs -n1 node validate.js",
-    "check_component_uniqueness": "node check_component_uniqueness.js"
+    "check_component_uniqueness": "node check_component_uniqueness.js",
+    "format": "prettier --write --config .prettierrc .",
+    "format_check": "prettier -c --config .prettierrc ."
   },
   "author": "Lior Schejter",
   "license": "MIT",
@@ -16,5 +18,8 @@
     "@json-schema-tools/dereferencer": "1.6.3",
     "@open-rpc/schema-utils-js": "^2.0.3",
     "fs-extra": "10.1.0"
+  },
+  "devDependencies": {
+    "prettier": "^3.5.3"
   }
 }

@@ -15,6 +15,7 @@ When developing the schema, you can validate the OpenRPC schema file, by running
 Note this requires node.js installed.
 
 The command:
+
 ```
 ./validate.js api/starknet_api_openrpc.json
 ```
