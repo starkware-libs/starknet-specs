@@ -40,16 +40,7 @@
         "description": "The resulting block information with transaction hashes",
         "schema": {
           "title": "Starknet get block hash with tx hashes result",
-          "oneOf": [
-            {
-              "title": "Block with transaction hashes",
-              "$ref": "#/components/schemas/BLOCK_WITH_TX_HASHES"
-            },
-            {
-              "title": "Pending block with transaction hashes",
-              "$ref": "#/components/schemas/PENDING_BLOCK_WITH_TX_HASHES"
-            }
-          ]
+          "$ref": "#/components/schemas/BLOCK_WITH_TX_HASHES"
         }
       },
       "errors": [
@@ -77,16 +68,7 @@
         "description": "The resulting block information with full transactions",
         "schema": {
           "title": "Starknet get block with txs result",
-          "oneOf": [
-            {
-              "title": "Block with transactions",
-              "$ref": "#/components/schemas/BLOCK_WITH_TXS"
-            },
-            {
-              "title": "Pending block with transactions",
-              "$ref": "#/components/schemas/PENDING_BLOCK_WITH_TXS"
-            }
-          ]
+          "$ref": "#/components/schemas/BLOCK_WITH_TXS"
         }
       },
       "errors": [
@@ -114,16 +96,7 @@
         "description": "The resulting block information with full transactions",
         "schema": {
           "title": "Starknet get block with txs and receipts result",
-          "oneOf": [
-            {
-              "title": "Block with transactions",
-              "$ref": "#/components/schemas/BLOCK_WITH_RECEIPTS"
-            },
-            {
-              "title": "Pending block with transactions",
-              "$ref": "#/components/schemas/PENDING_BLOCK_WITH_RECEIPTS"
-            }
-          ]
+          "$ref": "#/components/schemas/BLOCK_WITH_RECEIPTS"
         }
       },
       "errors": [
@@ -151,16 +124,7 @@
         "description": "The information about the state update of the requested block",
         "schema": {
           "title": "Starknet get state update result",
-          "oneOf": [
-            {
-              "title": "State update",
-              "$ref": "#/components/schemas/STATE_UPDATE"
-            },
-            {
-              "title": "Pending state update",
-              "$ref": "#/components/schemas/PENDING_STATE_UPDATE"
-            }
-          ]
+          "$ref": "#/components/schemas/STATE_UPDATE"
         }
       },
       "errors": [
@@ -889,17 +853,7 @@
           "required": true,
           "schema": {
             "title": "Block id",
-            "allOf": [
-                {
-                    "$ref": "#/components/schemas/BLOCK_ID"
-                },
-                {
-                    "not": {
-                      "type": "string",
-                      "enum": ["pending"]
-                    }
-                }
-            ]
+            "$ref": "#/components/schemas/BLOCK_ID"
           }
         },
         {
@@ -1214,7 +1168,7 @@
         "title": "Block tag",
         "type": "string",
         "description": "A tag specifying a dynamic reference to a block",
-        "enum": ["latest", "pending"]
+        "enum": ["latest"]
       },
       "SYNC_STATUS": {
         "title": "Sync status",
@@ -1385,24 +1339,6 @@
           "deployed_contracts",
           "nonces"
         ]
-      },
-      "PENDING_STATE_UPDATE": {
-        "title": "Pending state update",
-        "description": "Pending state update",
-        "type": "object",
-        "properties": {
-          "old_root": {
-            "title": "Old root",
-            "description": "The previous global state root",
-            "$ref": "#/components/schemas/FELT"
-          },
-          "state_diff": {
-            "title": "State diff",
-            "$ref": "#/components/schemas/STATE_DIFF"
-          }
-        },
-        "required": ["old_root", "state_diff"],
-        "additionalProperties": false
       },
       "STATE_UPDATE": {
         "title": "State update",
@@ -1607,67 +1543,6 @@
           "starknet_version"
         ]
       },
-      "PENDING_BLOCK_HEADER": {
-        "title": "Pending block header",
-        "type": "object",
-        "properties": {
-          "parent_hash": {
-            "title": "Parent hash",
-            "description": "The hash of this block's parent",
-            "$ref": "#/components/schemas/BLOCK_HASH"
-          },
-          "timestamp": {
-            "title": "Timestamp",
-            "description": "The time in which the block was created, encoded in Unix time",
-            "type": "integer",
-            "minimum": 0
-          },
-          "sequencer_address": {
-            "title": "Sequencer address",
-            "description": "The StarkNet identity of the sequencer submitting this block",
-            "$ref": "#/components/schemas/FELT"
-          },
-          "l1_gas_price": {
-            "title": "L1 gas price",
-            "description": "The price of l1 gas in the block",
-            "$ref": "#/components/schemas/RESOURCE_PRICE"
-          },
-          "l2_gas_price": {
-            "title": "L2 gas price",
-            "description": "The price of l2 gas in the block",
-            "$ref": "#/components/schemas/RESOURCE_PRICE"
-          },
-          "l1_data_gas_price": {
-            "title": "L1 data gas price",
-            "description": "The price of l1 data gas in the block",
-            "$ref": "#/components/schemas/RESOURCE_PRICE"
-          },
-          "l1_da_mode": {
-            "title": "L1 da mode",
-            "type": "string",
-            "description": "specifies whether the data of this block is published via blob data or calldata",
-            "enum": ["BLOB", "CALLDATA"]
-          },
-          "starknet_version": {
-            "title": "Starknet version",
-            "description": "Semver of the current Starknet protocol",
-            "type": "string"
-          }
-        },
-        "required": [
-          "parent_hash",
-          "timestamp",
-          "sequencer_address",
-          "l1_gas_price",
-          "l2_gas_price",
-          "l1_data_gas_price",
-          "l1_da_mode",
-          "starknet_version"
-        ],
-        "not": {
-          "required": ["block_hash", "block_number", "new_root"]
-        }
-      },
       "BLOCK_WITH_TX_HASHES": {
         "title": "Block with transaction hashes",
         "description": "The block object",
@@ -1740,48 +1615,6 @@
           {
             "title": "Block body with transactions and receipts",
             "$ref": "#/components/schemas/BLOCK_BODY_WITH_RECEIPTS"
-          }
-        ]
-      },
-      "PENDING_BLOCK_WITH_TX_HASHES": {
-        "title": "Pending block with transaction hashes",
-        "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
-        "allOf": [
-          {
-            "title": "Block body with transactions hashes",
-            "$ref": "#/components/schemas/BLOCK_BODY_WITH_TX_HASHES"
-          },
-          {
-            "title": "Pending block header",
-            "$ref": "#/components/schemas/PENDING_BLOCK_HEADER"
-          }
-        ]
-      },
-      "PENDING_BLOCK_WITH_TXS": {
-        "title": "Pending block with transactions",
-        "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
-        "allOf": [
-          {
-            "title": "Block body with transactions",
-            "$ref": "#/components/schemas/BLOCK_BODY_WITH_TXS"
-          },
-          {
-            "title": "Pending block header",
-            "$ref": "#/components/schemas/PENDING_BLOCK_HEADER"
-          }
-        ]
-      },
-      "PENDING_BLOCK_WITH_RECEIPTS": {
-        "title": "Pending block with transactions and receipts",
-        "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
-        "allOf": [
-          {
-            "title": "Block body with transactions and receipts",
-            "$ref": "#/components/schemas/BLOCK_BODY_WITH_RECEIPTS"
-          },
-          {
-            "title": "Pending block header",
-            "$ref": "#/components/schemas/PENDING_BLOCK_HEADER"
           }
         ]
       },
@@ -2965,13 +2798,11 @@
             "properties": {
               "block_hash": {
                 "title": "Block hash",
-                "$ref": "#/components/schemas/BLOCK_HASH",
-                "description": "If this field is missing, it means the receipt belongs to the pending block"
+                "$ref": "#/components/schemas/BLOCK_HASH"
               },
               "block_number": {
                 "title": "Block number",
-                "$ref": "#/components/schemas/BLOCK_NUMBER",
-                "description": "If this field is missing, it means the receipt belongs to the pending block"
+                "$ref": "#/components/schemas/BLOCK_NUMBER"
               }
             }
           }
@@ -3078,7 +2909,7 @@
       "BLOCK_STATUS": {
         "title": "Block status",
         "type": "string",
-        "enum": ["PENDING", "ACCEPTED_ON_L2", "ACCEPTED_ON_L1", "REJECTED"],
+        "enum": ["ACCEPTED_ON_L2", "ACCEPTED_ON_L1", "REJECTED"],
         "description": "The status of the block"
       },
       "FUNCTION_CALL": {
