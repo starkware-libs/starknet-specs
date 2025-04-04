@@ -7,4 +7,5 @@
 - [ ] Validated the specification files - `npm run validate_all`
 - [ ] Applied formatting - `npm run format`
 - [ ] Performed code self-review
-- [ ] If making a new release, checked out [the guidelines](../api/release.md)
+- [ ] Checked if this PR resolves any [issues](https://github.com/starkware-libs/starknet-specs/issues)
+- [ ] If making a new release, checked out [the guidelines](https://github.com/starkware-libs/starknet-specs/blob/master/api/release.md)
