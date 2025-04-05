@@ -58,6 +58,9 @@
         },
         {
           "$ref": "#/components/errors/UNEXPECTED_ERROR"
+        },
+        {
+          "$ref": "#/components/errors/MEMPOOL_AT_CAPACITY"
         }
       ]
     },
@@ -132,6 +135,9 @@
         },
         {
           "$ref": "#/components/errors/UNEXPECTED_ERROR"
+        },
+        {
+          "$ref": "#/components/errors/MEMPOOL_AT_CAPACITY"
         }
       ]
     },
@@ -193,6 +199,9 @@
         },
         {
           "$ref": "#/components/errors/UNEXPECTED_ERROR"
+        },
+        {
+          "$ref": "#/components/errors/MEMPOOL_AT_CAPACITY"
         }
       ]
     }
@@ -280,6 +289,10 @@
         "code": 63,
         "message": "An unexpected error occurred",
         "data": "string"
+      },
+      "MEMPOOL_AT_CAPACITY": {
+        "code": 64,
+        "message": "Mempool is full and cannot accept new transactions at the moment"
       }
     }
   }
