@@ -260,7 +260,7 @@
           "summary": "The subscription to close",
           "required": true,
           "schema": {
-            "type": "integer"
+            "$ref": "#/components/schemas/SUBSCRIPTION_ID"
           }
         }
       ],
