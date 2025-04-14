@@ -160,7 +160,7 @@
             },
             "contract_address": {
               "title": "The address of the new contract",
-              "$ref": "#/components/schemas/FELT"
+              "$ref": "#/components/schemas/ADDRESS"
             }
           },
           "required": ["transaction_hash", "contract_address"]
