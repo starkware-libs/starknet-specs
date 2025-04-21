@@ -1272,20 +1272,20 @@
       },
       "NUM_AS_HEX": {
         "title": "Number as hex",
-        "description": "An integer number in hex format (0x...)",
+        "description": "An unsigned integer number in hex format (0x...)",
         "type": "string",
         "pattern": "^0x[a-fA-F0-9]+$"
       },
       "u64": {
         "type": "string",
         "title": "u64",
-        "description": "64 bit integers, represented by hex string of length at most 16",
+        "description": "64 bit unsigned integers, represented by hex string of length at most 16",
         "pattern": "^0x(0|[a-fA-F1-9]{1}[a-fA-F0-9]{0,15})$"
       },
       "u128": {
         "type": "string",
         "title": "u128",
-        "description": "128 bit integers, represented by hex string of length at most 32",
+        "description": "128 bit unsigned integers, represented by hex string of length at most 32",
         "pattern": "^0x(0|[a-fA-F1-9]{1}[a-fA-F0-9]{0,31})$"
       },
       "CHAIN_ID": {
@@ -3663,7 +3663,7 @@
         "description": "represents a path to the highest non-zero descendant node",
         "properties": {
           "path": {
-            "description": "an integer whose binary representation represents the path from the current node to its highest non-zero descendant (bounded by 2^251)",
+            "description": "an unsigned integer whose binary representation represents the path from the current node to its highest non-zero descendant (bounded by 2^251)",
             "$ref": "#/components/schemas/NUM_AS_HEX"
           },
           "length": {
