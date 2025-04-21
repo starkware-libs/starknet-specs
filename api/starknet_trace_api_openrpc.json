@@ -401,7 +401,8 @@
               "order": {
                 "title": "order",
                 "description": "the order of the event within the transaction",
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               }
             }
           },
@@ -421,7 +422,8 @@
               "order": {
                 "title": "order",
                 "description": "the order of the message within the transaction",
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               }
             }
           },
@@ -438,12 +440,14 @@
           "l1_gas": {
             "title": "L1Gas",
             "description": "l1 gas consumed by this transaction, used for l2-->l1 messages and state updates if blobs are not used",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           },
           "l2_gas": {
             "title": "L2Gas",
             "description": "l2 gas consumed by this transaction, used for computation and calldata",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           }
         },
         "required": ["l1_gas", "l2_gas"]

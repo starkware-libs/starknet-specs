@@ -3287,7 +3287,8 @@
           "function_idx": {
             "title": "Function index",
             "description": "The index of the function in the program",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           }
         },
         "required": ["selector", "function_idx"]
@@ -3373,7 +3374,8 @@
               "offset": {
                 "title": "Offset",
                 "description": "offset of this property within the struct",
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               }
             }
           }
@@ -3616,17 +3618,20 @@
           "l1_gas": {
             "title": "L1Gas",
             "description": "l1 gas consumed by this transaction, used for l2-->l1 messages and state updates if blobs are not used",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           },
           "l1_data_gas": {
             "title": "L1DataGas",
             "description": "data gas consumed by this transaction, 0 if blobs are not used",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           },
           "l2_gas": {
             "title": "L2Gas",
             "description": "l2 gas consumed by this transaction, used for computation and calldata",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           }
         },
         "required": ["l1_gas", "l1_data_gas", "l2_gas"]
@@ -3668,7 +3673,8 @@
           },
           "length": {
             "description": "the length of the path (bounded by 251)",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           },
           "child": {
             "description": "the hash of the unique non-zero maximal-height descendant node",
@@ -3799,7 +3805,8 @@
             "transaction_index": {
               "title": "Transaction index",
               "description": "The index of the first transaction failing in a sequence of given transactions",
-              "type": "integer"
+              "type": "integer",
+              "minimum": 0
             },
             "execution_error": {
               "title": "revert error",
