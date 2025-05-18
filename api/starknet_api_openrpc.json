@@ -696,7 +696,7 @@
         "name": "result",
         "description": "the fee estimation",
         "schema": {
-          "$ref": "#/components/schemas/FEE_ESTIMATE"
+          "$ref": "#/components/schemas/MESSAGE_FEE_ESTIMATE"
         }
       },
       "errors": [
@@ -3470,13 +3470,24 @@
         "enum": ["SKIP_VALIDATE"],
         "description": "Flags that indicate how to simulate a given transaction. By default, the sequencer behavior is replicated locally"
       },
+      "PRICE_UNIT_WEI": {
+        "title": "price unit wei",
+        "type": "string",
+        "enum": ["WEI"]
+      },
+      "PRICE_UNIT_FRI": {
+        "title": "price unit fri",
+        "type": "string",
+        "enum": ["FRI"]
+      },
       "PRICE_UNIT": {
         "title": "price unit",
         "type": "string",
-        "enum": ["WEI", "FRI"]
+        "enum": ["WEI", "FRI"],
+        "description": "The unit used for price calculations, either WEI or FRI"
       },
-      "FEE_ESTIMATE": {
-        "title": "Fee estimation",
+      "FEE_ESTIMATE_COMMON": {
+        "title": "Fee estimation common fields",
         "type": "object",
         "properties": {
           "l1_gas_consumed": {
@@ -3513,11 +3524,6 @@
             "title": "Overall fee",
             "description": "The estimated fee for the transaction (in wei or fri, depending on the tx version), equals to l1_gas_consumed*l1_gas_price + l1_data_gas_consumed*l1_data_gas_price + l2_gas_consumed*l2_gas_price",
             "$ref": "#/components/schemas/u128"
-          },
-          "unit": {
-            "title": "Fee unit",
-            "description": "units in which the fee is given",
-            "$ref": "#/components/schemas/PRICE_UNIT"
           }
         },
         "required": [
@@ -3527,8 +3533,45 @@
           "l2_gas_price",
           "l1_data_gas_consumed",
           "l1_data_gas_price",
-          "overall_fee",
-          "unit"
+          "overall_fee"
+        ]
+      },
+      "FEE_ESTIMATE": {
+        "title": "Fee estimation",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FEE_ESTIMATE_COMMON"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "unit": {
+                "title": "Fee unit",
+                "description": "units in which the fee is given, can only be FRI",
+                "$ref": "#/components/schemas/PRICE_UNIT_FRI"
+              }
+            },
+            "required": ["unit"]
+          }
+        ]
+      },
+      "MESSAGE_FEE_ESTIMATE": {
+        "title": "Message fee estimation",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/FEE_ESTIMATE_COMMON"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "unit": {
+                "title": "Fee unit",
+                "description": "units in which the fee is given, can only be WEI",
+                "$ref": "#/components/schemas/PRICE_UNIT_WEI"
+              }
+            },
+            "required": ["unit"]
+          }
         ]
       },
       "FEE_PAYMENT": {
