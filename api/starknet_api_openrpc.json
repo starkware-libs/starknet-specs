@@ -650,7 +650,7 @@
       ],
       "result": {
         "name": "result",
-        "description": "the fee estimations",
+        "description": "The fee estimations",
         "schema": {
           "title": "Estimation",
           "type": "array",
@@ -694,7 +694,7 @@
       ],
       "result": {
         "name": "result",
-        "description": "the fee estimation",
+        "description": "The fee estimation",
         "schema": {
           "$ref": "#/components/schemas/MESSAGE_FEE_ESTIMATE"
         }
@@ -3471,20 +3471,26 @@
         "description": "Flags that indicate how to simulate a given transaction. By default, the sequencer behavior is replicated locally"
       },
       "PRICE_UNIT_WEI": {
-        "title": "price unit wei",
+        "title": "Price unit wei",
         "type": "string",
         "enum": ["WEI"]
       },
       "PRICE_UNIT_FRI": {
-        "title": "price unit fri",
+        "title": "Price unit fri",
         "type": "string",
         "enum": ["FRI"]
       },
       "PRICE_UNIT": {
-        "title": "price unit",
-        "type": "string",
-        "enum": ["WEI", "FRI"],
-        "description": "The unit used for price calculations, either WEI or FRI"
+        "title": "Price unit",
+        "description": "Units in which the fee is given",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/PRICE_UNIT_WEI"
+          },
+          {
+            "$ref": "#/components/schemas/PRICE_UNIT_FRI"
+          }
+        ]
       },
       "FEE_ESTIMATE_COMMON": {
         "title": "Fee estimation common fields",
@@ -3547,7 +3553,7 @@
             "properties": {
               "unit": {
                 "title": "Fee unit",
-                "description": "units in which the fee is given, can only be FRI",
+                "description": "Units in which the fee is given, can only be FRI",
                 "$ref": "#/components/schemas/PRICE_UNIT_FRI"
               }
             },
@@ -3566,7 +3572,7 @@
             "properties": {
               "unit": {
                 "title": "Fee unit",
-                "description": "units in which the fee is given, can only be WEI",
+                "description": "Units in which the fee is given, can only be WEI",
                 "$ref": "#/components/schemas/PRICE_UNIT_WEI"
               }
             },
