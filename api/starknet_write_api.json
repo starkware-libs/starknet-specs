@@ -250,7 +250,8 @@
       },
       "INVALID_TRANSACTION_NONCE": {
         "code": 52,
-        "message": "Invalid transaction nonce"
+        "message": "Invalid transaction nonce",
+        "data": "Invalid transaction nonce of contract at address <ADDRESS>. Account nonce: <NONCE>; got: <PAYLOAD_NONCE>."
       },
       "INSUFFICIENT_RESOURCES_FOR_VALIDATE": {
         "code": 53,
@@ -301,13 +302,11 @@
       },
       "REPLACEMENT_TRANSACTION_UNDERPRICED": {
         "code": 64,
-        "message": "Replacement transaction is underpriced",
-        "data": "string"
+        "message": "Replacement transaction is underpriced"
       },
       "FEE_BELOW_MINIMUM": {
         "code": 65,
-        "message": "Transcation Fee below minimum",
-        "data": "string"
+        "message": "Transaction fee below minimum"
       }
     }
   }
