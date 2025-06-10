@@ -1272,20 +1272,20 @@
       },
       "NUM_AS_HEX": {
         "title": "Number as hex",
-        "description": "An integer number in hex format (0x...)",
+        "description": "An unsigned integer number in hex format (0x...)",
         "type": "string",
         "pattern": "^0x[a-fA-F0-9]+$"
       },
       "u64": {
         "type": "string",
         "title": "u64",
-        "description": "64 bit integers, represented by hex string of length at most 16",
+        "description": "64 bit unsigned integers, represented by hex string of length at most 16",
         "pattern": "^0x(0|[a-fA-F1-9]{1}[a-fA-F0-9]{0,15})$"
       },
       "u128": {
         "type": "string",
         "title": "u128",
-        "description": "128 bit integers, represented by hex string of length at most 32",
+        "description": "128 bit unsigned integers, represented by hex string of length at most 32",
         "pattern": "^0x(0|[a-fA-F1-9]{1}[a-fA-F0-9]{0,31})$"
       },
       "CHAIN_ID": {
@@ -3298,7 +3298,8 @@
           "function_idx": {
             "title": "Function index",
             "description": "The index of the function in the program",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           }
         },
         "required": ["selector", "function_idx"]
@@ -3384,7 +3385,8 @@
               "offset": {
                 "title": "Offset",
                 "description": "offset of this property within the struct",
-                "type": "integer"
+                "type": "integer",
+                "minimum": 0
               }
             }
           }
@@ -3676,17 +3678,20 @@
           "l1_gas": {
             "title": "L1Gas",
             "description": "l1 gas consumed by this transaction, used for l2-->l1 messages and state updates if blobs are not used",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           },
           "l1_data_gas": {
             "title": "L1DataGas",
             "description": "data gas consumed by this transaction, 0 if blobs are not used",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           },
           "l2_gas": {
             "title": "L2Gas",
             "description": "l2 gas consumed by this transaction, used for computation and calldata",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           }
         },
         "required": ["l1_gas", "l1_data_gas", "l2_gas"]
@@ -3723,12 +3728,13 @@
         "description": "represents a path to the highest non-zero descendant node",
         "properties": {
           "path": {
-            "description": "an integer whose binary representation represents the path from the current node to its highest non-zero descendant (bounded by 2^251)",
+            "description": "an unsigned integer whose binary representation represents the path from the current node to its highest non-zero descendant (bounded by 2^251)",
             "$ref": "#/components/schemas/NUM_AS_HEX"
           },
           "length": {
             "description": "the length of the path (bounded by 251)",
-            "type": "integer"
+            "type": "integer",
+            "minimum": 0
           },
           "child": {
             "description": "the hash of the unique non-zero maximal-height descendant node",
@@ -3859,7 +3865,8 @@
             "transaction_index": {
               "title": "Transaction index",
               "description": "The index of the first transaction failing in a sequence of given transactions",
-              "type": "integer"
+              "type": "integer",
+              "minimum": 0
             },
             "execution_error": {
               "title": "revert error",
