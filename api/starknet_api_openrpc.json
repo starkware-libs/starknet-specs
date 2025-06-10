@@ -3135,7 +3135,12 @@
       "BLOCK_STATUS": {
         "title": "Block status",
         "type": "string",
-        "enum": ["PRE_CONFIRMED", "ACCEPTED_ON_L2", "ACCEPTED_ON_L1", "REJECTED"],
+        "enum": [
+          "PRE_CONFIRMED",
+          "ACCEPTED_ON_L2",
+          "ACCEPTED_ON_L1",
+          "REJECTED"
+        ],
         "description": "The status of the block"
       },
       "FUNCTION_CALL": {
