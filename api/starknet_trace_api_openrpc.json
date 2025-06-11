@@ -159,22 +159,7 @@
               },
               "execute_invocation": {
                 "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/FUNCTION_INVOCATION"
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "revert_reason": {
-                        "name": "revert reason",
-                        "description": "the revert reason for the failed execution",
-                        "type": "string"
-                      }
-                    },
-                    "required": ["revert_reason"]
-                  }
-                ]
+                "$ref": "#/components/schemas/REVERTABLE_FUNCTION_INVOCATION"
               },
               "fee_transfer_invocation": {
                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
@@ -270,7 +255,7 @@
             "properties": {
               "function_invocation": {
                 "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
-                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                "$ref": "#/components/schemas/REVERTABLE_FUNCTION_INVOCATION"
               },
               "state_diff": {
                 "title": "state_diff",
@@ -447,6 +432,24 @@
           }
         },
         "required": ["l1_gas", "l2_gas"]
+      },
+      "REVERTABLE_FUNCTION_INVOCATION": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "revert_reason": {
+                "name": "revert reason",
+                "description": "the revert reason for the failed invocation",
+                "type": "string"
+              }
+            },
+            "required": ["revert_reason"]
+          }
+        ]
       },
       "FELT": {
         "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
