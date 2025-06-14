@@ -251,7 +251,24 @@
       "INVALID_TRANSACTION_NONCE": {
         "code": 52,
         "message": "Invalid transaction nonce",
-        "data": "Invalid transaction nonce of contract at address <ADDRESS>. Account nonce: <NONCE>; got: <PAYLOAD_NONCE>."
+        "data": {
+          "type": "object",
+          "description": "More data about the nonce mismatch failure",
+          "properties": {
+            "address": {
+              "title": "Account contract address",
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/ADDRESS"
+            },
+            "expected_nonce": {
+              "title": "Nonce expected by the account contract",
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
+            },
+            "payload_nonce": {
+              "title": "Actual nonce delivered on the payload",
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
+            }
+          }
+        }
       },
       "INSUFFICIENT_RESOURCES_FOR_VALIDATE": {
         "code": 53,
