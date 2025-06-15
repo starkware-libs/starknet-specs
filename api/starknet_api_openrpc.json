@@ -276,15 +276,32 @@
               },
               "finality_status": {
                 "title": "finality status",
-                "$ref": "#/components/schemas/TXN_STATUS"
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TXN_STATUS"
+                  },
+                  {
+                    "not": {
+                      "enum": ["RECEIVED", "CANDIDATE", "PRE_CONFIRMED"]
+                    }
+                  }
+                ]
+              },
+              "execution_status": {
+                "title": "execution status",
+                "$ref": "#/components/schemas/TXN_EXECUTION_STATUS"
               },
               "failure_reason": {
                 "title": "failure reason",
-                "description": "the failure reason, only appears if finality_status is REJECTED",
+                "description": "The failure reason. Only appears if `execution_status` is REVERTED",
                 "type": "string"
               }
             },
-            "required": ["transaction_hash", "finality_status"]
+            "required": [
+              "transaction_hash",
+              "finality_status",
+              "execution_status"
+            ]
           }
         }
       },
