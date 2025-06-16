@@ -159,7 +159,7 @@
               },
               "execute_invocation": {
                 "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
-                "$ref": "#/components/schemas/REVERTABLE_FUNCTION_INVOCATION"
+                "$ref": "#/components/schemas/REVERTIBLE_FUNCTION_INVOCATION"
               },
               "fee_transfer_invocation": {
                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
@@ -255,7 +255,7 @@
             "properties": {
               "function_invocation": {
                 "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
-                "$ref": "#/components/schemas/REVERTABLE_FUNCTION_INVOCATION"
+                "$ref": "#/components/schemas/REVERTIBLE_FUNCTION_INVOCATION"
               },
               "state_diff": {
                 "title": "state_diff",
@@ -433,7 +433,7 @@
         },
         "required": ["l1_gas", "l2_gas"]
       },
-      "REVERTABLE_FUNCTION_INVOCATION": {
+      "REVERTIBLE_FUNCTION_INVOCATION": {
         "oneOf": [
           {
             "$ref": "#/components/schemas/FUNCTION_INVOCATION"
