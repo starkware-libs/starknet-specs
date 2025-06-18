@@ -167,7 +167,7 @@
                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
               },
               "execute_invocation": {
-                "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
+                "description": "the trace of the __execute__ call",
                 "oneOf": [
                   {
                     "$ref": "#/components/schemas/FUNCTION_INVOCATION"
@@ -244,7 +244,7 @@
                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
               },
               "constructor_invocation": {
-                "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
+                "description": "the trace of the constructor call",
                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
               },
               "fee_transfer_invocation": {
@@ -278,7 +278,7 @@
             "description": "the execution trace of an L1 handler transaction",
             "properties": {
               "function_invocation": {
-                "description": "the trace of the __execute__ call or constructor call, depending on the transaction type (none for declare transactions)",
+                "description": "the trace of the L1 handler call",
                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
               },
               "state_diff": {
