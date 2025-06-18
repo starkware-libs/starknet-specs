@@ -46,7 +46,7 @@
               "$ref": "#/components/schemas/BLOCK_WITH_TX_HASHES"
             },
             {
-              "title": "Pending block with transaction hashes",
+              "title": "Pre-confirmed block with transaction hashes",
               "$ref": "#/components/schemas/PRE_CONFIRMED_BLOCK_WITH_TX_HASHES"
             }
           ]
@@ -83,7 +83,7 @@
               "$ref": "#/components/schemas/BLOCK_WITH_TXS"
             },
             {
-              "title": "Pending block with transactions",
+              "title": "Pre-confirmed block with transactions",
               "$ref": "#/components/schemas/PRE_CONFIRMED_BLOCK_WITH_TXS"
             }
           ]
@@ -120,7 +120,7 @@
               "$ref": "#/components/schemas/BLOCK_WITH_RECEIPTS"
             },
             {
-              "title": "Pending block with transactions",
+              "title": "Pre-confirmed block with transactions",
               "$ref": "#/components/schemas/PRE_CONFIRMED_BLOCK_WITH_RECEIPTS"
             }
           ]
@@ -157,7 +157,7 @@
               "$ref": "#/components/schemas/STATE_UPDATE"
             },
             {
-              "title": "Pending state update",
+              "title": "Pre-confirmed state update",
               "$ref": "#/components/schemas/PRE_CONFIRMED_STATE_UPDATE"
             }
           ]
@@ -913,7 +913,7 @@
               {
                 "not": {
                   "type": "string",
-                  "enum": ["pending"]
+                  "enum": ["pre_confirmed"]
                 }
               }
             ]
@@ -1413,8 +1413,8 @@
         ]
       },
       "PRE_CONFIRMED_STATE_UPDATE": {
-        "title": "Pending state update",
-        "description": "Pending state update",
+        "title": "Pre-confirmed state update",
+        "description": "Pre-confirmed state update",
         "type": "object",
         "properties": {
           "old_root": {
@@ -1634,7 +1634,7 @@
         ]
       },
       "PRE_CONFIRMED_BLOCK_HEADER": {
-        "title": "Pending block header",
+        "title": "Pre-confirmed block header",
         "type": "object",
         "properties": {
           "parent_hash": {
@@ -1770,7 +1770,7 @@
         ]
       },
       "PRE_CONFIRMED_BLOCK_WITH_TX_HASHES": {
-        "title": "Pending block with transaction hashes",
+        "title": "Pre-confirmed block with transaction hashes",
         "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
         "allOf": [
           {
@@ -1778,13 +1778,13 @@
             "$ref": "#/components/schemas/BLOCK_BODY_WITH_TX_HASHES"
           },
           {
-            "title": "Pending block header",
+            "title": "Pre-confirmed block header",
             "$ref": "#/components/schemas/PRE_CONFIRMED_BLOCK_HEADER"
           }
         ]
       },
       "PRE_CONFIRMED_BLOCK_WITH_TXS": {
-        "title": "Pending block with transactions",
+        "title": "Pre-confirmed block with transactions",
         "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
         "allOf": [
           {
@@ -1792,13 +1792,13 @@
             "$ref": "#/components/schemas/BLOCK_BODY_WITH_TXS"
           },
           {
-            "title": "Pending block header",
+            "title": "Pre-confirmed block header",
             "$ref": "#/components/schemas/PRE_CONFIRMED_BLOCK_HEADER"
           }
         ]
       },
       "PRE_CONFIRMED_BLOCK_WITH_RECEIPTS": {
-        "title": "Pending block with transactions and receipts",
+        "title": "Pre-confirmed block with transactions and receipts",
         "description": "The dynamic block being constructed by the sequencer. Note that this object will be deprecated upon decentralization.",
         "allOf": [
           {
@@ -1806,7 +1806,7 @@
             "$ref": "#/components/schemas/BLOCK_BODY_WITH_RECEIPTS"
           },
           {
-            "title": "Pending block header",
+            "title": "Pre-confirmed block header",
             "$ref": "#/components/schemas/PRE_CONFIRMED_BLOCK_HEADER"
           }
         ]
@@ -3029,12 +3029,12 @@
               "block_hash": {
                 "title": "Block hash",
                 "$ref": "#/components/schemas/BLOCK_HASH",
-                "description": "If this field is missing, it means the receipt belongs to the pending block"
+                "description": "If this field is missing, it means the receipt belongs to the pre-confirmed block"
               },
               "block_number": {
                 "title": "Block number",
                 "$ref": "#/components/schemas/BLOCK_NUMBER",
-                "description": "If this field is missing, it means the receipt belongs to the pending block"
+                "description": "If this field is missing, it means the receipt belongs to the pre-confirmed block"
               }
             }
           }
