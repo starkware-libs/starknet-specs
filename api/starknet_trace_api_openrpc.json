@@ -114,7 +114,16 @@
           "description": "The hash of the requested block, or number (height) of the requested block, or a block tag",
           "required": true,
           "schema": {
-            "$ref": "#/components/schemas/BLOCK_ID"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BLOCK_ID"
+              },
+              {
+                "not": {
+                  "enum": ["pre_confirmed"]
+                }
+              }
+            ]
           }
         }
       ],
