@@ -168,22 +168,7 @@
               },
               "execute_invocation": {
                 "description": "the trace of the __execute__ call",
-                "oneOf": [
-                  {
-                    "$ref": "#/components/schemas/FUNCTION_INVOCATION"
-                  },
-                  {
-                    "type": "object",
-                    "properties": {
-                      "revert_reason": {
-                        "name": "revert reason",
-                        "description": "the revert reason for the failed execution",
-                        "type": "string"
-                      }
-                    },
-                    "required": ["revert_reason"]
-                  }
-                ]
+                "$ref": "#/components/schemas/REVERTIBLE_FUNCTION_INVOCATION"
               },
               "fee_transfer_invocation": {
                 "$ref": "#/components/schemas/FUNCTION_INVOCATION"
@@ -279,7 +264,7 @@
             "properties": {
               "function_invocation": {
                 "description": "the trace of the L1 handler call",
-                "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+                "$ref": "#/components/schemas/REVERTIBLE_FUNCTION_INVOCATION"
               },
               "state_diff": {
                 "title": "state_diff",
@@ -460,6 +445,24 @@
           }
         },
         "required": ["l1_gas", "l2_gas"]
+      },
+      "REVERTIBLE_FUNCTION_INVOCATION": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/FUNCTION_INVOCATION"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "revert_reason": {
+                "name": "revert reason",
+                "description": "the revert reason for the failed invocation",
+                "type": "string"
+              }
+            },
+            "required": ["revert_reason"]
+          }
+        ]
       },
       "FELT": {
         "$ref": "./api/starknet_api_openrpc.json#/components/schemas/FELT"
