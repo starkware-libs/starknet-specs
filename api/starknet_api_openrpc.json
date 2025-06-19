@@ -1637,10 +1637,10 @@
         "title": "Pre-confirmed block header",
         "type": "object",
         "properties": {
-          "parent_hash": {
-            "title": "Parent hash",
-            "description": "The hash of this block's parent",
-            "$ref": "#/components/schemas/BLOCK_HASH"
+          "block_number": {
+            "description": "The block number of the block that the proposer is currently building. Note that this is a local view of the node, whose accuracy depends on its polling interval length.",
+            "title": "Block number",
+            "$ref": "#/components/schemas/BLOCK_NUMBER"
           },
           "timestamp": {
             "title": "Timestamp",
@@ -1681,7 +1681,7 @@
           }
         },
         "required": [
-          "parent_hash",
+          "block_number",
           "timestamp",
           "sequencer_address",
           "l1_gas_price",
@@ -1691,7 +1691,7 @@
           "starknet_version"
         ],
         "not": {
-          "required": ["block_hash", "block_number", "new_root"]
+          "required": ["block_hash", "new_root"]
         }
       },
       "BLOCK_WITH_TX_HASHES": {
