@@ -251,7 +251,7 @@
       "INVALID_TRANSACTION_NONCE": {
         "code": 52,
         "message": "Invalid transaction nonce",
-        "data": "Invalid transaction nonce of contract at address <ADDRESS>. Account nonce: <NONCE>; got: <PAYLOAD_NONCE>."
+        "data": "string"
       },
       "INSUFFICIENT_RESOURCES_FOR_VALIDATE": {
         "code": 53,
