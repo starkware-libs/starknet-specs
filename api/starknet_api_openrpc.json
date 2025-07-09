@@ -1680,10 +1680,7 @@
           "l1_data_gas_price",
           "l1_da_mode",
           "starknet_version"
-        ],
-        "not": {
-          "required": ["block_hash", "new_root"]
-        }
+        ]
       },
       "BLOCK_WITH_TX_HASHES": {
         "title": "Block with transaction hashes",
