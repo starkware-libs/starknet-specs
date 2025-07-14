@@ -3101,7 +3101,7 @@
           },
           "failure_reason": {
             "title": "failure reason",
-            "description": "the failure reason, only appears if finality_status is REJECTED or execution_status is REVERTED",
+            "description": "the failure reason, only appears if execution_status is REVERTED",
             "type": "string"
           }
         },
@@ -3144,7 +3144,6 @@
           "PRE_CONFIRMED",
           "ACCEPTED_ON_L2",
           "ACCEPTED_ON_L1",
-          "REJECTED"
         ],
         "description": "The status of the block"
       },
