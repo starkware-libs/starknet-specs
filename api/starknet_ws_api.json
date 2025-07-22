@@ -401,24 +401,6 @@
           ]
         }
       },
-      "SUBSCRIPTION_BLOCK_ID": {
-        "title": "Subscription Block id",
-        "description": "Block hash, number or tag, same as BLOCK_ID, but without 'pre_confirmed' or 'l1_accepted'",
-        "schema": {
-          "title": "Block id",
-          "allOf": [
-            {
-              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
-            },
-            {
-              "not": {
-                "type": "string",
-                "enum": ["l1_accepted", "pre_confirmed"]
-              }
-            }
-          ]
-        }
-      },
       "REORG_DATA": {
         "name": "Reorg Data",
         "description": "Data about reorganized blocks, starting and ending block number and hash",
