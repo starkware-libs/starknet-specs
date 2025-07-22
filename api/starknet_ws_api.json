@@ -84,54 +84,14 @@
           "schema": {
             "$ref": "#/components/schemas/SUBSCRIPTION_BLOCK_ID"
           }
-        }
-      ],
-      "result": {
-        "name": "subscription_id",
-        "schema": {
-          "$ref": "#/components/schemas/SUBSCRIPTION_ID"
-        }
-      },
-      "errors": [
-        {
-          "$ref": "./api/starknet_api_openrpc.json#/components/errors/TOO_MANY_KEYS_IN_FILTER"
         },
         {
-          "$ref": "#/components/errors/TOO_MANY_BLOCKS_BACK"
-        },
-        {
-          "$ref": "./api/starknet_api_openrpc.json#/components/errors/BLOCK_NOT_FOUND"
-        }
-      ]
-    },
-    {
-      "name": "starknet_subscribePreConfirmedEvents",
-      "summary": "Events subscription for pre-confirmed transactions only. Pre-confirmed event notifications can be sent multiple times",
-      "description": "Creates a WebSocket stream which will fire events for new Starknet events with applied filters",
-      "params": [
-        {
-          "name": "from_address",
-          "summary": "Filter events by from_address which emitted the event",
+          "name": "finality_status",
+          "summary": "The finality status of the most recent events to include, default is ACCEPTED_ON_L2",
           "required": false,
           "schema": {
-            "$ref": "#/components/schemas/ADDRESS"
-          }
-        },
-        {
-          "name": "keys",
-          "summary": "The keys to filter events by",
-          "required": false,
-          "schema": {
-            "title": "event keys",
-            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EVENT_KEYS"
-          }
-        },
-        {
-          "name": "block_id",
-          "summary": "The block to get notifications from, default is latest, limited to 1024 blocks back",
-          "required": false,
-          "schema": {
-            "$ref": "#/components/schemas/SUBSCRIPTION_BLOCK_ID"
+            "type": "string",
+            "enum": ["PRE_CONFIRMED", "ACCEPTED_ON_L2"]
           }
         }
       ],
@@ -156,7 +116,7 @@
     {
       "name": "starknet_subscriptionEvents",
       "summary": "New events notification",
-      "description": "Notification to the client of a new event",
+      "description": "Notification to the client of a new event. The event also includes the finality status of the transaction emitting the event",
       "params": [
         {
           "name": "subscription_id",
@@ -167,7 +127,14 @@
         {
           "name": "result",
           "schema": {
-            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EMITTED_EVENT"
+            "allOf": [
+              {
+                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/EMITTED_EVENT"
+              },
+              {
+                "$ref": "#/components/schemas/TXN_FINALITY_STATUS"
+              }
+            ]
           }
         }
       ],
@@ -216,21 +183,24 @@
       "errors": []
     },
     {
-      "name": "starknet_subscribePreConfirmedTransactions",
-      "summary": "New pre-confirmed Transactions subscription",
-      "description": "Creates a WebSocket stream which will fire events when a new pre-confirmed transaction is added. A pre-confirmed transaction notification can be sent multiple times",
+      "name": "starknet_subscribeNewTransactionReceipts",
+      "summary": "New Transactions receipts subscription",
+      "description": "Creates a WebSocket stream which will fire events when a new transaction receipts are created. The endpoint receives a vector of finality statuses. An event is fired for each finality status update. It is possible for receipts for pre-confirmed transactions to be received multiple times, or not at all.",
       "params": [
         {
-          "name": "transaction_details",
-          "summary": "Get all transaction details, and not only the hash. If not provided, only hash is returned. Default is false",
+          "name": "finality_status",
+          "summary": "The finality status of the transaction, default is ACCEPTED_ON_L2",
           "required": false,
           "schema": {
-            "type": "boolean"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TXN_FINALITY_STATUS"
+            }
           }
         },
         {
           "name": "sender_address",
-          "summary": "Filter transactions to only receive notification from address list",
+          "summary": "Filter transaction receipts to only include transactions sent by the specified addresses",
           "required": false,
           "schema": {
             "type": "array",
@@ -253,9 +223,9 @@
       ]
     },
     {
-      "name": "starknet_subscriptionPreConfirmedTransactions",
-      "summary": "New pre-confirmed transaction notification",
-      "description": "Notification to the client of a new pre-confirmed transaction",
+      "name": "starknet_subscriptionNewTransactionReceipts",
+      "summary": "New transaction notification",
+      "description": "Notification to the client of a new transaction, with its current status",
       "params": [
         {
           "name": "subscription_id",
@@ -265,16 +235,9 @@
         },
         {
           "name": "result",
-          "description": "Either a tranasaction hash or full transaction details, based on subscription",
+          "description": "A transaction receipt",
           "schema": {
-            "oneOf": [
-              {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
-              },
-              {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_WITH_HASH"
-              }
-            ]
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_RECEIPT"
           }
         }
       ],
@@ -418,6 +381,24 @@
         "description": "An identifier for this subscription stream used to associate events with this subscription.",
         "schema": {
           "type": "string"
+        }
+      },
+      "SUBSCRIPTION_BLOCK_ID": {
+        "title": "Subscription Block id",
+        "description": "Block hash, number or tag, same as BLOCK_ID, but without 'pre_confirmed' or 'l1_accepted'",
+        "schema": {
+          "title": "Block id",
+          "allOf": [
+            {
+              "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
+            },
+            {
+              "not": {
+                "type": "string",
+                "enum": ["l1_accepted", "pre_confirmed"]
+              }
+            }
+          ]
         }
       },
       "SUBSCRIPTION_BLOCK_ID": {
