@@ -184,12 +184,12 @@
     },
     {
       "name": "starknet_subscribeNewTransactionReceipts",
-      "summary": "New Transactions receipts subscription",
+      "summary": "New transactions receipts subscription",
       "description": "Creates a WebSocket stream which will fire events when new transaction receipts are created. The endpoint receives a vector of finality statuses. An event is fired for each finality status update. It is possible for receipts for pre-confirmed transactions to be received multiple times, or not at all.",
       "params": [
         {
           "name": "finality_status",
-          "summary": "The finality status of the transaction, default is ACCEPTED_ON_L2",
+          "summary": "A vector of finality statuses to receive updates for, default is [ACCEPTED_ON_L2]",
           "required": false,
           "schema": {
             "type": "array",
@@ -224,8 +224,8 @@
     },
     {
       "name": "starknet_subscriptionNewTransactionReceipts",
-      "summary": "New transaction notification",
-      "description": "Notification to the client of a new transaction, with its current status",
+      "summary": "New transaction receipt notification",
+      "description": "Notification to the client of a new transaction receipt, with its current finality status",
       "params": [
         {
           "name": "subscription_id",
@@ -244,21 +244,25 @@
       "errors": []
     },
     {
-      "name": "starknet_subscribePendingTransactions",
-      "summary": "New Pending Transactions subscription",
-      "description": "Creates a WebSocket stream which will fire events when a new pending transaction is added. While there is no public mempool, this will not notify of new transactions",
+      "name": "starknet_subscribeNewTransactions",
+      "summary": "New transactions subscription",
+      "description": "Creates a WebSocket stream which will fire events when new transaction are created. The endpoint receives a vector of finality statuses. An event is fired for each finality status update. It is possible for events for pre-confirmed and candidate transactions to be received multiple times, or not at all.",
       "params": [
         {
-          "name": "transaction_details",
-          "summary": "Get all transaction details, and not only the hash. If not provided, only hash is returned. Default is false",
+          "name": "finality_status",
+          "summary": "A vector of finality statuses to receive updates for, default is [ACCEPTED_ON_L2, PRE_CONFIRMED, CANDIDATE]",
           "required": false,
           "schema": {
-            "type": "boolean"
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["ACCEPTED_ON_L2", "PRE_CONFIRMED", "CANDIDATE"]
+            }
           }
         },
         {
           "name": "sender_address",
-          "summary": "Filter transactions to only receive notification from address list",
+          "summary": "Filter transaction receipts to only include transactions sent by the specified addresses",
           "required": false,
           "schema": {
             "type": "array",
@@ -281,9 +285,9 @@
       ]
     },
     {
-      "name": "starknet_subscriptionPendingTransactions",
-      "summary": "New pending transaction notification",
-      "description": "Notification to the client of a new pending transaction",
+      "name": "starknet_subscriptionNewTransaction",
+      "summary": "New transaction notification",
+      "description": "Notification to the client of a new transaction, with its current finality status",
       "params": [
         {
           "name": "subscription_id",
@@ -293,14 +297,15 @@
         },
         {
           "name": "result",
-          "description": "Either a tranasaction hash or full transaction details, based on subscription",
+          "description": "A transaction and its current finality status",
           "schema": {
-            "oneOf": [
-              {
-                "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_HASH"
-              },
+            "allOf": [
               {
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_WITH_HASH"
+              },
+              {
+                "type": "string",
+                "enum": ["ACCEPTED_ON_L2", "PRE_CONFIRMED", "CANDIDATE"]
               }
             ]
           }
