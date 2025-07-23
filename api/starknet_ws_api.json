@@ -262,7 +262,7 @@
         },
         {
           "name": "sender_address",
-          "summary": "Filter transaction receipts to only include transactions sent by the specified addresses",
+          "summary": "Filter to only include transactions sent by the specified addresses",
           "required": false,
           "schema": {
             "type": "array",
