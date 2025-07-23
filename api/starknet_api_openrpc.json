@@ -3143,7 +3143,7 @@
         "enum": [
           "PRE_CONFIRMED",
           "ACCEPTED_ON_L2",
-          "ACCEPTED_ON_L1",
+          "ACCEPTED_ON_L1"
         ],
         "description": "The status of the block"
       },
