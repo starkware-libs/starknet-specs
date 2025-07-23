@@ -58,7 +58,7 @@
     {
       "name": "starknet_subscribeEvents",
       "summary": "Events subscription",
-      "description": "Creates a WebSocket stream which will fire events for new Starknet events with applied filters. Events are emitted for all events from the specified block tag, up to the latest block",
+      "description": "Creates a WebSocket stream which will fire events for new Starknet events with applied filters. Events are emitted for all events from the specified block_id, up to the latest block",
       "params": [
         {
           "name": "from_address",
