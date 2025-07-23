@@ -185,7 +185,7 @@
     {
       "name": "starknet_subscribeNewTransactionReceipts",
       "summary": "New Transactions receipts subscription",
-      "description": "Creates a WebSocket stream which will fire events when a new transaction receipts are created. The endpoint receives a vector of finality statuses. An event is fired for each finality status update. It is possible for receipts for pre-confirmed transactions to be received multiple times, or not at all.",
+      "description": "Creates a WebSocket stream which will fire events when new transaction receipts are created. The endpoint receives a vector of finality statuses. An event is fired for each finality status update. It is possible for receipts for pre-confirmed transactions to be received multiple times, or not at all.",
       "params": [
         {
           "name": "finality_status",
