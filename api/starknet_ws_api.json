@@ -237,7 +237,7 @@
           "name": "result",
           "description": "A transaction receipt",
           "schema": {
-            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_RECEIPT"
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_RECEIPT_WITH_BLOCK_INFO"
           }
         }
       ],
@@ -255,8 +255,9 @@
           "schema": {
             "type": "array",
             "items": {
-              "type": "string",
-              "enum": ["ACCEPTED_ON_L2", "PRE_CONFIRMED", "CANDIDATE"]
+              "items": {
+                "$ref": "#/components/schemas/TXN_STATUS_WITHOUT_L1"
+              }
             }
           }
         },
@@ -304,8 +305,7 @@
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_WITH_HASH"
               },
               {
-                "type": "string",
-                "enum": ["ACCEPTED_ON_L2", "PRE_CONFIRMED", "CANDIDATE"]
+                "$ref": "#/components/schemas/TXN_STATUS_WITHOUT_L1"
               }
             ]
           }
@@ -406,6 +406,22 @@
           ]
         }
       },
+      "TXN_STATUS_WITHOUT_L1": {
+        "title": "Transaction status without ACCEPTED_ON_L!",
+        "description": "Transaction status for new transactions subscription",
+        "allOf": [
+          {
+            "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_STATUS"
+          },
+          {
+            "not": {
+              "type": "string",
+              "enum": ["ACCEPTED_ON_L1"]
+            }
+          }
+        ]
+      },
+
       "REORG_DATA": {
         "name": "Reorg Data",
         "description": "Data about reorganized blocks, starting and ending block number and hash",
