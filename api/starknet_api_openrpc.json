@@ -1096,7 +1096,7 @@
             "properties": {
               "block_hash": {
                 "title": "Block hash",
-                "description": "The hash of the block in which the event was emitted",
+                "description": "The hash of the block in which the event was emitted. Absent when the block is pre_confirmed.",
                 "$ref": "#/components/schemas/BLOCK_HASH"
               },
               "block_number": {
@@ -1110,7 +1110,7 @@
                 "$ref": "#/components/schemas/TXN_HASH"
               }
             },
-            "required": ["transaction_hash"]
+            "required": ["transaction_hash", "block_number"]
           }
         ]
       },
@@ -1629,7 +1629,7 @@
         "type": "object",
         "properties": {
           "block_number": {
-            "description": "The block number of the block that the proposer is currently building. Note that this is a local view of the node, whose accuracy depends on its polling interval length.",
+            "description": "The block number of the block that the proposer is currently building. Note that this is a local view of the node, whose accuracy depends on its polling interval duration.",
             "title": "Block number",
             "$ref": "#/components/schemas/BLOCK_NUMBER"
           },
@@ -3017,14 +3017,15 @@
               "block_hash": {
                 "title": "Block hash",
                 "$ref": "#/components/schemas/BLOCK_HASH",
-                "description": "If this field is missing, it means the receipt belongs to the pre-confirmed block"
+                "description": "The hash of the block in which the receipt was created. Absent when the block is not yet confirmed."
               },
               "block_number": {
                 "title": "Block number",
                 "$ref": "#/components/schemas/BLOCK_NUMBER",
-                "description": "If this field is missing, it means the receipt belongs to the pre-confirmed block"
+                "description": "The number of the block in which the receipt was created"
               }
-            }
+            },
+            "required": ["transaction_hash", "block_number"]
           }
         ]
       },
