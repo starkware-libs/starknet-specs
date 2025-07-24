@@ -407,7 +407,7 @@
         }
       },
       "TXN_STATUS_WITHOUT_L1": {
-        "title": "Transaction status without ACCEPTED_ON_L!",
+        "title": "Transaction status without ACCEPTED_ON_L1",
         "description": "Transaction status for new transactions subscription",
         "allOf": [
           {
