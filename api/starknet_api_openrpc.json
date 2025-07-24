@@ -3025,7 +3025,7 @@
                 "description": "The number of the block in which the receipt was created"
               }
             },
-            "required": ["transaction_hash", "block_number"]
+            "required": ["block_number"]
           }
         ]
       },
