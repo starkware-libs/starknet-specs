@@ -1096,7 +1096,7 @@
             "properties": {
               "block_hash": {
                 "title": "Block hash",
-                "description": "The hash of the block in which the event was emitted. Absent when the block is pre_confirmed.",
+                "description": "The hash of the block in which the event was emitted. Absent when the block is not yet confirmed.",
                 "$ref": "#/components/schemas/BLOCK_HASH"
               },
               "block_number": {
