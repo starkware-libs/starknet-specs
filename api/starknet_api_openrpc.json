@@ -1104,13 +1104,18 @@
                 "description": "The number of the block in which the event was emitted",
                 "$ref": "#/components/schemas/BLOCK_NUMBER"
               },
+              "finality_status": {
+                "title": "Finality status",
+                "description": "Finality status of the transaction which emitted the event",
+                "$ref": "#/components/schemas/TXN_FINALITY_STATUS"
+              },
               "transaction_hash": {
                 "title": "Transaction hash",
                 "description": "The transaction that emitted the event",
                 "$ref": "#/components/schemas/TXN_HASH"
               }
             },
-            "required": ["transaction_hash"]
+            "required": ["transaction_hash", "finality_status"]
           }
         ]
       },
