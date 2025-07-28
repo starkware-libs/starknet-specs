@@ -387,8 +387,8 @@
       "result": {
         "name": "result",
         "schema": {
-          "title": "Transaction receipt with block info",
-          "$ref": "#/components/schemas/TXN_RECEIPT_WITH_BLOCK_INFO"
+          "title": "Transaction receipt with info",
+          "$ref": "#/components/schemas/TXN_RECEIPT_WITH_INFO"
         }
       },
       "errors": [
@@ -1103,6 +1103,12 @@
                 "title": "Block number",
                 "description": "The number of the block in which the event was emitted",
                 "$ref": "#/components/schemas/BLOCK_NUMBER"
+              },
+              "transaction_index": {
+                "title": "Transaction index",
+                "description": "Index of the transaction within the block which emitted this event",
+                "type": "integer",
+                "minimum": 0
               },
               "transaction_hash": {
                 "title": "Transaction hash",
@@ -3004,7 +3010,7 @@
           }
         ]
       },
-      "TXN_RECEIPT_WITH_BLOCK_INFO": {
+      "TXN_RECEIPT_WITH_INFO": {
         "title": "Transaction receipt with block info",
         "allOf": [
           {
@@ -3023,8 +3029,15 @@
                 "title": "Block number",
                 "$ref": "#/components/schemas/BLOCK_NUMBER",
                 "description": "If this field is missing, it means the receipt belongs to the pre-confirmed block"
-              }
-            }
+              },
+              "transaction_index": {
+                "title": "Transaction index",
+                "description": "Index of the transaction corresponding to this receipt",
+                "type": "integer",
+                "minimum": 0
+              },
+            },
+            "required": ["transaction_index"]
           }
         ]
       },
