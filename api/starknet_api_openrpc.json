@@ -1116,7 +1116,7 @@
                 "$ref": "#/components/schemas/TXN_HASH"
               }
             },
-            "required": ["transaction_hash"]
+            "required": ["transaction_hash", "transaction_index"]
           }
         ]
       },
