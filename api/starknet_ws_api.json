@@ -194,7 +194,9 @@
           "schema": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TXN_FINALITY_STATUS"
+              "items": {
+                "$ref": "#/components/schemas/TXN_STATUS_WITHOUT_L1"
+              }
             }
           }
         },
@@ -250,7 +252,7 @@
       "params": [
         {
           "name": "finality_status",
-          "summary": "A vector of finality statuses to receive updates for, default is [ACCEPTED_ON_L2, PRE_CONFIRMED, CANDIDATE]",
+          "summary": "A vector of finality statuses to receive updates for, default is [ACCEPTED_ON_L2]",
           "required": false,
           "schema": {
             "type": "array",
