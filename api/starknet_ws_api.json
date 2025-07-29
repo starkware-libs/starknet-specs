@@ -194,9 +194,17 @@
           "schema": {
             "type": "array",
             "items": {
-              "items": {
-                "$ref": "#/components/schemas/TXN_STATUS_WITHOUT_L1"
-              }
+              "allOf": [
+                {
+                  "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_STATUS"
+                },
+                {
+                  "not": {
+                    "type": "string",
+                    "enum": ["ACCEPTED_ON_L1", "CANDIDATE", "RECEIVED"]
+                  }
+                }
+              ]
             }
           }
         },
