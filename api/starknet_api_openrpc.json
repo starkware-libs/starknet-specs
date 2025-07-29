@@ -3011,7 +3011,7 @@
         ]
       },
       "TXN_RECEIPT_WITH_INFO": {
-        "title": "Transaction receipt with block info",
+        "title": "Transaction receipt with info",
         "allOf": [
           {
             "title": "Transaction receipt",
@@ -3032,7 +3032,7 @@
               },
               "transaction_index": {
                 "title": "Transaction index",
-                "description": "Index of the transaction corresponding to this receipt",
+                "description": "Index of the transaction corresponding to this receipt within the block",
                 "type": "integer",
                 "minimum": 0
               },
