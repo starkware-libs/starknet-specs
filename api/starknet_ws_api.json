@@ -315,7 +315,16 @@
                 "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_WITH_HASH"
               },
               {
-                "$ref": "#/components/schemas/TXN_STATUS_WITHOUT_L1"
+                "type": "object",
+                "properties": {
+                  "finality_status": {
+                    "description": "Finality status of the transaction",
+                    "$ref": "#/components/schemas/TXN_STATUS_WITHOUT_L1"
+                  }
+                },
+                "required": [
+                  "finality_status"
+                ]
               }
             ]
           }
