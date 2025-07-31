@@ -3021,10 +3021,10 @@
               },
               "block_number": {
                 "title": "Block number",
-                "$ref": "#/components/schemas/BLOCK_NUMBER",
-                "description": "If this field is missing, it means the receipt belongs to the pre-confirmed block"
+                "$ref": "#/components/schemas/BLOCK_NUMBER"
               }
-            }
+            },
+            "required": ["block_number"]
           }
         ]
       },
