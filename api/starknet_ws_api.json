@@ -322,9 +322,7 @@
                     "$ref": "#/components/schemas/TXN_STATUS_WITHOUT_L1"
                   }
                 },
-                "required": [
-                  "finality_status"
-                ]
+                "required": ["finality_status"]
               }
             ]
           }
