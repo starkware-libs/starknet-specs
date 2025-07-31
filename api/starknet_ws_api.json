@@ -196,12 +196,12 @@
             "items": {
               "allOf": [
                 {
-                  "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_STATUS"
+                  "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_FINALITY_STATUS"
                 },
                 {
                   "not": {
                     "type": "string",
-                    "enum": ["ACCEPTED_ON_L1", "CANDIDATE", "RECEIVED"]
+                    "enum": ["ACCEPTED_ON_L1"]
                   }
                 }
               ]
