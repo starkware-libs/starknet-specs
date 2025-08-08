@@ -265,9 +265,7 @@
           "schema": {
             "type": "array",
             "items": {
-              "items": {
-                "$ref": "#/components/schemas/TXN_STATUS_WITHOUT_L1"
-              }
+              "$ref": "#/components/schemas/TXN_STATUS_WITHOUT_L1"
             }
           }
         },
