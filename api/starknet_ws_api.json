@@ -272,9 +272,7 @@
           "schema": {
             "type": "array",
             "items": {
-              "items": {
-                "$ref": "#/components/schemas/TXN_STATUS_WITHOUT_L1"
-              }
+              "$ref": "#/components/schemas/TXN_STATUS_WITHOUT_L1"
             }
           }
         },
@@ -384,7 +382,6 @@
       ]
     }
   ],
-
   "components": {
     "schemas": {
       "FELT": {
@@ -445,7 +442,6 @@
           }
         ]
       },
-
       "REORG_DATA": {
         "name": "Reorg Data",
         "description": "Data about reorganized blocks, starting and ending block number and hash",
