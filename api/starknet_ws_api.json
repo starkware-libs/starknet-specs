@@ -136,7 +136,7 @@
                 "properties": {
                   "finality_status": {
                     "description": "Finality status of the transaction",
-                    "$ref": "#/components/schemas/TXN_FINALITY_STATUS"
+                    "$ref": "./api/starknet_api_openrpc.json#/components/schemas/TXN_FINALITY_STATUS"
                   }
                 },
                 "required": ["finality_status"]
