@@ -338,7 +338,7 @@
     {
       "name": "starknet_subscriptionReorg",
       "description": "Notifies the subscriber of a reorganization of the chain",
-      "summary": "Can be received from subscribing to newHeads, Events, TransactionStatus",
+      "summary": "Can be received from subscribing to newHeads, Events, TransactionStatus, NewTransactionReceipts, NewTransactions",
       "params": [
         {
           "name": "subscription_id",
