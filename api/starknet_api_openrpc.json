@@ -1418,7 +1418,7 @@
             "$ref": "#/components/schemas/STATE_DIFF"
           }
         },
-        "required": ["old_root", "state_diff"],
+        "required": ["state_diff"],
         "additionalProperties": false
       },
       "STATE_UPDATE": {
