@@ -790,7 +790,7 @@
             "type": "object",
             "additionalProperties": {
               "type": "array",
-              "itmes": {
+              "items": {
                 "$ref": "#/components/schemas/STARKNET_TYPE"
               }
             }
