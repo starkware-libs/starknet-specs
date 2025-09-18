@@ -949,7 +949,7 @@
                 "storage_keys": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/FELT"
+                    "$ref": "#/components/schemas/STORAGE_KEY"
                   }
                 }
               },
