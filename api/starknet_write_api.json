@@ -1,5 +1,5 @@
 {
-  "openrpc": "1.0.0-rc1",
+  "openrpc": "1.3.2",
   "info": {
     "version": "0.9.0",
     "title": "StarkNet Node Write API",
@@ -31,7 +31,9 @@
               "$ref": "#/components/schemas/TXN_HASH"
             }
           },
-          "required": ["transaction_hash"]
+          "required": [
+            "transaction_hash"
+          ]
         }
       },
       "errors": [
@@ -96,7 +98,10 @@
               "$ref": "#/components/schemas/FELT"
             }
           },
-          "required": ["transaction_hash", "class_hash"]
+          "required": [
+            "transaction_hash",
+            "class_hash"
+          ]
         }
       },
       "errors": [
@@ -175,7 +180,10 @@
               "$ref": "#/components/schemas/FELT"
             }
           },
-          "required": ["transaction_hash", "contract_address"]
+          "required": [
+            "transaction_hash",
+            "contract_address"
+          ]
         }
       },
       "errors": [
