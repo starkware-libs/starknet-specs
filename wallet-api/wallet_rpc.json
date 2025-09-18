@@ -646,7 +646,7 @@
           "calldata": {
             "type": "array",
             "title": "calldata",
-            "description": "Calldata to be passed to the entrypoint",
+            "description": "Calldata to be passed to the entry point",
             "items": {
               "$ref": "#/components/schemas/FELT"
             }
