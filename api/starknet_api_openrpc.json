@@ -1114,9 +1114,21 @@
                 "title": "Transaction hash",
                 "description": "The transaction that emitted the event",
                 "$ref": "#/components/schemas/TXN_HASH"
+              },
+              "transaction_index": {
+                "title": "Transaction index",
+                "description": "The index of the transaction in the block by which the event was emitted",
+                "type": "integer",
+                "minimum": 0
+              },
+              "event_index": {
+                "title": "Event index",
+                "description": "The index of the event in the transaction by which it was emitted",
+                "type": "integer",
+                "minimum": 0
               }
             },
-            "required": ["transaction_hash"]
+            "required": ["transaction_hash", "transaction_index", "event_index"]
           }
         ]
       },
