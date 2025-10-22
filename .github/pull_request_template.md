@@ -8,4 +8,4 @@
 - [ ] Applied formatting - `npm run format`
 - [ ] Performed code self-review
 - [ ] Checked if this PR resolves any [issues](https://github.com/starkware-libs/starknet-specs/issues)
-- [ ] If making a new release, checked out [the guidelines](https://github.com/starkware-libs/starknet-specs/blob/master/api/release.md)
+- [ ] If making a new release, check out [the guidelines](https://github.com/starkware-libs/starknet-specs/blob/master/api/release.md)
