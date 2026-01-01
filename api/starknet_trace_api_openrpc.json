@@ -355,23 +355,6 @@
               "required": ["contract_address", "class_hash"]
             }
           },
-          "compiled_class_hashes": {
-            "title": "Compiled class hashes",
-            "description": "Compiled class hashes that were read during simulation: class_hash -> compiled_class_hash",
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "class_hash": {
-                  "$ref": "#/components/schemas/FELT"
-                },
-                "compiled_class_hash": {
-                  "$ref": "#/components/schemas/FELT"
-                }
-              },
-              "required": ["class_hash", "compiled_class_hash"]
-            }
-          },
           "declared_contracts": {
             "title": "Declared contracts",
             "description": "Class declaration status that was read during simulation: class_hash -> is_declared",
