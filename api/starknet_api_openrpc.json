@@ -718,9 +718,6 @@
       },
       "errors": [
         {
-          "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
-        },
-        {
           "$ref": "#/components/errors/TRANSACTION_EXECUTION_ERROR"
         },
         {
@@ -759,9 +756,6 @@
         }
       },
       "errors": [
-        {
-          "$ref": "#/components/errors/CONTRACT_NOT_FOUND"
-        },
         {
           "$ref": "#/components/errors/CONTRACT_ERROR"
         },
