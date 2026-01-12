@@ -147,24 +147,31 @@
         "name": "traces",
         "description": "The traces of all transactions in the block",
         "schema": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "description": "A single pair of transaction hash and corresponding trace",
-            "properties": {
-              "transaction_hash": {
-                "$ref": "#/components/schemas/FELT"
-              },
-              "trace_root": {
-                "$ref": "#/components/schemas/TRANSACTION_TRACE"
-              },
-              "initial_reads": {
-                "title": "Initial reads",
-                "description": "The set of state values fetched from the underlying state reader during execution. This provides a complete witness sufficient to reconstruct the cached state needed for re-execution. Only included when RETURN_INITIAL_READS is present in trace_flags.",
-                "$ref": "#/components/schemas/INITIAL_READS"
+          "type": "object",
+          "properties": {
+            "traces": {
+              "type": "array",
+              "description": "The traces of all transactions in the block",
+              "items": {
+                "type": "object",
+                "description": "A single pair of transaction hash and corresponding trace",
+                "properties": {
+                  "transaction_hash": {
+                    "$ref": "#/components/schemas/FELT"
+                  },
+                  "trace_root": {
+                    "$ref": "#/components/schemas/TRANSACTION_TRACE"
+                  }
+                }
               }
+            },
+            "initial_reads": {
+              "title": "Initial reads",
+              "description": "The set of state values fetched from the underlying state reader during execution for all transactions in the block. This provides a complete witness sufficient to reconstruct the cached state needed for re-execution. Only included when RETURN_INITIAL_READS is present in trace_flags.",
+              "$ref": "#/components/schemas/INITIAL_READS"
             }
-          }
+          },
+          "required": ["traces"]
         }
       },
       "errors": [
