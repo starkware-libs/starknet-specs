@@ -77,27 +77,34 @@
         "name": "simulated_transactions",
         "description": "The execution trace and consumed resources of the required transactions",
         "schema": {
-          "type": "array",
-          "items": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "transaction_trace": {
-                  "title": "the transaction's trace",
-                  "$ref": "#/components/schemas/TRANSACTION_TRACE"
-                },
-                "fee_estimation": {
-                  "title": "the transaction's resources and fee",
-                  "$ref": "#/components/schemas/FEE_ESTIMATE"
-                },
-                "initial_reads": {
-                  "title": "Initial reads",
-                  "description": "The set of state values fetched from the underlying state reader during execution. This provides a complete witness sufficient to reconstruct the cached state needed for re-execution.",
-                  "$ref": "#/components/schemas/INITIAL_READS"
+          "type": "object",
+          "properties": {
+            "simulated_transactions": {
+              "type": "array",
+              "description": "The execution trace and consumed resources of the required transactions",
+              "items": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "transaction_trace": {
+                      "title": "the transaction's trace",
+                      "$ref": "#/components/schemas/TRANSACTION_TRACE"
+                    },
+                    "fee_estimation": {
+                      "title": "the transaction's resources and fee",
+                      "$ref": "#/components/schemas/FEE_ESTIMATE"
+                    }
+                  }
                 }
               }
+            },
+            "initial_reads": {
+              "title": "Initial reads",
+              "description": "The set of state values fetched from the underlying state reader during execution for all transactions in the simulation. This provides a complete witness sufficient to reconstruct the cached state needed for re-execution. Only included when RETURN_INITIAL_READS is present in simulation_flags.",
+              "$ref": "#/components/schemas/INITIAL_READS"
             }
-          }
+          },
+          "required": ["simulated_transactions"]
         }
       },
       "errors": [
@@ -317,12 +324,12 @@
       "SIMULATION_FLAG": {
         "type": "string",
         "enum": ["SKIP_VALIDATE", "SKIP_FEE_CHARGE", "RETURN_INITIAL_READS"],
-        "description": "Flags that indicate how to simulate a given transaction. By default, the sequencer behavior is replicated locally (enough funds are expected to be in the account, and fee will be deducted from the balance before the simulation of the next transaction). To skip the fee charge, use the SKIP_FEE_CHARGE flag. When RETURN_INITIAL_READS is present, the node returns the minimal set of concrete state values fetched from the underlying state reader during execution (per transaction). This provides a complete witness sufficient to reconstruct the cached state needed for re-execution."
+        "description": "Flags that indicate how to simulate a given transaction. By default, the sequencer behavior is replicated locally (enough funds are expected to be in the account, and fee will be deducted from the balance before the simulation of the next transaction). To skip the fee charge, use the SKIP_FEE_CHARGE flag. When RETURN_INITIAL_READS is present, the node returns the minimal set of concrete state values fetched from the underlying state reader during execution for all transactions in the simulation. This provides a complete witness sufficient to reconstruct the cached state needed for re-execution."
       },
       "TRACE_FLAG": {
         "type": "string",
         "enum": ["RETURN_INITIAL_READS"],
-        "description": "Flags that indicate what additional information should be included in the trace. When RETURN_INITIAL_READS is present, the node returns the minimal set of concrete state values fetched from the underlying state reader during execution (per transaction). This provides a complete witness sufficient to reconstruct the cached state needed for re-execution."
+        "description": "Flags that indicate what additional information should be included in the trace. When RETURN_INITIAL_READS is present, the node returns the minimal set of concrete state values fetched from the underlying state reader during execution for all transactions in the block. This provides a complete witness sufficient to reconstruct the cached state needed for re-execution."
       },
       "INITIAL_READS": {
         "title": "Initial reads",
