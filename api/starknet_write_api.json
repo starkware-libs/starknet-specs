@@ -286,10 +286,6 @@
       "COMPILED_CLASS_HASH_MISMATCH": {
         "code": 60,
         "message": "the compiled class hash did not match the one supplied in the transaction",
-        "actual_class_hash": {
-          "description": "The actual compiled class hash",
-          "$ref": "#/components/schemas/FELT"
-        },
         "data": {
           "type": "object",
           "description": "More data about the mismatch between class hashes",
