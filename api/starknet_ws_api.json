@@ -63,9 +63,22 @@
         {
           "name": "from_address",
           "summary": "Filter events by from_address which emitted the event",
+          "description": "A contract address or a list of addresses from which events should originate",
           "required": false,
           "schema": {
-            "$ref": "#/components/schemas/ADDRESS"
+            "oneOf": [
+              {
+                "title": "Single address",
+                "$ref": "#/components/schemas/ADDRESS"
+              },
+              {
+                "title": "List of addresses",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/ADDRESS"
+                }
+              }
+            ]
           }
         },
         {
