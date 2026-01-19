@@ -285,7 +285,22 @@
       },
       "COMPILED_CLASS_HASH_MISMATCH": {
         "code": 60,
-        "message": "the compiled class hash did not match the one supplied in the transaction"
+        "message": "the compiled class hash did not match the one supplied in the transaction",
+        "data": {
+          "type": "object",
+          "description": "More data about the mismatch between class hashes",
+          "properties": {
+            "actual_class_hash": {
+              "title": "The actual compiled class hash",
+              "$ref": "#/components/schemas/FELT"
+            },
+            "supplied_class_hash": {
+              "title": "The class hash supplied in the transaction",
+              "$ref": "#/components/schemas/FELT"
+            }
+          },
+          "required": ["actual_class_hash", "supplied_class_hash"]
+        }
       },
       "UNSUPPORTED_TX_VERSION": {
         "code": 61,
