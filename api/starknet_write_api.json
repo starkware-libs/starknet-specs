@@ -299,10 +299,7 @@
               "$ref": "#/components/schemas/FELT"
             }
           },
-          "required": [
-            "actual_class_hash",
-            "supplied_class_hash"
-          ]
+          "required": ["actual_class_hash", "supplied_class_hash"]
         }
       },
       "UNSUPPORTED_TX_VERSION": {
