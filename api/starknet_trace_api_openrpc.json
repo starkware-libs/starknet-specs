@@ -118,7 +118,7 @@
                 },
                 "initial_reads": {
                   "title": "Initial reads",
-                  "description": "The set of state values fetched from the underlying state reader during execution for all transactions in the simulation. This provides a complete witness sufficient to reconstruct the cached state needed for re-execution. Required when RETURN_INITIAL_READS is present in simulation_flags.",
+                  "description": "The set of state values fetched from the underlying state reader during execution for all transactions in the simulation. Required when RETURN_INITIAL_READS is present in simulation_flags.",
                   "$ref": "#/components/schemas/INITIAL_READS"
                 }
               },
@@ -213,7 +213,7 @@
                 },
                 "initial_reads": {
                   "title": "Initial reads",
-                  "description": "The set of state values fetched from the underlying state reader during execution for all transactions in the block. This provides a complete witness sufficient to reconstruct the cached state needed for re-execution. Required when RETURN_INITIAL_READS is present in trace_flags.",
+                  "description": "The set of state values fetched from the underlying state reader during execution for all transactions in the block. Required when RETURN_INITIAL_READS is present in trace_flags. Returns an empty object instead of INITIAL_READS when the execution trace for the referenced block is inconsistent with the canonical block trace.",
                   "$ref": "#/components/schemas/INITIAL_READS"
                 }
               },
@@ -365,12 +365,12 @@
       "SIMULATION_FLAG": {
         "type": "string",
         "enum": ["SKIP_VALIDATE", "SKIP_FEE_CHARGE", "RETURN_INITIAL_READS"],
-        "description": "Flags that indicate how to simulate a given transaction. By default, the sequencer behavior is replicated locally (enough funds are expected to be in the account, and fee will be deducted from the balance before the simulation of the next transaction). To skip the fee charge, use the SKIP_FEE_CHARGE flag. When RETURN_INITIAL_READS is present, the node returns the minimal set of concrete state values fetched from the underlying state reader during execution for all transactions in the simulation. This provides a complete witness sufficient to reconstruct the cached state needed for re-execution."
+        "description": "Flags that indicate how to simulate a given transaction. By default, the sequencer behavior is replicated locally (enough funds are expected to be in the account, and fee will be deducted from the balance before the simulation of the next transaction). To skip the fee charge, use the SKIP_FEE_CHARGE flag. When RETURN_INITIAL_READS is present, the node returns the minimal set of concrete state values fetched from the underlying state reader during execution for all transactions in the simulation."
       },
       "TRACE_FLAG": {
         "type": "string",
         "enum": ["RETURN_INITIAL_READS"],
-        "description": "Flags that indicate what additional information should be included in the trace. When RETURN_INITIAL_READS is present, the node returns the minimal set of concrete state values fetched from the underlying state reader during execution for all transactions in the block. This provides a complete witness sufficient to reconstruct the cached state needed for re-execution."
+        "description": "Flags that indicate what additional information should be included in the trace. When RETURN_INITIAL_READS is present, the node returns the minimal set of concrete state values fetched from the underlying state reader during execution for all transactions in the block. Returns an empty object instead of INITIAL_READS when the execution trace for the referenced block is inconsistent with the canonical block trace."
       },
       "INITIAL_READS": {
         "title": "Initial reads",
