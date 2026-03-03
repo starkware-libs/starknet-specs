@@ -2859,7 +2859,7 @@
               },
               "proof_facts": {
                 "title": "Proof facts",
-                "description": "Optional proof facts for the transaction",
+                "description": "Proof facts for the transaction. An empty array is returned if no proof facts exist for the transaction",
                 "type": "array",
                 "items": {
                   "$ref": "#/components/schemas/FELT"
@@ -3654,7 +3654,7 @@
       "TXN_RESPONSE_FLAG": {
         "type": "string",
         "enum": ["INCLUDE_PROOF_FACTS"],
-        "description": "Flags that control what additional fields are included in transaction responses. INCLUDE_PROOF_FACTS: Include proof_facts field when available (only for transactions submitted through the gateway with proof facts)."
+        "description": "Flags that control what additional fields are included in transaction responses. INCLUDE_PROOF_FACTS: Include proof_facts field in the response (an empty array is returned if no proof facts exist for the transaction)."
       },
       "PRICE_UNIT_WEI": {
         "title": "Price unit wei",
