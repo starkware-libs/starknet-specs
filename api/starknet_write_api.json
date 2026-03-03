@@ -63,6 +63,9 @@
           "$ref": "#/components/errors/UNSUPPORTED_TX_VERSION"
         },
         {
+          "$ref": "#/components/errors/INVALID_PROOF"
+        },
+        {
           "$ref": "#/components/errors/UNEXPECTED_ERROR"
         }
       ]
@@ -307,6 +310,10 @@
       "FEE_BELOW_MINIMUM": {
         "code": 65,
         "message": "Transaction fee below minimum"
+      },
+      "INVALID_PROOF": {
+        "code": 69,
+        "message": "The proof field in the invoke v3 transaction is invalid"
       }
     }
   }
