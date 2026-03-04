@@ -168,6 +168,18 @@
             "title": "Block id",
             "$ref": "#/components/schemas/BLOCK_ID"
           }
+        },
+        {
+          "name": "contract_addresses",
+          "description": "If specified, only state diffs related to these contract addresses will be returned. Class declarations are unaffected by this filter. If omitted, the full state diff is returned.",
+          "required": false,
+          "schema": {
+            "title": "Contract addresses",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ADDRESS"
+            }
+          }
         }
       ],
       "result": {
