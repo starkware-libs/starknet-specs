@@ -1,0 +1,145 @@
+{
+  "openrpc": "1.0.0-rc1",
+  "info": {
+    "version": "0.10.2",
+    "title": "Starknet Transaction Prover API",
+    "description": "JSON-RPC API for proving Starknet transactions via the Starknet Transaction Prover.",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "servers": [],
+  "methods": [
+    {
+      "name": "starknet_specVersion",
+      "summary": "Returns the Starknet RPC specification version.",
+      "params": [],
+      "result": {
+        "name": "spec_version",
+        "description": "The Starknet RPC specification version (e.g. \"0.10.2\").",
+        "schema": {
+          "title": "Spec version",
+          "type": "string"
+        }
+      }
+    },
+    {
+      "name": "starknet_proveTransaction",
+      "summary": "Proves a transaction on top of the specified block.",
+      "params": [
+        {
+          "name": "block_id",
+          "description": "The block to execute the transaction on.",
+          "required": true,
+          "schema": {
+            "title": "Block id",
+            "$ref": "#/components/schemas/BLOCK_ID"
+          }
+        },
+        {
+          "name": "transaction",
+          "description": "The transaction to prove (must be an Invoke transaction).",
+          "required": true,
+          "schema": {
+            "title": "RPC transaction",
+            "$ref": "#/components/schemas/BROADCASTED_INVOKE_TXN"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "description": "The proof, proof facts, and L2-to-L1 messages.",
+        "schema": {
+          "title": "Prove transaction result",
+          "$ref": "#/components/schemas/PROVE_TRANSACTION_RESULT"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "./api/starknet_api_openrpc.json#/components/errors/BLOCK_NOT_FOUND"
+        },
+        {
+          "$ref": "#/components/errors/ACCOUNT_VALIDATION_FAILED"
+        },
+        {
+          "$ref": "./api/starknet_write_api.json#/components/errors/UNSUPPORTED_TX_VERSION"
+        },
+        {
+          "$ref": "#/components/errors/SERVICE_BUSY"
+        },
+        {
+          "$ref": "#/components/errors/INVALID_TRANSACTION_INPUT"
+        }
+      ]
+    }
+  ],
+  "components": {
+    "schemas": {
+      "BLOCK_ID": {
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
+      },
+      "BROADCASTED_INVOKE_TXN": {
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_INVOKE_TXN"
+      },
+      "PROOF": {
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/PROOF"
+      },
+      "PROOF_FACTS": {
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/PROOF_FACTS"
+      },
+      "MSG_TO_L1": {
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
+      },
+      "PROVE_TRANSACTION_RESULT": {
+        "title": "Prove transaction result",
+        "description": "The result of proving a transaction.",
+        "type": "object",
+        "properties": {
+          "proof": {
+            "title": "Proof",
+            "$ref": "#/components/schemas/PROOF"
+          },
+          "proof_facts": {
+            "title": "Proof facts",
+            "$ref": "#/components/schemas/PROOF_FACTS"
+          },
+          "l2_to_l1_messages": {
+            "title": "L2 to L1 messages",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MSG_TO_L1"
+            }
+          }
+        },
+        "required": ["proof", "proof_facts", "l2_to_l1_messages"]
+      }
+    },
+    "errors": {
+      "ACCOUNT_VALIDATION_FAILED": {
+        "code": 55,
+        "message": "Account validation failed",
+        "data": {
+          "type": "string",
+          "description": "Details about the validation failure."
+        }
+      },
+      "SERVICE_BUSY": {
+        "code": -32005,
+        "message": "Service is busy",
+        "data": {
+          "type": "string",
+          "description": "Details about capacity and retry advice."
+        }
+      },
+      "INVALID_TRANSACTION_INPUT": {
+        "code": 1000,
+        "message": "Invalid transaction input",
+        "data": {
+          "type": "string",
+          "description": "Details about which input field is invalid."
+        }
+      }
+    }
+  }
+}
