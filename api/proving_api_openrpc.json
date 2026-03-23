@@ -1,7 +1,7 @@
 {
     "openrpc": "1.0.0-rc1",
     "info": {
-        "version": "0.10.1",
+        "version": "0.10.2",
         "title": "Starknet Transaction Prover API",
         "description": "JSON-RPC API for proving Starknet transactions via the Starknet Transaction Prover.",
         "license": {
@@ -17,7 +17,7 @@
             "params": [],
             "result": {
                 "name": "spec_version",
-                "description": "The Starknet RPC specification version (e.g. \"0.10.1\").",
+                "description": "The Starknet RPC specification version (e.g. \"0.10.2\").",
                 "schema": {
                     "title": "Spec version",
                     "type": "string"
@@ -34,7 +34,7 @@
                     "required": true,
                     "schema": {
                         "title": "Block id",
-                        "$ref": "#/components/schemas/BLOCK_ID"
+                        "$ref": "./starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
                     }
                 },
                 {
@@ -43,7 +43,7 @@
                     "required": true,
                     "schema": {
                         "title": "RPC transaction",
-                        "$ref": "#/components/schemas/RPC_TRANSACTION"
+                        "$ref": "./starknet_api_openrpc.json#/components/schemas/BROADCASTED_INVOKE_TXN"
                     }
                 }
             ],
@@ -57,13 +57,13 @@
             },
             "errors": [
                 {
-                    "$ref": "#/components/errors/BLOCK_NOT_FOUND"
+                    "$ref": "./starknet_api_openrpc.json#/components/errors/BLOCK_NOT_FOUND"
                 },
                 {
                     "$ref": "#/components/errors/ACCOUNT_VALIDATION_FAILED"
                 },
                 {
-                    "$ref": "#/components/errors/UNSUPPORTED_TX_VERSION"
+                    "$ref": "./starknet_write_api.json#/components/errors/UNSUPPORTED_TX_VERSION"
                 },
                 {
                     "$ref": "#/components/errors/SERVICE_BUSY"
@@ -76,282 +76,6 @@
     ],
     "components": {
         "schemas": {
-            "FELT": {
-                "title": "Field element",
-                "description": "A field element represented as a hex string with 0x prefix.",
-                "type": "string",
-                "pattern": "^0x[0-9a-fA-F]{1,64}$"
-            },
-            "ETH_ADDRESS": {
-                "title": "Ethereum address",
-                "description": "An Ethereum address represented as a hex string with 0x prefix (up to 20 bytes).",
-                "type": "string",
-                "pattern": "^0x[0-9a-fA-F]{1,40}$"
-            },
-            "BLOCK_ID": {
-                "title": "Block id",
-                "description": "Identifies a finalized block by hash, number, or the \"latest\" tag.",
-                "oneOf": [
-                    {
-                        "title": "Block hash",
-                        "type": "object",
-                        "properties": {
-                            "block_hash": {
-                                "title": "Block hash",
-                                "$ref": "#/components/schemas/FELT"
-                            }
-                        },
-                        "required": [
-                            "block_hash"
-                        ]
-                    },
-                    {
-                        "title": "Block number",
-                        "type": "object",
-                        "properties": {
-                            "block_number": {
-                                "title": "Block number",
-                                "type": "integer",
-                                "minimum": 0
-                            }
-                        },
-                        "required": [
-                            "block_number"
-                        ]
-                    },
-                    {
-                        "title": "Block tag",
-                        "type": "string",
-                        "enum": [
-                            "latest"
-                        ]
-                    }
-                ]
-            },
-            "u64": {
-                "type": "string",
-                "title": "u64",
-                "description": "64 bit integers, represented by hex string of length at most 16",
-                "pattern": "^0x(0|[a-fA-F1-9]{1}[a-fA-F0-9]{0,15})$"
-            },
-            "u128": {
-                "type": "string",
-                "title": "u128",
-                "description": "128 bit integers, represented by hex string of length at most 32",
-                "pattern": "^0x(0|[a-fA-F1-9]{1}[a-fA-F0-9]{0,31})$"
-            },
-            "ADDRESS": {
-                "title": "Address",
-                "$ref": "#/components/schemas/FELT"
-            },
-            "SIGNATURE": {
-                "title": "Signature",
-                "description": "A transaction signature",
-                "type": "array",
-                "items": {
-                    "$ref": "#/components/schemas/FELT"
-                }
-            },
-            "DA_MODE": {
-                "title": "DA mode",
-                "type": "string",
-                "description": "Specifies a storage domain in Starknet.",
-                "enum": [
-                    "L1",
-                    "L2"
-                ]
-            },
-            "RESOURCE_BOUNDS_MAPPING": {
-                "type": "object",
-                "properties": {
-                    "l1_gas": {
-                        "title": "L1 Gas",
-                        "description": "The max amount and max price per unit of L1 gas used in this tx.",
-                        "$ref": "#/components/schemas/RESOURCE_BOUNDS"
-                    },
-                    "l2_gas": {
-                        "title": "L2 Gas",
-                        "description": "The max amount and max price per unit of L2 gas used in this tx.",
-                        "$ref": "#/components/schemas/RESOURCE_BOUNDS"
-                    },
-                    "l1_data_gas": {
-                        "title": "L1 Data Gas",
-                        "description": "The max amount and max price per unit of L1 data gas used in this tx.",
-                        "$ref": "#/components/schemas/RESOURCE_BOUNDS"
-                    }
-                },
-                "required": [
-                    "l1_gas",
-                    "l2_gas",
-                    "l1_data_gas"
-                ]
-            },
-            "RESOURCE_BOUNDS": {
-                "type": "object",
-                "properties": {
-                    "max_amount": {
-                        "title": "max amount",
-                        "description": "The max amount of the resource that can be used in the tx.",
-                        "$ref": "#/components/schemas/u64"
-                    },
-                    "max_price_per_unit": {
-                        "title": "max price",
-                        "description": "The max price per unit of this resource for this tx.",
-                        "$ref": "#/components/schemas/u128"
-                    }
-                },
-                "required": [
-                    "max_amount",
-                    "max_price_per_unit"
-                ]
-            },
-            "RPC_TRANSACTION": {
-                "title": "RPC transaction",
-                "description": "A Starknet RPC transaction. Only Invoke transactions are supported for proving.",
-                "$ref": "#/components/schemas/INVOKE_TXN"
-            },
-            "INVOKE_TXN": {
-                "title": "Invoke transaction",
-                "description": "Initiate a transaction from an account.",
-                "$ref": "#/components/schemas/INVOKE_TXN_V3"
-            },
-            "INVOKE_TXN_V3": {
-                "title": "Invoke transaction V3",
-                "description": "Initiates a transaction from a given account.",
-                "allOf": [
-                    {
-                        "type": "object",
-                        "properties": {
-                            "type": {
-                                "title": "Type",
-                                "type": "string",
-                                "enum": [
-                                    "INVOKE"
-                                ]
-                            },
-                            "sender_address": {
-                                "title": "Sender address",
-                                "$ref": "#/components/schemas/ADDRESS"
-                            },
-                            "calldata": {
-                                "type": "array",
-                                "title": "Calldata",
-                                "description": "The data expected by the account's execute function.",
-                                "items": {
-                                    "$ref": "#/components/schemas/FELT"
-                                }
-                            },
-                            "version": {
-                                "title": "Version",
-                                "description": "Version of the transaction scheme.",
-                                "type": "string",
-                                "enum": [
-                                    "0x3"
-                                ]
-                            },
-                            "signature": {
-                                "title": "Signature",
-                                "$ref": "#/components/schemas/SIGNATURE"
-                            },
-                            "nonce": {
-                                "title": "Nonce",
-                                "$ref": "#/components/schemas/FELT"
-                            },
-                            "resource_bounds": {
-                                "title": "Resource bounds",
-                                "description": "Resource bounds for transaction execution.",
-                                "$ref": "#/components/schemas/RESOURCE_BOUNDS_MAPPING"
-                            },
-                            "tip": {
-                                "title": "Tip",
-                                "$ref": "#/components/schemas/u64",
-                                "description": "The tip for the transaction."
-                            },
-                            "paymaster_data": {
-                                "title": "Paymaster data",
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/FELT"
-                                },
-                                "description": "Data needed to allow the paymaster to pay for the transaction in native tokens."
-                            },
-                            "account_deployment_data": {
-                                "title": "Account deployment data",
-                                "type": "array",
-                                "items": {
-                                    "$ref": "#/components/schemas/FELT"
-                                },
-                                "description": "Data needed to deploy the account contract from which this tx will be initiated."
-                            },
-                            "nonce_data_availability_mode": {
-                                "title": "Nonce DA mode",
-                                "description": "The storage domain of the account nonce.",
-                                "$ref": "#/components/schemas/DA_MODE"
-                            },
-                            "fee_data_availability_mode": {
-                                "title": "Fee DA mode",
-                                "description": "The storage domain of the account balance from which fee is charged.",
-                                "$ref": "#/components/schemas/DA_MODE"
-                            }
-                        },
-                        "required": [
-                            "type",
-                            "sender_address",
-                            "calldata",
-                            "version",
-                            "signature",
-                            "nonce",
-                            "resource_bounds",
-                            "tip",
-                            "paymaster_data",
-                            "account_deployment_data",
-                            "nonce_data_availability_mode",
-                            "fee_data_availability_mode"
-                        ]
-                    }
-                ]
-            },
-            "PROOF": {
-                "title": "Proof",
-                "description": "The generated proof as a base64-encoded byte string.",
-                "type": "string",
-                "pattern": "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$"
-            },
-            "PROOF_FACTS": {
-                "title": "Proof facts",
-                "description": "The proof facts as a flat array of field elements.",
-                "type": "array",
-                "items": {
-                    "$ref": "#/components/schemas/FELT"
-                }
-            },
-            "MSG_TO_L1": {
-                "title": "Message to L1",
-                "description": "A message sent from L2 to L1 during execution.",
-                "type": "object",
-                "properties": {
-                    "from_address": {
-                        "title": "From address",
-                        "$ref": "#/components/schemas/FELT"
-                    },
-                    "to_address": {
-                        "title": "To address",
-                        "$ref": "#/components/schemas/ETH_ADDRESS"
-                    },
-                    "payload": {
-                        "title": "Payload",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/FELT"
-                        }
-                    }
-                },
-                "required": [
-                    "from_address",
-                    "to_address",
-                    "payload"
-                ]
-            },
             "PROVE_TRANSACTION_RESULT": {
                 "title": "Prove transaction result",
                 "description": "The result of proving a transaction.",
@@ -359,17 +83,17 @@
                 "properties": {
                     "proof": {
                         "title": "Proof",
-                        "$ref": "#/components/schemas/PROOF"
+                        "$ref": "./starknet_api_openrpc.json#/components/schemas/PROOF"
                     },
                     "proof_facts": {
                         "title": "Proof facts",
-                        "$ref": "#/components/schemas/PROOF_FACTS"
+                        "$ref": "./starknet_api_openrpc.json#/components/schemas/PROOF_FACTS"
                     },
                     "l2_to_l1_messages": {
                         "title": "L2 to L1 messages",
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/MSG_TO_L1"
+                            "$ref": "./starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
                         }
                     }
                 },
@@ -381,24 +105,12 @@
             }
         },
         "errors": {
-            "BLOCK_NOT_FOUND": {
-                "code": 24,
-                "message": "Block not found"
-            },
             "ACCOUNT_VALIDATION_FAILED": {
                 "code": 55,
                 "message": "Account validation failed",
                 "data": {
                     "type": "string",
                     "description": "Details about the validation failure."
-                }
-            },
-            "UNSUPPORTED_TX_VERSION": {
-                "code": 61,
-                "message": "The transaction version is not supported",
-                "data": {
-                    "type": "string",
-                    "description": "Details about the unsupported version."
                 }
             },
             "SERVICE_BUSY": {
