@@ -446,6 +446,148 @@
       ]
     },
     {
+      "name": "wallet_strk20InvokeTransaction",
+      "summary": "Submit a transaction containing STRK20 privacy protocol actions",
+      "description": "Submits one or more STRK20 actions (deposit, withdraw, private transfer) as a single transaction. The wallet displays an approval UI and may take significantly longer than wallet_addInvokeTransaction because zero-knowledge proof generation is required. The dapp must tolerate long-running calls. Registration into the privacy pool is handled transparently by the wallet — if the user is not registered, NOT_REGISTERED is returned.",
+      "params": [
+        {
+          "name": "actions",
+          "description": "An ordered list of STRK20 actions to execute atomically",
+          "required": true,
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/STRK20_ACTION"
+            },
+            "minItems": 1
+          }
+        },
+        {
+          "name": "api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/API_VERSION"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "description": "The result of the transaction submission",
+        "schema": {
+          "type": "object",
+          "properties": {
+            "transaction_hash": {
+              "title": "Transaction Hash",
+              "$ref": "#/components/schemas/PADDED_TXN_HASH"
+            }
+          },
+          "required": ["transaction_hash"]
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/NOT_REGISTERED"
+        },
+        {
+          "$ref": "#/components/errors/INSUFFICIENT_PRIVATE_BALANCE"
+        },
+        {
+          "$ref": "#/components/errors/PRIVACY_LEAK"
+        },
+        {
+          "$ref": "#/components/errors/INVALID_REQUEST_PAYLOAD"
+        },
+        {
+          "$ref": "#/components/errors/USER_REFUSED_OP"
+        },
+        {
+          "$ref": "#/components/errors/API_VERSION_NOT_SUPPORTED"
+        },
+        {
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "wallet_strk20Balances",
+      "summary": "Query the user's private balances for a list of tokens",
+      "description": "Returns the private balance held inside the STRK20 privacy pool for each of the requested token addresses. If the user is not registered in the pool, returns NOT_REGISTERED.",
+      "params": [
+        {
+          "name": "tokens",
+          "description": "The token addresses to query balances for",
+          "required": true,
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ADDRESS"
+            },
+            "minItems": 1
+          }
+        },
+        {
+          "name": "api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/API_VERSION"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "description": "Private balances, one entry per requested token, in the same order as the input",
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/STRK20_BALANCE_ENTRY"
+          }
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/NOT_REGISTERED"
+        },
+        {
+          "$ref": "#/components/errors/INVALID_REQUEST_PAYLOAD"
+        },
+        {
+          "$ref": "#/components/errors/API_VERSION_NOT_SUPPORTED"
+        },
+        {
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
+        }
+      ]
+    },
+    {
+      "name": "wallet_strk20Mode",
+      "summary": "Query whether the active address is the user's real address or a generated ephemeral one",
+      "description": "Read-only. Lets the dapp adapt its UI (for example, show a 'private mode' indicator) based on whether the address returned by wallet_requestAccounts is the user's real address or a freshly generated address tied to the current dapp session. The wallet does not change mode in response to this call.",
+      "params": [
+        {
+          "name": "api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/API_VERSION"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "description": "The privacy mode of the active address",
+        "schema": {
+          "$ref": "#/components/schemas/STRK20_MODE"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/API_VERSION_NOT_SUPPORTED"
+        },
+        {
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
+        }
+      ]
+    },
+    {
       "name": "wallet_signTypedData",
       "summary": "Sign typed data using the wallet",
       "description": "When wallet is locked, open wallet-unlock UI. When Dapp is not approved, display Dapp-approve UI. When wallet is connected and unlocked, display sign-typed-data UI.",
@@ -834,6 +976,161 @@
           }
         }
       },
+      "STRK20_ACTION": {
+        "title": "STRK20 Action",
+        "description": "A single action to perform via the STRK20 privacy protocol. The 'type' field discriminates the variant.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/STRK20_DEPOSIT_ACTION"
+          },
+          {
+            "$ref": "#/components/schemas/STRK20_WITHDRAW_ACTION"
+          },
+          {
+            "$ref": "#/components/schemas/STRK20_TRANSFER_ACTION"
+          },
+          {
+            "$ref": "#/components/schemas/STRK20_INVOKE_ACTION"
+          }
+        ]
+      },
+      "STRK20_DEPOSIT_ACTION": {
+        "title": "STRK20 Deposit Action",
+        "description": "Deposits public funds from the user's account into the privacy pool. Always to self.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["deposit"]
+          },
+          "token": {
+            "title": "Token Address",
+            "$ref": "#/components/schemas/ADDRESS"
+          },
+          "amount": {
+            "title": "Amount",
+            "description": "Amount of the token, in its smallest unit",
+            "$ref": "#/components/schemas/FELT"
+          }
+        },
+        "required": ["type", "token", "amount"]
+      },
+      "STRK20_WITHDRAW_ACTION": {
+        "title": "STRK20 Withdraw Action",
+        "description": "Withdraws funds from the privacy pool to a public recipient address.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["withdraw"]
+          },
+          "token": {
+            "title": "Token Address",
+            "$ref": "#/components/schemas/ADDRESS"
+          },
+          "amount": {
+            "title": "Amount",
+            "description": "Amount of the token, in its smallest unit",
+            "$ref": "#/components/schemas/FELT"
+          },
+          "recipient": {
+            "title": "Recipient Address",
+            "description": "The public Starknet address that receives the withdrawn funds",
+            "$ref": "#/components/schemas/ADDRESS"
+          }
+        },
+        "required": ["type", "token", "amount", "recipient"]
+      },
+      "STRK20_TRANSFER_ACTION": {
+        "title": "STRK20 Transfer Action",
+        "description": "Privately transfers funds inside the privacy pool to another registered user.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["transfer"]
+          },
+          "token": {
+            "title": "Token Address",
+            "$ref": "#/components/schemas/ADDRESS"
+          },
+          "amount": {
+            "title": "Amount",
+            "description": "Amount of the token, in its smallest unit",
+            "$ref": "#/components/schemas/FELT"
+          },
+          "recipient": {
+            "title": "Recipient Address",
+            "description": "The Starknet address of the registered recipient inside the privacy pool",
+            "$ref": "#/components/schemas/ADDRESS"
+          }
+        },
+        "required": ["type", "token", "amount", "recipient"]
+      },
+      "STRK20_INVOKE_ACTION": {
+        "title": "STRK20 Invoke Action",
+        "description": "Invokes an arbitrary contract entry point as part of the same STRK20 transaction. Calldata items may be literal felts or wallet-resolved placeholders that the wallet substitutes during action assembly: ${openNotes[N]} for the Nth opened note ID, ${withdrawals[N]} for the Nth withdrawal ID, or ${poolAddress} for the privacy pool address.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["invoke"]
+          },
+          "contract": {
+            "title": "Contract Address",
+            "$ref": "#/components/schemas/ADDRESS"
+          },
+          "calldata": {
+            "type": "array",
+            "title": "Calldata",
+            "items": {
+              "$ref": "#/components/schemas/STRK20_CALLDATA_ITEM"
+            }
+          }
+        },
+        "required": ["type", "contract", "calldata"]
+      },
+      "STRK20_CALLDATA_ITEM": {
+        "title": "STRK20 Invoke Calldata Item",
+        "description": "A single calldata entry: either a literal felt, or one of the placeholder strings the wallet expands during action assembly.",
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/FELT"
+          },
+          {
+            "$ref": "#/components/schemas/STRK20_CALLDATA_PLACEHOLDER"
+          }
+        ]
+      },
+      "STRK20_CALLDATA_PLACEHOLDER": {
+        "title": "STRK20 Calldata Placeholder",
+        "description": "A wallet-resolved placeholder that the wallet substitutes with a single felt during action assembly. ${openNotes[N]} expands to the Nth note ID created by openNote actions in the same transaction; ${withdrawals[N]} expands to the Nth withdrawal ID in the same transaction; ${poolAddress} expands to the privacy pool contract address. N is a zero-based index.",
+        "type": "string",
+        "pattern": "^\\$\\{(?:(?:openNotes|withdrawals)\\[[0-9]+\\]|poolAddress)\\}$"
+      },
+      "STRK20_BALANCE_ENTRY": {
+        "title": "STRK20 Balance Entry",
+        "description": "A private balance for a single token held inside the privacy pool",
+        "type": "object",
+        "properties": {
+          "token": {
+            "title": "Token Address",
+            "$ref": "#/components/schemas/ADDRESS"
+          },
+          "balance": {
+            "title": "Balance",
+            "description": "The private balance of the token, in its smallest unit",
+            "$ref": "#/components/schemas/FELT"
+          }
+        },
+        "required": ["token", "balance"]
+      },
+      "STRK20_MODE": {
+        "title": "STRK20 Mode",
+        "description": "Whether the address returned by wallet_requestAccounts is the user's real address or a freshly generated ephemeral one tied to the current dapp session.",
+        "type": "string",
+        "enum": ["real", "generated"]
+      },
       "PADDED_FELT": {
         "type": "string",
         "title": "Padded felt",
@@ -881,6 +1178,21 @@
         "code": 117,
         "message": "An error occurred (CHAIN_ID_NOT_SUPPORTED)",
         "description": "The requested chain ID is not supported by the wallet"
+      },
+      "NOT_REGISTERED": {
+        "code": 118,
+        "message": "An error occurred (NOT_REGISTERED)",
+        "description": "The user is not registered in the STRK20 privacy pool"
+      },
+      "INSUFFICIENT_PRIVATE_BALANCE": {
+        "code": 119,
+        "message": "An error occurred (INSUFFICIENT_PRIVATE_BALANCE)",
+        "description": "The user does not have enough private balance to cover the requested withdraw or transfer"
+      },
+      "PRIVACY_LEAK": {
+        "code": 120,
+        "message": "An error occurred (PRIVACY_LEAK)",
+        "description": "The wallet detected that completing the operation may compromise the user's privacy"
       },
       "API_VERSION_NOT_SUPPORTED": {
         "code": 162,
