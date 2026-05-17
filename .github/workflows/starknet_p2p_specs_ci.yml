@@ -1,0 +1,70 @@
+name: Starknet-P2p-Specs-CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - '*'
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - auto_merge_enabled
+      - edited
+
+env:
+  PROTOC_VERSION: v25.1
+
+jobs:
+  compile-protos:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: Noelware/setup-protoc@1.1.0
+        with:
+          version: ${{env.PROTOC_VERSION}}
+
+      - name: Find .proto files
+        id: find-protos
+        run: |
+          proto_files=$(find . -name "*.proto")
+          if [ -z "$proto_files" ]; then
+            echo "No .proto files found."
+            exit 1
+          fi
+          echo "Found the following .proto files:"
+          echo "$proto_files"
+          # Save the list as an output
+          echo "proto_files=$(echo "$proto_files" | tr '\n' ' ')" >> $GITHUB_OUTPUT
+
+      - name: Validate Rust compatibility
+        run: |
+          for file in ${{ steps.find-protos.outputs.proto_files }}; do
+            echo "Compiling $file"
+            protoc --fatal_warnings --rust_out=experimental-codegen=enabled,kernel=upb:$(mktemp -d) $file
+          done
+
+      - name: Validate Python compatibility
+        run: |
+          for file in ${{ steps.find-protos.outputs.proto_files }}; do
+            echo "Compiling $file"
+            protoc --fatal_warnings --python_out=$(mktemp -d) $file
+          done
+
+      - name: Validate C++ compatibility
+        run: |
+          for file in ${{ steps.find-protos.outputs.proto_files }}; do
+            echo "Compiling $file"
+            protoc --fatal_warnings --cpp_out=$(mktemp -d) $file
+          done
+
+      - name: Validate GO compatibility
+        run: |
+          go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+          export PATH=$PATH:$(go env GOPATH)/bin
+          for file in ${{ steps.find-protos.outputs.proto_files }}; do
+            echo "Compiling $file"
+            protoc --fatal_warnings --go_out=$(mktemp -d) --go_opt=paths=source_relative $file
+          done

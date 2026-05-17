@@ -1,0 +1,106 @@
+syntax = "proto3";
+import "p2p/proto/common.proto";
+import "p2p/proto/transaction.proto";
+
+option go_package = "github.com/starknet-io/starknet-p2pspecs/p2p/proto/consensus/consensus";
+
+// Contains all transaction types that can be in a new block:
+// - User transactions (same types as MempoolTransaction: Declare, DeployAccount, Invoke)
+// - L1Handler transactions (messages from L1, not propagated via mempool)
+message ConsensusTransaction {
+    oneof txn {
+        DeclareV3WithClass declare_v3     = 1;
+        DeployAccountV3 deploy_account_v3 = 2;
+        InvokeV3WithProof invoke_v3       = 3;
+        L1HandlerV0 l1_handler            = 4;
+    }
+    Hash transaction_hash = 5;
+}
+
+message Vote {
+    enum  VoteType {
+        Prevote   = 0;
+        Precommit = 1;
+    };
+
+    // We use a type field to distinguish between prevotes and precommits instead of different
+    // messages, to make sure the data, and therefore the signatures, are unambiguous between
+    // Prevote and Precommit.
+    VoteType      vote_type           = 2;
+    uint64        height              = 3;
+    uint32        round               = 4;
+    // This is optional since a vote can be NIL.
+    optional Hash proposal_commitment = 5;
+    Address       voter               = 6;
+    Hashes        signature           = 7;
+}
+
+message StreamMessage {
+    oneof message {
+        bytes content = 1;
+        Fin fin       = 2;
+    }
+    bytes stream_id   = 3;
+    uint64 message_id = 4;
+}
+
+message ProposalInit {
+    uint64 height                     = 1;
+    uint32 round                      = 2;
+    optional uint32 valid_round       = 3;
+    Address proposer                  = 4;
+    uint64 timestamp                  = 5;
+    Address builder                   = 6;
+    L1DataAvailabilityMode l1_da_mode = 7;
+    Uint128 l2_gas_price_fri          = 8;
+    Uint128 l1_gas_price_fri          = 9;
+    Uint128 l1_data_gas_price_fri     = 10;
+    Uint128 l1_gas_price_wei          = 11;
+    Uint128 l1_data_gas_price_wei     = 12;
+    string starknet_version           = 13;
+    Hash version_constant_commitment   = 14;
+}
+
+message TransactionBatch {
+    repeated ConsensusTransaction transactions = 1;
+}
+
+message CommitmentParts {
+    Felt252 concatenated_counts = 1;
+    optional Hash parent_commitment = 2;
+    Hash transaction_commitment = 3;
+    Hash event_commitment = 4;
+    Hash receipt_commitment = 5;
+}
+
+// L2 gas info for the block (next price and gas used).
+message L2GasInfo {
+    Uint128 next_l2_gas_price_fri = 1;
+    uint64 l2_gas_used = 2;
+}
+
+// Optional payload carried in ProposalFin: commitment parts and L2 gas.
+message ProposalFinPayload {
+    CommitmentParts commitment_parts = 1;
+    optional L2GasInfo l2_gas_info = 2;
+}
+
+message ProposalFin {
+    // Identifies a Starknet block based on the content streamed in the proposal.
+    Hash proposal_commitment = 1;
+    // Number of executed transactions in the proposal.
+    uint64 executed_transaction_count = 2;
+    optional ProposalFinPayload fin_payload = 3;
+}
+
+// Network format:
+// 1. First message is ProposalInit (init, includes all block metadata)
+// 2. transactions is sent repeatedly (for non-empty blocks)
+// 3. Last message is ProposalFin
+message ProposalPart {
+    oneof message {
+        ProposalInit init             = 1;
+        ProposalFin fin               = 2;
+        TransactionBatch transactions = 3;
+    }
+}
