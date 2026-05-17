@@ -6,6 +6,7 @@ proposals.
 
 Validators are encouraged to be in the Mempool and Sync networks in addition to the consensus
 network.
+
 - Mempool network allows validators to learn of new transactions.
 - Sync network is needed by a node to catch up if it falls behind the network's consensus.
 
@@ -15,26 +16,30 @@ reached.
 # [Votes][VoteLink]
 
 This topic uses a broadcast model.
+
 - topic name: consensus_votes
 
 Votes are atomic messages, meaning each network message corresponds to a single logical consensus
 vote.
 
-In order to ensure all validators receive enough votes to progress, validators are expected to 
+In order to ensure all validators receive enough votes to progress, validators are expected to
 periodically resend their latest prevote and precommit. This is aimed to bring us closer aligned
 with the Partially Synchronous Model, which is difficult to simply assume in a real network.
 
 # Proposals
 
 This topic uses a broadcast model.
+
 - topic name: consensus_proposals
 
 Starknet sends proposals as streams of network messages. This enables:
+
 1. Proposals to be larger than a single message.
 2. Higher utilization, as Validators can begin re-executing while the Proposer is still building.
 
 Tendermint, though, views Proposals as a single logical event. To that end, the primary consensus
 based messages are:
+
 1. [ProposalInit][ProposalInitLink] - the fields of the Tendermint proposal which can be known
    before the proposer completes block building.
 2. [ProposalFin][ProposalFinLink] - the proposed value ID and the proposer's signature on the block
@@ -43,11 +48,13 @@ based messages are:
 ## Order of messages
 
 The standard order for a Proposal:
+
 1. [ProposalInit][ProposalInitLink] - once (includes all block metadata)
 1. [TransactionBatch][TransactionBatchLink] - multiple (for non-empty blocks)
 1. [ProposalFin][ProposalFinLink] - once
 
 ### Executed Transaction Count
+
 The `executed_transaction_count` field in [ProposalFin][ProposalFinLink] is used to allow for
 increased parallelism between the proposer and the validators. Specifically, the proposer can
 broadcast batches of transactions before it has executed them. The Proposer may time out before
@@ -56,8 +63,10 @@ This may require validators to roll back transactions if they executed transacti
 proposer didn't execute.
 
 ### Proposal Commitment
+
 In Starknet, validators vote on an execution of a Proposal, not on an identifier of the values
 proposed. The primary reason for this is that Starknet is optimizing for the e2e latency between:
+
 1. End user submits a TX
 2. The effect of that TX is widely visible; consensus has been reached on the StateDiff including
    it.
@@ -87,12 +96,13 @@ precedence over those with which they equivocate votes.
 
 Some fields in a proposal do not require validations once consensus has been reached on them. This
 extends to a prevote quorum. So a validator which receives a reproposal `v`, for which it knows the
-prevote quorum supporting `v`, need not re-validate these fields. 
+prevote quorum supporting `v`, need not re-validate these fields.
 
 ### Empty Proposals
 
 A proposer may not be able to offer a valid proposal. If so, the height can be agreed to be empty.
 Order of messages (no [TransactionBatch][TransactionBatchLink] messages are sent):
+
 1. [ProposalInit][ProposalInitLink]
 2. [ProposalFin][ProposalFinLink]
 
@@ -105,6 +115,7 @@ We define here a generic streaming protocol which is used for proposals.
 `content` - the application level information (encoded as bytes).
 
 `fin` - signals the last message on the stream.
+
 - If a receiver sees a message with `message_id` greater than that of the fin's
   `message_id` it may either ignore such messages or reject the stream.
 
@@ -113,6 +124,7 @@ We define here a generic streaming protocol which is used for proposals.
 ## Stream ID
 
 Field which identifies a stream of messages.
+
 - The primary requirement is that a given sender never reuse the `stream_id`.
 - Receivers identify streams based on (sender_id, `stream_id`), so distinct senders need not
   coordinate IDs.
@@ -127,7 +139,7 @@ Field which identifies a stream of messages.
 1. Known proposal - [ProposalFin][ProposalFinLink] before content.
 1. Specify levels of finality for each field in ProposalCommitment
 
-----------------------------------------------------------------------------------------------------
+---
 
 [VoteLink]: consensus.proto#L20
 [ProposalPartLink]: consensus.proto#L100
