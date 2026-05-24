@@ -9,6 +9,12 @@ You can view it more conveniently using the OpenRPC playground [here](https://pl
 
 A guide to the API can be found [here](./starknet_vs_ethereum_node_apis.md).
 
+## MCP Server (Claude Code)
+
+An MCP server is available under `mcp/` that exposes all Starknet JSON-RPC methods as Claude Code tools. This lets Claude query blocks, transactions, state, and traces directly from a live Starknet node.
+
+If you use Claude Code, run `/install-starknet-mcp <your-rpc-url>` from this repo to set it up. See [mcp/README.md](./mcp/README.md) for details.
+
 # Tooling
 
 When developing the schema, you can validate the OpenRPC schema file, by running the provided script.

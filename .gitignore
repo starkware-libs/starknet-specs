@@ -23,3 +23,9 @@ jspm_packages/
 .node_repl_history
 
 .vscode/settings.json
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+venv/
