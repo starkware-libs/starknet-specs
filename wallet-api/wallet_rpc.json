@@ -1245,8 +1245,7 @@
       },
       "USER_REFUSED_OP": {
         "code": 113,
-        "message": "An error occurred (USER_REFUSED_OP)",
-        "description": "The user refused the operation in the wallet"
+        "message": "An error occurred (USER_REFUSED_OP): The user refused the operation in the wallet"
       },
       "INVALID_REQUEST_PAYLOAD": {
         "code": 114,
@@ -1258,28 +1257,23 @@
       },
       "DEPLOYMENT_DATA_NOT_AVAILABLE": {
         "code": 116,
-        "message": "An error occurred (DEPLOYMENT_DATA_NOT_AVAILABLE)",
-        "description": "The deployment data is not available or no supported"
+        "message": "An error occurred (DEPLOYMENT_DATA_NOT_AVAILABLE): The deployment data is not available or not supported"
       },
       "CHAIN_ID_NOT_SUPPORTED": {
         "code": 117,
-        "message": "An error occurred (CHAIN_ID_NOT_SUPPORTED)",
-        "description": "The requested chain ID is not supported by the wallet"
+        "message": "An error occurred (CHAIN_ID_NOT_SUPPORTED): The requested chain ID is not supported by the wallet"
       },
       "NOT_REGISTERED": {
         "code": 118,
-        "message": "An error occurred (NOT_REGISTERED)",
-        "description": "The user is not registered in the STRK20 privacy pool"
+        "message": "An error occurred (NOT_REGISTERED): The user is not registered in the STRK20 privacy pool"
       },
       "INSUFFICIENT_PRIVATE_BALANCE": {
         "code": 119,
-        "message": "An error occurred (INSUFFICIENT_PRIVATE_BALANCE)",
-        "description": "The user does not have enough private balance to cover the requested withdraw or transfer"
+        "message": "An error occurred (INSUFFICIENT_PRIVATE_BALANCE): The user does not have enough private balance to cover the requested withdrawal or transfer"
       },
       "PRIVACY_LEAK": {
         "code": 120,
-        "message": "An error occurred (PRIVACY_LEAK)",
-        "description": "The wallet detected that completing the operation may compromise the user's privacy"
+        "message": "An error occurred (PRIVACY_LEAK): The wallet detected that completing the operation may compromise the user's privacy"
       },
       "API_VERSION_NOT_SUPPORTED": {
         "code": 162,
