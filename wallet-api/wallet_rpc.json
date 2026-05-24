@@ -341,7 +341,7 @@
     {
       "name": "wallet_addInvokeTransaction",
       "summary": "Submit a new transaction to be added to the chain",
-      "description": "When wallet is locked, open wallet-unlock UI. When Dapp is not approved, display Dapp-approve UI. When wallet is connected and unlocked, display invoke-tx UI.",
+      "description": "When wallet is locked, open wallet-unlock UI. When Dapp is not approved, display Dapp-approve UI. When wallet is connected and unlocked, display invoke-tx UI. To submit a STRK20 transaction prepared by wallet_strk20PrepareInvoke, pass the prepared call as the single entry of 'invoke_transaction' and the prepared proof material via 'proof'.",
       "params": [
         {
           "name": "invoke_transaction",
@@ -352,6 +352,14 @@
             "items": {
               "$ref": "#/components/schemas/INVOKE_CALL"
             }
+          }
+        },
+        {
+          "name": "proof",
+          "description": "Zero-knowledge proof material to attach to the transaction. Required when submitting a STRK20 call produced by wallet_strk20PrepareInvoke; omitted for regular invocations.",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/STRK20_PROOF"
           }
         },
         {
