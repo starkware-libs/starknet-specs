@@ -1,25 +1,37 @@
-# StarkNet P2P Specification
+# Starknet P2P specification (`p2p/`)
 
-This repo contains and tracks the specification of the P2P protocol for StarkNet nodes.
+This tree holds the **peer-to-peer** specification for Starknet nodes: Protocol Buffer (`.proto`) messages and Markdown overviews for sync, mempool, and consensus-related traffic.
 
-## Starknet P2P Networks
+## Starknet P2P networks
 
-There are three different networks that serve different type of applications:
+Three logical networks support different roles:
 
-- [Sync](./p2p/proto/sync/protocols.md) - responsible for downloading information about blocks existing in Starknet
-- [Mempool](./p2p/proto/mempool/mempool.md) - responsible for handling transactions pending for insertion to Starknet
-- [Consensus](./p2p/proto/consensus/consensus.md) - responsible for creating and adding new blocks to Starknet via staking
+- [Sync](proto/sync/protocols.md) — downloading information about existing Starknet blocks.
+- [Mempool](proto/mempool/mempool.md) — transactions pending inclusion.
+- [Consensus](proto/consensus/consensus.md) — producing and agreeing on new blocks (staking).
 
-Each network has a separate discovery network. The Kademlia protocol names for those networks are:
+Each network has a separate Kademlia-style discovery namespace, for example:
 
-- /starknet/<chain_id>/sync/kad/1.0.0
-- /starknet/<chain_id>/mempool/kad/1.0.0
-- /starknet/<chain_id>/consensus/kad/1.0.0
+- `/starknet/<chain_id>/sync/kad/1.0.0`
+- `/starknet/<chain_id>/mempool/kad/1.0.0`
+- `/starknet/<chain_id>/consensus/kad/1.0.0`
 
-A node that wants to connect to multiple networks should connect through a different port for each network.
+A node that joins several networks should use a distinct listen address (port) per network. Splitting by protocol allows different security policies, capability filtering, and modular implementations per subnetwork.
 
-The reasons to split the network by protocols and not have a singular network are:
+## Protocol Buffer sources
 
-- Allow adding custom security policies and authentication requirements for each network separately.
-- Filter out nodes that don't support the capabilities you need
-- Allow modular development of node's code stack by having a node comprised of different implementations for each network.
+`.proto` files live under `p2p/proto/` (imports use paths such as `p2p/proto/common.proto`; compile with `-I` set to the **repository root**).
+
+List every proto file from the repository root:
+
+```bash
+find p2p -name '*.proto' | sort
+```
+
+## CI
+
+GitHub Actions compiles all discovered `.proto` files with `protoc` for Rust, Python, C++, and Go outputs; see [.github/workflows/starknet_p2p_specs_ci.yml](../.github/workflows/starknet_p2p_specs_ci.yml). Reproducing that locally requires installing `protoc` (the workflow pins a version via `PROTOC_VERSION`).
+
+## Further reading
+
+- [Repository overview](../README.md)
