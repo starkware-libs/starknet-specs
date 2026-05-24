@@ -509,6 +509,71 @@
       ]
     },
     {
+      "name": "wallet_strk20PrepareInvoke",
+      "summary": "Build the Starknet call (and zero-knowledge proof) for a STRK20 transaction without submitting it",
+      "description": "Builds the Starknet call that wallet_strk20InvokeTransaction would submit, plus its zero-knowledge proof, but does not send the transaction to the network. The dapp is responsible for submitting the returned call itself. The wallet supplies the viewing key and the user's private state (channels, notes) — the dapp only describes the actions. When 'simulate' is true the wallet returns the call with an empty proof: it skips the (expensive, state-revealing) proof-generation step, but the returned call is otherwise the same shape as the non-simulated one. Simulate mode is intended for fee estimation and UI previews; the returned call cannot be submitted on-chain. As with wallet_strk20InvokeTransaction the wallet may take significantly longer than wallet_addInvokeTransaction when simulate is false, because proof generation is required, and the dapp must tolerate long-running calls. Registration into the privacy pool is handled transparently by the wallet — if the user is not registered, NOT_REGISTERED is returned.",
+      "params": [
+        {
+          "name": "actions",
+          "description": "An ordered list of STRK20 actions to bundle into the prepared call",
+          "required": true,
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/STRK20_ACTION"
+            },
+            "minItems": 1
+          }
+        },
+        {
+          "name": "simulate",
+          "description": "If true, skip zero-knowledge proof generation and return an empty proof. Use for fee estimation or UI previews; the returned call is not submittable on-chain. Defaults to false.",
+          "required": false,
+          "schema": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        {
+          "name": "api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/API_VERSION"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "description": "The Starknet call that materializes the requested STRK20 actions and its accompanying zero-knowledge proof. When 'simulate' was true, the 'proof' fields are present but empty.",
+        "schema": {
+          "$ref": "#/components/schemas/STRK20_CALL_AND_PROOF"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/NOT_REGISTERED"
+        },
+        {
+          "$ref": "#/components/errors/INSUFFICIENT_PRIVATE_BALANCE"
+        },
+        {
+          "$ref": "#/components/errors/PRIVACY_LEAK"
+        },
+        {
+          "$ref": "#/components/errors/INVALID_REQUEST_PAYLOAD"
+        },
+        {
+          "$ref": "#/components/errors/USER_REFUSED_OP"
+        },
+        {
+          "$ref": "#/components/errors/API_VERSION_NOT_SUPPORTED"
+        },
+        {
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
+        }
+      ]
+    },
+    {
       "name": "wallet_strk20Balances",
       "summary": "Query the user's private balances for a list of tokens",
       "description": "Returns the private balance held inside the STRK20 privacy pool for each of the requested token addresses. If the user is not registered in the pool, returns NOT_REGISTERED.",
@@ -1098,6 +1163,52 @@
           }
         },
         "required": ["token", "balance"]
+      },
+      "STRK20_CALL_AND_PROOF": {
+        "title": "STRK20 Call And Proof",
+        "description": "A Starknet call that materializes a STRK20 transaction, together with the zero-knowledge proof needed to submit it. When this was produced in simulate mode the 'proof' fields are present but empty (proof.data is an empty string, proof.output and proof.proof_facts are empty arrays); in that case the call is not submittable on-chain and is only useful for fee estimation or UI previews.",
+        "type": "object",
+        "properties": {
+          "call": {
+            "title": "Call",
+            "description": "The Starknet call to submit (typically targeting the privacy pool contract)",
+            "$ref": "#/components/schemas/INVOKE_CALL"
+          },
+          "proof": {
+            "title": "Proof",
+            "$ref": "#/components/schemas/STRK20_PROOF"
+          }
+        },
+        "required": ["call", "proof"]
+      },
+      "STRK20_PROOF": {
+        "title": "STRK20 Proof",
+        "description": "Zero-knowledge proof material that must be included with the call when submitting the STRK20 transaction on-chain. When the prepared call was built in simulate mode all three fields are present but empty.",
+        "type": "object",
+        "properties": {
+          "data": {
+            "title": "Proof Data",
+            "description": "The serialized proof. Empty string in simulate mode.",
+            "type": "string"
+          },
+          "output": {
+            "title": "L2-to-L1 Message Payload",
+            "description": "L2-to-L1 message payload: [class_hash, ...serialized_server_actions]. Empty array in simulate mode.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FELT"
+            }
+          },
+          "proof_facts": {
+            "title": "Proof Facts",
+            "description": "Proof facts emitted by the proving service; must be included with the transaction when submitting to the chain. Empty array in simulate mode.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FELT"
+            }
+          }
+        },
+        "required": ["data", "output", "proof_facts"]
       },
       "PADDED_FELT": {
         "type": "string",
