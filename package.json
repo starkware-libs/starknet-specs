@@ -1,6 +1,6 @@
 {
   "name": "starknet_specs",
-  "version": "0.10.2",
+  "version": "0.10.3-rc.0",
   "description": "Tooling for OpenRPC files",
   "repository": {
     "type": "git",
