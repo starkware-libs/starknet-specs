@@ -1269,7 +1269,7 @@
       },
       "INSUFFICIENT_PRIVATE_BALANCE": {
         "code": 119,
-        "message": "An error occurred (INSUFFICIENT_PRIVATE_BALANCE): The user does not have enough private balance to cover the requested withdraw or transfer"
+        "message": "An error occurred (INSUFFICIENT_PRIVATE_BALANCE): The user does not have enough private balance to cover the requested withdrawal or transfer"
       },
       "PRIVACY_LEAK": {
         "code": 120,
