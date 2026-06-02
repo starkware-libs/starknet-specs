@@ -178,7 +178,7 @@ Each single message is either a fin, or a [TransactionWithReceipt](./transaction
 (A pair of [TransactionInBlock](./transaction.proto) and [Receipt](./receipt.proto))
 
 Each transaction represents a Starknet transaction that's already part of the Starknet chain.
-For more detail on the different transaction types, their content and their hash calculation see [here](https://docs.starknet.io/documentation/architecture_and_concepts/Network_Architecture/transactions/).
+For more detail on the different transaction types, their content and their hash calculation see [here](https://docs.starknet.io/learn/protocol/transactions).
 
 The main differences between [TransactionInBlock](./transaction.proto) and a transaction that is pending insertion ([ConsensusTransaction](../consensus/consensus.proto) or [MempoolTransaction](../mempool/transaction.proto))
 are:
@@ -294,7 +294,7 @@ The classes protocol is used to download the classes declared in a range of bloc
 Its name for negotiation is `/starknet/classes/0.1.0-rc.0`
 
 Each single message is a fin or a [Class](../class.proto). For more information on classes, see
-[here](https://docs.starknet.io/documentation/architecture_and_concepts/Smart_Contracts/contract-classes/)
+[here](https://docs.starknet.io/learn/protocol/state#the-class-trie)
 
 You should use the [state diff protocol](#state-diff) before using this protocol.
 The reason is that the class hashes and amount of declared classes per block are part of the
