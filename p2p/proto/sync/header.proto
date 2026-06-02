@@ -7,7 +7,7 @@ option go_package = "github.com/starknet-io/starknet-p2pspecs/p2p/proto/sync/hea
 // Note: commitments may change to be for the previous blocks like comet/tendermint
 // hash of block header sent to L1
 message SignedBlockHeader {
-    Hash block_hash = 1; //  For the structure of the block hash, see https://docs.starknet.io/documentation/architecture_and_concepts/Network_Architecture/header/#block_hash
+    Hash block_hash = 1; //  For the structure of the block hash, see https://docs.starknet.io/learn/protocol/blocks#block-hash
     Hash parent_hash = 2;
     uint64 number = 3; // This can be deduced from context. We can consider removing this field.
     uint64 time = 4; // Encoded in Unix time.
