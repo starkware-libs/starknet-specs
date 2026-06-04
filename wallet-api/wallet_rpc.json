@@ -1103,8 +1103,16 @@
           },
           "amount": {
             "title": "Amount",
-            "description": "Amount of the token, in its smallest unit",
-            "$ref": "#/components/schemas/FELT"
+            "description": "Amount of the token, in its smallest unit, or the literal string \"OPEN\" to transfer the full opened note balance",
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/FELT"
+              },
+              {
+                "type": "string",
+                "enum": ["OPEN"]
+              }
+            ]
           },
           "recipient": {
             "title": "Recipient Address",
