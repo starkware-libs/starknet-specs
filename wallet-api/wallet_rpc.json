@@ -583,19 +583,18 @@
     },
     {
       "name": "wallet_strk20Balances",
-      "summary": "Query the user's private balances for a list of tokens",
-      "description": "Returns the private balance held inside the STRK20 privacy pool for each of the requested token addresses. If the user is not registered in the pool, returns NOT_REGISTERED.",
+      "summary": "Query the user's private balances for a list of tokens, or for all shielded tokens",
+      "description": "Returns the private balance held inside the STRK20 privacy pool for each of the requested token addresses. If an empty array is passed, returns the balances of all shielded tokens the wallet holds in the privacy pool. If the user is not registered in the pool, returns NOT_REGISTERED.",
       "params": [
         {
           "name": "tokens",
-          "description": "The token addresses to query balances for",
+          "description": "The token addresses to query balances for. An empty array returns the balances of all shielded tokens",
           "required": true,
           "schema": {
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/ADDRESS"
-            },
-            "minItems": 1
+            }
           }
         },
         {
@@ -608,7 +607,7 @@
       ],
       "result": {
         "name": "result",
-        "description": "Private balances, one entry per requested token, in the same order as the input",
+        "description": "Private balances, one entry per requested token, in the same order as the input. When an empty array is passed, one entry per shielded token held in the privacy pool",
         "schema": {
           "type": "array",
           "items": {
