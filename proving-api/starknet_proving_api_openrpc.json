@@ -113,9 +113,18 @@
             "items": {
               "$ref": "#/components/schemas/MSG_TO_L1"
             }
+          },
+          "additional_data": {
+            "title": "Additional data",
+            "$ref": "#/components/schemas/ADDITIONAL_DATA"
           }
         },
         "required": ["proof", "proof_facts", "l2_to_l1_messages"]
+      },
+      "ADDITIONAL_DATA": {
+        "title": "Additional data",
+        "description": "Opaque side-channel attached alongside the proof and relayed verbatim by the prover from the external blocking check service. Optional; omitted from the response when absent. The prover does not interpret its contents — concrete keys (e.g. a screening signature under `signature`) are defined by the producing service, not by this API.",
+        "type": "object"
       }
     },
     "errors": {
