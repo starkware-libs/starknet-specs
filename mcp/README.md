@@ -1,13 +1,13 @@
 # Starknet MCP Server
 
-An MCP (Model Context Protocol) server that exposes all Starknet JSON-RPC v0.10.2 methods as Claude Code tools. Lets Claude read blocks, transactions, state, traces, and more directly from a live Starknet node.
+An MCP (Model Context Protocol) server that exposes the Starknet JSON-RPC methods defined in this repository as Claude Code tools. Lets Claude read blocks, transactions, state, traces, and more directly from a live Starknet node.
 
 ## Installation
 
 ### Prerequisites
 
 - Python 3.10+
-- A Starknet JSON-RPC endpoint URL (any node implementing spec v0.10.2+)
+- A compatible Starknet JSON-RPC endpoint URL
 
 ### Using Claude Code (recommended)
 
@@ -41,7 +41,7 @@ claude mcp add --env STARKNET_RPC_URL=<your-rpc-url> starknet -- python mcp/serv
 claude mcp add --scope user --env STARKNET_RPC_URL=<your-rpc-url> starknet -- python /absolute/path/to/mcp/server.py
 ```
 
-Replace `<your-rpc-url>` with your Starknet JSON-RPC endpoint (v0.10.2+).
+Replace `<your-rpc-url>` with your Starknet JSON-RPC endpoint.
 
 3. Restart Claude Code for the server to take effect.
 
