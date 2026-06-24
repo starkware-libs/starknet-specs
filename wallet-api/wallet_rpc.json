@@ -456,7 +456,7 @@
     {
       "name": "wallet_strk20InvokeTransaction",
       "summary": "Submit a transaction containing STRK20 privacy protocol actions",
-      "description": "Submits one or more STRK20 actions (deposit, withdraw, private transfer) as a single transaction. The wallet displays an approval UI and may take significantly longer than wallet_addInvokeTransaction because zero-knowledge proof generation is required. The dapp must tolerate long-running calls. Registration into the privacy pool is handled transparently by the wallet — if the user is not registered, NOT_REGISTERED is returned.",
+      "description": "Submits one or more STRK20 actions (deposit, withdraw, private transfer) as a single transaction. The wallet displays an approval UI and may take significantly longer than wallet_addInvokeTransaction because zero-knowledge proof generation is required. The dapp must tolerate long-running calls. Registration into the privacy pool is handled transparently by the wallet — if the user is not registered, NOT_REGISTERED is returned. If the number of open notes filled by invoke actions does not match the number of open notes created by transfer actions with \"OPEN\" as the amount, INVALID_REQUEST_PAYLOAD is returned.",
       "params": [
         {
           "name": "actions",
@@ -519,7 +519,7 @@
     {
       "name": "wallet_strk20PrepareInvoke",
       "summary": "Build the Starknet call (and zero-knowledge proof) for a STRK20 transaction without submitting it",
-      "description": "Builds the Starknet call that wallet_strk20InvokeTransaction would submit, plus its zero-knowledge proof, but does not send the transaction to the network. The dapp is responsible for submitting the returned call itself. The wallet supplies the viewing key and the user's private state (channels, notes) — the dapp only describes the actions. When 'simulate' is true the wallet returns the call with an empty proof: it skips the (expensive, state-revealing) proof-generation step, but the returned call is otherwise the same shape as the non-simulated one. Simulate mode is intended for fee estimation and UI previews; the returned call cannot be submitted on-chain. As with wallet_strk20InvokeTransaction the wallet may take significantly longer than wallet_addInvokeTransaction when simulate is false, because proof generation is required, and the dapp must tolerate long-running calls. Registration into the privacy pool is handled transparently by the wallet — if the user is not registered, NOT_REGISTERED is returned.",
+      "description": "Builds the Starknet call that wallet_strk20InvokeTransaction would submit, plus its zero-knowledge proof, but does not send the transaction to the network. The dapp is responsible for submitting the returned call itself. The wallet supplies the viewing key and the user's private state (channels, notes) — the dapp only describes the actions. When 'simulate' is true the wallet returns the call with an empty proof: it skips the (expensive, state-revealing) proof-generation step, but the returned call is otherwise the same shape as the non-simulated one. Simulate mode is intended for fee estimation and UI previews; the returned call cannot be submitted on-chain. As with wallet_strk20InvokeTransaction the wallet may take significantly longer than wallet_addInvokeTransaction when simulate is false, because proof generation is required, and the dapp must tolerate long-running calls. Registration into the privacy pool is handled transparently by the wallet — if the user is not registered, NOT_REGISTERED is returned. If the number of open notes filled by invoke actions does not match the number of open notes created by transfer actions with \"OPEN\" as the amount, INVALID_REQUEST_PAYLOAD is returned.",
       "params": [
         {
           "name": "actions",
@@ -1089,7 +1089,7 @@
       },
       "STRK20_TRANSFER_ACTION": {
         "title": "STRK20 Transfer Action",
-        "description": "Privately transfers funds inside the privacy pool to another registered user.",
+        "description": "Privately transfers funds inside the privacy pool to another registered user. When amount is \"OPEN\", creates an open note instead of transferring a fixed amount (see the amount field).",
         "type": "object",
         "properties": {
           "type": {
@@ -1102,7 +1102,7 @@
           },
           "amount": {
             "title": "Amount",
-            "description": "Amount of the token, in its smallest unit, or the literal string \"OPEN\" to transfer the full opened note balance",
+            "description": "Amount of the token, in its smallest unit, or the literal string \"OPEN\" to create a new open note",
             "oneOf": [
               {
                 "$ref": "#/components/schemas/FELT"
@@ -1123,7 +1123,7 @@
       },
       "STRK20_INVOKE_ACTION": {
         "title": "STRK20 Invoke Action",
-        "description": "Invokes an arbitrary contract entry point as part of the same STRK20 transaction. Calldata items may be literal felts or wallet-resolved placeholders that the wallet substitutes during action assembly: ${openNoteIds[N]} for the Nth opened note ID, or ${poolAddress} for the privacy pool address.",
+        "description": "Invokes an arbitrary contract as part of the same STRK20 transaction. Calldata items may be literal felts or wallet-resolved placeholders that the wallet substitutes during action assembly: ${openNoteIds[N]} for the Nth opened note ID, or ${poolAddress} for the privacy pool address.",
         "type": "object",
         "properties": {
           "type": {
@@ -1158,7 +1158,7 @@
       },
       "STRK20_CALLDATA_PLACEHOLDER": {
         "title": "STRK20 Calldata Placeholder",
-        "description": "A wallet-resolved placeholder that the wallet substitutes with a single felt during action assembly. ${openNoteIds[N]} expands to the Nth note ID created by openNote actions in the same transaction; ${poolAddress} expands to the privacy pool contract address. N is a zero-based index.",
+        "description": "A wallet-resolved placeholder that the wallet substitutes with a single felt during action assembly. ${openNoteIds[N]} expands to the ID of the Nth open note in the same transaction (i.e. the Nth transfer action with amount \"OPEN\"); ${poolAddress} expands to the privacy pool contract address. N is a zero-based index.",
         "type": "string",
         "pattern": "^\\$\\{(?:openNoteIds\\[[0-9]+\\]|poolAddress)\\}$"
       },
