@@ -708,7 +708,7 @@
         "title": "Wallet API version",
         "description": "A wallet API version, following semantic versioning. When used as a request parameter and not specified, the latest is assumed.",
         "type": "string",
-        "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+(-[0-9A-Za-z.-]+)?)?$"
+        "pattern": "^[0-9]+\\.[0-9]+(\\.[0-9]+)?$"
       },
       "PERMISSION": {
         "title": "Wallet permission",
