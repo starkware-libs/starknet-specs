@@ -1,7 +1,7 @@
 {
   "openrpc": "1.0.0-rc1",
   "info": {
-    "version": "0.10.3-rc.3",
+    "version": "0.10.3",
     "title": "Starknet Transaction Prover API",
     "description": "JSON-RPC API for proving Starknet transactions via the Starknet Transaction Prover.",
     "license": {
