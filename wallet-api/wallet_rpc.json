@@ -634,6 +634,62 @@
       ]
     },
     {
+      "name": "wallet_strk20GetSubaccountCommitment",
+      "summary": "Compute the commitment for a dapp's STRK20 sub-accounts",
+      "description": "Returns a STRK20 sub-account commitment, computed locally by the wallet from the user's private state (no transaction is sent). When 'nonce' is given, returns the full commitment for that single sub-account: hash(partial_commitment, nonce); each nonce maps to a distinct, deterministic sub-account for the user + dapp. When 'nonce' is omitted, returns the partial (nonce-independent) commitment: hash(identity_key, dapp_name), where identity_key is derived from the user, their viewing key, and the sub-account anonymizer address. The partial commitment is shared by every sub-account the user derives for this dapp, so it can be published once to let a dapp recognize all of the user's sub-accounts without learning any individual nonce. If the user is not registered in the STRK20 privacy pool, NOT_REGISTERED is returned.",
+      "params": [
+        {
+          "name": "dapp_name",
+          "description": "The dapp that scopes the sub-account(s)",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/STRK20_DAPP_NAME"
+          }
+        },
+        {
+          "name": "nonce",
+          "description": "The sub-account nonce; each nonce selects a distinct sub-account for this user + dapp. When omitted, the partial (nonce-independent) commitment shared by all of the dapp's sub-accounts is returned instead.",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/FELT"
+          }
+        },
+        {
+          "name": "api_version",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/API_VERSION"
+          }
+        }
+      ],
+      "result": {
+        "name": "result",
+        "description": "The sub-account commitment: hash(partial_commitment, nonce) when 'nonce' was given, otherwise the partial commitment hash(identity_key, dapp_name)",
+        "required": true,
+        "schema": {
+          "title": "Sub-account Commitment",
+          "$ref": "#/components/schemas/FELT"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "#/components/errors/NOT_REGISTERED"
+        },
+        {
+          "$ref": "#/components/errors/INVALID_REQUEST_PAYLOAD"
+        },
+        {
+          "$ref": "#/components/errors/USER_REFUSED_OP"
+        },
+        {
+          "$ref": "#/components/errors/API_VERSION_NOT_SUPPORTED"
+        },
+        {
+          "$ref": "#/components/errors/UNKNOWN_ERROR"
+        }
+      ]
+    },
+    {
       "name": "wallet_signTypedData",
       "summary": "Sign typed data using the wallet",
       "description": "When wallet is locked, open wallet-unlock UI. When Dapp is not approved, display Dapp-approve UI. When wallet is connected and unlocked, display sign-typed-data UI.",
@@ -1037,6 +1093,9 @@
           },
           {
             "$ref": "#/components/schemas/STRK20_INVOKE_ACTION"
+          },
+          {
+            "$ref": "#/components/schemas/STRK20_SUBACCOUNT_INVOKE_ACTION"
           }
         ]
       },
@@ -1161,6 +1220,42 @@
         "description": "A wallet-resolved placeholder that the wallet substitutes with a single felt during action assembly. ${openNoteIds[N]} expands to the ID of the Nth open note in the same transaction (i.e. the Nth transfer action with amount \"OPEN\"); ${poolAddress} expands to the privacy pool contract address. N is a zero-based index.",
         "type": "string",
         "pattern": "^\\$\\{(?:openNoteIds\\[[0-9]+\\]|poolAddress)\\}$"
+      },
+      "STRK20_SUBACCOUNT_INVOKE_ACTION": {
+        "title": "STRK20 Sub-account Invoke Action",
+        "description": "Invokes one or more contract calls through the user's STRK20 sub-account for a dapp, routed via the sub-account anonymizer. The sub-account is selected by (dapp_name, nonce); each nonce maps to a distinct, deterministic sub-account. The proceeds of the calls are settled into the open notes created by transfer actions with amount \"OPEN\" in the same transaction, so the usual rule applies: the number of open notes filled by this action must match the number of open notes created in the transaction.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["subaccount_invoke"]
+          },
+          "dapp_name": {
+            "title": "Dapp Name",
+            "description": "The dapp that scopes the sub-account",
+            "$ref": "#/components/schemas/STRK20_DAPP_NAME"
+          },
+          "nonce": {
+            "title": "Sub-account Nonce",
+            "description": "The sub-account nonce; each nonce selects a distinct sub-account for this user + dapp",
+            "$ref": "#/components/schemas/FELT"
+          },
+          "calls": {
+            "type": "array",
+            "title": "Calls",
+            "description": "The contract calls to execute through the sub-account, in order",
+            "items": {
+              "$ref": "#/components/schemas/INVOKE_CALL"
+            },
+            "minItems": 1
+          }
+        },
+        "required": ["type", "dapp_name", "nonce", "calls"]
+      },
+      "STRK20_DAPP_NAME": {
+        "title": "STRK20 Dapp Name",
+        "description": "Identifies the dapp that scopes a set of STRK20 sub-accounts, as a single felt. Either a 0x-prefixed felt, or a human-readable ASCII string of at most 31 characters that the wallet encodes as a Cairo short string.",
+        "type": "string"
       },
       "STRK20_BALANCE_ENTRY": {
         "title": "STRK20 Balance Entry",
