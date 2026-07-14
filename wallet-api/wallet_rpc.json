@@ -634,7 +634,7 @@
       ]
     },
     {
-      "name": "wallet_strk20GetSubaccountCommitment",
+      "name": "wallet_strk20SubaccountCommitment",
       "summary": "Compute the commitment for a dapp's STRK20 sub-accounts",
       "description": "Returns a STRK20 sub-account commitment, computed locally by the wallet from the user's private state (no transaction is sent). When 'nonce' is given, returns the full commitment for that single sub-account: hash(partial_commitment, nonce); each nonce maps to a distinct, deterministic sub-account for the user + dapp. When 'nonce' is omitted, returns the partial (nonce-independent) commitment: hash(identity_key, dapp_name), where identity_key is derived from the user, their viewing key, and the sub-account anonymizer address. The partial commitment is shared by every sub-account the user derives for this dapp, so it can be published once to let a dapp recognize all of the user's sub-accounts without learning any individual nonce. If the user is not registered in the STRK20 privacy pool, NOT_REGISTERED is returned.",
       "params": [
