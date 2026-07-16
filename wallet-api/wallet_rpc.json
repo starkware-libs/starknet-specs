@@ -1248,9 +1248,31 @@
               "$ref": "#/components/schemas/INVOKE_CALL"
             },
             "minItems": 1
+          },
+          "collect_policy": {
+            "title": "Collect Policy",
+            "description": "A single policy applied to every open note this action settles: how much of the sub-account's balance each note collects.",
+            "$ref": "#/components/schemas/STRK20_COLLECT_POLICY"
           }
         },
-        "required": ["type", "dapp_name", "nonce", "calls"]
+        "required": ["type", "dapp_name", "nonce", "calls", "collect_policy"]
+      },
+      "STRK20_COLLECT_POLICY": {
+        "title": "STRK20 Collect Policy",
+        "description": "How much of the sub-account's token balance a settled open note collects. 'all' collects the sub-account's entire token balance; 'diff' collects only the balance gained during this interaction; 'exact' collects the given amount (which must be provided).",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["all", "diff", "exact"]
+          },
+          "amount": {
+            "title": "Exact Amount",
+            "description": "The exact amount to collect, in the token's smallest unit. Required when and only when type is 'exact'.",
+            "$ref": "#/components/schemas/FELT"
+          }
+        },
+        "required": ["type"]
       },
       "STRK20_DAPP_NAME": {
         "title": "STRK20 Dapp Name",
