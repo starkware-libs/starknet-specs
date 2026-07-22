@@ -20,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
 
-      - uses: Noelware/setup-protoc@1.1.0
+      - uses: Noelware/setup-protoc@5c4b19e42fb2bef76c5fa6f53270a3ce82e1f840 # 1.1.0
         with:
           version: ${{env.PROTOC_VERSION}}
 
