@@ -57,7 +57,7 @@
       },
       "errors": [
         {
-          "$ref": "../api/starknet_api_openrpc.json#/components/errors/BLOCK_NOT_FOUND"
+          "$ref": "./api/starknet_api_openrpc.json#/components/errors/BLOCK_NOT_FOUND"
         },
         {
           "$ref": "#/components/errors/ACCOUNT_VALIDATION_FAILED"
@@ -80,19 +80,19 @@
   "components": {
     "schemas": {
       "BLOCK_ID": {
-        "$ref": "../api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BLOCK_ID"
       },
       "BROADCASTED_INVOKE_TXN": {
-        "$ref": "../api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_INVOKE_TXN"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/BROADCASTED_INVOKE_TXN"
       },
       "PROOF": {
-        "$ref": "../api/starknet_api_openrpc.json#/components/schemas/PROOF"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/PROOF"
       },
       "PROOF_FACTS": {
-        "$ref": "../api/starknet_api_openrpc.json#/components/schemas/PROOF_FACTS"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/PROOF_FACTS"
       },
       "MSG_TO_L1": {
-        "$ref": "../api/starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
+        "$ref": "./api/starknet_api_openrpc.json#/components/schemas/MSG_TO_L1"
       },
       "PROVE_TRANSACTION_RESULT": {
         "title": "Prove transaction result",
