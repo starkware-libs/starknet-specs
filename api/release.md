@@ -47,6 +47,14 @@ When updating the specification version, change the `"version"` property in all 
 npm version <VERSION> --no-git-tag-version
 ```
 
+## Release Scope
+
+Each release changes exactly one of the specifications in this repository (see the
+[README](../README.md#specifications)). Release notes state at the top which one, so
+readers can tell whether a release concerns them without reading the changelog.
+
+An implementation bumps the version it advertises only when a release changes the spec it implements.
+
 ## Technical Implementation
 
 We use github releases on this repo to publish releases.

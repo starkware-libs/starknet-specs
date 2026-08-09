@@ -9,11 +9,12 @@
   "methods": [
     {
       "name": "starknet_specVersion",
-      "summary": "Returns the version of the Starknet JSON-RPC specification being used",
+      "summary": "Returns the version of the Starknet JSON-RPC specification implemented by this node",
+      "description": "Returns the version of the full node JSON-RPC specification that this node implements. This is the version of the most recent specification release that changed the full node JSON-RPC API.",
       "params": [],
       "result": {
         "name": "result",
-        "description": "Semver of Starknet's JSON-RPC spec being used",
+        "description": "Semver of the full node JSON-RPC spec implemented by this node",
         "required": true,
         "schema": {
           "title": "JSON-RPC spec version",
