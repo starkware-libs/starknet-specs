@@ -24,7 +24,7 @@ The latest release that changed each spec:
 | Spec               | Current version |
 | ------------------ | --------------- |
 | Full node JSON-RPC | `0.10.2`        |
-| Wallet API         | `0.10.4-rc.0`   |
+| Wallet API         | `0.10.4-rc.1`   |
 | Proving API        | `0.10.3`        |
 | P2P                | `0.10.3`        |
 
