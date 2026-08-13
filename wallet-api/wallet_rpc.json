@@ -10,7 +10,7 @@
     {
       "name": "wallet_supportedWalletApi",
       "summary": "Returns a list of wallet api versions compatible with the wallet. Notice this might be different from Starknet JSON-RPC spec",
-      "description": "When wallet is locked, return values. When Dapp is not approved, return values. When wallet is connected and unlocked, return values.",
+      "description": "When wallet is locked, return values. When Dapp is not approved, return values. When wallet is connected and unlocked, return values. The versions returned refers to latest Wallet API releases.",
       "params": [],
       "result": {
         "name": "result",
@@ -29,11 +29,11 @@
     {
       "name": "wallet_supportedSpecs",
       "summary": "Returns a list of rpc spec versions compatible with the wallet",
-      "description": "When wallet is locked, return values. When Dapp is not approved, return values. When wallet is connected and unlocked, return values.",
+      "description": "When wallet is locked, return values. When Dapp is not approved, return values. When wallet is connected and unlocked, return values. These are full node JSON-RPC spec versions, and are distinct from the Wallet API versions returned by `wallet_supportedWalletApi`.",
       "params": [],
       "result": {
         "name": "result",
-        "description": "Semver of Starknet's JSON-RPC supported by the wallet",
+        "description": "Semver of Starknet's JSON-RPC supported by the wallet.",
         "required": true,
         "schema": {
           "type": "array",
