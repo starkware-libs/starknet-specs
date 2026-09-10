@@ -598,6 +598,17 @@
           }
         },
         {
+          "name": "valid_until",
+          "description": "Requested expiry of the balance-read authorization, as a Unix timestamp in seconds. When omitted, the wallet applies its own default window.",
+          "required": false,
+          "schema": {
+            "title": "Timestamp",
+            "description": "The time at which the authorization expires, encoded in Unix time",
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        {
           "name": "api_version",
           "required": false,
           "schema": {
