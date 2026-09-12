@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Starknet RPC MCP Server — exposes all Starknet RPC v0.10.2 methods as Claude tools.
+"""Starknet RPC MCP Server — exposes Starknet RPC methods as Claude tools.
 
 Requires STARKNET_RPC_URL environment variable to be set to a Starknet JSON-RPC endpoint
-running spec version 0.10.2 or later.
+compatible with the methods exposed by this server.
 The URL can also be changed mid-conversation with the set_network / get_network tools.
 """
 
@@ -17,7 +17,7 @@ from mcp.server.fastmcp import FastMCP
 _initial_url = os.getenv("STARKNET_RPC_URL")
 if not _initial_url:
     print("Error: STARKNET_RPC_URL environment variable is required.", file=sys.stderr)
-    print("Set it to a Starknet JSON-RPC endpoint (spec v0.10.2+).", file=sys.stderr)
+    print("Set it to a compatible Starknet JSON-RPC endpoint.", file=sys.stderr)
     sys.exit(1)
 
 state = {"url": _initial_url}
