@@ -66,6 +66,9 @@
           "$ref": "#/components/errors/UNSUPPORTED_TX_TYPE"
         },
         {
+          "$ref": "#/components/errors/UNSUPPORTED_BUILTIN"
+        },
+        {
           "$ref": "#/components/errors/SERVICE_BUSY"
         },
         {
@@ -158,6 +161,14 @@
         "data": {
           "type": "string",
           "description": "Details about the unsupported transaction type."
+        }
+      },
+      "UNSUPPORTED_BUILTIN": {
+        "code": 1002,
+        "message": "Unsupported builtin",
+        "data": {
+          "type": "string",
+          "description": "Details about the unsupported builtins."
         }
       },
       "TRANSACTION_BLOCKED": {
