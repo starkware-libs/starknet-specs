@@ -1106,6 +1106,9 @@
             "$ref": "#/components/schemas/STRK20_INVOKE_ACTION"
           },
           {
+            "$ref": "#/components/schemas/STRK20_COMPUTE_AND_INVOKE_ACTION"
+          },
+          {
             "$ref": "#/components/schemas/STRK20_SHADOW_ACCOUNT_INVOKE_ACTION"
           }
         ]
@@ -1213,6 +1216,39 @@
           }
         },
         "required": ["type", "contract", "calldata"]
+      },
+      "STRK20_COMPUTE_AND_INVOKE_ACTION": {
+        "title": "STRK20 Compute And Invoke Action",
+        "description": "Invokes a contract as part of the same STRK20 transaction, supplying it an identity_key that the dapp cannot provide or forge. While building the proof, the privacy pool derives identity_key from the user, their viewing key, and the contract address, and calls the contract's privacy_compute with [identity_key, ...compute_additional_data]. privacy_compute must return a non-empty result. On chain, the pool then calls privacy_invoke_with_computation with [...compute_result, ...invoke_additional_data]. The dapp never supplies identity_key or compute_result: the pool prepends both. identity_key is deterministic for a given user and contract and differs between contracts. Calldata items may be literal felts or the same wallet-resolved placeholders as in STRK20_INVOKE_ACTION, substituted before the pool prepends its values. The contract may deposit into open notes created by transfer actions with amount \"OPEN\" in the same transaction, so the usual rule applies: the number of open notes filled must match the number of open notes created. The privacy pool accepts at most one of invoke or compute_and_invoke per transaction.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["compute_and_invoke"]
+          },
+          "contract": {
+            "title": "Contract Address",
+            "description": "The contract whose privacy_compute and privacy_invoke_with_computation entry points are called",
+            "$ref": "#/components/schemas/ADDRESS"
+          },
+          "compute_additional_data": {
+            "type": "array",
+            "title": "Compute Additional Data",
+            "description": "Calldata appended after identity_key when calling privacy_compute. Defaults to empty.",
+            "items": {
+              "$ref": "#/components/schemas/STRK20_CALLDATA_ITEM"
+            }
+          },
+          "invoke_additional_data": {
+            "type": "array",
+            "title": "Invoke Additional Data",
+            "description": "Calldata appended after the privacy_compute result when calling privacy_invoke_with_computation. Defaults to empty.",
+            "items": {
+              "$ref": "#/components/schemas/STRK20_CALLDATA_ITEM"
+            }
+          }
+        },
+        "required": ["type", "contract"]
       },
       "STRK20_CALLDATA_ITEM": {
         "title": "STRK20 Invoke Calldata Item",
