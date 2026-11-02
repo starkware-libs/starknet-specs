@@ -456,7 +456,7 @@
     {
       "name": "wallet_strk20InvokeTransaction",
       "summary": "Submit a transaction containing STRK20 privacy protocol actions",
-      "description": "Submits one or more STRK20 actions (deposit, withdraw, private transfer) as a single transaction. The wallet displays an approval UI and may take significantly longer than wallet_addInvokeTransaction because zero-knowledge proof generation is required. The dapp must tolerate long-running calls. The wallet adds the fee action itself: a withdraw action covering the paymaster/relayer fee required to submit, on top of the actions the dapp supplies. Registration into the privacy pool is handled transparently by the wallet — if the user is not registered, NOT_REGISTERED is returned. If the number of open notes filled by invoke actions does not match the number of open notes created by transfer actions with \"OPEN\" as the amount, INVALID_REQUEST_PAYLOAD is returned.",
+      "description": "Submits one or more STRK20 actions (register, deposit, withdraw, private transfer, invoke, shadow account invoke) as a single transaction. The wallet displays an approval UI and may take significantly longer than wallet_addInvokeTransaction because zero-knowledge proof generation is required. The dapp must tolerate long-running calls. For actions other than register, the wallet adds the fee action itself: a withdraw action covering the paymaster/relayer fee required to submit, on top of the actions the dapp supplies. Registration must support public fee funding or sponsorship without requiring an existing private balance; the wallet handles any required fee-token approvals and displays the fees for approval. To register the active account in the wallet's configured privacy pool on the active chain, pass a single register action. The wallet derives and retains the registration secrets and generates the required proof; the dapp does not supply them. The register action must be the only action in the request; otherwise INVALID_REQUEST_PAYLOAD is returned. If the account is already registered, a register request returns INVALID_REQUEST_PAYLOAD. Requests without a register action require the account to be registered; otherwise NOT_REGISTERED is returned. Returning a transaction hash indicates submission, not confirmed registration. If the number of open notes filled by invoke actions does not match the number of open notes created by transfer actions with \"OPEN\" as the amount, INVALID_REQUEST_PAYLOAD is returned.",
       "params": [
         {
           "name": "actions",
@@ -519,7 +519,7 @@
     {
       "name": "wallet_strk20PrepareInvoke",
       "summary": "Build the Starknet call (and zero-knowledge proof) for a STRK20 transaction without submitting it",
-      "description": "Builds the Starknet call that wallet_strk20InvokeTransaction would submit, plus its zero-knowledge proof, but does not send the transaction to the network. The dapp is responsible for submitting the returned call itself. The wallet supplies the viewing key and the user's private state (channels, notes) — the dapp only describes the actions. The wallet does not add a fee withdrawal action. When 'simulate' is true the wallet returns the call with an empty proof: it skips the (expensive, state-revealing) proof-generation step, but the returned call is otherwise the same shape as the non-simulated one. Simulate mode is intended for fee estimation and UI previews; the returned call cannot be submitted on-chain. As with wallet_strk20InvokeTransaction the wallet may take significantly longer than wallet_addInvokeTransaction when simulate is false, because proof generation is required, and the dapp must tolerate long-running calls. Registration into the privacy pool is handled transparently by the wallet — if the user is not registered, NOT_REGISTERED is returned. If the number of open notes filled by invoke actions does not match the number of open notes created by transfer actions with \"OPEN\" as the amount, INVALID_REQUEST_PAYLOAD is returned.",
+      "description": "Builds the Starknet call that wallet_strk20InvokeTransaction would submit, plus its zero-knowledge proof, but does not send the transaction to the network. The dapp is responsible for submitting the returned call itself. The wallet supplies the viewing key and the user's private state (channels, notes) — the dapp only describes the actions. The wallet does not add a fee withdrawal action. When 'simulate' is true the wallet returns the call with an empty proof: it skips the (expensive, state-revealing) proof-generation step, but the returned call is otherwise the same shape as the non-simulated one. Simulate mode is intended for fee estimation and UI previews; the returned call cannot be submitted on-chain. As with wallet_strk20InvokeTransaction the wallet may take significantly longer than wallet_addInvokeTransaction when simulate is false, because proof generation is required, and the dapp must tolerate long-running calls. To prepare registration of the active account in the wallet's configured privacy pool on the active chain, pass a single register action. The wallet derives and retains the registration secrets and generates the required proof unless simulate is true; the dapp does not supply them. The register action must be the only action in the request; otherwise INVALID_REQUEST_PAYLOAD is returned. If the account is already registered, a register request returns INVALID_REQUEST_PAYLOAD. Requests without a register action require the account to be registered; otherwise NOT_REGISTERED is returned. Preparing registration does not submit a transaction or mark the account as registered. The dapp is responsible for arranging any required public fee-token approvals and fee funding or sponsorship when submitting the returned call; registration must not require an existing private balance. If the number of open notes filled by invoke actions does not match the number of open notes created by transfer actions with \"OPEN\" as the amount, INVALID_REQUEST_PAYLOAD is returned.",
       "params": [
         {
           "name": "actions",
@@ -1094,6 +1094,9 @@
         "description": "A single action to perform via the STRK20 privacy protocol. The 'type' field discriminates the variant.",
         "oneOf": [
           {
+            "$ref": "#/components/schemas/STRK20_REGISTER_ACTION"
+          },
+          {
             "$ref": "#/components/schemas/STRK20_DEPOSIT_ACTION"
           },
           {
@@ -1109,6 +1112,19 @@
             "$ref": "#/components/schemas/STRK20_SHADOW_ACCOUNT_INVOKE_ACTION"
           }
         ]
+      },
+      "STRK20_REGISTER_ACTION": {
+        "title": "STRK20 Register Action",
+        "description": "Registers the active account in the wallet's configured STRK20 privacy pool on the active chain. The wallet derives and retains the registration secrets. Must be the only action in the request. Requests for an already registered account return INVALID_REQUEST_PAYLOAD.",
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["register"]
+          }
+        },
+        "required": ["type"],
+        "additionalProperties": false
       },
       "STRK20_DEPOSIT_ACTION": {
         "title": "STRK20 Deposit Action",
