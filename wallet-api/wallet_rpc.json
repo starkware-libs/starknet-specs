@@ -1116,7 +1116,7 @@ The register action must be the only action in the request; otherwise INVALID_RE
       },
       "STRK20_REGISTER_ACTION": {
         "title": "STRK20 Register Action",
-        "description": "Registers the active account in the wallet's configured STRK20 privacy pool on the active chain. The wallet derives and retains the registration secrets. Must be the only action in the request. Requests for an already registered account return INVALID_REQUEST_PAYLOAD.",
+        "description": "Registers the active account in the wallet's configured STRK20 privacy pool on the active chain. Must be the only action in the request. Requests for an already registered account return INVALID_REQUEST_PAYLOAD.",
         "type": "object",
         "properties": {
           "type": {
