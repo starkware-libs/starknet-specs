@@ -24,8 +24,8 @@ The latest release that changed each spec:
 | Spec               | Current version |
 | ------------------ | --------------- |
 | Full node JSON-RPC | `0.10.2`        |
-| Wallet API         | `0.10.4`        |
-| Proving API        | `0.10.3`        |
+| Wallet API         | `0.10.5-rc.0`   |
+| Proving API        | `0.10.5-rc.0`   |
 | P2P                | `0.10.3`        |
 
 ## MCP Server (Claude Code)
