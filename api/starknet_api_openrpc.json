@@ -1194,6 +1194,12 @@
                 "description": "The number of the block in which the event was emitted",
                 "$ref": "#/components/schemas/BLOCK_NUMBER"
               },
+              "block_timestamp": {
+                "title": "Block timestamp",
+                "description": "The timestamp of the block in which the event was emitted, encoded in Unix time (the block header's `timestamp`)",
+                "type": "integer",
+                "minimum": 0
+              },
               "transaction_hash": {
                 "title": "Transaction hash",
                 "description": "The transaction that emitted the event",
